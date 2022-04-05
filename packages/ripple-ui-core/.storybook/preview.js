@@ -1,3 +1,4 @@
+import '../src/assets/css/global.css'
 import 'virtual:svg-icons-register'
 
 export const parameters = {

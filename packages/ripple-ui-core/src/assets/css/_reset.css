@@ -1,0 +1,8 @@
+/*
+  1. Reset rem unit to 1rem = 10px
+*/
+html {
+  font-size: 62.5%; /* [1] */
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: subpixel-antialiased;
+}
