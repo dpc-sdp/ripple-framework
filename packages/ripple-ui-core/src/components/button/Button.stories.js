@@ -1,8 +1,8 @@
 import MyButton from './index.vue'
-import iconNamesRaw from 'virtual:svg-icons-names'
+// import iconNamesRaw from 'virtual:svg-icons-names'
 
 // Build a list of icon names
-let iconNames = iconNamesRaw.map((i) => i.replace('rpl-icon--', ''))
+let iconNames = ['download', 'home']
 // Add an empty icon name at the start of the array so that it can be unset by the user
 iconNames.unshift('')
 
@@ -14,20 +14,20 @@ export default {
   argTypes: {
     theme: {
       control: { type: null },
-      options: ['primary', 'secondary', 'tertiary'],
+      options: ['primary', 'secondary', 'tertiary']
     },
     iconName: {
       control: { type: 'select' },
-      options: iconNames,
+      options: iconNames
     },
     iconPosition: {
       control: { type: 'select' },
-      options: ['left', 'right'],
+      options: ['left', 'right']
     },
     size: {
       control: { type: 'select' },
-      options: ['default', 'large'],
-    },
+      options: ['default', 'large']
+    }
   }
 }
 
@@ -61,3 +61,11 @@ Tertiary.args = {
   ...Primary.args,
   theme: 'tertiary'
 }
+
+const MixedTemplate = () => ({
+  components: { MyButton },
+  template:
+    '<my-button label="Home" iconName="home" /> <my-button label="Home" iconName="home" /> <my-button label="Download" iconName="download" theme="secondary" />'
+})
+
+export const MultipleButtons = MixedTemplate.bind({})

@@ -5,7 +5,12 @@
     </header>
     <div v-if="page">
       <h1>Tide Page</h1>
-      <RplButton label="tests" :theme="'secondary'" />
+      <RplButton
+        label="Home"
+        :theme="'secondary'"
+        icon-name="home"
+        icon-position="left"
+      />
       <component :is="`Tide${page.type}Page`" :page="page" />
       {{ site }}
     </div>

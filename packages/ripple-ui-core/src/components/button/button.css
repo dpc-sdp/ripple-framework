@@ -3,7 +3,7 @@
     1. TODO: Replace this with rem units once tokens are using rems
     2. TODO: Wire these fonts up into tokens when the designers include them
   */
-  display: flex;
+  display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: var(--rpl-space-2);
@@ -83,6 +83,7 @@
   align-items: center;
 
   .rpl-icon {
+    fill: currentcolor;
     width: 1.2rem;
     height: 1.2rem;
   }
