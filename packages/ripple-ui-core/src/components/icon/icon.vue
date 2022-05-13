@@ -28,6 +28,10 @@ const props = defineProps({
   presentational: {
     type: Boolean,
     default: true
+  },
+  nopad: {
+    type: Boolean,
+    default: false
   }
 })
 
@@ -39,14 +43,13 @@ const asyncIcon = computed(() => {
   return false
 })
 const classes = computed(() => {
-  const c = ['rpl-icon', `rpl-icon--size-${props.size}`]
-  if (props.name) {
-    c.push(`rpl-icon--${props.name}`)
+  return {
+    'rpl-icon': true,
+    [`rpl-icon--size-${props.size}`]: props.size,
+    [`rpl-icon--${props.name}`]: props.name,
+    [`rpl-icon--theme-${props.theme}`]: props.theme,
+    [`rpl-icon--no-padding`]: props.nopad
   }
-  if (props.theme) {
-    c.push(`rpl-icon--theme-${props.theme}`)
-  }
-  return c
 })
 </script>
 

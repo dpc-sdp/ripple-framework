@@ -6,6 +6,10 @@
     padding: calc(var(--rpl-icon-size) / 2);
   }
 
+  &--no-padding svg {
+    padding: 0;
+  }
+
   &--size-s svg {
     --rpl-icon-size: var(--rpl-space-4);
   }

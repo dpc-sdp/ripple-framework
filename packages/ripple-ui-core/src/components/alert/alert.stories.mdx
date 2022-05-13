@@ -1,0 +1,117 @@
+import {
+  Canvas,
+  Meta,
+  Story
+} from '@storybook/addon-docs'
+import RplAlert from './alert.vue'
+import { RplColorThemes } from './../../lib/constants'
+import { reactive } from 'vue'
+
+export const SingleTemplate = (args) => ({
+  components: { RplAlert },
+  setup() {
+    return { args }
+  },
+  template: '<div style="position: relative;"><RplAlert v-bind="args"></RplAlert></div>'
+})
+
+<Meta
+  title='Components/Containers/Alert'
+  component={RplAlert}
+  argTypes={{
+    type: {
+      control: { type: 'select' },
+      options: ['info', 'warning', 'error'],
+      defaultValue: 'info'
+    },
+    iconName: {
+      control: { type: 'select' },
+      options: ['icon-information-circle-filled', 'icon-fire', 'icon-flood'],
+      defaultValue: 'icon-information-circle-filled'
+    },
+    message: {
+      defaultValue: 'An informative message.'
+    },
+    linkText: {
+      type: 'string',
+      defaultValue: 'Find out more'
+    },
+    linkUrl: {
+      type: 'string',
+      defaultValue: '/'
+    }
+  }}
+/>
+
+# Alert
+
+<Canvas>
+  <Story
+    name='Information'
+    args={{
+      type: 'info',
+      iconName: 'icon-information-circle-filled'
+    }}
+  >
+    {SingleTemplate.bind()}
+  </Story>
+  <Story
+    name='Warning'
+    args={{
+      type: 'warning',
+      iconName: 'icon-fire'
+    }}
+  >
+    {SingleTemplate.bind()}
+  </Story>
+  <Story
+    name='Danger'
+    args={{
+      type: 'error',
+      iconName: 'icon-exclamation-circle-filled'
+    }}
+  >
+    {SingleTemplate.bind()}
+  </Story>
+</Canvas>
+
+<Canvas>
+  <Story
+    name='Stacked'
+    args={{
+      type: 'error',
+      iconName: 'icon-exclamation-circle-filled'
+    }}
+  >
+    {(args) => {
+      return {
+        components: { RplAlert },
+        setup() {
+          const dismissed = reactive({
+            info: false,
+            warning: false,
+            danger: false,
+          })
+          return {
+            args,
+            dismissed,
+            alerts: ['info', 'warning', 'error'],
+            onDismiss: (id) => {
+              return dismissed[id] = !dismissed[id]
+            }
+          }
+        },
+        template: `<div style="position: relative;" v-for="(alert, i) in alerts">
+            <RplAlert v-bind="args"
+              :key="'alert-' + i"
+              :type="alert"
+              :alertId="alert"
+              :dismissed="dismissed[alert]"
+              @dismiss="onDismiss"
+            >
+            </RplAlert>
+          </div>`
+      }
+    }}
+  </Story>
+</Canvas>
