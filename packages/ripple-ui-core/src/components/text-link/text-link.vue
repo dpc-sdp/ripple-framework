@@ -24,13 +24,12 @@ const props = defineProps({
   }
 })
 
-const classes = computed(() => {
-  const cl = ['rpl-text-link', `rpl-text-link--${props.theme}`]
-  if (props.inactive) {
-    cl.push('rpl-text-link--inactive')
-  }
-  return cl.join(' ')
-})
+const classes = computed(() => ({
+  'rpl-text-link': true,
+  'rpl-type-body-link': true,
+  [`rpl-text-link--${props.theme}`]: props.theme,
+  'rpl-text-link--inactive': props.inactive
+}))
 
 const onClick = (payload?: any) => {
   rplEventBus.emit('rpl-text-link/click', payload)
@@ -38,8 +37,8 @@ const onClick = (payload?: any) => {
 </script>
 
 <template>
-  <a :className="classes" :href="url" @click="onClick()">
-    <slot />
+  <a :class="classes" :href="url" @click="onClick()">
+    <slot></slot>
   </a>
 </template>
 

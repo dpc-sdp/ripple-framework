@@ -25,9 +25,9 @@ const props = defineProps({
     type: String as PropType<typeof RplIconSizes[number]>,
     default: 's'
   },
-  presentational: {
-    type: Boolean,
-    default: true
+  title: {
+    type: String,
+    default: undefined
   },
   nopad: {
     type: Boolean,
@@ -56,7 +56,8 @@ const classes = computed(() => {
 <template>
   <span :class="classes">
     <component :is="asyncIcon" v-if="name && !inSprite && asyncIcon" />
-    <svg v-else-if="name">
+    <svg v-else-if="name" :role="title ? undefined : 'presentation'">
+      <title v-if="title">{{ title }}</title>
       <use :xlink:href="`#${name}`"></use>
     </svg>
     <slot v-else></slot>

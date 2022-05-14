@@ -4,7 +4,7 @@ import {
   Story
 } from '@storybook/addon-docs'
 import { ArgsTable } from '@storybook/addon-docs'
-import RplTextLink from './TextLink.vue'
+import RplTextLink from './text-link.vue'
 import RplIcon from '../icon/icon.vue'
 
 import { expect } from '@storybook/jest'
@@ -26,7 +26,7 @@ export const Template = (args) => ({
   setup() {
     return { args }
   },
-  template: '<p class="sb-container">This para contains a <RplTextLink @click.prevent="args.onClick()" v-bind="args">link</RplTextLink> in the middle.</p>'
+  template: '<p class="rpl-type-body">This para contains a <RplTextLink @click.prevent="args.onClick()" v-bind="args">link</RplTextLink> in the middle.</p>'
 })
 
 <Meta
@@ -142,7 +142,7 @@ export const Template = (args) => ({
       return {
         components: { RplTextLink },
         setup() { return { args } },
-        template: '<p class="sb-container">This para contains a <RplTextLink>voilà</RplTextLink> in the middle.</p>'
+        template: '<p class="rpl-type-body">This para contains a <RplTextLink>voilà</RplTextLink> in the middle.</p>'
       }
     }}
   </Story>
@@ -151,7 +151,7 @@ export const Template = (args) => ({
       return {
         components: { RplTextLink },
         setup() { return { args } },
-        template: '<p class="sb-container">This para contains a <RplTextLink>😍</RplTextLink> in the middle.</p>'
+        template: '<p class="rpl-type-body">This para contains a <RplTextLink>😍</RplTextLink> in the middle.</p>'
       }
     }}
   </Story>
@@ -160,7 +160,7 @@ export const Template = (args) => ({
       return {
         components: { RplTextLink },
         setup() { return { args } },
-        template: `<p class="sb-container">This para contains a <RplTextLink target="_blank">link that opens in a new window</RplTextLink> in the middle.</p>`
+        template: `<p class="rpl-type-body">This para contains a <RplTextLink target="_blank">link that opens in a new window</RplTextLink> in the middle.</p>`
       }
     }}
   </Story>
@@ -174,7 +174,7 @@ export const Template = (args) => ({
       return {
         components: { RplTextLink, RplIcon },
         setup() { return { args } },
-        template: `<p class="sb-container">This para contains a <RplTextLink><RplIcon name="icon-download"></RplIcon></RplTextLink> in the middle.</p>`
+        template: `<p class="rpl-type-body">This para contains a <RplTextLink><RplIcon name="icon-download" nopad></RplIcon></RplTextLink> in the middle.</p>`
       }
     }}
   </Story>
@@ -191,7 +191,7 @@ export const Template = (args) => ({
       return {
         components: { RplTextLink },
         setup() { return { args } },
-        template: `<p class="sb-container">This para contains an <RplTextLink @click.prevent="args.onClick()">event-tracked link</RplTextLink> in the middle.</p>`
+        template: `<p class="rpl-type-body">This para contains an <RplTextLink @click.prevent="args.onClick()">event-tracked link</RplTextLink> in the middle.</p>`
       }
     }}
   </Story>

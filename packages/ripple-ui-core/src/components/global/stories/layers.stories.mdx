@@ -26,7 +26,7 @@ export const BorderRadiusTemplate = (args) => ({
     }
   },
   template: `
-    <sbTokenTable :columns="columns" full>
+    <sbTokenTable :columns="columns">
       <sbTokenTableRow v-for="item in items" :key="item">
         <sbTokenTableCol>{{item.value}}</sbTokenTableCol>
         <sbTokenTableCol><div :style="getExampleStyles(item)"></div></sbTokenTableCol>
@@ -102,7 +102,7 @@ export const ElevationTemplate = (args) => ({
 
 # Layer Styles
 
-<Meta title='Base Styles/Layer styles' parameters={{viewMode: 'docs'}}/>
+<Meta title='Base Styles/Layer styles' parameters={{viewMode: 'docs'}} />
 
 ## Border radius
 

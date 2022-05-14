@@ -1,19 +1,36 @@
 import {
   Canvas,
   Meta,
-  Story
+  Story,
+  ArgsTable
 } from '@storybook/addon-docs'
+import { expect } from '@storybook/jest';
+import { within, userEvent, waitFor } from '@storybook/testing-library';
 import RplAlert from './alert.vue'
 import { RplColorThemes } from './../../lib/constants'
-import { reactive } from 'vue'
+import { reactive, ref } from 'vue';
+import { rplEventBus } from './../../index.ts';
+const playFunction = async ({ canvasElement }) => {
+  let fired = false
+  rplEventBus.all.clear()
+  const handler = () => { fired = !fired }
+  rplEventBus.on('rpl-alert/dismiss', handler)
+  const canvas = await within(canvasElement)
+  await new Promise((r) => setTimeout(r, 2000));
+  await userEvent.click(canvas.getByText('Dismiss alert'))
+  await expect(fired).toBeTruthy()
+  await expect(canvas.queryByText('Dismiss alert')).not.toBeInTheDocument()
+  rplEventBus.off('rpl-alert/dismiss', handler)
+}
 
 export const SingleTemplate = (args) => ({
   components: { RplAlert },
   setup() {
     return { args }
   },
-  template: '<div style="position: relative;"><RplAlert v-bind="args"></RplAlert></div>'
-})
+  template: '<RplAlert v-bind="args"></RplAlert>'
+});
+
 
 <Meta
   title='Components/Containers/Alert'
@@ -45,12 +62,17 @@ export const SingleTemplate = (args) => ({
 
 # Alert
 
-<Canvas>
+<ArgsTable of={RplAlert} />
+
+## Variants
+
+<Canvas columns={2}>
   <Story
     name='Information'
     args={{
       type: 'info',
-      iconName: 'icon-information-circle-filled'
+      iconName: 'icon-information-circle-filled',
+      alertId: 'info-1'
     }}
   >
     {SingleTemplate.bind()}
@@ -59,7 +81,8 @@ export const SingleTemplate = (args) => ({
     name='Warning'
     args={{
       type: 'warning',
-      iconName: 'icon-fire'
+      iconName: 'icon-fire',
+      alertId: 'fire-1'
     }}
   >
     {SingleTemplate.bind()}
@@ -68,12 +91,15 @@ export const SingleTemplate = (args) => ({
     name='Danger'
     args={{
       type: 'error',
-      iconName: 'icon-exclamation-circle-filled'
+      iconName: 'icon-exclamation-circle-filled',
+      alertId: 'danger-1'
     }}
   >
     {SingleTemplate.bind()}
   </Story>
 </Canvas>
+
+## Stacked
 
 <Canvas>
   <Story
@@ -82,6 +108,7 @@ export const SingleTemplate = (args) => ({
       type: 'error',
       iconName: 'icon-exclamation-circle-filled'
     }}
+    parameters={{ actions: { argTypesRegex: '^on.*' } }}
   >
     {(args) => {
       return {
@@ -90,23 +117,58 @@ export const SingleTemplate = (args) => ({
           const dismissed = reactive({
             info: false,
             warning: false,
-            danger: false,
+            error: false,
           })
           return {
             args,
             dismissed,
-            alerts: ['info', 'warning', 'error'],
-            onDismiss: (id) => {
-              return dismissed[id] = !dismissed[id]
-            }
+            onDismiss: (id) => dismissed[id] = !dismissed[id]
           }
         },
-        template: `<div style="position: relative;" v-for="(alert, i) in alerts">
+        template: `<div style="position: relative;" v-for="(alert, i) in Object.keys(dismissed)">
             <RplAlert v-bind="args"
               :key="'alert-' + i"
               :type="alert"
               :alertId="alert"
               :dismissed="dismissed[alert]"
+              @dismiss="onDismiss"
+            >
+            </RplAlert>
+          </div>`
+      }
+    }}
+  </Story>
+</Canvas>
+
+## Dismissed
+
+<Canvas columns={2}>
+  <Story
+    name='Dismissed'
+    args={{
+      type: 'error',
+      iconName: 'icon-exclamation-circle-filled'
+    }}
+    play={playFunction}
+  >
+    {(args) => {
+      return {
+        components: { RplAlert },
+        setup() {
+          let dismissed = ref(false)
+          return {
+            args,
+            dismissed,
+            onDismiss: (id) => {
+              dismissed.value = !dismissed.value
+            }
+          }
+        },
+        template: `<div style="position: relative;">
+            <RplAlert v-bind="args"
+              type="info"
+              alertId="123"
+              :dismissed="dismissed"
               @dismiss="onDismiss"
             >
             </RplAlert>
