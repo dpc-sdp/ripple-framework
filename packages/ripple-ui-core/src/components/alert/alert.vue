@@ -53,12 +53,13 @@ const classes = computed(() => {
 </script>
 
 <template>
-  <div
-    :class="classes"
-    role="region"
-    :aria-labelledby="`alert-message-${props.alertId}`"
-  >
-    <div v-if="!dismissed" className="rpl-alert__inner">
+  <div :class="classes">
+    <div
+      v-if="!dismissed"
+      className="rpl-alert__inner"
+      role="region"
+      :aria-labelledby="`alert-message-${props.alertId}`"
+    >
       <rpl-icon
         class="rpl-alert__icon-info"
         size="m"
