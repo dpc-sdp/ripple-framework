@@ -23,7 +23,7 @@
 
   &__message {
     margin-top: var(--rpl-space-1);
-    margin-bottom: var(--rpl-space-5);
+    margin-bottom: var(--rpl-space-4);
 
     &-wrap {
       width: 100%;
