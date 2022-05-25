@@ -3,6 +3,8 @@
   color: var(--rpl-clr-semantic-link);
   text-decoration: underline;
   cursor: pointer;
+  display: inline-flex;
+  align-items: center;
 
   &:visited {
     color: var(--rpl-clr-semantic-link-visited);

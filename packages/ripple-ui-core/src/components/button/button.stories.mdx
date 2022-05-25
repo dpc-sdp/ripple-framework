@@ -1,7 +1,8 @@
 import {
   Canvas,
   Meta,
-  Story
+  Story,
+  ArgsTable
 } from '@storybook/addon-docs'
 import { within } from '@storybook/testing-library';
 import { eventCheck, a11yCheck, a11yStoryCheck } from './../../../.storybook/interactions.js'
@@ -65,6 +66,8 @@ export const Template = (args) => ({
 />
 
 ## Example
+
+<ArgsTable of={RplButton} />
 
 <Story
   name='1. Example'
