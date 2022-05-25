@@ -57,8 +57,8 @@ const classes = computed(() => {
     <div
       v-if="!dismissed"
       className="rpl-alert__inner"
-      role="region"
       :aria-labelledby="`alert-message-${props.alertId}`"
+      role="region"
     >
       <rpl-icon
         class="rpl-alert__icon-info"
@@ -68,14 +68,14 @@ const classes = computed(() => {
       ></rpl-icon>
       <div className="rpl-alert__message-wrap">
         <div
-          className="rpl-alert__message rpl-type-component-bold"
           :id="`alert-message-${props.alertId}`"
+          className="rpl-alert__message rpl-type-component-bold"
         >
           {{ message }}
         </div>
         <RplTextLink
           v-if="linkText && linkUrl"
-          class="rpl-alert__link"
+          class="rpl-alert__link rpl-type-body-link"
           :url="linkUrl"
         >
           <span>{{ linkText }}</span>
