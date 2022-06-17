@@ -1,0 +1,128 @@
+import {
+  Canvas,
+  Meta,
+  Story,
+  ArgsTable
+} from '@storybook/addon-docs'
+import RplIconAndText from './icon-and-text.vue'
+import {
+  RplIconAndTextPositions,
+  RplIconAndTextThemes,
+  RplIconAndTextColours,
+  RplIconAndTextSizes,
+  RplIconAndTextWeights,
+  RplIconAndTextDecorations,
+  RplIconAndTextStyles
+} from './constants'
+import { a11yStoryCheck } from './../../../.storybook/interactions.js'
+import { RplIconNames } from './../icon/constants.ts';
+
+export const SingleTemplate = (args) => ({
+  components: { RplIconAndText },
+  setup() {
+    return { args }
+  },
+  template: '<RplIconAndText v-bind="args" />'
+})
+
+<Meta
+  title='Components/Atoms/Icon and text'
+  component={RplIconAndText}
+  argTypes={{
+    label: {
+      defaultValue: 'Button text',
+      type: 'string'
+    },
+    iconName: {
+      control: { type: 'select' },
+      options: RplIconNames,
+      defaultValue: 'icon-star'
+    },
+    iconPosition: {
+      control: { type: 'select' },
+      options: RplIconAndTextPositions,
+      defaultValue: 'left'
+    },
+    theme: {
+      control: { type: 'select' },
+      options: RplIconAndTextThemes,
+      defaultValue: 'default'
+    },
+    textColour: {
+      control: { type: 'select' },
+      options: RplIconAndTextColours,
+      defaultValue: 'default'
+    },
+    textSize: {
+      control: { type: 'select' },
+      options: RplIconAndTextSizes,
+      defaultValue: 'default'
+    },
+    textWeight: {
+      control: { type: 'select' },
+      options: RplIconAndTextWeights,
+      defaultValue: 'bold'
+    },
+    textDecoration: {
+      control: { type: 'select' },
+      options: RplIconAndTextDecorations,
+      defaultValue: 'none'
+    },
+    textStyle: {
+      control: { type: 'select' },
+      options: RplIconAndTextStyles,
+      defaultValue: 'paragraph'
+    },
+    onClick: { action: 'clicked' }
+  }}
+/>
+
+# Icon and text
+
+<ArgsTable of={RplIconAndText} />
+
+<Canvas>
+  <Story
+    name='Default'
+    play={a11yStoryCheck}
+    args={{
+      label: 'Default',
+      iconName: 'icon-star'
+    }}
+  >
+    {SingleTemplate.bind()}
+  </Story>
+  <Story
+    name='Link'
+    play={a11yStoryCheck}
+    args={{
+      label: 'Link',
+      iconName: 'icon-star',
+      textColour: 'link'
+    }}
+  >
+    {SingleTemplate.bind()}
+  </Story>
+  <Story
+    name='White'
+    play={a11yStoryCheck}
+    args={{
+      label: 'White',
+      iconName: 'icon-star',
+      textColour: 'white'
+    }}
+  >
+    {SingleTemplate.bind()}
+  </Story>
+  <Story
+    name='Text'
+    play={a11yStoryCheck}
+    args={{
+      label: 'Text',
+      iconName: 'icon-star',
+      textColour: 'text'
+    }}
+  >
+    {SingleTemplate.bind()}
+  </Story>
+</Canvas>

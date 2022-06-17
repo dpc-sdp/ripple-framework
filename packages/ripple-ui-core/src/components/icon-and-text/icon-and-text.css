@@ -1,0 +1,54 @@
+.rpl-icon-and-text {
+  background-color: var(--rpl-icon-and-text-bg-clr);
+  color: var(--rpl-icon-and-text-clr);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--rpl-space-2);
+  padding: var(--rpl-space-4) var(--rpl-space-5);
+  box-sizing: border-box;
+
+  &__icon {
+    display: flex;
+    align-items: center;
+
+    svg {
+      fill: var(--rpl-icon-and-text-icon);
+      padding: 0;
+    }
+  }
+
+  &__label {
+    &--underline {
+      text-decoration: underline;
+    }
+  }
+
+  &--reverse {
+    flex-direction: row-reverse;
+  }
+
+  &--default {
+    --rpl-icon-and-text-bg-clr: var(--rpl-clr-white);
+    --rpl-icon-and-text-clr: var(--rpl-clr-type-default);
+    --rpl-icon-and-text-icon: var(--rpl-clr-primary);
+  }
+
+  &--link {
+    --rpl-icon-and-text-bg-clr: var(--rpl-clr-white);
+    --rpl-icon-and-text-clr: var(--rpl-clr-primary);
+    --rpl-icon-and-text-icon: var(--rpl-clr-primary);
+  }
+
+  &--white {
+    --rpl-icon-and-text-bg-clr: var(--rpl-clr-primary);
+    --rpl-icon-and-text-clr: var(--rpl-clr-primary-contrast);
+    --rpl-icon-and-text-icon: var(--rpl-clr-primary-contrast);
+  }
+
+  &--text {
+    --rpl-icon-and-text-bg-clr: var(--rpl-clr-white);
+    --rpl-icon-and-text-clr: var(--rpl-clr-type-default);
+    --rpl-icon-and-text-icon: var(--rpl-clr-type-default);
+  }
+}
