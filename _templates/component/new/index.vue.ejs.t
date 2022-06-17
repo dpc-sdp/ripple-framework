@@ -15,7 +15,7 @@ defineProps({
 </script>
 
 <template>
-  <div :className="`<%= h.rplclassname(name) %> <%= h.rplclassname(name) %>--${theme}`">
+  <div :class="`<%= h.rplclassname(name) %> <%= h.rplclassname(name) %>--${theme}`">
     TODO: <%= h.rplcomponentname(name) %> functionality
   </div>
 </template>
