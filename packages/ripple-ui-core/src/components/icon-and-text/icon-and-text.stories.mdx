@@ -25,9 +25,29 @@ export const SingleTemplate = (args) => ({
   template: '<RplIconAndText v-bind="args" />'
 })
 
+export const SingleTemplateReversed = (args) => ({
+  components: { RplIconAndText },
+  setup() {
+    const el = document.querySelector('#story--components-navigation-chip--reversed')
+    if (el) el.parentElement.parentElement.parentElement.parentElement.parentElement.style.backgroundColor='#003174'
+    return { args }
+  },
+  template: '<div class="sb-container" style="background:#003174"><RplIconAndText v-bind="args" /></div>'
+})
+
+
 <Meta
-  title='Components/Atoms/Icon and text'
+  title='WIP/Components/Atoms/Icon and text'
   component={RplIconAndText}
+  parameters={{
+    backgrounds: {
+      default: 'default',
+      values: [
+        { name: 'default', value: '#ffffff' },
+        { name: 'reverse', value: '#003174' },
+      ],
+    }
+  }}
   argTypes={{
     label: {
       defaultValue: 'Button text',
@@ -106,13 +126,18 @@ export const SingleTemplate = (args) => ({
   <Story
     name='White'
     play={a11yStoryCheck}
+    parameters={{
+      backgrounds: {
+        default: 'reverse'
+      },
+    }}
     args={{
       label: 'White',
       iconName: 'icon-star',
       textColour: 'white'
     }}
   >
-    {SingleTemplate.bind()}
+    {SingleTemplateReversed.bind()}
   </Story>
   <Story
     name='Text'
