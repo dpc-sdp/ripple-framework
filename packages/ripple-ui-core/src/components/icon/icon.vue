@@ -15,19 +15,23 @@ const props = defineProps({
     type: String,
     required: true
   },
-  theme: {
+  colour: {
     type: [String, undefined] as PropType<
       typeof RplColorThemes[number] | undefined
     >,
-    default: undefined
+    default: 'default'
   },
   size: {
     type: String as PropType<typeof RplIconSizes[number]>,
     default: 's'
   },
-  presentational: {
+  padded: {
     type: Boolean,
-    default: true
+    default: false
+  },
+  title: {
+    type: String,
+    default: undefined
   }
 })
 
@@ -43,8 +47,11 @@ const classes = computed(() => {
   if (props.name) {
     c.push(`rpl-icon--${props.name}`)
   }
-  if (props.theme) {
-    c.push(`rpl-icon--theme-${props.theme}`)
+  if (props.colour) {
+    c.push(`rpl-icon--colour-${props.colour}`)
+  }
+  if (props.padded) {
+    c.push(`rpl-icon--padded`)
   }
   return c
 })
@@ -53,7 +60,8 @@ const classes = computed(() => {
 <template>
   <span :class="classes">
     <component :is="asyncIcon" v-if="name && !inSprite && asyncIcon" />
-    <svg v-else-if="name">
+    <svg v-else-if="name" :role="title ? undefined : 'presentation'">
+      <title v-if="title">{{ title }}</title>
       <use :xlink:href="`#${name}`"></use>
     </svg>
     <slot v-else></slot>
