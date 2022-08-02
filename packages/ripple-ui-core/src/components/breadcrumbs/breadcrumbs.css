@@ -74,6 +74,7 @@
 
     &:active {
       color: var(--rpl-clr-type-default);
+      text-decoration: none;
     }
 
     &:focus-visible {
