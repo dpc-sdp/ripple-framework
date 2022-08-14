@@ -1,36 +1,11 @@
 .rpl-file {
+  margin: 0;
+
   :where(.rpl-content) & {
     margin-top: var(--rpl-sp-5);
 
     @media (--rpl-bp-l) {
       margin-top: var(--rpl-sp-6);
-    }
-  }
-
-  &__link {
-    display: flex;
-    align-items: flex-start;
-    color: var(--rpl-clr-type-default);
-    text-decoration: none;
-
-    &:hover .rpl-file__name {
-      text-decoration: none;
-      color: var(--rpl-clr-link);
-    }
-
-    &:active .rpl-file__name {
-      text-decoration: underline;
-    }
-
-    &:focus-visible {
-      outline: 0;
-
-      .rpl-file__name {
-        color: var(--rpl-clr-type-focus-contrast);
-        background-color: var(--rpl-clr-focus);
-        text-decoration-thickness: 3px;
-        text-underline-offset: 3px;
-      }
     }
   }
 
@@ -70,5 +45,32 @@
 
   &__caption {
     margin-top: var(--rpl-sp-4);
+  }
+
+  &__link {
+    display: flex;
+    align-items: flex-start;
+    color: var(--rpl-clr-type-default);
+    text-decoration: none;
+
+    &:hover .rpl-file__name {
+      text-decoration: none;
+      color: var(--rpl-clr-link);
+    }
+
+    &:active .rpl-file__name {
+      text-decoration: underline;
+    }
+
+    &:focus-visible {
+      outline: 0;
+
+      .rpl-file__name {
+        color: var(--rpl-clr-type-focus-contrast);
+        background-color: var(--rpl-clr-focus);
+        text-decoration-thickness: 3px;
+        text-underline-offset: 3px;
+      }
+    }
   }
 }
