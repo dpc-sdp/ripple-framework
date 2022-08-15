@@ -55,7 +55,7 @@ const updatedAt = computed(() => epochToText(props.updated))
         <div class="rpl-file__meta rpl-type-p-small">
           <span v-if="extension" class="rpl-file__type">{{ extension }}</span>
           <span v-if="size" class="rpl-file__size">{{ size }}</span>
-          <div v-if="updated" class="rpl-file__updated">Updated {{ updatedAt }}</div>
+          <div v-if="updatedAt" class="rpl-file__updated">Updated {{ updatedAt }}</div>
         </div>
       </div>
     </a>
