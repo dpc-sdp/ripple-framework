@@ -37,7 +37,7 @@ const props = defineProps({
 })
 
 const isExternal = computed(() => isExternalLink(props.url))
-const updatedAt = computed(() => epochToText(props.updated))
+const updatedText = computed(() => epochToText(props.updated))
 </script>
 
 <template>
@@ -55,7 +55,7 @@ const updatedAt = computed(() => epochToText(props.updated))
         <div class="rpl-file__meta rpl-type-p-small">
           <span v-if="extension" class="rpl-file__type">{{ extension }}</span>
           <span v-if="size" class="rpl-file__size">{{ size }}</span>
-          <div v-if="updatedAt" class="rpl-file__updated">Updated {{ updatedAt }}</div>
+          <div v-if="updatedText" class="rpl-file__updated">Updated {{ updatedText }}</div>
         </div>
       </div>
     </a>
