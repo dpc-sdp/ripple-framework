@@ -23,6 +23,7 @@
 @import '_reset.css';
 
 /* CSS only Components */
-@import 'components/_file.css';
+@import 'components/_blockquote.css';
 @import 'components/_callout.css';
+@import 'components/_file.css';
 @import 'components/_img.css';
