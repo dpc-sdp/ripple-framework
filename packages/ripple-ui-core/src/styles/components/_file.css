@@ -18,13 +18,13 @@
 
   &__name {
     text-decoration: underline;
-    text-underline-offset: 2px;
-    line-height: var(--rpl-type-lh-2);
+    text-underline-offset: 1px;
+    line-height: var(--rpl-type-lh-3);
   }
 
   &__meta {
     color: var(--rpl-clr-neutral-600);
-    margin-top: var(--rpl-sp-2);
+    margin-top: var(--rpl-sp-1);
     line-height: var(--rpl-type-lh-1);
   }
 
@@ -60,17 +60,6 @@
 
     &:active .rpl-file__name {
       text-decoration: underline;
-    }
-
-    &:focus-visible {
-      outline: 0;
-
-      .rpl-file__name {
-        color: var(--rpl-clr-type-focus-contrast);
-        background-color: var(--rpl-clr-focus);
-        text-decoration-thickness: 3px;
-        text-underline-offset: 3px;
-      }
     }
   }
 }
