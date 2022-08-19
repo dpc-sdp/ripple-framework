@@ -3,7 +3,7 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import RplIcon from '../icon/icon.vue'
-import { epochToText, isExternalLink } from '../../lib/helpers'
+import { isExternalLink } from '../../lib/helpers'
 
 const props = defineProps({
   name: {
@@ -27,8 +27,8 @@ const props = defineProps({
     required: true
   },
   updated: {
-    type: Number,
-    default: null
+    type: String,
+    default: ''
   },
   caption: {
     type: String,
@@ -37,7 +37,6 @@ const props = defineProps({
 })
 
 const isExternal = computed(() => isExternalLink(props.url))
-const updatedText = computed(() => epochToText(props.updated))
 </script>
 
 <template>
@@ -55,7 +54,7 @@ const updatedText = computed(() => epochToText(props.updated))
         <div class="rpl-file__meta rpl-type-p-small">
           <span v-if="extension" class="rpl-file__type">{{ extension }}</span>
           <span v-if="size" class="rpl-file__size">{{ size }}</span>
-          <div v-if="updatedText" class="rpl-file__updated">Updated {{ updatedText }}</div>
+          <div v-if="updated" class="rpl-file__updated">Updated {{ updated }}</div>
         </div>
       </div>
     </a>
