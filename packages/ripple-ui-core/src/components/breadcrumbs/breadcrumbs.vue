@@ -3,15 +3,15 @@ export default { name: 'RplBreadcrumbs' }
 </script>
 
 <script setup lang="ts">
-import { PropType } from 'vue'
 import { RplBreadcrumbsItemArray } from './constants'
 import RplTextLink from '../text-link/text-link.vue'
 
-defineProps({
-  items: {
-    type: Array as PropType<typeof RplBreadcrumbsItemArray[]>,
-    default: () => []
-  }
+export interface Props {
+  items: RplBreadcrumbsItemArray[],
+}
+
+withDefaults(defineProps<Props>(), {
+  items: () => [],
 })
 </script>
 

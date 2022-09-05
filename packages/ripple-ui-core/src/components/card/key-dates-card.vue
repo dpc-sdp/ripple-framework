@@ -3,29 +3,26 @@ export default { name: 'RplKeyDatesCard' }
 </script>
 
 <script setup lang="ts">
-import { PropType } from 'vue'
-import { RplPropEl, RplPropStringRequired } from '../../lib/constants'
+import { RplCardElements } from '../../lib/constants'
 import { RplCardItemArray } from './constants'
 import { useAccessibleContainer } from '../../composables/useAccessibleContainer'
 
 import RplCard from './card.vue'
 import RplTextLink from '../text-link/text-link.vue'
 
-defineProps({
-  ctaTitle: RplPropStringRequired,
-  el: RplPropEl,
-  items: {
-    type: Array as PropType<typeof RplCardItemArray[]>,
-    default: () => []
-  },
-  title: {
-    type: String,
-    default: 'Key calendar dates'
-  },
-  url: {
-    type: [String, undefined],
-    default: undefined
-  }
+export interface Props {
+  ctaTitle: string,
+  el?: RplCardElements,
+  items: RplCardItemArray[],
+  title?: string,
+  url?: string,
+}
+
+withDefaults(defineProps<Props>(), {
+  el: 'li',
+  items: () => [],
+  title: 'Key calendar dates',
+  url: undefined,
 })
 
 const { container, trigger } = useAccessibleContainer()
