@@ -75,3 +75,7 @@
   padding: 20px;
   font-size: 1.6rem;
 }
+
+.rpl-storybook__progressive-image--offset.rpl-progressive-image {
+  margin-top: 120vh;
+}

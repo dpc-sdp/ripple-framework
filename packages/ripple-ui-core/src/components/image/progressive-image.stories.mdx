@@ -1,0 +1,78 @@
+import {
+  Canvas,
+  Meta,
+  Story,
+  ArgsTable
+} from '@storybook/addon-docs'
+import RplProgressiveImage from './progressive-image.vue'
+import { RplImageFit, RplImagePriority } from './constants'
+import { a11yStoryCheck } from './../../../stories/interactions.js'
+
+export const SingleTemplate = (args) => ({
+  components: { RplProgressiveImage },
+  setup() {
+    return { args }
+  },
+  template: '<RplProgressiveImage v-bind="args" />'
+})
+
+<Meta
+  title='WIP/Components/Progressive Image'
+  component={RplProgressiveImage}
+  argTypes={{
+    height: {
+      control: { type: 'number' }
+    },
+    width: {
+      control: { type: 'number' }
+    },
+    srcSet: {
+      control: { type: 'text' }
+    },
+    sizes: {
+      control: { type: 'text' }
+    },
+    fit: {
+      type: 'select',
+      options: RplImageFit
+    },
+    priority: {
+      type: 'select',
+      options: RplImagePriority
+    }
+  }}
+/>
+
+# Responsive image
+
+<ArgsTable of={RplProgressiveImage} />
+
+<Canvas>
+  <Story
+    name='Progressive Image'
+    args={{
+      class: 'rpl-storybook__progressive-image--offset',
+      src: 'https://images.unsplash.com/photo-1662904162853-cfc087b8d621?w=1200&q=80',
+      preview: 'https://images.unsplash.com/photo-1662904162853-cfc087b8d621?w=40&q=60',
+      width: 900,
+      height: 600
+    }}
+    play={a11yStoryCheck}
+  >
+    {SingleTemplate.bind()}
+  </Story>
+  <Story
+    name='Progressive Aspect'
+    args={{
+      class: 'rpl-storybook__progressive-image--offset',
+      src: 'https://images.unsplash.com/photo-1662898220670-cc8c23e53fe0?w=1200&q=80',
+      preview: 'https://images.unsplash.com/photo-1662898220670-cc8c23e53fe0?w=40&q=60',
+      width: 900,
+      height: 600,
+      aspect: 'square'
+    }}
+    play={a11yStoryCheck}
+  >
+    {SingleTemplate.bind()}
+  </Story>
+</Canvas>
