@@ -1,4 +1,5 @@
 import axios, { AxiosInstance } from 'axios'
+import qs from 'qs'
 
 export default class HttpClient {
   client: AxiosInstance
@@ -9,8 +10,11 @@ export default class HttpClient {
       this.client = axios.create({
         baseURL: config.baseUrl,
         auth: config.auth,
-        paramsSerializer: {
-          indexes: true
+        paramsSerializer: function (params) {
+          return qs.stringify(params, {
+            arrayFormat: 'brackets',
+            indices: false
+          })
         }
       })
     }
