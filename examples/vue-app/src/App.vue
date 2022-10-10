@@ -14,7 +14,7 @@ import { RplButton } from '@dpc-sdp/ripple-ui-core'
     />
 
     <div class="wrapper">
-      <RplButton theme="primary">RPL Button</RplButton>
+      <RplButton>RPL Button</RplButton>
       <nav>
         <RouterLink to="/">Home</RouterLink>
         <RouterLink to="/about">About</RouterLink>
