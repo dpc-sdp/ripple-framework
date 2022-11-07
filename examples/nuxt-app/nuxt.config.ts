@@ -39,6 +39,7 @@ export default defineNuxtConfig({
     '@dpc-sdp/ripple-tide-publication/nuxt',
     '@dpc-sdp/ripple-tide-publication-page/nuxt',
     '@dpc-sdp/ripple-ui-core/nuxt',
-    '@dpc-sdp/ripple-ui-forms/nuxt'
+    '@dpc-sdp/ripple-ui-forms/nuxt',
+    '@dpc-sdp/ripple-tide-analytics/nuxt'
   ]
 })
