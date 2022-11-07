@@ -9,7 +9,9 @@ import RplIcon from '../icon/icon.vue'
 import RplContent from '../content/content.vue'
 import RplExpandable from '../expandable/expandable.vue'
 import { useExpandableState } from '../../composables/useExpandableState'
-import { rplEventBus } from '@dpc-sdp/ripple-ui-core'
+import useRippleEvent from './../../composables/useRippleEvent'
+
+const { emitRplEvent } = useRippleEvent('rpl-accordion', ['toggleAll'])
 
 type RplAccordionItem = {
   id: string
@@ -28,14 +30,6 @@ const props = withDefaults(defineProps<Props>(), {
   items: () => [],
   numbered: false
 })
-
-const RPL_ACCORDION_OPEN_ALL = 'rpl-accordion/toggleAll'
-rplEventBus.register(RPL_ACCORDION_OPEN_ALL)
-
-const emit =
-  defineEmits<{
-    (e: 'onToggleAll', value: string): void
-  }>()
 
 const initialActiveIndexes: string[] = props.items.reduce(
   (result: string[], current: RplAccordionItem): string[] => {
@@ -56,9 +50,7 @@ const { isItemExpanded, isAllExpanded, toggleItem } = useExpandableState(
 const toggleAll = () => {
   // Make all items active
   if (!isAllExpanded()) {
-    rplEventBus.emit(RPL_ACCORDION_OPEN_ALL, 'open')
-    console.log(rplEventBus)
-    emit('onToggleAll', 'open')
+    emitRplEvent('toggleAll', 'open')
     props.items.forEach((item) => {
       // If the item is not expanded, make it expanded
       if (!isItemExpanded(item.id)) {
@@ -69,8 +61,7 @@ const toggleAll = () => {
 
   // Make all items inactive
   else {
-    rplEventBus.emit(RPL_ACCORDION_OPEN_ALL, 'close')
-    emit('onToggleAll', 'close')
+    emitRplEvent('toggleAll', 'close')
     props.items.forEach((item) => {
       // If the item is expanded, make it not expanded
       if (isItemExpanded(item.id)) {
