@@ -1,5 +1,9 @@
 <template>
-  <slot v-if="page" :name="`${componentName}Page`" v-bind="{ page, site }">
+  <slot
+    v-if="page && site"
+    :name="`${componentName}Page`"
+    v-bind="{ page, site }"
+  >
     <component :is="`${componentName}Page`" :page="page" :site="site">
       <template #sidebar>
         <slot name="aboveSidebar"></slot>
@@ -65,6 +69,7 @@ const { data: page, error: pageError } = await useFetch('/api/tide/page', {
 // TODO: Properly handle this
 if (siteError.value) {
   console.log(siteError.value)
+  throw new Error('aslkdnjasld')
 }
 
 const componentName = computed(
