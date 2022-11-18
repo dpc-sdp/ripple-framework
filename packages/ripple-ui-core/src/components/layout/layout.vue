@@ -48,6 +48,7 @@ const hasSidebar = computed(() => {
       >
         <slot name="breadcrumbs"></slot>
       </div>
+      asd
     </header>
     <section v-if="$slots.aboveBody" id="rpl-above-body">
       <slot name="aboveBody"></slot>
