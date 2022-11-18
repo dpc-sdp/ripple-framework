@@ -65,7 +65,6 @@ const { data: page, error: pageError } = await useFetch('/api/tide/page', {
 // TODO: Properly handle this
 if (siteError.value) {
   console.log(siteError.value)
-  throw new Error("Site data couldn't be fetched")
 }
 
 const componentName = computed(
