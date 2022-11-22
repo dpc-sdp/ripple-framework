@@ -1,30 +1,14 @@
 <template>
-  <slot
-    v-if="page && site"
-    :name="`${componentName}Page`"
-    v-bind="{ page, site }"
-  >
+  <slot v-if="page && site" :name="`${componentName}Page`" v-bind="{ page, site }">
     <component :is="`${componentName}Page`" :page="page" :site="site">
       <template #sidebar>
         <slot name="aboveSidebar"></slot>
         <slot v-if="page.sidebar" name="sidebar">
-          <TideSidebarSiteSectionNav
-            v-if="page.sidebar.siteSectionNav"
-            :nav="page.sidebar.siteSectionNav"
-          />
-          <TideSidebarRelatedLinks
-            v-if="page.sidebar.relatedLinks?.length"
-            :items="page.sidebar.relatedLinks"
-          />
-          <TideSidebarContactUs
-            v-if="page.sidebar.contacts?.length"
-            :contacts="page.sidebar.contacts"
-          />
-          <TideSidebarSocialShare
-            v-if="page.sidebar.socialShareNetworks?.length"
-            :networks="page.sidebar.socialShareNetworks"
-            :page-title="page.title"
-          />
+          <TideSidebarSiteSectionNav v-if="page.sidebar.siteSectionNav" :nav="page.sidebar.siteSectionNav" />
+          <TideSidebarRelatedLinks v-if="page.sidebar.relatedLinks?.length" :items="page.sidebar.relatedLinks" />
+          <TideSidebarContactUs v-if="page.sidebar.contacts?.length" :contacts="page.sidebar.contacts" />
+          <TideSidebarSocialShare v-if="page.sidebar.socialShareNetworks?.length"
+            :networks="page.sidebar.socialShareNetworks" :page-title="page.title" />
         </slot>
         <slot name="belowSidebar"></slot>
       </template>
@@ -35,12 +19,13 @@
 <script setup lang="ts">
 // @ts-ignore
 import { useRoute, useRuntimeConfig, useFetch, createError } from '#imports'
-import { computed, unref } from 'vue'
+import { computed, unref, inject } from 'vue'
 import { pascalCase } from 'change-case'
 
 const route = useRoute()
 const { public: config } = useRuntimeConfig()
 const siteId = config.tide?.contentApi.site
+const $rplEvent: any = inject('$rplEvent')
 
 const { data: site, error: siteError } = await useFetch('/api/tide/site', {
   baseURL: config.API_URL || '',
@@ -59,10 +44,15 @@ if (siteError.value) {
 
 const { data: page, error: pageError } = await useFetch('/api/tide/page', {
   baseURL: config.API_URL || '',
+  key: route.path,
   params: {
     path: route.path,
     site: siteId
   }
+}).then((res) => {
+  const pageData = res.data.value
+  $rplEvent?.emit(`tide-page/navigate`, pageData)
+  return res
 })
 
 if (pageError.value || !page.value) {
