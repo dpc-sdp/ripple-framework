@@ -7,18 +7,17 @@ export default {
 
 <script setup lang="ts">
 import { RplSearchBarVariants } from './constants'
-import { rplEventBus } from '@dpc-sdp/ripple-ui-core'
 import { ref, watch } from 'vue'
 import RplIcon from '../icon/icon.vue'
-
-const RPL_SUBMIT_EVENT = 'rpl-search-bar/onSubmit'
-rplEventBus.register(RPL_SUBMIT_EVENT)
+import useRippleEvent from './../../composables/useRippleEvent'
 
 const emit =
   defineEmits<{
     (e: 'onSubmit', value: string): void
     (e: 'update:inputValue', value: string): void
   }>()
+const { emitRplEvent } = useRippleEvent('rpl-search-bar', emit)
+
 
 interface Props {
   variant?: typeof RplSearchBarVariants[number]
@@ -37,14 +36,12 @@ const props = withDefaults(defineProps<Props>(), {
 const internalValue = ref(props.inputValue || '')
 
 const handleSubmit = (e) => {
-  rplEventBus.emit(RPL_SUBMIT_EVENT, internalValue.value)
-  console.log('handleSubmit', RPL_SUBMIT_EVENT)
-  emit('onSubmit', internalValue.value)
+  emitRplEvent('onSubmit', { value: internalValue.value })
 }
 
 const handleInputChange = (e) => {
   internalValue.value = e.target.value
-  emit('update:inputValue', e.target.value)
+  emitRplEvent('update:inputValue', { value: e.target.value })
 }
 
 watch([ref(props.inputValue)], ([newModelValue]) => {
@@ -72,13 +69,6 @@ watch([ref(props.inputValue)], ([newModelValue]) => {
     </div>
   </form>
 </template>
-
-
-
-
-
-
-
 
 
 <style src="./search-bar.css" />

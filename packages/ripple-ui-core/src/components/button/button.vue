@@ -12,10 +12,11 @@ import {
 } from './constants'
 import { RplIconNames } from '../icon/constants'
 import RplIcon from '../icon/icon.vue'
-import { rplEventBus } from '../../index'
+import useRippleEvent from './../../composables/useRippleEvent'
 
-rplEventBus.register('rpl-button/click')
 const emit = defineEmits(['click'])
+const { emitRplEvent } = useRippleEvent('rpl-button', emit)
+
 
 interface Props {
   el?: typeof RplButtonElements[number]
@@ -52,29 +53,21 @@ const classes = computed(() => {
   return classTokens.join(' ')
 })
 
-const onClick = (payload?: any) => {
-  rplEventBus.emit('rpl-button/click', payload)
-  emit('click', payload)
+const onClick = () => {
+  emitRplEvent('click', { label: props.label })
 }
 
 const link = ref(null)
 const triggerClick = () => {
-  link.value.click()
+  link.value?.click()
 }
 
 defineExpose({ triggerClick })
 </script>
 
 <template>
-  <component
-    :is="el"
-    ref="link"
-    :href="el === 'a' ? url : null"
-    type="button"
-    :class="classes"
-    :disabled="disabled"
-    @click="onClick()"
-  >
+  <component :is="el" ref="link" :href="el === 'a' ? url : null" type="button" :class="classes" :disabled="disabled"
+    @click="onClick()">
     <span class="rpl-button__label rpl-type-label rpl-type-weight-bold">
       <template v-if="label">
         {{ label }}
@@ -84,5 +77,19 @@ defineExpose({ triggerClick })
     <RplIcon v-if="iconName" :name="iconName"></RplIcon>
   </component>
 </template>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 <style src="./button.css" />

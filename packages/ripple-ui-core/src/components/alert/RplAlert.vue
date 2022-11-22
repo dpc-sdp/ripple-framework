@@ -34,7 +34,7 @@ const props = withDefaults(defineProps<Props>(), {
 })
 
 const onClose = () => {
-  emitRplEvent('dismiss', props.alertId)
+  emitRplEvent('dismiss', { label: props.alertId })
 }
 const classes = computed(() => {
   return {
@@ -76,6 +76,8 @@ onResizeHeight(alertRef, (height) => {
     </div>
   </div>
 </template>
+
+
 
 
 

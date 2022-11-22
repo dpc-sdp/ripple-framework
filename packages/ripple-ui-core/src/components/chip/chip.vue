@@ -4,9 +4,10 @@ export default { name: 'RplChip' }
 
 <script setup lang="ts">
 import { RplChipVariants } from './constants'
+import useRippleEvent from './../../composables/useRippleEvent'
+const emit = defineEmits(['click'])
+const { emitRplEvent } = useRippleEvent('rpl-chip', emit)
 
-import { rplEventBus } from '../../index'
-rplEventBus.register('rpl-text-link/click')
 
 interface Props {
   variant?: typeof RplChipVariants[number]
@@ -21,17 +22,16 @@ withDefaults(defineProps<Props>(), {
 })
 
 const onClick = (payload?: any) => {
-  rplEventBus.emit('rpl-chip/click', payload)
+  emitRplEvent('rpl-chip/click', payload)
 }
 </script>
 
 <template>
-  <a
-    :class="`rpl-chip rpl-chip--${variant} rpl-type-label rpl-u-focusable-block`"
-    :href="url"
-    @click="onClick()"
-    >{{ label }}</a
-  >
+  <a :class="`rpl-chip rpl-chip--${variant} rpl-type-label rpl-u-focusable-block`" :href="url" @click="onClick()">{{
+      label
+  }}</a>
 </template>
+
+
 
 <style src="./chip.css" />

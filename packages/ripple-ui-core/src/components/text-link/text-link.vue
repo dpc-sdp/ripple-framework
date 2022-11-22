@@ -5,8 +5,10 @@ export default { name: 'RplTextLink' }
 <script setup lang="ts">
 import { ref } from 'vue'
 
-import { rplEventBus } from '../../index'
-rplEventBus.register('rpl-text-link/click')
+import useRippleEvent from './../../composables/useRippleEvent'
+
+const emit = defineEmits(['click'])
+const { emitRplEvent } = useRippleEvent('rpl-text-link', emit)
 
 interface Props {
   url: string
@@ -15,7 +17,7 @@ interface Props {
 defineProps<Props>()
 
 const onClick = (payload?: any) => {
-  rplEventBus.emit('rpl-text-link/click', payload)
+  emitRplEvent('rpl-text-link/click', payload)
 }
 
 const link = ref(null)
@@ -27,14 +29,11 @@ defineExpose({ triggerClick })
 </script>
 
 <template>
-  <a
-    ref="link"
-    class="rpl-text-link rpl-u-focusable-inline"
-    :href="url"
-    @click="onClick()"
-  >
+  <a ref="link" class="rpl-text-link rpl-u-focusable-inline" :href="url" @click="onClick()">
     <slot />
   </a>
 </template>
+
+
 
 <style src="./text-link.css" />
