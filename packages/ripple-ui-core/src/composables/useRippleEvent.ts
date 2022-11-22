@@ -8,7 +8,7 @@ export type rplEventPayload = {
   value?: unknown
 }
 
-export function useRippleEvent(namespace: string, emit) {
+export function useRippleEvent(namespace: string, emit?: any) {
   const $rplEvent: typeof rplEventBus | undefined = inject('$rplEvent')
   const emitRplEvent = (event, payload: rplEventPayload) => {
     if (emit) {
