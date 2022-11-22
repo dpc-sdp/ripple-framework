@@ -17,7 +17,7 @@
     "@dpc-sdp/ripple-tide-grant",
     "@dpc-sdp/ripple-tide-publication",
     "vue-app",
-    "@dpc-sdp/ripple-tide-analytics"
+    "@dpc-sdp/ripple-analytics"
   ],
   "cSpell.words": [
     "colour",

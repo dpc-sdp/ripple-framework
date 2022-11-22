@@ -1,15 +1,20 @@
-import { rplEventBus } from '@dpc-sdp/ripple-ui-core'
+import { inject } from 'vue'
+import rplEventBus from './../lib/eventbus'
 
-export function useRippleEvent(namespace: string, events: string[]) {
-  const emit = defineEmits(events)
-  // register global events under component namespace
-  events.forEach((event) => {
-    rplEventBus.register(`${namespace}/${event}`)
-  })
+export type rplEventPayload = {
+  action?: string
+  label?: string
+  category?: string
+  value?: unknown
+}
 
-  const emitRplEvent = (event, payload) => {
-    emit(event, payload)
-    rplEventBus.emit(`${namespace}/${event}`, payload)
+export function useRippleEvent(namespace: string, emit) {
+  const $rplEvent: typeof rplEventBus | undefined = inject('$rplEvent')
+  const emitRplEvent = (event, payload: rplEventPayload) => {
+    if (emit) {
+      emit(event, payload)
+    }
+    $rplEvent?.emit(`${namespace}/${event}`, payload)
   }
 
   return {

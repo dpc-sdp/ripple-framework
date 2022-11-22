@@ -1,5 +1,10 @@
 import { join } from 'pathe'
-import { defineNuxtModule, addComponentsDir } from '@nuxt/kit'
+import {
+  defineNuxtModule,
+  addPluginTemplate,
+  addComponentsDir,
+  createResolver
+} from '@nuxt/kit'
 import vitePlugins from './vite.plugins'
 
 export default defineNuxtModule({
@@ -17,6 +22,7 @@ export default defineNuxtModule({
     }
   },
   async setup(_options, nuxt) {
+    const resolver = createResolver(import.meta.url)
     // Adds all ripple Vue components to autoimports in Nuxt
     addComponentsDir({
       extensions: ['vue'],
@@ -24,6 +30,9 @@ export default defineNuxtModule({
       prefix: 'rpl',
       global: true
     })
+
+    // Add Ripple UI plugins
+    addPluginTemplate(resolver.resolve('./plugins/nuxt.js'))
 
     // Adds required PostCss plugins
     nuxt.options.postcss.plugins = {

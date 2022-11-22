@@ -14,6 +14,7 @@
   "exports": {
     ".": "./dist/rpl-lib.es.js",
     "./nuxt": "./dist/nuxt.js",
+    "./plugin": "./dist/plugins/vue.js",
     "./webcomponents": "./dist/web-components/rpl-wc.es.js",
     "./style": "./dist/global.css",
     "./style/components": "./dist/style.css",

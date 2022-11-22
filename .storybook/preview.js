@@ -1,4 +1,5 @@
 import { RplIconSprite } from '@dpc-sdp/ripple-ui-core'
+import rplVuePlugin from '@dpc-sdp/ripple-ui-core/plugin'
 import { registerRplFormPlugin } from '@dpc-sdp/ripple-ui-forms'
 import '@dpc-sdp/ripple-ui-core/style'
 import { withCssResources } from '@storybook/addon-cssresources'
@@ -15,6 +16,7 @@ window.svgPlaceholder = svgPlaceholder
 
 // Ripple vue plugins
 registerRplFormPlugin(app)
+app.use(rplVuePlugin)
 
 export const parameters = {
   actions: { argTypesRegex: '^on[A-Z].*' },

@@ -11,7 +11,8 @@ import RplExpandable from '../expandable/expandable.vue'
 import { useExpandableState } from '../../composables/useExpandableState'
 import useRippleEvent from './../../composables/useRippleEvent'
 
-const { emitRplEvent } = useRippleEvent('rpl-accordion', ['toggleAll'])
+const emit = defineEmits(['toggleAll', 'toggleItem'])
+const { emitRplEvent } = useRippleEvent('rpl-accordion', emit)
 
 type RplAccordionItem = {
   id: string
@@ -50,7 +51,7 @@ const { isItemExpanded, isAllExpanded, toggleItem } = useExpandableState(
 const toggleAll = () => {
   // Make all items active
   if (!isAllExpanded()) {
-    emitRplEvent('toggleAll', 'open')
+    emitRplEvent('toggleAll', { label: `accordion-${props.id}`, action: 'open' })
     props.items.forEach((item) => {
       // If the item is not expanded, make it expanded
       if (!isItemExpanded(item.id)) {
@@ -61,7 +62,7 @@ const toggleAll = () => {
 
   // Make all items inactive
   else {
-    emitRplEvent('toggleAll', 'close')
+    emitRplEvent('toggleAll', { label: `accordion-${props.id}`, action: 'close' })
     props.items.forEach((item) => {
       // If the item is expanded, make it not expanded
       if (isItemExpanded(item.id)) {
@@ -69,6 +70,11 @@ const toggleAll = () => {
       }
     })
   }
+}
+
+const toggleAccordionItem = (item: RplAccordionItem) => {
+  toggleItem(item.id)
+  emitRplEvent('toggleItem', { label: `accordion-${props.id}-item-${item.title}`, action: isItemExpanded(item.id) ? 'open' : 'close' })
 }
 
 const toggleAllLabel = computed(() => {
@@ -100,7 +106,7 @@ const toggleAllLabel = computed(() => {
         <!-- Item toggle -->
         <button :id="`accordion-${props.id}-${item.id}-toggle`" class="rpl-accordion__item-toggle rpl-u-focusable-block"
           type="button" :aria-controls="`accordion-${id}-${item.id}-content`" :aria-expanded="isItemExpanded(item.id)"
-          @click="toggleItem(item.id)">
+          @click="toggleAccordionItem(item)">
           <span class="rpl-accordion__item-heading-wrapper">
             <!-- Number -->
             <span v-if="numbered" class="rpl-accordion__item-number rpl-type-h4">
@@ -131,6 +137,4 @@ const toggleAllLabel = computed(() => {
   </div>
 </template>
 
-
-
-<style src="./accordion.css" />
+<style src="./accordion.css" ></style>
