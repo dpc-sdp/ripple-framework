@@ -14,20 +14,26 @@ export default defineNuxtPlugin((nuxtApp) => {
       id: config.public?.GA
     }
   })
-  nuxtApp.vueApp.use({
-    install(app: any) {
-      const rplEventBus = app._context?.provides?.$rplEvent
-      if (rplEventBus) {
-        if (eventListeners) {
-          Object.keys(eventListeners).forEach((key) => {
-            rplEventBus.on(key, eventListeners[key](gtag))
-          })
+  /* @ts-ignore */
+  if (process.client) {
+    nuxtApp.vueApp.use({
+      install(app: any) {
+        const rplEventBus = app._context?.provides?.$rplEvent
+        if (rplEventBus) {
+          if (eventListeners) {
+            const evtKeys = Object.keys(eventListeners)
+            if (evtKeys.length > 0) {
+              evtKeys.forEach((key) => {
+                rplEventBus.on(key, eventListeners[key](gtag))
+              })
+            }
+          }
+        } else {
+          console.error(
+            'Error: (ripple-analytics) could not instantiate rplEvent Bus for analytics'
+          )
         }
-      } else {
-        console.error(
-          'Error: (ripple-analytics) could not instantiate rplEvent Bus for analytics'
-        )
       }
-    }
-  })
+    })
+  }
 })

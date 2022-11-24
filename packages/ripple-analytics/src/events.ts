@@ -20,17 +20,9 @@ export default {
   'tide-page/navigate': ({ customMap }) => {
     return (payload: any) => {
       if (payload) {
-        const hasAccordion = () => {
-          if (payload.type === 'landing_page') {
-            return payload.bodyComponents?.some(
-              (cmp: any) => cmp.component === 'RplAccordion'
-            )
-          }
-        }
         customMap({
           page_title: payload.title,
-          page_type: payload.type,
-          has_accordion: hasAccordion()
+          page_type: payload.type
         })
       }
     }
