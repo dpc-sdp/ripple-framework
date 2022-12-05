@@ -3,9 +3,8 @@ import rplEventBus from './../lib/eventbus'
 
 export type rplEventPayload = {
   action?: string
-  label?: string
-  category?: string
-  value?: unknown
+  id: string
+  [key: string]: unknown
 }
 
 export function useRippleEvent(namespace: string, emit?: any) {

@@ -12,7 +12,7 @@ import RplIcon from './../icon/icon.vue'
 import RplTextLink from './../text-link/text-link.vue'
 import useRippleEvent from './../../composables/useRippleEvent'
 
-const { emitRplEvent } = useRippleEvent('rpl-alert', ['dismiss'])
+const { emitRplEvent } = useRippleEvent('rpl-alert')
 
 interface Props {
   variant?: RplAlertTypes
@@ -34,7 +34,7 @@ const props = withDefaults(defineProps<Props>(), {
 })
 
 const onClose = () => {
-  emitRplEvent('dismiss', { label: props.alertId })
+  emitRplEvent('dismiss', { id: props.alertId })
 }
 const classes = computed(() => {
   return {
@@ -85,4 +85,6 @@ onResizeHeight(alertRef, (height) => {
 
 
 
-<style src="./alert.css" />
+<style src="./alert.css">
+
+</style>

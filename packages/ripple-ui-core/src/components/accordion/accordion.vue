@@ -51,7 +51,7 @@ const { isItemExpanded, isAllExpanded, toggleItem } = useExpandableState(
 const toggleAll = () => {
   // Make all items active
   if (!isAllExpanded()) {
-    emitRplEvent('toggleAll', { label: `accordion-${props.id}`, action: 'open' })
+    emitRplEvent('toggleAll', { id: `accordion-${props.id}`, action: 'open' })
     props.items.forEach((item) => {
       // If the item is not expanded, make it expanded
       if (!isItemExpanded(item.id)) {
@@ -62,7 +62,7 @@ const toggleAll = () => {
 
   // Make all items inactive
   else {
-    emitRplEvent('toggleAll', { label: `accordion-${props.id}`, action: 'close' })
+    emitRplEvent('toggleAll', { id: `accordion-${props.id}`, action: 'close' })
     props.items.forEach((item) => {
       // If the item is expanded, make it not expanded
       if (isItemExpanded(item.id)) {
