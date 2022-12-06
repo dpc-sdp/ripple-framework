@@ -10,31 +10,8 @@ import vitePlugins from './src/vite.plugins'
 export default defineConfig({
   resolve: {
     alias: {
-      '@': path.resolve(__dirname, './src')
+      vue: 'vue/dist/vue.esm-bundler.js'
     }
   },
-  plugins: [vue(), dts()].concat(vitePlugins),
-  build: {
-    emptyOutDir: false,
-    lib: {
-      entry: path.resolve(__dirname, 'src/index.ts'),
-      name: 'rpl',
-      formats: ['es'],
-      fileName: (f) => `rpl-lib.${f}.js`
-    },
-    sourcemap: false,
-    // Reduce bloat from legacy polyfills.
-    target: 'esnext',
-    // Leave minification for now whilst we are non prod
-    minify: false,
-    rollupOptions: {
-      external: ['vue'],
-      output: {
-        inlineDynamicImports: true,
-        globals: {
-          vue: 'Vue'
-        }
-      }
-    }
-  }
+  plugins: [vue(), dts()].concat(vitePlugins)
 })

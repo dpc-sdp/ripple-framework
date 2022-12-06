@@ -56,6 +56,7 @@
     "vue": "^3.2.41"
   },
   "devDependencies": {
+    "@applitools/eyes-cypress": "^3.27.8",
     "@originjs/vite-plugin-content": "^1.0.1",
     "@vitejs/plugin-vue": "^3.1.2",
     "@vue/compiler-sfc": "^3.2.45",
