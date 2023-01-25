@@ -1,4 +1,5 @@
 .rpl-grid {
+  background: red;
   display: grid;
   grid-template-columns: repeat(var(--local-grid-cols, 12), minmax(0, 1fr));
   grid-template-rows: auto;
