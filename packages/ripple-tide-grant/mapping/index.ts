@@ -1,11 +1,13 @@
 import mime from 'mime-types'
 import {
-  tidePageBaseMapping,
-  tidePageBaseIncludes,
   formatPriceRange,
   getField,
   humanizeFilesize
 } from '@dpc-sdp/ripple-tide-api'
+import {
+  tidePageBaseMapping,
+  tidePageBaseIncludes
+} from '@dpc-sdp/nuxt-ripple/mapping'
 import type { RplTideMapping } from '@dpc-sdp/ripple-tide-api/types'
 
 const extractAudiences = (audiences = []) => {

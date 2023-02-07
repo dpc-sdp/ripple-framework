@@ -1,8 +1,8 @@
+import { getDynamicPageComponents } from '@dpc-sdp/ripple-tide-api'
 import {
-  getDynamicPageComponents,
   tidePageBaseMapping,
   tidePageBaseIncludes
-} from '@dpc-sdp/ripple-tide-api'
+} from '@dpc-sdp/nuxt-ripple/mapping'
 import {
   landingPageComponentsMapping,
   landingPageComponentsIncludes

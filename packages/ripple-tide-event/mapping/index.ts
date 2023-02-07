@@ -1,13 +1,14 @@
 import {
-  // getAddress,
   drupalField,
   getField,
   getBodyFromField,
   getLinkFromField,
-  formatPriceRange,
+  formatPriceRange
+} from '@dpc-sdp/ripple-tide-api'
+import {
   tidePageBaseMapping,
   tidePageBaseIncludes
-} from '@dpc-sdp/ripple-tide-api'
+} from '@dpc-sdp/nuxt-ripple/mapping'
 import type { RplTideMapping } from '@dpc-sdp/ripple-tide-api/types'
 
 const getAddress = (field: drupalField) => `

@@ -11,5 +11,8 @@
     "@vueuse/core": "^9.10.0",
     "change-case": "^4.1.2",
     "vue": "^3.2.45"
+  },
+  "exports": {
+    "./mapping": "./mapping/index.ts"
   }
 }

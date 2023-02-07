@@ -1,12 +1,14 @@
 import type { RplTideMapping } from '@dpc-sdp/ripple-tide-api/types'
 import {
-  tidePageBaseMapping,
-  tidePageBaseIncludes,
   getImageFromField,
   getBodyFromField,
   getField,
   formatDate
 } from '@dpc-sdp/ripple-tide-api'
+import {
+  tidePageBaseMapping,
+  tidePageBaseIncludes
+} from '@dpc-sdp/nuxt-ripple/mapping'
 
 const tideNewsModule: RplTideMapping = {
   mapping: {
