@@ -72,11 +72,11 @@
 }
 
 .rpl-header-graphic--pattern {
-  --local-pattern-fill-100: #cccccc;
-  --local-pattern-fill-200: #aaaaaa;
-  --local-pattern-fill-300: #888888;
-  --local-pattern-fill-400: #666666;
-  --local-pattern-fill-500: #444444;
+  --local-pattern-fill-100: #dddddd;
+  --local-pattern-fill-200: #cccccc;
+  --local-pattern-fill-300: #aaaaaa;
+  --local-pattern-fill-400: #888888;
+  --local-pattern-fill-500: #666666;
 
   background-image: var(--rpl-clr-gradient-horizontal);
 
