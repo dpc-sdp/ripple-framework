@@ -104,92 +104,92 @@ const initialize = async (userOptions: DocSearchOptions) => {
           }),
       ...userOptions.searchParameters
     },
-    // transformSearchClient: (client) => {
-    //   const transformHierarchy = (hit) => {
-    //     const section = hit.url.startsWith('/framework/')
-    //       ? 'framework'
-    //       : 'design-system'
+    transformSearchClient: (client) => {
+      const transformHierarchy = (hit) => {
+        const section = hit.url.startsWith('/framework/')
+          ? 'framework'
+          : 'design-system'
 
-    //     const sectionName =
-    //       section === 'design-system'
-    //         ? 'Ripple design system'
-    //         : 'Modules Ecosystem'
+        const sectionName =
+          section === 'design-system'
+            ? 'Ripple design system'
+            : 'Modules Ecosystem'
 
-    //     return {
-    //       ...hit,
-    //       type: {
-    //         lvl0: 'lvl1',
-    //         lvl1: 'lvl2',
-    //         lvl2: 'lvl3',
-    //         lvl3: 'lvl4',
-    //         lvl4: 'lvl5',
-    //         lvl5: 'lvl6',
-    //         lvl6: ''
-    //       }[hit.type],
-    //       hierarchy: {
-    //         lvl0: sectionName,
-    //         lvl1: hit.hierarchy.lvl0,
-    //         lvl2: hit.hierarchy.lvl1,
-    //         lvl3: hit.hierarchy.lvl2,
-    //         lvl4: hit.hierarchy.lvl3,
-    //         lvl5: hit.hierarchy.lvl4,
-    //         lvl6: hit.hierarchy.lvl5
-    //       },
-    //       _highlightResult: {
-    //         ...hit._highlightResult,
-    //         hierarchy: {
-    //           lvl0: {
-    //             value: sectionName,
-    //             matchLevel: 'full',
-    //             fullyHighlighted: true,
-    //             matchedWords: [sectionName]
-    //           },
-    //           lvl1: hit._highlightResult.hierarchy.lvl0,
-    //           lvl2: hit._highlightResult.hierarchy.lvl1,
-    //           lvl3: hit._highlightResult.hierarchy.lvl2,
-    //           lvl4: hit._highlightResult.hierarchy.lvl3,
-    //           lvl5: hit._highlightResult.hierarchy.lvl4,
-    //           lvl6: hit._highlightResult.hierarchy.lvl5
-    //         }
-    //       },
-    //       _snippetResult: {
-    //         ...hit._snippetResult,
-    //         hierarchy: hit._snippetResult.hierarchy
-    //           ? {
-    //               lvl0: 'Wow',
-    //               lvl1: hit._snippetResult.hierarchy.lvl0,
-    //               lvl2: hit._snippetResult.hierarchy.lvl1,
-    //               lvl3: hit._snippetResult.hierarchy.lvl2,
-    //               lvl4: hit._snippetResult.hierarchy.lvl3,
-    //               lvl5: hit._snippetResult.hierarchy.lvl4,
-    //               lvl6: hit._snippetResult.hierarchy.lvl5
-    //             }
-    //           : undefined
-    //       }
-    //     }
-    //   }
+        return {
+          ...hit,
+          type: {
+            lvl0: 'lvl1',
+            lvl1: 'lvl2',
+            lvl2: 'lvl3',
+            lvl3: 'lvl4',
+            lvl4: 'lvl5',
+            lvl5: 'lvl6',
+            lvl6: ''
+          }[hit.type],
+          hierarchy: {
+            lvl0: sectionName,
+            lvl1: hit.hierarchy.lvl0,
+            lvl2: hit.hierarchy.lvl1,
+            lvl3: hit.hierarchy.lvl2,
+            lvl4: hit.hierarchy.lvl3,
+            lvl5: hit.hierarchy.lvl4,
+            lvl6: hit.hierarchy.lvl5
+          },
+          _highlightResult: {
+            ...hit._highlightResult,
+            hierarchy: {
+              lvl0: {
+                value: sectionName,
+                matchLevel: 'full',
+                fullyHighlighted: true,
+                matchedWords: [sectionName]
+              },
+              lvl1: hit._highlightResult.hierarchy.lvl0,
+              lvl2: hit._highlightResult.hierarchy.lvl1,
+              lvl3: hit._highlightResult.hierarchy.lvl2,
+              lvl4: hit._highlightResult.hierarchy.lvl3,
+              lvl5: hit._highlightResult.hierarchy.lvl4,
+              lvl6: hit._highlightResult.hierarchy.lvl5
+            }
+          },
+          _snippetResult: {
+            ...hit._snippetResult,
+            hierarchy: hit._snippetResult.hierarchy
+              ? {
+                  lvl0: 'Wow',
+                  lvl1: hit._snippetResult.hierarchy.lvl0,
+                  lvl2: hit._snippetResult.hierarchy.lvl1,
+                  lvl3: hit._snippetResult.hierarchy.lvl2,
+                  lvl4: hit._snippetResult.hierarchy.lvl3,
+                  lvl5: hit._snippetResult.hierarchy.lvl4,
+                  lvl6: hit._snippetResult.hierarchy.lvl5
+                }
+              : undefined
+          }
+        }
+      }
 
-    //   return {
-    //     ...client,
-    //     search: async (...args) => {
-    //       console.log('askjdnakjsdnkajsnd')
-    //       const response = await client.search(...args)
-    //       console.log(response)
-    //       const transformed = {
-    //         ...response,
-    //         results: response.results.map((result) => {
-    //           return {
-    //             ...result,
-    //             hits: result.hits.map(transformHierarchy)
-    //           }
-    //         })
-    //       }
+      return {
+        ...client,
+        search: async (...args) => {
+          console.log('askjdnakjsdnkajsnd')
+          const response = await client.search(...args)
+          console.log(response)
+          const transformed = {
+            ...response,
+            results: response.results.map((result) => {
+              return {
+                ...result,
+                hits: result.hits.map(transformHierarchy)
+              }
+            })
+          }
 
-    //       console.log('asd', transformed)
-    //       return transformed
-    //     }
-    //   }
-    // },
+          console.log('asd', transformed)
+          return transformed
+        }
+      }
+    },
     navigator: userOptions.navigator
       ? userOptions.navigator
       : {
