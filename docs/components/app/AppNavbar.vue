@@ -25,6 +25,8 @@ const sectionColor = sectionConfig?.color || undefined
         <span class="flex text-sm font-bold mx-2 dark:text-white">
           {{ sectionTitle }}
         </span>
+
+        <AppDocSearch />
       </div>
     </div>
   </header>
