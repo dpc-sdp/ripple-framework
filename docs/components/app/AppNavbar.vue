@@ -13,18 +13,20 @@ const sectionColor = sectionConfig?.color || undefined
   <header class="docs-header" :style="{ '--docs-header-color': sectionColor }">
     <div class="rpl-container">
       <div class="docs-header-inner">
-        <!-- Logo -->
-        <a
-          aria-current="page"
-          href="/"
-          class="docs-header-logo rpl-u-focusable-outline"
-          aria-label="false"
-          ><img class="w-8" src="/img/vicgovau-logo.svg" width="100" />
-        </a>
+        <div class="docs-header-logo-wrap">
+          <!-- Logo -->
+          <a
+            aria-current="page"
+            href="/"
+            class="docs-header-logo rpl-u-focusable-outline"
+            aria-label="false"
+            ><img class="w-8" src="/img/vicgovau-logo.svg" width="100" />
+          </a>
 
-        <span class="flex text-sm font-bold mx-2 dark:text-white">
-          {{ sectionTitle }}
-        </span>
+          <span class="flex text-sm font-bold mx-2 dark:text-white">
+            {{ sectionTitle }}
+          </span>
+        </div>
 
         <AppDocSearch />
       </div>
@@ -42,7 +44,13 @@ const sectionColor = sectionConfig?.color || undefined
 .docs-header-inner {
   display: flex;
   align-items: center;
+  justify-content: space-between;
   height: 60px;
+}
+
+.docs-header-logo-wrap {
+  display: flex;
+  align-items: center;
 }
 
 .docs-header-logo img {

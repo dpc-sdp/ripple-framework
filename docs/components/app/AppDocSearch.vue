@@ -286,8 +286,8 @@ watch(options, (n: any) => initialize(n))
   --docsearch-modal-background: #f5f6f7;
   --docsearch-modal-shadow: none;
   --docsearch-searchbox-height: 56px;
-  --docsearch-searchbox-background: #ebedf0;
-  --docsearch-searchbox-focus-background: #fff;
+  --docsearch-searchbox-background: transparent;
+  --docsearch-searchbox-focus-background: transparent;
   --docsearch-searchbox-shadow: inset 0 0 0 2px var(--docsearch-primary-color);
   --docsearch-hit-height: 56px;
   --docsearch-hit-color: var(--rpl-clr-dark);
@@ -300,5 +300,26 @@ watch(options, (n: any) => initialize(n))
   --docsearch-footer-height: 44px;
   --docsearch-footer-background: #fff;
   --docsearch-footer-shadow: none;
+}
+
+.DocSearch.DocSearch-Button {
+  color: var(--rpl-clr-light);
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 14px;
+}
+.DocSearch-Button .DocSearch-Button-Placeholder {
+  color: var(--rpl-clr-light);
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 14px;
+}
+
+.DocSearch-Button .DocSearch-Search-Icon {
+  color: var(--rpl-clr-light) !important;
+}
+
+.DocSearch-Button-Keys {
+  display: none;
 }
 </style>
