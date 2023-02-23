@@ -36,7 +36,7 @@
     <template #body="{ hasSidebar }">
       <slot name="body" :hasSidebar="hasSidebar"></slot>
       <div
-        v-if="topicTags.length"
+        v-if="!featureFlags?.disableTopicTags && topicTags.length"
         data-cy="topic-tags"
         class="rpl-u-margin-t-6"
       >
@@ -47,7 +47,6 @@
           :url="tag.url"
         />
       </div>
-
       <TideUpdatedDate v-if="updatedDate" :date="updatedDate" />
     </template>
     <template #belowBody>
@@ -88,8 +87,9 @@
 <script setup lang="ts">
 // @ts-ignore
 import { useHead, useSiteTheme, useAppConfig, useRoute } from '#imports'
-import { RplChip } from '@dpc-sdp/ripple-ui-core'
+import { RplChip } from '#components'
 import { computed, onMounted, provide, ref } from 'vue'
+import deepmerge from 'deepmerge'
 import { TideSiteData } from '../types'
 import { TideTopicTag } from '../mapping/topic-tags/topic-tags-mapping'
 import { TideSiteSection } from '@dpc-sdp/ripple-tide-api/types'
@@ -115,8 +115,15 @@ const props = withDefaults(defineProps<Props>(), {
   updatedDate: null,
   siteSection: null
 })
+
 // Feature flags will be available on component instances with inject('featureFlags') - See https://vuejs.org/guide/components/provide-inject.html#inject
-const featureFlags = ref(props.site?.featureFlags || {})
+// Site flags provided by drupal will override the app config flags
+const featureFlags = ref(
+  deepmerge(
+    useAppConfig()?.ripple?.featureFlags || {},
+    props.site?.featureFlags || {}
+  )
+)
 provide('featureFlags', featureFlags.value)
 
 onMounted(() => {
@@ -130,7 +137,9 @@ const showBreadcrumbs = computed(() => {
   return route.path !== '/'
 })
 
-const style = useSiteTheme(props.site?.theme || useAppConfig().theme)
+const style = useSiteTheme(
+  deepmerge(useAppConfig()?.ripple?.theme || {}, props.site?.theme || {})
+)
 
 useHead({
   title: props.pageTitle,

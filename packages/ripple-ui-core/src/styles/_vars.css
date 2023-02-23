@@ -6,8 +6,11 @@
  */
 
 :root {
-  --rpl-z-index-above-content: 1;
-  --rpl-z-index-default: 0;
+  --rpl-layer-5: 5;
+  --rpl-layer-4: 4;
+  --rpl-layer-3: 3;
+  --rpl-layer-2: 2;
+  --rpl-layer-1: 1;
   --rpl-type-ls-7: 0.008em;
   --rpl-type-ls-6: 0.012em;
   --rpl-type-ls-5: 0.014em;
@@ -38,15 +41,16 @@
   --rpl-type-weight-bold: 700;
   --rpl-type-weight-regular: 400;
   --rpl-type-font-family: VIC, Arial, Helvetica, sans-serif;
-  --rpl-motion-speed-9: 500ms;
-  --rpl-motion-speed-8: 420ms;
-  --rpl-motion-speed-7: 360ms;
-  --rpl-motion-speed-6: 300ms;
-  --rpl-motion-speed-5: 240ms;
-  --rpl-motion-speed-4: 200ms;
-  --rpl-motion-speed-3: 160ms;
-  --rpl-motion-speed-2: 120ms;
-  --rpl-motion-speed-1: 80ms;
+  --rpl-motion-speed-10: 500ms;
+  --rpl-motion-speed-9: 420ms;
+  --rpl-motion-speed-8: 360ms;
+  --rpl-motion-speed-7: 300ms;
+  --rpl-motion-speed-6: 240ms;
+  --rpl-motion-speed-5: 200ms;
+  --rpl-motion-speed-4: 160ms;
+  --rpl-motion-speed-3: 120ms;
+  --rpl-motion-speed-2: 80ms;
+  --rpl-motion-speed-1: 60ms;
   --rpl-sp-14: 120px;
   --rpl-sp-13: 80px;
   --rpl-sp-12: 64px;
@@ -75,7 +79,6 @@
   --rpl-content-max-width: 615px;
   --rpl-clr-gradient-vertical: linear-gradient(180deg, #0052C2 0%, #825DFF 12%, #EF4A81 24%, #E57200 36%, #FFC166 52%, #F9E062 80%);
   --rpl-clr-gradient-horizontal: linear-gradient(90deg, #0052C2 0%, #825DFF 12%, #EF4A81 24%, #E57200 36%, #FFC166 52%, #F9E062 80%);
-  --rpl-clr-error-alt: #880020;
   --rpl-clr-error-dark: #880020;
   --rpl-clr-error-light: #F7E6EA;
   --rpl-clr-error: #AA0028;

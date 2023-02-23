@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { nextTick, provide, ref, watch, reactive } from 'vue'
+import { nextTick, provide, ref, watch, reactive, computed } from 'vue'
 import {
   FormKitSchemaCondition,
   FormKitSchemaNode,
@@ -8,7 +8,7 @@ import {
 import { getValidationMessages } from '@formkit/validation'
 import rplFormInputs from '../../plugin'
 import RplFormAlert from '../RplFormAlert/RplFormAlert.vue'
-import { RplContent } from '@dpc-sdp/ripple-ui-core'
+import { RplContent } from '@dpc-sdp/ripple-ui-core/vue'
 import { reset } from '@formkit/vue'
 
 interface Props {
@@ -48,6 +48,11 @@ const props = withDefaults(defineProps<Props>(), {
 const emit = defineEmits(['submit'])
 
 provide('formId', props.id)
+
+const isFormSubmitting = computed(() => {
+  return props.submissionState.status === 'submitting'
+})
+provide('isFormSubmitting', isFormSubmitting)
 
 const serverMessageRef = ref(null)
 

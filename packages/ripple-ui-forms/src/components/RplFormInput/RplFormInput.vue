@@ -6,7 +6,7 @@ export default {
 
 <script setup lang="ts">
 import { computed } from 'vue'
-import { RplIcon } from '@dpc-sdp/ripple-ui-core'
+import { RplIcon } from '@dpc-sdp/ripple-ui-core/vue'
 import RplFormCounter from '../RplFormCounter/RplFormCounter.vue'
 
 interface Props {
@@ -115,7 +115,6 @@ TODO - Wire up event bus handling
       :invalid="invalid"
       :counter-min="counterMin"
       :counter-max="counterMax"
-      :count-words="isWordCounter"
     />
   </div>
 </template>
