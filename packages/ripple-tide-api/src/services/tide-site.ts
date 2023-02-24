@@ -14,7 +14,7 @@ export default class TideSite extends TideApiBase {
     logger: ILogger
   ) {
     super(tide, logger)
-    this.site = tide.config.site
+    this.site = tide.contentApi.site
     if (!siteMapping) {
       throw new Error('Error loading site mapping')
     }

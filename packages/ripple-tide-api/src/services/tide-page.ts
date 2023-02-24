@@ -12,7 +12,7 @@ export default class TidePageApi extends TideApiBase {
 
   constructor(tide: RplTideModuleConfig, logger: ILogger) {
     super(tide, logger)
-    this.site = tide.config.site
+    this.site = tide.contentApi.site
     this.sectionId = ''
     this.path = ''
     this.contentTypes = {}

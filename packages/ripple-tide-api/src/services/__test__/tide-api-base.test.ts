@@ -29,7 +29,7 @@ describe('TideApiBase', () => {
     const tideApiBase = new TideApiBase(
       {
         debug: false,
-        config: exampleApiConfig,
+        contentApi: exampleApiConfig,
         mapping: {
           site: exampleMapping,
           event: exampleMapping
@@ -73,7 +73,7 @@ describe('TideApiBase', () => {
   describe('get', () => {
     const tideApiBase = new TideApiBase(
       {
-        config: exampleApiConfig,
+        contentApi: exampleApiConfig,
         debug: false,
         mapping: {
           site: exampleMapping,

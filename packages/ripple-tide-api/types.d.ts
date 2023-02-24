@@ -137,7 +137,7 @@ export interface RplTideModuleMappingConfig {
 }
 
 export interface RplTideModuleConfig {
-  config: {
+  contentApi: {
     /**
      * Site taxonomy id or name
      */
