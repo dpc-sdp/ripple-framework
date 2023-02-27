@@ -86,7 +86,7 @@ const loading = computed(() => (props.priority === 'high' ? 'eager' : 'lazy'))
 </script>
 
 <template>
-  <img
+  <nuxt-img
     :class="classes"
     :src="src"
     :srcset="srcSet"
@@ -97,7 +97,7 @@ const loading = computed(() => (props.priority === 'high' ? 'eager' : 'lazy'))
     :loading="loading"
     :fetchpriority="priority"
     :style="objectPosition"
-  />
+  ></nuxt-img>
 </template>
 
 <style src="./RplImage.css" />

@@ -8,14 +8,20 @@ import themes from './themes.json'
 import withBackground from './utils/withBackground'
 import svgPlaceholder from './utils/svgPlaceholder'
 import { withSource } from './utils/withSource'
+
 // Storybook specific CSS
 import './storybook.css'
+
+// Placeholder for nuxt-img
+import NuxtImg from './components/NuxtImg.vue'
 
 // Add SVG based image placeholder for use in all stories
 window.svgPlaceholder = svgPlaceholder
 
 // Ripple vue plugins
 registerRplFormPlugin(app)
+
+app.component('NuxtImg', NuxtImg)
 
 export const parameters = {
   actions: { argTypesRegex: '^on[A-Z].*' },
