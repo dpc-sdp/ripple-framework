@@ -68,11 +68,13 @@ export const globalTypes = {
       icon: 'paintbrush',
       items: Object.entries(themes).map(([themeId, config]) => {
         return {
-          value: themeId, left: 'Theme:', title: config.label
+          value: themeId,
+          left: 'Theme:',
+          title: config.label
         }
       }),
       showName: true,
-      dynamicTitle: true,
-    },
-  },
-};
+      dynamicTitle: true
+    }
+  }
+}
