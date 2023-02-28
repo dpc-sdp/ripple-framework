@@ -15,24 +15,16 @@
     "nuxt-ripple": "./dist/commands/index.js"
   },
   "dependencies": {
-    "@badeball/cypress-cucumber-preprocessor": "^15.1.4",
-    "@bahmutov/cypress-esbuild-preprocessor": "^2.2.0",
-    "@testing-library/cypress": "^9.0.0",
-    "mockttp": "^3.7.0",
-    "start-server-and-test": "^1.15.5"
+    "mockttp": "^3.7.0"
   },
   "devDependencies": {
     "commander": "^10.0.0",
     "copyfiles": "^2.4.1",
-    "cypress": "^12.7.0",
     "enquirer": "^2.3.6",
     "hygen": "^6.2.11",
     "inquirer": "8.2.5",
     "minimist": "^1.2.8",
     "plop": "^3.1.2",
     "ts-node": "^10.7.0"
-  },
-  "peerDependencies": {
-    "cypress": "^12.7.0"
   }
 }
