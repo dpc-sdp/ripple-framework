@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import RplMediaGalleryContent from './RplMediaGalleryContent.vue'
-import RplImage from '../image/RplImage.vue'
+import RplResponsiveImage from '../image/RplResponsiveImage.vue'
 import RplSlider from '../slider/RplSlider.vue'
 import RplModal from '../modal/RplModal.vue'
 import { ref } from 'vue'
@@ -47,7 +47,7 @@ const toggleModal = () => {
       data-cy="gallery-images"
       @change="imageSlideUpdate"
     >
-      <RplImage
+      <RplResponsiveImage
         v-for="(item, i) in items"
         :key="i"
         :src="item.thumbnail"
@@ -82,7 +82,7 @@ const toggleModal = () => {
         class="rpl-media-gallery__modal-images"
         @change="imageSlideUpdate"
       >
-        <RplImage
+        <RplResponsiveImage
           v-for="(item, i) in items"
           :key="i"
           :src="item.image"

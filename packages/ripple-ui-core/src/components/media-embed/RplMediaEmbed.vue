@@ -5,7 +5,7 @@ import {
   RplMediaEmbedVariants,
   RplMediaEmbedSizes
 } from './constants'
-import RplImage from '../image/RplImage.vue'
+import RplResponsiveImage from '../image/RplResponsiveImage.vue'
 import RplIcon from '../icon/RplIcon.vue'
 import RplModal from '../modal/RplModal.vue'
 import RplContent from '../content/RplContent.vue'
@@ -102,7 +102,7 @@ const isActionsListEmpty = computed(() => {
     <!-- Figure (iframe, caption, source info) -->
     <figure class="rpl-media-embed__figure">
       <!-- Image -->
-      <RplImage
+      <RplResponsiveImage
         v-if="type === 'image'"
         :src="src"
         :alt="caption"
@@ -208,7 +208,7 @@ const isActionsListEmpty = computed(() => {
       :is-open="isFullScreenOpen"
       @close="() => (isFullScreenOpen = false)"
     >
-      <RplImage :src="props.src" :alt="props.caption" />
+      <RplResponsiveImage :src="props.src" :alt="props.caption" />
       <template #below>
         <div class="rpl-media-embed__content">
           <h3 class="rpl-type-h3 rpl-u-margin-b-2">{{ props.title }}</h3>

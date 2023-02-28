@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import RplHeader from './RplHeader.vue'
-import RplImage from '../image/RplImage.vue'
+import RplResponsiveImage from '../image/RplResponsiveImage.vue'
 import {
   IRplHeaderLinkExtended,
   IRplHeaderLinksList,
@@ -71,7 +71,11 @@ const contentClasses = computed(() => ({
 <template>
   <RplHeader :class="classes" :full-width="fullWidth">
     <template v-if="background || cornerTop || cornerBottom" #behind>
-      <RplImage v-if="background" v-bind="background" priority="high" />
+      <RplResponsiveImage
+        v-if="background"
+        v-bind="background"
+        priority="high"
+      />
       <RplHeaderGraphic v-if="cornerTop" :image="cornerTop" placement="top" />
       <RplHeaderGraphic
         v-if="cornerBottom"
@@ -80,7 +84,7 @@ const contentClasses = computed(() => ({
       />
     </template>
     <template v-if="logo && !background" #upper>
-      <RplImage class="rpl-header__logo" v-bind="logo" />
+      <RplResponsiveImage class="rpl-header__logo" v-bind="logo" />
     </template>
     <template #title>
       <h1 :class="titleClasses" data-cy="hero-title">{{ title }}</h1>

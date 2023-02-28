@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import RplTextLink from '../text-link/RplTextLink.vue'
-import RplImage from '../image/RplImage.vue'
+import RplResponsiveImage from '../image/RplResponsiveImage.vue'
 import { formatDateRange } from '../../lib/helpers'
 
 interface Props {
@@ -62,7 +62,7 @@ const classes = (item: IRplTimelineItem, index: number) => {
         :key="index"
         :class="classes(item, index)"
       >
-        <RplImage
+        <RplResponsiveImage
           v-if="item.image"
           ref="image"
           :src="item.image"

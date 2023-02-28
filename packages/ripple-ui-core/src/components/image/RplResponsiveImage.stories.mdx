@@ -4,21 +4,21 @@ import {
   Story,
   ArgsTable
 } from '@storybook/addon-docs'
-import RplImage from './RplImage.vue'
+import RplResponsiveImage from './RplResponsiveImage.vue'
 import { RplImageFit, RplImagePriority } from './constants'
 import { a11yStoryCheck } from './../../../stories/interactions.js'
 
 export const SingleTemplate = (args) => ({
-  components: { RplImage },
+  components: { RplResponsiveImage },
   setup() {
     return { args }
   },
-  template: '<RplImage v-bind="args" />'
+  template: '<RplResponsiveImage v-bind="args" />'
 })
 
 <Meta
   title='Core/Containers/Image'
-  component={RplImage}
+  component={RplResponsiveImage}
   argTypes={{
     height: {
       control: { type: 'number' }
@@ -45,7 +45,7 @@ export const SingleTemplate = (args) => ({
 
 # Responsive image
 
-<ArgsTable of={RplImage} />
+<ArgsTable of={RplResponsiveImage} />
 
 <Canvas>
   <Story

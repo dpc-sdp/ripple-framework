@@ -35,7 +35,8 @@ import { default as RplIntroHeaderCmp } from './components/header/RplIntroHeader
 import { default as RplIconCmp } from './components/icon/RplIcon.vue'
 import { default as RplIconSpriteCmp } from './components/icon/RplIconSprite.vue'
 
-import { default as RplImageCmp } from './components/image/RplImage.vue'
+import { default as RplImgCmp } from './components/image/RplImg.vue'
+import { default as RplResponsiveImageCmp } from './components/image/RplResponsiveImage.vue'
 
 import { default as RplInPageNavigationCmp } from './components/in-page-navigation/RplInPageNavigation.vue'
 
@@ -102,7 +103,8 @@ const RplIntroHeader = defineCustomElement(RplIntroHeaderCmp)
 const RplIcon = defineCustomElement(RplIconCmp)
 const RplIconSprite = defineCustomElement(RplIconSpriteCmp)
 
-const RplImage = defineCustomElement(RplImageCmp)
+const RplImg = defineCustomElement(RplImgCmp)
+const RplResponsiveImage = defineCustomElement(RplResponsiveImageCmp)
 
 const RplInPageNavigation = defineCustomElement(RplInPageNavigationCmp)
 
@@ -169,7 +171,8 @@ export { RplIntroHeader }
 export { RplIcon }
 export { RplIconSprite }
 
-export { RplImage }
+export { RplImg }
+export { RplResponsiveImage }
 
 export { RplInPageNavigation }
 
@@ -237,7 +240,8 @@ export function registerRplWebComponents() {
   customElements.define('rpl-icon', RplIcon)
   customElements.define('rpl-icon-sprite', RplIconSprite)
 
-  customElements.define('rpl-image', RplImage)
+  customElements.define('rpl-img', RplImg)
+  customElements.define('rpl-image', RplResponsiveImage)
 
   customElements.define('rpl-in-page-navigation', RplInPageNavigation)
 

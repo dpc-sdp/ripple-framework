@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import RplCampaignBanner from './RplCampaignBanner.vue'
-import RplImage from '../image/RplImage.vue'
+import RplResponsiveImage from '../image/RplResponsiveImage.vue'
 import RplButton from '../button/RplButton.vue'
 import { RplLink } from '../../lib/constants'
 import { RplImageType } from '../image/constants'
@@ -20,7 +20,7 @@ withDefaults(defineProps<Props>(), {
 <template>
   <RplCampaignBanner class="rpl-campaign-banner--primary">
     <template v-if="image" #media>
-      <RplImage
+      <RplResponsiveImage
         v-bind="image"
         :aspect="{ xs: 'wide', s: 'panorama' }"
         alt=""

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { RplHeaderGraphicPlacement } from './constants'
-import RplImage from '../image/RplImage.vue'
+import RplResponsiveImage from '../image/RplResponsiveImage.vue'
 import RplTriangles from '../../assets/patterns/triangles.svg?component'
 
 interface Props {
@@ -26,7 +26,7 @@ const classes = computed(() => ({
 
 <template>
   <div :class="classes">
-    <RplImage v-if="suppliedImage" :src="image" />
+    <RplResponsiveImage v-if="suppliedImage" :src="image" />
     <RplTriangles v-else role="presentation" />
   </div>
 </template>

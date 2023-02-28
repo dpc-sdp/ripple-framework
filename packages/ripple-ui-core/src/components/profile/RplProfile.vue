@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { RplDescriptionListItem } from '../description-list/constants'
 import type { ImgHTMLAttributes } from 'vue'
-import RplImage from '../image/RplImage.vue'
+import RplResponsiveImage from '../image/RplResponsiveImage.vue'
 import RplDescriptionList from '../description-list/RplDescriptionList.vue'
 
 interface Props {
@@ -17,7 +17,7 @@ withDefaults(defineProps<Props>(), {
 <template>
   <div class="rpl-profile">
     <div class="rpl-profile__media">
-      <RplImage v-bind="image" circle />
+      <RplResponsiveImage v-bind="image" circle />
     </div>
     <div v-if="items.length > 0" class="rpl-profile__items">
       <RplDescriptionList :items="items" inline></RplDescriptionList>

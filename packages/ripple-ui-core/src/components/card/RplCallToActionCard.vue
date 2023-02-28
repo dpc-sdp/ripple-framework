@@ -6,7 +6,7 @@ import { useAccessibleContainer } from '../../composables/useAccessibleContainer
 
 import RplCard from './RplCard.vue'
 import RplButton from '../button/RplButton.vue'
-import RplImage from '../image/RplImage.vue'
+import RplResponsiveImage from '../image/RplResponsiveImage.vue'
 import { RplImageType } from '../image/constants'
 
 interface Props {
@@ -42,7 +42,7 @@ const { container, trigger } = useAccessibleContainer()
     :el="el"
   >
     <template v-if="image" #upper>
-      <RplImage
+      <RplResponsiveImage
         v-bind="image"
         class="rpl-card__media rpl-card__media--inset"
         :aspect="{

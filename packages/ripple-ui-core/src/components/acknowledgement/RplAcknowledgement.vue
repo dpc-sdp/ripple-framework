@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import aboriginalFlag from './../../assets/flags/flag-aboriginal.svg?url'
 import torresStraitIslanderFlag from './../../assets/flags/flag-torres-strait-islander.svg?url'
-import RplImage from '../image/RplImage.vue'
+import RplResponsiveImage from '../image/RplResponsiveImage.vue'
 
 interface Props {
   message?: string
@@ -16,12 +16,12 @@ withDefaults(defineProps<Props>(), {
 <template>
   <div class="rpl-acknowledgement">
     <div class="rpl-acknowledgement__flags">
-      <RplImage
+      <RplResponsiveImage
         class="rpl-acknowledgement__flag"
         :src="aboriginalFlag"
         alt="Aboriginal flag"
       />
-      <RplImage
+      <RplResponsiveImage
         class="rpl-acknowledgement__flag"
         :src="torresStraitIslanderFlag"
         alt="Torres Strait Islander flag"

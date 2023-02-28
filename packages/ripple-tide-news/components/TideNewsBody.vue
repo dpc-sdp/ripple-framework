@@ -3,7 +3,7 @@
     <RplDescriptionList :items="detailsList" data-cy="details" />
   </div>
   <figure v-if="body.image" class="tide-news__image rpl-u-margin-none">
-    <RplImage
+    <RplResponsiveImage
       v-if="body.image"
       :src="body.image.src"
       :alt="body.image.alt"

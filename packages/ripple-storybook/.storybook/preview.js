@@ -2,7 +2,7 @@ import { withCssResources } from '@storybook/addon-cssresources'
 import { withDesign } from 'storybook-addon-designs'
 import { app } from '@storybook/vue3'
 import { registerRplFormPlugin } from '@dpc-sdp/ripple-ui-forms'
-import { RplIconSprite } from '@dpc-sdp/ripple-ui-core/vue'
+import { RplIconSprite, RplImg } from '@dpc-sdp/ripple-ui-core/vue'
 import '@dpc-sdp/ripple-ui-core/style'
 import themes from './themes.js'
 import withBackground from './utils/withBackground'
@@ -13,16 +13,14 @@ import { withSource } from './utils/withSource'
 import './storybook.css'
 import withTheme from './utils/withTheme'
 
-// Placeholder for nuxt-img
-import NuxtImg from './components/NuxtImg.vue'
-
 // Add SVG based image placeholder for use in all stories
 window.svgPlaceholder = svgPlaceholder
 
 // Ripple vue plugins
 registerRplFormPlugin(app)
 
-app.component('NuxtImg', NuxtImg)
+// Register RplImg
+app.component('RplImg', RplImg)
 
 export const parameters = {
   actions: { argTypesRegex: '^on[A-Z].*' },

@@ -7,6 +7,7 @@ import {
   IRplImageFocalPoint,
   RplImageAspect
 } from './constants'
+// RplImg needs to be registered at runtime to support local override
 
 interface Props {
   src: string
@@ -86,7 +87,7 @@ const loading = computed(() => (props.priority === 'high' ? 'eager' : 'lazy'))
 </script>
 
 <template>
-  <nuxt-img
+  <RplImg
     :class="classes"
     :src="src"
     :srcset="srcSet"
@@ -97,7 +98,7 @@ const loading = computed(() => (props.priority === 'high' ? 'eager' : 'lazy'))
     :loading="loading"
     :fetchpriority="priority"
     :style="objectPosition"
-  ></nuxt-img>
+  ></RplImg>
 </template>
 
-<style src="./RplImage.css" />
+<style src="./RplResponsiveImage.css" />
