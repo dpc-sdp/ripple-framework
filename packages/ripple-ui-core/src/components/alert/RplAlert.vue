@@ -57,7 +57,7 @@ onResizeHeight(alertRef, (height) => {
     <div
       v-if="!dismissed"
       class="rpl-alert__inner"
-      role="region"
+      role="alert"
       :aria-labelledby="`alert-message-${props.alertId}`"
     >
       <rpl-icon
