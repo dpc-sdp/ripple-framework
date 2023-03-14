@@ -120,7 +120,7 @@ const pluginEmbededVideo = function (this: any) {
       </div>`
         : ''
 
-      return $video.replaceWith(`<div class="rpl-media-embed">
+      return $video.replaceWith(`<div class="rpl-media-embed" data-content-type="media-embed">
         <figure class="rpl-media-embed__figure">
           <div class="rpl-media-embed__video-container">
             <iframe class="rpl-media-embed__video" src="${source}" title="${title}" width="${width}" height="${height}" allow="autoplay; fullscreen; picture-in-picture;" allowfullscreen></iframe>
