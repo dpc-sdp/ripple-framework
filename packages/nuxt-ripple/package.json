@@ -16,6 +16,11 @@
     "@nuxtjs/robots": "^3.0.0",
     "@vueuse/core": "^9.13.0",
     "change-case": "^4.1.2",
-    "deepmerge-ts": "^5.0.0"
+    "deepmerge-ts": "^4.3.0",
+    "next-auth": "4.18.8",
+    "pnpm": "^7.30.0"
+  },
+  "devDependencies": {
+    "@sidebase/nuxt-auth": "^0.4.4"
   }
 }

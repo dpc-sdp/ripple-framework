@@ -34,7 +34,9 @@ export default defineNuxtConfig({
   robots: {
     configPath: resolve('./robots.config.ts')
   },
+  auth: { origin: 'http://localhost:3000' },
   modules: [
+    '@sidebase/nuxt-auth',
     'nuxt-proxy',
     '@dpc-sdp/ripple-ui-core/nuxt',
     '@dpc-sdp/ripple-ui-forms/nuxt',
