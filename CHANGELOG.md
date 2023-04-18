@@ -3,6 +3,41 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.1.0-alpha.144](https://github.com/dpc-sdp/ripple-framework/compare/v2.1.0-alpha.143...v2.1.0-alpha.144) (2023-04-18)
+
+### Performance Improvements
+
+* **@dpc-sdp/nuxt-ripple:** :zap: set cache age on static assets to 1 year ([4441176](https://github.com/dpc-sdp/ripple-framework/commit/44411760fe5277f94156ae9b55be5871a777b579))
+
+# [2.1.0-alpha.143](https://github.com/dpc-sdp/ripple-framework/compare/v2.1.0-alpha.142...v2.1.0-alpha.143) (2023-04-18)
+
+### Performance Improvements
+
+* **@dpc-sdp/ripple-tide-landing-page:** :zap: remove unnecessary #component imports ([8292a59](https://github.com/dpc-sdp/ripple-framework/commit/8292a59005323e57d485dc3d18fff87a4b150450))
+* **@dpc-sdp/ripple-ui-core:** :zap: remove global component definitions ([1876256](https://github.com/dpc-sdp/ripple-framework/commit/187625669a992c788d29455455293020fbc9e088))
+
+# [2.1.0-alpha.142](https://github.com/dpc-sdp/ripple-framework/compare/v2.1.0-alpha.141...v2.1.0-alpha.142) (2023-04-17)
+
+### Features
+
+* **@dpc-sdp/ripple-tide-api:** add draft alert ([792990e](https://github.com/dpc-sdp/ripple-framework/commit/792990e3d11c2ddf71fc95efe45adddfc62877ff))
+* **@dpc-sdp/ripple-tide-api:** add vid from ripple 1 ([fe75040](https://github.com/dpc-sdp/ripple-framework/commit/fe75040433f2ef7524a68c4c30e2d18cabb3b1f4))
+* **@dpc-sdp/ripple-tide-api:** enable preview urls ([23e753b](https://github.com/dpc-sdp/ripple-framework/commit/23e753bc18ae091ef5c2916068d10f38639b9c96))
+
+# [2.1.0-alpha.141](https://github.com/dpc-sdp/ripple-framework/compare/v2.1.0-alpha.140...v2.1.0-alpha.141) (2023-04-16)
+
+### Bug Fixes
+
+* **@dpc-sdp/nuxt-ripple:** fixed ios 14 crashing because of array.at() usage in deepmerge.ts ([66fcd08](https://github.com/dpc-sdp/ripple-framework/commit/66fcd08713cacf0276c4a96240ef3cb4b16ea86c))
+* **@dpc-sdp/nuxt-ripple:** use defu for merging instead of deepmerge ([bba2c78](https://github.com/dpc-sdp/ripple-framework/commit/bba2c786d7b4dd39f4ff9e0c16454efa3e29e594))
+
+# [2.1.0-alpha.140](https://github.com/dpc-sdp/ripple-framework/compare/v2.1.0-alpha.139...v2.1.0-alpha.140) (2023-04-14)
+
+### Bug Fixes
+
+* **@dpc-sdp/ripple-ui-core:** print style feedback and additions ([823cc42](https://github.com/dpc-sdp/ripple-framework/commit/823cc42050ed621a3bf1632e44671a778460918e))
+* use latest `@nuxtlabs/github` module ([98afa74](https://github.com/dpc-sdp/ripple-framework/commit/98afa74520c0292b4b8fe0fba9c1aeda4ba7f424))
+
 # [2.1.0-alpha.139](https://github.com/dpc-sdp/ripple-framework/compare/v2.1.0-alpha.138...v2.1.0-alpha.139) (2023-04-12)
 
 ### Bug Fixes
