@@ -326,6 +326,9 @@ importers:
 
   packages/nuxt-ripple:
     dependencies:
+      '@dpc-sdp/nuxt-ripple-preview':
+        specifier: workspace:*
+        version: link:../nuxt-ripple-preview
       '@dpc-sdp/ripple-tide-api':
         specifier: workspace:*
         version: link:../ripple-tide-api
