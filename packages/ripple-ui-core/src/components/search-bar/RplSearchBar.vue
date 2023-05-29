@@ -25,6 +25,7 @@ interface Props {
   inputLabel?: string
   inputValue?: string
   suggestions?: string[]
+  placeholder?: string | undefined
   maxSuggestionsDisplayed?: number
 }
 
@@ -34,6 +35,7 @@ const props = withDefaults(defineProps<Props>(), {
   inputLabel: 'Search',
   submitLabel: 'Search',
   inputValue: '',
+  placeholder: undefined,
   suggestions: () => [],
   maxSuggestionsDisplayed: 10
 })
@@ -220,6 +222,7 @@ watch(activeOptionId, async (newId) => {
         autocomplete="off"
         aria-autocomplete="list"
         :aria-expanded="isOpen"
+        :placeholder="placeholder"
         role="combobox"
         :class="{
           'rpl-search-bar__input': true,

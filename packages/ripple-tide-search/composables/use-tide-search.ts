@@ -2,7 +2,7 @@ import { SearchDriver, SearchResult, SearchState } from '@elastic/search-ui'
 import type { SearchDriverOptions } from '@elastic/search-ui'
 import AppSearchAPIConnector from '@elastic/search-ui-app-search-connector'
 import ElasticsearchAPIConnector from '@elastic/search-ui-elasticsearch-connector'
-
+import { useAppConfig } from '#imports'
 import { ref, computed } from 'vue'
 import { FilterConfigItem, MappedSearchResult } from 'ripple-tide-search/types'
 
@@ -33,18 +33,20 @@ export default async (
     searchQuery: {
       ...config.searchQuery,
       facets: filterConfig.reduce((result, filter) => {
-        return {
-          ...result,
-          [filter.field]: {
-            type: 'value',
-            size: 10
+        if (filter.facets) {
+          return {
+            ...result,
+            ...filter.facets
           }
         }
+        return result
       }, {})
     }
   })
   const searchDriver = getSearchDriver(apiConnectorOptions, config)
   const searchState = ref(searchDriver.getState())
+  const appConfig = useAppConfig()
+  const filterUpdateHooks = appConfig.ripple?.search?.filterUpdateHooks || {}
 
   const staticFacetOptions = ref(null)
   staticSearchDriver.setSearchTerm('')
@@ -60,14 +62,7 @@ export default async (
     )
   })
 
-  const filterFormValues = ref(
-    searchState.value.filters.reduce((result, curr) => {
-      return {
-        ...result,
-        [curr.field]: curr.values
-      }
-    }, {})
-  )
+  const filterFormValues = ref({})
 
   searchDriver.subscribeToStateChanges((state: SearchState) => {
     searchState.value = state
@@ -114,12 +109,20 @@ export default async (
 
   const applyFilters = () => {
     searchDriver.clearFilters()
-
     Object.entries(filterFormValues.value).forEach(([key, val]) => {
       if (val && val.length) {
-        const config = filterConfig.find((filter) => filter.field === key)
-
-        searchDriver.addFilter(key, val, config.filterType)
+        const config = filterConfig.find((filter) => filter.id === key)
+        if (
+          config &&
+          config.hasOwnProperty('filterUpdateHook') &&
+          Array.isArray(config.filterUpdateHook)
+        ) {
+          const filterUpdateHook = filterUpdateHooks[config.filterUpdateHook[0]]
+          if (filterUpdateHook && typeof filterUpdateHook === 'function') {
+            const args = config.filterUpdateHook.slice(1)
+            filterUpdateHook(key, val, searchDriver, ...args)
+          }
+        }
       }
     })
   }

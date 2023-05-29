@@ -1,94 +1,67 @@
 <script setup lang="ts">
-import { FilterConfigItem, MappedSearchResult } from '../types'
-import { formatDate } from '#imports'
-
-const filtersConfig: FilterConfigItem[] = [
-  {
-    label: 'Select a topic',
-    placeholder: 'Select',
-    field: 'field_topic_name',
-    filterType: 'any'
-  }
-]
-
-const searchDriverOptions = {
-  initialState: { resultsPerPage: 10 },
-  alwaysSearchOnInitialLoad: true,
-  searchQuery: {
-    search_fields: {
-      title: {
-        weight: 10
-      },
-      body: {},
-      field_paragraph_body: {},
-      field_landing_page_summary: {},
-      summary_processed: {},
-      field_paragraph_summary: {},
-      field_event_details_event_locality: {}
+const searchConfig = {
+  globalFilters: [
+    { field: 'type', values: ['landing_page', 'grant', 'event', 'news'] },
+    { field: 'field_node_site', values: [4] }
+  ],
+  searchFields: {
+    title: {
+      weight: 10
     },
-    result_fields: {
-      title: {
-        raw: {
-          size: 150
+    field_landing_page_summary: {},
+    summary_processed: {}
+  },
+  filterInputs: [
+    {
+      id: 'topic',
+      component: 'TideSearchFilterDropdown',
+      facets: {
+        field_topic_name: {
+          type: 'value',
+          size: 30
         }
       },
-      field_landing_page_summary: {
-        snippet: {
-          size: 150,
-          fallback: true
-        }
-      },
-      summary_processed: {
-        snippet: {
-          size: 150,
-          fallback: true
-        }
-      },
-      changed: {
-        raw: {}
-      },
-      url: {
-        raw: {}
-      },
-      type: {
-        raw: {}
+      filterType: 'any',
+      filterUpdateHook: ['singleFieldSelect', 'field_topic_name', 'any'],
+      props: {
+        label: 'Select a topic',
+        field: 'field_topic_name',
+        placeholder: 'Select',
+        type: 'RplFormDropdown',
+        multiple: true
       }
     }
+  ],
+  pageConfig: {
+    searchPlaceholder: 'Start typing...',
+    resultsLayout: 'list',
+    resultsPerPage: 9,
+    hideFilters: false
   },
-  autocompleteQuery: {
-    suggestions: {
-      types: {
-        documents: { fields: ['title'] }
-      },
-      size: 8
+  resultsConfig: {
+    '*': {
+      component: 'TideSearchResult'
     }
   }
 }
 
-const searchResultsMappingFn = (item): MappedSearchResult<any> => {
-  let summaryField =
-    item.summary_processed?.snippet || item.field_landing_page_summary?.snippet
-
-  const rawUpdated = item.changed?.raw?.[0]
-
-  return {
-    id: item._meta.id,
-    component: 'TideSearchResult',
-    props: {
-      title: item.title?.raw?.[0],
-      url: item.url?.raw?.[0].replace(/\/site-(\d+)/, ''),
-      content: summaryField,
-      updated: rawUpdated ? formatDate(rawUpdated) : ''
-    }
+const searchDriverOptions = {
+  initialState: {
+    resultsPerPage: searchConfig.pageConfig?.resultsPerPage
+  },
+  alwaysSearchOnInitialLoad: true,
+  searchQuery: {
+    filters: searchConfig.globalFilters,
+    search_fields: searchConfig.searchFields
   }
 }
 </script>
 
 <template>
   <TideSearchPage
-    pageTitle="Search"
+    title="Search"
+    :filterInputs="searchConfig?.filterInputs"
+    :pageConfig="searchConfig?.pageConfig"
     :searchDriverOptions="searchDriverOptions"
-    :filtersConfig="filtersConfig"
-    :searchResultsMappingFn="searchResultsMappingFn"
   />
 </template>

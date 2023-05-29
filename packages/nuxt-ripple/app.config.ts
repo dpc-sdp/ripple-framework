@@ -1,5 +1,4 @@
 import type { IRplFeatureFlags } from '@dpc-sdp/ripple-tide-api/types'
-
 declare module '@nuxt/schema' {
   interface AppConfigInput {
     ripple?: {
@@ -12,6 +11,12 @@ declare module '@nuxt/schema' {
         ['rpl-clr-link']?: string
         ['rpl-clr-focus']?: string
         ['rpl-clr-type-focus-contrast']?: string
+      }
+      search?: {
+        filterUpdateHooks?: Record<
+          string,
+          (key: string, val: string | string[], searchDriver: any) => void
+        >
       }
     }
   }

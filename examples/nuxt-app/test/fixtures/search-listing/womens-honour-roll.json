@@ -1,0 +1,68 @@
+{
+  "title": "Victorian Honour Roll of women inductees",
+  "changed": "2022-11-02T12:47:29+11:00",
+  "created": "2022-11-02T12:47:29+11:00",
+  "type": "search_listing",
+  "nid": "11dede11-10c0-111e1-1100-000000000330",
+  "showTopicTags": true,
+  "summary": "View our outstanding inductees.",
+  "searchPlaceholder": "Search honoree name",
+  "searchQuery": {
+    "filters": [{ "field": "type", "values": ["landing_page"] }],
+    "search_fields": {
+      "title": {
+        "weight": 10
+      },
+      "summary_processed": {},
+      "field_landing_page_summary": {}
+    }
+  },
+  "inputFilters": [
+    {
+      "label": "Category",
+      "placeholder": "Select resource type",
+      "field": "field_profile_category_name",
+      "type": "RplFormDropdown",
+      "filterType": "any"
+    },
+    {
+      "label": "Expertise",
+      "placeholder": "Please select",
+      "field": "field_profile_expertise_name",
+      "type": "RplFormDropdown",
+      "filterType": "any"
+    },
+    {
+      "label": "Induction year",
+      "placeholder": "Please select",
+      "field": "field_year",
+      "type": "RplFormDropdown",
+      "filterType": "any"
+    },
+    {
+      "label": "Owner",
+      "placeholder": "Please select",
+      "field": "field_emv_recovery_env_name",
+      "type": "RplFormDropdown",
+      "filterType": "any"
+    },
+    {
+      "label": "Audience",
+      "placeholder": "Please select",
+      "field": "field_emv_recovery_env_name",
+      "type": "RplFormDropdown",
+      "filterType": "any"
+    }
+  ],
+  "layout": {
+    "results": "grid",
+    "hideFilters": false,
+    "sidebar": true,
+    "resultsPerPage": 9
+  },
+  "results": {
+    "*": {
+      "component": "TideSearchResultCard"
+    }
+  }
+}

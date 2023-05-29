@@ -2,20 +2,35 @@
 import { computed, ref } from 'vue'
 import { useRuntimeConfig, useFetch, useRoute } from '#imports'
 import useTideSearch from './../composables/use-tide-search'
-import { FilterConfigItem, MappedSearchResult } from 'ripple-tide-search/types'
-import { FormKit } from '@formkit/vue'
+import { MappedSearchResult } from 'ripple-tide-search/types'
 import { SearchDriverOptions } from '@elastic/search-ui'
+import type { TideSearchListingPage } from './../types'
 
 interface Props {
-  pageTitle: string
-  filtersConfig: FilterConfigItem[]
+  title: string
+  summary: string
+  filterInputs: TideSearchListingPage['filterInputs']
+  filterConfig: TideSearchListingPage['filterConfig']
+  pageConfig: TideSearchListingPage['pageConfig']
   searchDriverOptions: Omit<SearchDriverOptions, 'apiConnector'>
   searchResultsMappingFn: (item: any) => MappedSearchResult<any>
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  pageTitle: 'Search',
-  filtersConfig: () => [],
+  title: 'Search',
+  filterInputs: () => [],
+  filterConfig: () => {
+    return {
+      hideFilters: false,
+      labels: {
+        submit: 'Submit',
+        reset: 'Reset'
+      }
+    }
+  },
+  pageConfig: () => ({
+    results: 'grid'
+  }),
   searchDriverOptions: () => ({
     initialState: { resultsPerPage: 10 },
     alwaysSearchOnInitialLoad: true,
@@ -42,9 +57,7 @@ const props = withDefaults(defineProps<Props>(), {
       id: item._meta.id,
       component: 'TideSearchResult',
       props: {
-        title: item.title?.raw?.[0],
-        url: item.url?.raw?.[0].replace(/\/site-(\d+)/, ''),
-        updated: item.changed?.raw?.[0]
+        result: item
       }
     }
   }
@@ -79,7 +92,7 @@ const {
 } = await useTideSearch(
   apiConnectorOptions,
   props.searchDriverOptions,
-  props.filtersConfig,
+  props.filterInputs,
   props.searchResultsMappingFn
 )
 
@@ -129,29 +142,17 @@ const handleNextClick = () => {
   goToPage(searchState.value.current + 1)
 }
 
-const handleFilterSubmit = () => {
-  doSearch()
+const handleFilterSubmit = (formValue) => {
+  doSearch(formValue)
 }
 
 const handleFilterReset = () => {
   filterFormValues.value = {}
-  doSearch()
+  doSearch([])
 }
 
 const toggleFilters = () => {
   filtersExpanded.value = !filtersExpanded.value
-}
-
-const getFilterOptions = (field) => {
-  if (!staticFacetOptions.value?.[field]) {
-    return []
-  }
-
-  return staticFacetOptions.value?.[field].map((item) => ({
-    id: item,
-    label: item,
-    value: item
-  }))
 }
 </script>
 
@@ -159,60 +160,55 @@ const getFilterOptions = (field) => {
   <TideBaseLayout :site="site">
     <template #aboveBody>
       <RplHeroHeader
-        :title="pageTitle"
+        :title="title"
         :behind-nav="true"
         :breadcrumbs="true"
         :full-width="true"
         :corner-top="true"
         :corner-bottom="false"
       >
+        <p class="rpl-type-p-large" v-if="summary">{{ summary }}</p>
         <div class="tide-search-header">
           <RplSearchBar
             id="tide-search-bar"
             variant="default"
-            input-label="Search"
+            :input-label="pageConfig.searchLabel"
             :inputValue="searchState.searchTerm"
             :suggestions="searchTermSuggestions"
+            :placeholder="pageConfig.searchPlaceholder"
             @on-submit="doSearch"
             @update:input-value="updateSearchTerm"
           />
           <RplSearchBarRefine
+            v-if="pageConfig.hideFilters"
             class="tide-search-refine-btn"
             :expanded="filtersExpanded"
             @click="toggleFilters"
           />
-          <RplExpandable :expanded="filtersExpanded">
-            <RplForm
-              v-if="staticFacetOptions !== null"
-              id="tide-search-filter-form"
-              v-model:model-value="filterFormValues"
+
+          <RplExpandable v-if="filterConfig.hideFilters">
+            <TideSearchFilters
+              :staticFacetOptions="staticFacetOptions"
+              :filter-form-values="filterFormValues"
+              :filterInputs="filterInputs"
+              :submitLabel="filterConfig.labels.submit"
+              :resetLabel="filterConfig.labels.submit"
+              @reset="handleFilterReset"
               @submit="handleFilterSubmit"
             >
-              <div class="rpl-grid rpl-grid--no-row-gap tide-search-filters">
-                <div
-                  v-for="filter in filtersConfig"
-                  :key="filter.field"
-                  class="rpl-col-12 rpl-col-6-m"
-                >
-                  <FormKit
-                    :id="filter.field"
-                    :name="filter.field"
-                    type="RplFormDropdown"
-                    :multiple="true"
-                    :label="filter.label"
-                    :placeholder="filter.placeholder"
-                    :options="getFilterOptions(filter.field)"
-                  />
-                </div>
-              </div>
-              <RplFormActions
-                label="Apply search filters"
-                resetLabel="Clear search filters"
-                :displayResetButton="true"
-                @reset="handleFilterReset"
-              />
-            </RplForm>
+            </TideSearchFilters>
           </RplExpandable>
+          <div v-else class="rpl-u-margin-t-4">
+            <TideSearchFilters
+              :staticFacetOptions="staticFacetOptions"
+              :filter-form-values="filterFormValues"
+              :filterInputs="filterInputs"
+              :filters-config="filterConfig.inputs"
+              @reset="handleFilterReset"
+              @submit="handleFilterSubmit"
+            >
+            </TideSearchFilters>
+          </div>
         </div>
       </RplHeroHeader>
     </template>
@@ -236,30 +232,46 @@ const getFilterOptions = (field) => {
               }"
             >
               <div v-if="searchState.error">
-                <RplContent>
-                  <p class="rpl-type-h3">
-                    Sorry! Something went wrong. Please try again later.
-                  </p>
-                </RplContent>
+                <slot name="error">
+                  <RplContent>
+                    <p class="rpl-type-h3">
+                      Sorry! Something went wrong. Please try again later.
+                    </p>
+                  </RplContent>
+                </slot>
               </div>
               <div
                 v-else-if="!searchState.isLoading && !searchState.totalResults"
               >
-                <RplContent>
-                  <p class="rpl-type-h3">
-                    Sorry! We couldn't find any matches for '{{
-                      searchState.resultSearchTerm
-                    }}'.
-                  </p>
-                  <p>To improve your search results:</p>
-                  <ul>
-                    <li>use different or fewer keywords</li>
-                    <li>check spelling.</li>
-                  </ul>
-                </RplContent>
+                <slot
+                  name="noresults"
+                  :resultSearchTerm="searchState.resultSearchTerm"
+                >
+                  <RplContent>
+                    <p class="rpl-type-h3">
+                      Sorry! We couldn't find any matches for '{{
+                        searchState.resultSearchTerm
+                      }}'.
+                    </p>
+                    <p>To improve your search results:</p>
+                    <ul>
+                      <li>use different or fewer keywords</li>
+                      <li>check spelling.</li>
+                    </ul>
+                  </RplContent>
+                </slot>
               </div>
-              <RplResultListing v-else>
+              <RplResultListing
+                :class="pageConfig.resultsLayout === 'grid' && 'rpl-grid'"
+                v-else
+              >
                 <RplResultListingItem
+                  :class="
+                    pageConfig.resultsLayout === 'grid' && [
+                      'rpl-col-12',
+                      'rpl-col-4-m'
+                    ]
+                  "
                   v-for="(result, idx) in results"
                   :key="`result-${idx}-${result.id}`"
                 >
@@ -271,26 +283,33 @@ const getFilterOptions = (field) => {
         </div>
       </RplPageComponent>
       <RplPageComponent>
-        <RplPageLinks v-if="results && results.length && !searchState.error">
-          <RplPageLinksItem
-            v-if="prevLink"
-            :url="prevLink.url"
-            label="Previous"
-            direction="prev"
-            @click.prevent="handlePrevClick"
-          >
-            {{ prevLink.description }}
-          </RplPageLinksItem>
-          <RplPageLinksItem
-            v-if="nextLink"
-            :url="nextLink.url"
-            label="Next"
-            direction="next"
-            @click.prevent="handleNextClick"
-          >
-            {{ nextLink.description }}
-          </RplPageLinksItem></RplPageLinks
+        <slot
+          name="pagination"
+          :results="results"
+          :hasError="searchState.error"
         >
+          <!-- TODO: Replace this with numbered pagination -->
+          <RplPageLinks v-if="results && results.length && !searchState.error">
+            <RplPageLinksItem
+              v-if="prevLink"
+              :url="prevLink.url"
+              label="Previous"
+              direction="prev"
+              @click.prevent="handlePrevClick"
+            >
+              {{ prevLink.description }}
+            </RplPageLinksItem>
+            <RplPageLinksItem
+              v-if="nextLink"
+              :url="nextLink.url"
+              label="Next"
+              direction="next"
+              @click.prevent="handleNextClick"
+            >
+              {{ nextLink.description }}
+            </RplPageLinksItem></RplPageLinks
+          >
+        </slot>
       </RplPageComponent>
     </template>
   </TideBaseLayout>

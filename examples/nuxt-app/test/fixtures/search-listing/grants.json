@@ -1,0 +1,109 @@
+{
+  "title": "Grants and programs",
+  "changed": "2022-11-02T12:47:29+11:00",
+  "created": "2022-11-02T12:47:29+11:00",
+  "type": "tide_search_listing",
+  "nid": "11dede11-10c0-111e1-1100-000000000330",
+  "showTopicTags": true,
+  "summary": "",
+  "searchConfig": {
+    "globalFilters": [{ "field": "type", "values": ["grant"] }],
+    "searchFields": {
+      "title": {
+        "weight": 10
+      },
+      "field_landing_page_summary": {},
+      "summary_processed": {}
+    },
+    "filterInputs": [
+      {
+        "type": "dropdown",
+        "taxonomyname": "field_audience_name",
+        "label": "View those relevant to me",
+        "placeholder": "Individuals and organisation types",
+        "multiple": true
+      },
+      {
+        "id": "audience",
+        "component": "TideSearchFilterDropdown",
+        "facets": {
+          "field_audience_name": {
+            "type": "value",
+            "size": 30
+          }
+        },
+        "filterUpdateHook": ["singleFieldSelect", "field_audience_name", "any"],
+        "props": {
+          "label": "View those relevant to me",
+          "placeholder": "Individuals and organisation types",
+          "field": "field_audience_name",
+          "name": "field_audience_name",
+          "type": "RplFormDropdown",
+          "multiple": true
+        }
+      },
+      {
+        "id": "topic",
+        "component": "TideSearchFilterDropdown",
+        "facets": {
+          "field_topic_name": {
+            "type": "value",
+            "size": 30
+          }
+        },
+        "filterType": "any",
+        "filterUpdateHook": ["singleFieldSelect", "field_topic_name", "any"],
+        "props": {
+          "label": "Grant or program topic",
+          "field": "field_topic_name",
+          "placeholder": "Please select",
+          "type": "RplFormDropdown",
+          "multiple": true
+        }
+      },
+      {
+        "id": "status",
+        "component": "TideSearchFilterDropdown",
+        "filterUpdateHook": ["grantStatus"],
+        "props": {
+          "label": "Status",
+          "placeholder": "Please select",
+          "type": "RplFormDropdown",
+          "multiple": false,
+          "options": [
+            {
+              "id": "open",
+              "label": "Open",
+              "value": "open"
+            },
+            {
+              "id": "closed",
+              "label": "Closed",
+              "value": "closed"
+            },
+            {
+              "id": "ongoing",
+              "label": "Ongoing",
+              "value": "ongoing"
+            },
+            {
+              "id": "opening_soon",
+              "label": "Opening soon",
+              "value": "opening_soon"
+            }
+          ]
+        }
+      }
+    ],
+    "pageConfig": {
+      "searchPlaceholder": "Search all grants and programs",
+      "resultsLayout": "list",
+      "resultsPerPage": 9
+    },
+    "resultsConfig": {
+      "grant": {
+        "component": "TideGrantSearchResult"
+      }
+    }
+  }
+}
