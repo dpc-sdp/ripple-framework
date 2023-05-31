@@ -222,64 +222,58 @@ const toggleFilters = () => {
         </p>
       </RplPageComponent>
       <RplPageComponent>
-        <div class="rpl-grid">
-          <div class="rpl-col-12 rpl-col-8-m">
-            <div
-              :class="{
-                'tide-search-results': true,
-                'tide-search-results--loading':
-                  searchState.isLoading && !searchState.error
-              }"
-            >
-              <div v-if="searchState.error">
-                <slot name="error">
-                  <RplContent>
-                    <p class="rpl-type-h3">
-                      Sorry! Something went wrong. Please try again later.
-                    </p>
-                  </RplContent>
-                </slot>
-              </div>
-              <div
-                v-else-if="!searchState.isLoading && !searchState.totalResults"
-              >
-                <slot
-                  name="noresults"
-                  :resultSearchTerm="searchState.resultSearchTerm"
-                >
-                  <RplContent>
-                    <p class="rpl-type-h3">
-                      Sorry! We couldn't find any matches for '{{
-                        searchState.resultSearchTerm
-                      }}'.
-                    </p>
-                    <p>To improve your search results:</p>
-                    <ul>
-                      <li>use different or fewer keywords</li>
-                      <li>check spelling.</li>
-                    </ul>
-                  </RplContent>
-                </slot>
-              </div>
-              <RplResultListing
-                :class="pageConfig.resultsLayout === 'grid' && 'rpl-grid'"
-                v-else
-              >
-                <RplResultListingItem
-                  :class="
-                    pageConfig.resultsLayout === 'grid' && [
-                      'rpl-col-12',
-                      'rpl-col-4-m'
-                    ]
-                  "
-                  v-for="(result, idx) in results"
-                  :key="`result-${idx}-${result.id}`"
-                >
-                  <component :is="result.component" v-bind="result.props" />
-                </RplResultListingItem>
-              </RplResultListing>
-            </div>
+        <div
+          :class="{
+            'tide-search-results': true,
+            'tide-search-results--loading':
+              searchState.isLoading && !searchState.error
+          }"
+        >
+          <div v-if="searchState.error">
+            <slot name="error">
+              <RplContent>
+                <p class="rpl-type-h3">
+                  Sorry! Something went wrong. Please try again later.
+                </p>
+              </RplContent>
+            </slot>
           </div>
+          <div v-else-if="!searchState.isLoading && !searchState.totalResults">
+            <slot
+              name="noresults"
+              :resultSearchTerm="searchState.resultSearchTerm"
+            >
+              <RplContent>
+                <p class="rpl-type-h3">
+                  Sorry! We couldn't find any matches for '{{
+                    searchState.resultSearchTerm
+                  }}'.
+                </p>
+                <p>To improve your search results:</p>
+                <ul>
+                  <li>use different or fewer keywords</li>
+                  <li>check spelling.</li>
+                </ul>
+              </RplContent>
+            </slot>
+          </div>
+          <RplResultListing
+            :class="pageConfig.resultsLayout === 'grid' && 'rpl-grid'"
+            v-else
+          >
+            <RplResultListingItem
+              :class="
+                pageConfig.resultsLayout === 'grid' && [
+                  'rpl-col-12',
+                  'rpl-col-4-m'
+                ]
+              "
+              v-for="(result, idx) in results"
+              :key="`result-${idx}-${result.id}`"
+            >
+              <component :is="result.component" v-bind="result.props" />
+            </RplResultListingItem>
+          </RplResultListing>
         </div>
       </RplPageComponent>
       <RplPageComponent>

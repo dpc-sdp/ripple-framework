@@ -11,16 +11,14 @@ interface Props {
 
 const props = defineProps<Props>()
 
-const searchConfig = computed(() => props.page.searchConfig)
-
 const searchDriverOptions = {
   initialState: {
-    resultsPerPage: searchConfig?.pageConfig?.resultsPerPage || 10
+    resultsPerPage: props.page.searchConfig?.pageConfig?.resultsPerPage || 10
   },
   alwaysSearchOnInitialLoad: true,
   searchQuery: {
-    filters: searchConfig?.globalFilters,
-    search_fields: searchConfig?.searchFields
+    filters: props.page.searchConfig?.globalFilters,
+    search_fields: props.page.searchConfig?.searchFields
   }
 }
 

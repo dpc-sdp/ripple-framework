@@ -14,8 +14,8 @@ interface Props {
 const props = defineProps<Props>()
 
 const title = computed(() => getSearchResultValue(props.result, 'title'))
-const url = computed(() => getSearchResultValue('url'))
-const updated = computed(() => getSearchResultValue('changed'))
+const url = computed(() => getSearchResultValue(props.result, 'url'))
+const updated = computed(() => getSearchResultValue(props.result, 'changed'))
 const content = computed(() =>
   getSearchResultValue(props.result, 'field_landing_page_summary')
 )
@@ -72,6 +72,7 @@ const items = computed(() => {
 
 <template>
   <RplSearchResult
+    class="tide-grant-search-result"
     :title="title"
     :url="url"
     :content="content"
@@ -82,3 +83,9 @@ const items = computed(() => {
     </template>
   </RplSearchResult>
 </template>
+
+<style>
+.tide-grant-search-result {
+  max-width: var(--rpl-content-max-width);
+}
+</style>

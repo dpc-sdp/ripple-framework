@@ -7,7 +7,10 @@
   "showTopicTags": true,
   "summary": "",
   "searchConfig": {
-    "globalFilters": [{ "field": "type", "values": ["grant"] }],
+    "globalFilters": [
+      { "field": "type", "values": ["grant"] },
+      { "field": "field_node_site", "values": [4] }
+    ],
     "searchFields": {
       "title": {
         "weight": 10
@@ -16,13 +19,6 @@
       "summary_processed": {}
     },
     "filterInputs": [
-      {
-        "type": "dropdown",
-        "taxonomyname": "field_audience_name",
-        "label": "View those relevant to me",
-        "placeholder": "Individuals and organisation types",
-        "multiple": true
-      },
       {
         "id": "audience",
         "component": "TideSearchFilterDropdown",
@@ -101,7 +97,7 @@
       "resultsPerPage": 9
     },
     "resultsConfig": {
-      "grant": {
+      "*": {
         "component": "TideGrantSearchResult"
       }
     }

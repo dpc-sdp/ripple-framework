@@ -13,7 +13,7 @@ interface TideGrantStatus {
  * @description Format grant audience string
  */
 export const formatGrantAudiences = (audiences = []) => {
-  if (audiences.length === 0) return ''
+  if (!audiences || audiences.length === 0) return ''
 
   const audienceStr = [...new Set(audiences)]
     .map((input: any) => {

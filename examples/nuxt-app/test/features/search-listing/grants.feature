@@ -4,7 +4,6 @@ Feature: Collection pages
 
   Background:
     Given the endpoint "/api/tide/site" with query "?id=8888" returns fixture "/site/reference" with status 200
-    And the endpoint "/api/tide/site" with query "?id=8888" returns fixture "/site/reference" with status 200
     And I am using a "macbook-16" device
 
   @mockserver
