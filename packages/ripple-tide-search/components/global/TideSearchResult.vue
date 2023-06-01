@@ -27,9 +27,3 @@ const content = computed(() =>
   >
   </RplSearchResult>
 </template>
-
-<style>
-.tide-search-result {
-  max-width: var(--rpl-content-max-width);
-}
-</style>

@@ -39,7 +39,7 @@ const isOnGoing = computed(() =>
 const status = computed(() =>
   getGrantStatus(
     new Date(),
-    isOnGoing,
+    isOnGoing.value,
     getSearchResultValue(props.result, 'field_node_dates_start_value'),
     getSearchResultValue(props.result, 'field_node_dates_end_value')
   )

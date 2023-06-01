@@ -168,7 +168,7 @@
     ],
     "pageConfig": {
       "searchPlaceholder": "Search all resources",
-      "resultsLayout": "grid",
+      "resultsLayout": "TideSearchGrid",
       "resultsPerPage": 9
     },
     "resultsConfig": {

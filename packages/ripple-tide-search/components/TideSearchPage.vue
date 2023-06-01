@@ -257,23 +257,9 @@ const toggleFilters = () => {
               </RplContent>
             </slot>
           </div>
-          <RplResultListing
-            :class="pageConfig.resultsLayout === 'grid' && 'rpl-grid'"
-            v-else
-          >
-            <RplResultListingItem
-              :class="
-                pageConfig.resultsLayout === 'grid' && [
-                  'rpl-col-12',
-                  'rpl-col-4-m'
-                ]
-              "
-              v-for="(result, idx) in results"
-              :key="`result-${idx}-${result.id}`"
-            >
-              <component :is="result.component" v-bind="result.props" />
-            </RplResultListingItem>
-          </RplResultListing>
+          <slot v-else name="results" :results="results">
+            <component :is="pageConfig.resultsLayout" :results="results" />
+          </slot>
         </div>
       </RplPageComponent>
       <RplPageComponent>

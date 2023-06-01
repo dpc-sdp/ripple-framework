@@ -39,6 +39,23 @@ export type TideSearchListingResultConfig = {
   }
 }
 
+export type TideSearchListingResult = {
+  /**
+   * @description search result key
+   */
+  id: string
+  /**
+   * @description name of Vue component (globally imported) to render result
+   */
+  component: string
+  /**
+   * @description optionally pass props to component (useful for configuring an existing component)
+   */
+  props?: {
+    [key: string]: unknown
+  }
+}
+
 export interface TideSearchListingPage extends TidePageBase {
   summary: string
   searchConfig: {

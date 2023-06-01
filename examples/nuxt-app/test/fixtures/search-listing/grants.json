@@ -93,7 +93,7 @@
     ],
     "pageConfig": {
       "searchPlaceholder": "Search all grants and programs",
-      "resultsLayout": "list",
+      "resultsLayout": "TideSearchList",
       "resultsPerPage": 9
     },
     "resultsConfig": {

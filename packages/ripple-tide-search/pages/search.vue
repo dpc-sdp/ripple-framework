@@ -34,7 +34,7 @@ const searchConfig = {
   ],
   pageConfig: {
     searchPlaceholder: 'Start typing...',
-    resultsLayout: 'list',
+    resultsLayout: 'TideSearchList',
     resultsPerPage: 9,
     hideFilters: false
   },

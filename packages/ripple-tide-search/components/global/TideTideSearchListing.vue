@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { computed } from '#imports'
 import { MappedSearchResult } from '@dpc-sdp/ripple-tide-search/types'
 import { TideSiteData } from '@dpc-sdp/ripple-tide-api/types'
 import type { TideSearchListingPage } from './../../types'
