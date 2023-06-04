@@ -24,27 +24,14 @@ export const getInputIcons = (
   return {}
 }
 
-export const getMinMaxFields = (
+export const getCounterField = (
   field
-): { minlength?: string; maxlength?: string } => {
-  let minlength = field['#minlength']
-  let maxlength = field['#maxlength']
-
-  // Counter fields override the main min/max  fields
-  if (field['#counter_type'] && field['#counter_type'] === 'character') {
-    minlength = field['#counter_minimum'] || minlength
-    maxlength = field['#counter_maximum'] || maxlength
+): string | null => {
+  // For text fields #counter_type comes through empty when it's value is none in the CMS
+  // however if it's set to the default value of 'character' then #counter_type won't be set at all
+  if (field['#type'] === 'textfield' && !field.hasOwnProperty('#counter_type')) {
+    field['#counter_type'] = 'character'
   }
 
-  return { minlength, maxlength }
-}
-
-export const getCounterFields = (
-  field
-): { counter?: string; counterMin?: string; counterMax?: string } => {
-  return {
-    counter: field['#counter_type'],
-    counterMin: field['#counter_minimum'],
-    counterMax: field['#counter_maximum']
-  }
+  return field['#counter_type']
 }

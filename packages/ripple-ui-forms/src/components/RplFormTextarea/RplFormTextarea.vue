@@ -74,7 +74,6 @@ const classes = computed(() => {
       v-if="counter"
       :value="value"
       :type="counter"
-      :invalid="invalid"
       :counter-min="counterMin"
       :counter-max="counterMax"
     />

@@ -74,8 +74,6 @@ const classes = computed(() => {
   }
 })
 
-const isWordCounter = computed(() => props.counter === 'word')
-
 const handleChange = () => {
   emitRplEvent(
     'update',
@@ -114,8 +112,8 @@ const handleChange = () => {
         v-bind="$attrs"
         :name="name"
         :value="value"
-        :minlength="!isWordCounter ? minlength : null"
-        :maxlength="!isWordCounter ? maxlength : null"
+        :minlength="minlength"
+        :maxlength="maxlength"
         @blur="onBlur"
         @input="onInput"
         @change="handleChange"
@@ -132,7 +130,6 @@ const handleChange = () => {
       v-if="counter"
       :value="value"
       :type="counter"
-      :invalid="invalid"
       :counter-min="counterMin"
       :counter-max="counterMax"
     />

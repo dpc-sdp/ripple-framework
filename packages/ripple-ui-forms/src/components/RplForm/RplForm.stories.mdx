@@ -113,8 +113,6 @@ export const SlotTemplate = (args) => ({
           id: "role",
           help: "Enter your role",
           counter: "word",
-          counterMin: 0,
-          counterMax: 5,
           validation: [[['matches', /^\\W*(\\w+(\\W+|$)){0,5}$/]]],
           validationMessages: {
             matches: "You can enter a maximum of 5 words"
@@ -127,8 +125,6 @@ export const SlotTemplate = (args) => ({
           id: 'message',
           help: 'Please enter a message',
           counter: 'character',
-          counterMin: 10,
-          counterMax: 50,
           validation: [['required'], ['length', 10, 50]],
           validationMessages: {
             required: 'The message field is required',

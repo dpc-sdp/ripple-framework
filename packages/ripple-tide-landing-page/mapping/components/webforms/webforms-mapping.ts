@@ -1,9 +1,8 @@
 import { TideDynamicPageComponent, getBody } from '@dpc-sdp/ripple-tide-api'
 import { FormKitSchemaNode } from '@formkit/core'
 import {
-  getCounterFields,
+  getCounterField,
   getInputIcons,
-  getMinMaxFields,
   getValidationAndConditionals
 } from './webform-utils.js'
 import { getAdvancedAddressMapping } from './webforms-address'
@@ -55,10 +54,9 @@ const getFormSchemaFromMapping = async (
           id: fieldKey,
           help: field['#description'] || field['#help_title'],
           value: field['#default_value'],
+          counter: getCounterField(field),
           ...getValidationAndConditionals(field),
-          ...getInputIcons(field),
-          ...getMinMaxFields(field),
-          ...getCounterFields(field)
+          ...getInputIcons(field)
         }
         break
       case 'email':
@@ -73,8 +71,7 @@ const getFormSchemaFromMapping = async (
           help: field['#description'] || field['#help_title'],
           value: field['#default_value'],
           ...getValidationAndConditionals(field),
-          ...getInputIcons(field),
-          ...getMinMaxFields(field)
+          ...getInputIcons(field)
         }
         break
       case 'number':
@@ -107,8 +104,7 @@ const getFormSchemaFromMapping = async (
           help: field['#description'] || field['#help_title'],
           value: field['#default_value'],
           ...getValidationAndConditionals(field),
-          ...getInputIcons(field),
-          ...getMinMaxFields(field)
+          ...getInputIcons(field)
         }
         break
       case 'url':
@@ -123,8 +119,7 @@ const getFormSchemaFromMapping = async (
           help: field['#description'] || field['#help_title'],
           value: field['#default_value'],
           ...getValidationAndConditionals(field),
-          ...getInputIcons(field),
-          ...getMinMaxFields(field)
+          ...getInputIcons(field)
         }
         break
       case 'textarea':
@@ -139,9 +134,8 @@ const getFormSchemaFromMapping = async (
           rows: field['#rows'],
           help: field['#description'] || field['#help_title'],
           value: field['#default_value'],
+          counter: getCounterField(field),
           ...getValidationAndConditionals(field),
-          ...getMinMaxFields(field),
-          ...getCounterFields(field)
         }
         break
       case 'date':
