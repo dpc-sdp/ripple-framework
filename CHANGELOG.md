@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.1.0-alpha.185](https://github.com/dpc-sdp/ripple-framework/compare/v2.1.0-alpha.184...v2.1.0-alpha.185) (2023-06-06)
+
+### Features
+
+* **@dpc-sdp/ripple-ui-core:** design feedback ([0c74039](https://github.com/dpc-sdp/ripple-framework/commit/0c74039339653ca25b1ffb6c5d14f391e5854040))
+
+# [2.1.0-alpha.184](https://github.com/dpc-sdp/ripple-framework/compare/v2.1.0-alpha.183...v2.1.0-alpha.184) (2023-06-06)
+
+**Note:** Version bump only for package @dpc-sdp/ripple-monorepo
+
+# [2.1.0-alpha.183](https://github.com/dpc-sdp/ripple-framework/compare/v2.1.0-alpha.182...v2.1.0-alpha.183) (2023-06-05)
+
+### Features
+
+* **@dpc-sdp/ripple-tide-landing-page:** conditional logic for checkbox lists and multi selects ([c5c80b3](https://github.com/dpc-sdp/ripple-framework/commit/c5c80b301acc04e9cf08168c523b7a30c048d1e2))
+
 # [2.1.0-alpha.182](https://github.com/dpc-sdp/ripple-framework/compare/v2.1.0-alpha.181...v2.1.0-alpha.182) (2023-06-02)
 
 ### Bug Fixes
