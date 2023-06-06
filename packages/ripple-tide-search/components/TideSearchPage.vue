@@ -8,12 +8,13 @@ import type { TideSearchListingPage } from './../types'
 
 interface Props {
   title: string
-  summary: string
-  filterInputs: TideSearchListingPage['filterInputs']
-  filterConfig: TideSearchListingPage['filterConfig']
-  pageConfig: TideSearchListingPage['pageConfig']
-  searchDriverOptions: Omit<SearchDriverOptions, 'apiConnector'>
-  searchResultsMappingFn: (item: any) => MappedSearchResult<any>
+  summary?: string
+  filterInputs?: TideSearchListingPage['filterInputs']
+  filterConfig?: TideSearchListingPage['filterConfig']
+  pageConfig?: TideSearchListingPage['pageConfig']
+  searchDriverOptions?: Omit<SearchDriverOptions, 'apiConnector'>
+  searchResultsMappingFn?: (item: any) => MappedSearchResult<any>
+  apiConnectorOptions?: any
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -30,6 +31,10 @@ const props = withDefaults(defineProps<Props>(), {
   },
   pageConfig: () => ({
     results: 'grid'
+  }),
+  apiConnectorOptions: () => ({
+    // The search request is proxied through the API to avoid CORS issues
+    endpointBase: '/api/tide/search'
   }),
   searchDriverOptions: () => ({
     initialState: { resultsPerPage: 10 },
@@ -74,10 +79,9 @@ const { data: site } = useFetch('/api/tide/site', {
   }
 })
 
-const apiConnectorOptions = {
+const apiConnector = {
   ...config.tide?.appSearch,
-  // The search request is proxied through the API to avoid CORS issues
-  endpointBase: '/api/tide/search'
+  ...props.apiConnectorOptions
 }
 
 const {
@@ -90,7 +94,7 @@ const {
   staticFacetOptions,
   filterFormValues
 } = await useTideSearch(
-  apiConnectorOptions,
+  apiConnector,
   props.searchDriverOptions,
   props.filterInputs,
   props.searchResultsMappingFn
@@ -167,7 +171,7 @@ const toggleFilters = () => {
         :corner-top="true"
         :corner-bottom="false"
       >
-        <p class="rpl-type-p-large" v-if="summary">{{ summary }}</p>
+        <p v-if="summary" class="rpl-type-p-large">{{ summary }}</p>
         <div class="tide-search-header">
           <RplSearchBar
             id="tide-search-bar"

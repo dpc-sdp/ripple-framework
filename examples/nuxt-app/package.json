@@ -29,7 +29,8 @@
     "@dpc-sdp/ripple-tide-media": "workspace:*",
     "@dpc-sdp/ripple-tide-news": "workspace:*",
     "@dpc-sdp/ripple-tide-publication": "workspace:*",
-    "@dpc-sdp/ripple-tide-search": "workspace:*"
+    "@dpc-sdp/ripple-tide-search": "workspace:*",
+    "@dpc-sdp/ripple-tide-maps": "workspace:*"
   },
   "devDependencies": {
     "@dpc-sdp/ripple-tide-api": "workspace:*",

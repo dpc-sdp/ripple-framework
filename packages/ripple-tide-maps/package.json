@@ -1,0 +1,20 @@
+{
+  "name": "@dpc-sdp/ripple-tide-maps",
+  "packageManager": "pnpm@8.0.0",
+  "version": "2.1.0-alpha.182",
+  "description": "Ripple maps components",
+  "main": "./nuxt.config.ts",
+  "license": "Apache-2.0",
+  "keywords": [],
+  "exports": {
+    ".": "./nuxt.config.ts",
+    "./types": "./types.ts"
+  },
+  "dependencies": {
+    "@dpc-sdp/ripple-ui-core": "workspace:*",
+    "@dpc-sdp/ripple-ui-forms": "workspace:*",
+    "ol": "^7.4.0",
+    "ol-mapbox-style": "^10.6.0",
+    "vue3-openlayers": "^0.5.1"
+  }
+}

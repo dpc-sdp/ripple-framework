@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import RplDataTableRow from './RplDataTableRow.vue'
+import { computed } from 'vue'
 
 interface HeadingType {
   horizontal: boolean
@@ -12,7 +13,7 @@ interface Props {
   columns: Array<string>
   headingType?: HeadingType
   items: Array<Array<string>>
-  offset: number
+  offset?: number
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -26,21 +27,23 @@ const props = withDefaults(defineProps<Props>(), {
 })
 
 // Split hidden content out for presentation component
-let hiddenItems: Array<any> = [],
-  rowItems: Array<Array<string>> = []
+let hiddenItems: Array<any> = []
+// rowItems: Array<Array<string>> = []
 
-props.items.map((j) => {
-  let row: Array<string> = []
+const rowItems = computed(() => {
+  return props.items.map((j) => {
+    let row: Array<string> = []
 
-  j.map((k) => {
-    if (Array.isArray(k)) {
-      hiddenItems.push(k)
-    } else {
-      row.push(k)
-    }
+    j.map((k) => {
+      if (Array.isArray(k)) {
+        hiddenItems.push(k)
+      } else {
+        row.push(k)
+      }
+    })
+
+    return row
   })
-
-  rowItems.push(row)
 })
 </script>
 

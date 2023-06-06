@@ -31,7 +31,7 @@
 </template>
 
 <script setup lang="ts">
-import { FilterFormModel } from 'ripple-tide-search/types'
+import type { FilterFormModel } from './../types'
 import { ref } from 'vue'
 
 type FacetOptionType = {
@@ -41,6 +41,7 @@ type FacetOptionType = {
 }
 
 type CollectionFilter = {
+  id: string
   component: string
   props: Record<string, any>
 }
