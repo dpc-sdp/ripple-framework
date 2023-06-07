@@ -142,13 +142,13 @@ const handleNextClick = () => {
   goToPage(searchState.value.current + 1)
 }
 
-const handleFilterSubmit = (formValue) => {
-  doSearch(formValue)
+const handleFilterSubmit = () => {
+  doSearch()
 }
 
 const handleFilterReset = () => {
   filterFormValues.value = {}
-  doSearch([])
+  doSearch()
 }
 
 const toggleFilters = () => {

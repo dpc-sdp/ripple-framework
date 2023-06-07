@@ -62,7 +62,14 @@ export default async (
     )
   })
 
-  const filterFormValues = ref({})
+  const filterFormValues = ref(
+    searchState.value.filters.reduce((result, curr) => {
+      return {
+        ...result,
+        [curr.field]: curr.values
+      }
+    }, {})
+  )
 
   searchDriver.subscribeToStateChanges((state: SearchState) => {
     searchState.value = state
@@ -109,9 +116,11 @@ export default async (
 
   const applyFilters = () => {
     searchDriver.clearFilters()
-    Object.entries(filterFormValues.value).forEach(([key, val]) => {
+    filterConfig.forEach((config) => {
+      const key = config.id
+      const val = filterFormValues.value[config.id]
+
       if (val && val.length) {
-        const config = filterConfig.find((filter) => filter.id === key)
         if (
           config &&
           config.hasOwnProperty('filterUpdateHook') &&
@@ -122,6 +131,9 @@ export default async (
             const args = config.filterUpdateHook.slice(1)
             filterUpdateHook(key, val, searchDriver, ...args)
           }
+        } else {
+          // Generic behaviour when no filterUpdateHook provided
+          searchDriver.addFilter(key, val, config.filterType)
         }
       }
     })
