@@ -13,6 +13,7 @@ export interface MappedSearchResult<T> {
 }
 
 export interface FilterConfigItem {
+  id: string
   component: string
   facets: Record<string, FacetConfiguration>
   props?: {

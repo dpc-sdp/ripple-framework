@@ -1,8 +1,13 @@
 <script setup lang="ts">
+import { useRuntimeConfig } from '#imports'
+
+const { public: config } = useRuntimeConfig()
+const siteId = config.tide?.site
+
 const searchConfig = {
   globalFilters: [
     { field: 'type', values: ['landing_page', 'grant', 'event', 'news'] },
-    { field: 'field_node_site', values: [4] }
+    { field: 'field_node_site', values: [siteId] }
   ],
   searchFields: {
     title: {
@@ -13,7 +18,7 @@ const searchConfig = {
   },
   filterInputs: [
     {
-      id: 'topic',
+      id: 'field_topic_name',
       component: 'TideSearchFilterDropdown',
       facets: {
         field_topic_name: {
@@ -22,7 +27,6 @@ const searchConfig = {
         }
       },
       filterType: 'any',
-      filterUpdateHook: ['singleFieldSelect', 'field_topic_name', 'any'],
       props: {
         label: 'Select a topic',
         field: 'field_topic_name',
@@ -35,7 +39,7 @@ const searchConfig = {
   pageConfig: {
     searchPlaceholder: 'Start typing...',
     resultsLayout: 'TideSearchList',
-    resultsPerPage: 9,
+    resultsPerPage: 10,
     hideFilters: false
   },
   resultsConfig: {
