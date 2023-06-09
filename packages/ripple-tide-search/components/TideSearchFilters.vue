@@ -1,8 +1,6 @@
 <template>
   <RplForm
-    v-if="staticFacetOptions !== null"
     id="tide-search-filter-form"
-    v-model:model-value="filterFormModel"
     class="rpl-u-margin-t-6"
     @submit="handleFilterSubmit"
   >
@@ -16,7 +14,6 @@
           :is="filter.component"
           :id="filter.id"
           v-bind="filter.props"
-          :staticFacetOptions="staticFacetOptions"
         ></component>
       </div>
     </div>
@@ -31,14 +28,7 @@
 </template>
 
 <script setup lang="ts">
-import type { FilterFormModel } from './../types'
-import { ref } from 'vue'
-
-type FacetOptionType = {
-  id: string
-  label: string
-  value: string
-}
+import type { FilterFormModel as FilterFormModelType } from './../types'
 
 type CollectionFilter = {
   id: string
@@ -47,30 +37,26 @@ type CollectionFilter = {
 }
 
 interface Props {
-  staticFacetOptions: null | Record<string, FacetOptionType[]>
   filterInputs: CollectionFilter[]
-  filterFormValues: FilterFormModel[]
   submitLabel?: string | boolean
   resetLabel?: string | boolean
 }
 
 const emit = defineEmits<{
-  (e: 'submit', payload: FilterFormModel[]): void
+  (e: 'submit', payload: FilterFormModelType[]): void
   (e: 'reset'): void
 }>()
 
-const props = withDefaults(defineProps<Props>(), {
+withDefaults(defineProps<Props>(), {
   submitLabel: 'Apply search filters',
   resetLabel: 'Clear search filters'
 })
-
-const filterFormModel = ref(props.filterFormValues)
 
 function handleFilterReset() {
   emit('reset')
 }
 
-function handleFilterSubmit() {
-  emit('submit', filterFormModel.value)
+function handleFilterSubmit(formVal) {
+  emit('submit', formVal)
 }
 </script>

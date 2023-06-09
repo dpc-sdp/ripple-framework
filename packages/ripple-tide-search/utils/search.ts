@@ -11,5 +11,5 @@ export const getSearchResultValue = (
 ) => {
   const value = result[property]
   if (!value) return null
-  return multiple ? value.raw : value.raw[0]
+  return multiple ? value : value[0]
 }

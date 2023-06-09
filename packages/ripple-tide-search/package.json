@@ -15,6 +15,7 @@
     "@dpc-sdp/ripple-ui-forms": "workspace:*",
     "@elastic/search-ui": "^1.19.1",
     "@elastic/search-ui-app-search-connector": "^1.19.1",
-    "@elastic/search-ui-elasticsearch-connector": "1.19.1"
+    "@elastic/search-ui-elasticsearch-connector": "1.19.1",
+    "http-proxy-middleware": "^2.0.6"
   }
 }

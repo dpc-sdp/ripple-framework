@@ -666,6 +666,9 @@ importers:
       ol:
         specifier: ^7.4.0
         version: 7.4.0
+      ol-ext:
+        specifier: ^4.0.8
+        version: 4.0.8(ol@7.4.0)
       ol-mapbox-style:
         specifier: ^10.6.0
         version: 10.6.0
@@ -726,6 +729,9 @@ importers:
       '@elastic/search-ui-elasticsearch-connector':
         specifier: 1.19.1
         version: 1.19.1(patch_hash=gu5hi3ef3apils4ueqmedvotwu)
+      http-proxy-middleware:
+        specifier: ^2.0.6
+        version: 2.0.6
 
   packages/ripple-ui-core:
     dependencies:
@@ -8147,13 +8153,6 @@ packages:
     resolution: {integrity: sha512-HC8G7c1WmaF2ekqpnFq626xd3Zz0uvaqFmBJNRZCGEZCXkvSdJoNFn/8Ygbd9fKNQj8UzLdCETaI0UWPAjK7IA==}
     dependencies:
       '@types/node': 18.15.10
-    dev: true
-
-  /@types/http-proxy@1.17.9:
-    resolution: {integrity: sha512-QsbSjA/fSk7xB+UXlCT3wHBy5ai9wOcNDWwZAtud+jXhwOM3l+EYZh8Lng4+/6n8uar0J7xILzqftJdJ/Wdfkw==}
-    dependencies:
-      '@types/node': 18.15.10
-    dev: false
 
   /@types/iframe-resizer@3.5.9:
     resolution: {integrity: sha512-RQUBI75F+uXruB95BFpC/8V8lPgJg4MQ6HxOCtAZYBB/h0FNCfrFfb4I+u2pZJIV7sKeszZbFqy1UnGeBMrvsA==}
@@ -17105,6 +17104,24 @@ packages:
       - supports-color
     dev: true
 
+  /http-proxy-middleware@2.0.6:
+    resolution: {integrity: sha512-ya/UeJ6HVBYxrgYotAZo1KvPWlgB48kUJLDePFeneHsVujFaW5WNj2NgWCAE//B1Dl02BIfYlpNgBy8Kf8Rjmw==}
+    engines: {node: '>=12.0.0'}
+    peerDependencies:
+      '@types/express': ^4.17.13
+    peerDependenciesMeta:
+      '@types/express':
+        optional: true
+    dependencies:
+      '@types/http-proxy': 1.17.11
+      http-proxy: 1.18.1(debug@4.3.4)
+      is-glob: 4.0.3
+      is-plain-obj: 3.0.0
+      micromatch: 4.0.5
+    transitivePeerDependencies:
+      - debug
+    dev: false
+
   /http-proxy-middleware@3.0.0-beta.0:
     resolution: {integrity: sha512-99DWW7XRJdLGkVKkXh7sOP1adeSMss2wzI6qAI7klyishj/E8/I+EgtvPuFsSdZ+zDy2D8YizF8vs31Y61Y1bA==}
     engines: {node: '>=12.0.0'}
@@ -17114,7 +17131,7 @@ packages:
       '@types/express':
         optional: true
     dependencies:
-      '@types/http-proxy': 1.17.9
+      '@types/http-proxy': 1.17.11
       debug: 4.3.4(supports-color@8.1.1)
       http-proxy: 1.18.1(debug@4.3.4)
       is-glob: 4.0.3

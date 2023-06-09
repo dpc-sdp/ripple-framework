@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { computed } from 'vue'
 interface Props {
   id: string
   field: string
@@ -9,20 +10,18 @@ interface Props {
 }
 const props = defineProps<Props>()
 
-function getFilterOptions(field) {
-  if (!props.staticFacetOptions) {
-    return []
-  }
-  if (!props.staticFacetOptions[field]) {
-    return []
-  }
-
-  return props.staticFacetOptions[field].map((item) => ({
-    id: item,
-    label: item,
-    value: item
-  }))
-}
+const resolvedOptions = computed(() => {
+  return props.options.map((opt) => {
+    if (typeof opt === 'string') {
+      return {
+        id: opt,
+        label: opt,
+        value: opt
+      }
+    }
+    return opt
+  })
+})
 </script>
 
 <template>
@@ -33,6 +32,6 @@ function getFilterOptions(field) {
     :multiple="true"
     :label="label"
     :placeholder="placeholder"
-    :options="options || getFilterOptions(field)"
+    :options="resolvedOptions"
   />
 </template>
