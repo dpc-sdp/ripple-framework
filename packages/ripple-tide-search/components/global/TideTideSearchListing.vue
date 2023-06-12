@@ -10,17 +10,6 @@ interface Props {
 
 const props = defineProps<Props>()
 
-const searchDriverOptions = {
-  initialState: {
-    resultsPerPage: props.page.searchConfig?.pageConfig?.resultsPerPage || 10
-  },
-  alwaysSearchOnInitialLoad: true,
-  searchQuery: {
-    filters: props.page.searchConfig?.globalFilters,
-    search_fields: props.page.searchConfig?.searchFields
-  }
-}
-
 const searchResultsMappingFn = (item): MappedSearchResult<any> => {
   for (const key in props.page.searchConfig?.resultsConfig) {
     const mapping = props.page.searchConfig?.resultsConfig[key]
@@ -47,13 +36,11 @@ const searchResultsMappingFn = (item): MappedSearchResult<any> => {
 </script>
 
 <template>
-  <TideSearchPage
+  <TideSearchListing
     :title="page.title"
-    :summary="page.summary"
-    :filterConfig="page.searchConfig?.filterConfig || undefined"
-    :filterInputs="page.searchConfig?.filterInputs"
-    :pageConfig="page.searchConfig?.pageConfig"
-    :searchDriverOptions="searchDriverOptions"
-    :searchResultsMappingFn="searchResultsMappingFn"
+    :queryConfig="page.searchConfig.query"
+    :globalFilters="page.searchConfig.globalFilters"
+    :pageConfig="page.searchConfig.pageConfig"
+    :userFilters="page.userFilters"
   />
 </template>

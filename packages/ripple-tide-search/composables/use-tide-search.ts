@@ -63,18 +63,42 @@ export default (
   }
 
   const userFilters = computed(() => {
-    let final = [] as any[]
+    let ESFilterClause = [] as any[]
     Object.keys(filterForm.value).map((key: string) => {
       const itm = userFilterConfig.find((itm) => itm.id === key)
       const filterVal =
         filterForm.value[key] && Array.from(filterForm.value[key])
-      if (itm.filter && filterVal && filterVal.length > 0) {
-        const re = new RegExp('{{value}}', 'g')
-        const result = itm.filter.replace(re, JSON.stringify(filterVal))
-        final = JSON.parse(result)
+      // Need to work out if form has value - will be different for different controls
+      const hasValue = (v: unknown) => {
+        if (itm.component === 'TideSearchFilterDropdown') {
+          return Array.isArray(v) && v.length > 0
+        }
+        return v
+      }
+      if (itm.filter && hasValue(filterVal)) {
+        // Raw ES Filter clause from Tide config, replaces {{value}} with user value
+        if (itm.filter.type === 'raw') {
+          const re = new RegExp('{{value}}', 'g')
+          const result = itm.filter.value.replace(re, JSON.stringify(filterVal))
+          ESFilterClause = JSON.parse(result)
+        }
+        // Add a simple taxonomy term filter
+        if (itm.filter.type === 'taxonomy') {
+          ESFilterClause = [
+            {
+              terms: {
+                [`${itm.filter.value}.keyword`]: filterVal
+              }
+            }
+          ]
+        }
+        // Call a function passed from app.config to add filters
+        if (itm.filter.type === 'function') {
+          // TODO
+        }
       }
     })
-    return final
+    return ESFilterClause
   })
 
   const getQueryDSL = () => {

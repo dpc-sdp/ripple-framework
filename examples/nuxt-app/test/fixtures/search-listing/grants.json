@@ -1,105 +1,80 @@
 {
-  "title": "Grants and programs",
-  "changed": "2022-11-02T12:47:29+11:00",
-  "created": "2022-11-02T12:47:29+11:00",
-  "type": "tide_search_listing",
-  "nid": "11dede11-10c0-111e1-1100-000000000330",
-  "showTopicTags": true,
-  "summary": "",
-  "searchConfig": {
-    "globalFilters": [
-      { "field": "type", "values": ["grant"] },
-      { "field": "field_node_site", "values": [4] }
-    ],
-    "searchFields": {
-      "title": {
-        "weight": 10
-      },
-      "field_landing_page_summary": {},
-      "summary_processed": {}
-    },
-    "filterInputs": [
-      {
-        "id": "audience",
-        "component": "TideSearchFilterDropdown",
-        "facets": {
-          "field_audience_name": {
-            "type": "value",
-            "size": 30
-          }
-        },
-        "filterUpdateHook": ["singleFieldSelect", "field_audience_name", "any"],
-        "props": {
-          "label": "View those relevant to me",
-          "placeholder": "Individuals and organisation types",
-          "field": "field_audience_name",
-          "name": "field_audience_name",
-          "type": "RplFormDropdown",
-          "multiple": true
-        }
-      },
-      {
-        "id": "topic",
-        "component": "TideSearchFilterDropdown",
-        "facets": {
-          "field_topic_name": {
-            "type": "value",
-            "size": 30
-          }
-        },
-        "filterType": "any",
-        "filterUpdateHook": ["singleFieldSelect", "field_topic_name", "any"],
-        "props": {
-          "label": "Grant or program topic",
-          "field": "field_topic_name",
-          "placeholder": "Please select",
-          "type": "RplFormDropdown",
-          "multiple": true
-        }
-      },
-      {
-        "id": "status",
-        "component": "TideSearchFilterDropdown",
-        "filterUpdateHook": ["grantStatus"],
-        "props": {
-          "label": "Status",
-          "placeholder": "Please select",
-          "type": "RplFormDropdown",
-          "multiple": false,
-          "options": [
-            {
-              "id": "open",
-              "label": "Open",
-              "value": "open"
-            },
-            {
-              "id": "closed",
-              "label": "Closed",
-              "value": "closed"
-            },
-            {
-              "id": "ongoing",
-              "label": "Ongoing",
-              "value": "ongoing"
-            },
-            {
-              "id": "opening_soon",
-              "label": "Opening soon",
-              "value": "opening_soon"
-            }
-          ]
-        }
-      }
-    ],
-    "pageConfig": {
-      "searchPlaceholder": "Search all grants and programs",
-      "resultsLayout": "TideSearchList",
-      "resultsPerPage": 9
-    },
-    "resultsConfig": {
-      "*": {
-        "component": "TideGrantSearchResult"
+  "title": "Grants",
+  "query": [
+    {
+      "multi_match": {
+        "query": "{{query}}",
+        "fields": [
+          "title^3",
+          "field_landing_page_summary^2",
+          "body",
+          "field_paragraph_body",
+          "summary_processed"
+        ]
       }
     }
-  }
+  ],
+  "pageConfig": {
+    "resultsLayout": "TideSearchListingLayoutList",
+    "searchPlaceholder": "Search grants"
+  },
+  "globalFilters": [
+    {
+      "term": {
+        "type": "grant"
+      }
+    },
+    {
+      "exists": {
+        "field": "nid"
+      }
+    },
+    {
+      "term": {
+        "field_node_site": "4"
+      }
+    }
+  ],
+  "userFilters": [
+    {
+      "id": "topic",
+      "filter": {
+        "type": "raw",
+        "value": "[\n  {\n    \"terms\": {\n      \"field_topic_name.keyword\": {{value}}\n    }\n  }\n]"
+      },
+      "taxonomy": "topic",
+      "component": "TideSearchFilterDropdown",
+      "props": {
+        "label": "Grant or program topic",
+        "placeholder": "Please select",
+        "options": ["Business", "Education"]
+      }
+    },
+    {
+      "id": "audience",
+      "filter": {
+        "type": "taxonomy",
+        "value": "field_audience_name"
+      },
+      "taxonomy": "audience",
+      "component": "TideSearchFilterDropdown",
+      "props": {
+        "label": "View those relevant to me",
+        "placeholder": "Individuals and organisation types"
+      }
+    },
+    {
+      "id": "status",
+      "filter": {
+        "type": "function",
+        "value": "grantStatus"
+      },
+      "component": "TideSearchFilterDropdown",
+      "props": {
+        "label": "Status",
+        "placeholder": "Select grant status",
+        "options": ["Open", "Closed", "Ongoing"]
+      }
+    }
+  ]
 }

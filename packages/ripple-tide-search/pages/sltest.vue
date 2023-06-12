@@ -1,6 +1,6 @@
 <script setup lang="ts">
 const page = {
-  title: 'Search Listing',
+  title: 'Grants',
   query: [
     {
       multi_match: {
@@ -15,6 +15,10 @@ const page = {
       }
     }
   ],
+  pageConfig: {
+    resultsLayout: 'TideSearchListingLayoutList',
+    searchPlaceholder: 'Search grants'
+  },
   globalFilters: [
     {
       term: {
@@ -42,6 +46,24 @@ const page = {
           }
         }
       ]`,
+      taxonomy: 'field_topic_name',
+      component: 'TideSearchFilterDropdown',
+      props: {
+        label: 'View those relevant to me',
+        placeholder: 'Individuals and organisation types',
+        options: ['Business', 'Education']
+      }
+    },
+    {
+      id: 'audience',
+      filter: `[
+        {
+          "terms": {
+            "field_topic_name.keyword": {{value}}
+          }
+        }
+      ]`,
+      taxonomy: '',
       component: 'TideSearchFilterDropdown',
       props: {
         label: 'View those relevant to me',
@@ -68,6 +90,7 @@ const page = {
     :title="page.title"
     :queryConfig="page.query"
     :globalFilters="page.globalFilters"
+    :pageConfig="page.pageConfig"
     :userFilters="page.userFilters"
   />
 </template>

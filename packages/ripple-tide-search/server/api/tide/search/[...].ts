@@ -9,7 +9,7 @@ export const createSearchHandler = async (event: H3Event) => {
   const proxyMiddleware = createProxyMiddleware({
     target: config.tide.appSearch.endpointBase,
     pathRewrite: {
-      '^/api/tide/search': '/api/as/v1/engines/'
+      '^/api/tide/search': '/api/as/v1/engines'
     },
     onProxyReq(proxyReq) {
       // add ES auth header to request

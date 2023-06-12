@@ -47,7 +47,6 @@
 
 <script setup lang="ts">
 import { ref, computed } from 'vue'
-import { $fetch } from '#imports'
 
 const results = ref([])
 
@@ -149,6 +148,7 @@ const queryDSL = computed(() => {
 const doSearch = async (term) => {
   searchTerm.value = term
 
+  // eslint-disable-next-line no-undef
   const { hits } = await $fetch(
     'https://a83890f7a31dea14e1ae83c6f0afacca.sdp2-b.elastic.sdp.vic.gov.au/sdp_data_pipelines_scl/_search',
     {
