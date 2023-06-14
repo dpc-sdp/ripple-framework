@@ -6,7 +6,7 @@ to: README.md
 
 ## Important information
 
-SDP Ripple 2.1 project for <%= name %>
+SDP Ripple project for <%= name %>
 
 Before working on this project please ensure you have undertaken onboarding with the SDP team.
 Please go to https://www.vic.gov.au/outsourcing-content-development-industry-partners and follow instructions for onboarding new developers.
