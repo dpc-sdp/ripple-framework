@@ -26,7 +26,7 @@ id: core-navigation-vertical-navigation--vertical-navigation
 ::
 
 ### When and how to use
-- Use in a page's sidebar.
+- Use in a page's sidebar. asdasd
 - Always keep the navigation links short. You can use a shorter version of the page title.
 - Display up to 4 levels of navigation.
 - Add a link for the section's 'home' page.
