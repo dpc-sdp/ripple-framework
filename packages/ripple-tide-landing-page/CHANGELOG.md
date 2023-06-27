@@ -3,6 +3,69 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.0.0-rc.1](https://github.com/dpc-sdp/ripple-framework/compare/v2.1.0-alpha.201...v2.0.0-rc.1) (2023-06-22)
+
+**Note:** Version bump only for package @dpc-sdp/ripple-tide-landing-page
+
+# [2.1.0-alpha.200](https://github.com/dpc-sdp/ripple-framework/compare/v2.1.0-alpha.199...v2.1.0-alpha.200) (2023-06-21)
+
+**Note:** Version bump only for package @dpc-sdp/ripple-tide-landing-page
+
+# [2.1.0-alpha.197](https://github.com/dpc-sdp/ripple-framework/compare/v2.1.0-alpha.196...v2.1.0-alpha.197) (2023-06-20)
+
+**Note:** Version bump only for package @dpc-sdp/ripple-tide-landing-page
+
+# [2.1.0-alpha.196](https://github.com/dpc-sdp/ripple-framework/compare/v2.1.0-alpha.195...v2.1.0-alpha.196) (2023-06-20)
+
+### Features
+
+* **@dpc-sdp/ripple-tide-search:** move search runtime config options to search package ([7af6ab8](https://github.com/dpc-sdp/ripple-framework/commit/7af6ab828c1d1b986f679925ac10a6dd1596ba5a))
+
+# [2.1.0-alpha.195](https://github.com/dpc-sdp/ripple-framework/compare/v2.1.0-alpha.194...v2.1.0-alpha.195) (2023-06-19)
+
+**Note:** Version bump only for package @dpc-sdp/ripple-tide-landing-page
+
+# [2.1.0-alpha.194](https://github.com/dpc-sdp/ripple-framework/compare/v2.1.0-alpha.193...v2.1.0-alpha.194) (2023-06-16)
+
+**Note:** Version bump only for package @dpc-sdp/ripple-tide-landing-page
+
+# [2.1.0-alpha.193](https://github.com/dpc-sdp/ripple-framework/compare/v2.1.0-alpha.192...v2.1.0-alpha.193) (2023-06-16)
+
+**Note:** Version bump only for package @dpc-sdp/ripple-tide-landing-page
+
+# [2.1.0-alpha.192](https://github.com/dpc-sdp/ripple-framework/compare/v2.1.0-alpha.191...v2.1.0-alpha.192) (2023-06-16)
+
+**Note:** Version bump only for package @dpc-sdp/ripple-tide-landing-page
+
+# [2.1.0-alpha.191](https://github.com/dpc-sdp/ripple-framework/compare/v2.1.0-alpha.190...v2.1.0-alpha.191) (2023-06-16)
+
+### Features
+
+* **@dpc-sdp/ripple-ui-core:** add support for intro buttons (to match ripple 1) ([743fbe4](https://github.com/dpc-sdp/ripple-framework/commit/743fbe4b3ffae98691bcfa0e95444cf294c6dbc9))
+
+# [2.1.0-alpha.190](https://github.com/dpc-sdp/ripple-framework/compare/v2.1.0-alpha.189...v2.1.0-alpha.190) (2023-06-15)
+
+**Note:** Version bump only for package @dpc-sdp/ripple-tide-landing-page
+
+# [2.1.0-alpha.189](https://github.com/dpc-sdp/ripple-framework/compare/v2.1.0-alpha.188...v2.1.0-alpha.189) (2023-06-15)
+
+### Bug Fixes
+
+* cleaning up browser console warnings ([06bcb20](https://github.com/dpc-sdp/ripple-framework/commit/06bcb20d0ef2b069973cb532bacd26efa5645e00))
+* remove unneeded 'undefined' ([eb06dc3](https://github.com/dpc-sdp/ripple-framework/commit/eb06dc32b0ea1df001f7d8269209d5e9b171b305))
+
+# [2.1.0-alpha.188](https://github.com/dpc-sdp/ripple-framework/compare/v2.1.0-alpha.187...v2.1.0-alpha.188) (2023-06-13)
+
+**Note:** Version bump only for package @dpc-sdp/ripple-tide-landing-page
+
+# [2.1.0-alpha.187](https://github.com/dpc-sdp/ripple-framework/compare/v2.1.0-alpha.186...v2.1.0-alpha.187) (2023-06-08)
+
+**Note:** Version bump only for package @dpc-sdp/ripple-tide-landing-page
+
+# [2.1.0-alpha.186](https://github.com/dpc-sdp/ripple-framework/compare/v2.1.0-alpha.185...v2.1.0-alpha.186) (2023-06-08)
+
+**Note:** Version bump only for package @dpc-sdp/ripple-tide-landing-page
+
 # [2.1.0-alpha.185](https://github.com/dpc-sdp/ripple-framework/compare/v2.1.0-alpha.184...v2.1.0-alpha.185) (2023-06-06)
 
 **Note:** Version bump only for package @dpc-sdp/ripple-tide-landing-page

@@ -1,5 +1,16 @@
 <template>
   <AppLayout background="alt">
+    <template #aboveHeader>
+      <RplAlertsContainer>
+        <RplAlert
+          message="These Docs are for Ripple version 2.0. If you are looking for the original Ripple Storybook please click below"
+          linkText="View Ripple 1 storybook"
+          linkUrl="https://master--5e736ff82649250022dd830c.chromatic.com/"
+          alert-id="storybook-alert"
+          :isDismissible="false"
+        />
+      </RplAlertsContainer>
+    </template>
     <template #aboveBody>
       <DocsHeroHeader :title="title" :description="subheader" />
 
@@ -27,22 +38,7 @@
       </div>
     </template>
 
-    <DocsHomeSection title="Ripple modules">
-      <div
-        class="rpl-grid"
-        :style="{ '--rpl-clr-gradient-horizontal': 'var(--rpl-clr-dark)' }"
-      >
-        <div class="rpl-col-12">
-          <RplPromoCard v-bind="page.modulesCTA" highlight>
-            <p>
-              {{ page.modulesCTA.description }}
-            </p>
-          </RplPromoCard>
-        </div>
-      </div>
-    </DocsHomeSection>
-
-    <DocsHomeSection title="Quick links">
+    <DocsHomeSection title="Find out more">
       <div class="rpl-grid">
         <div class="rpl-col-12 rpl-col-6-m rpl-col-4-l">
           <RplPromoCard v-bind="page.quickLink1">
@@ -68,6 +64,24 @@
       </div>
     </DocsHomeSection>
 
+    <DocsHomeSection
+      v-if="!hideModulesSection && page.modulesCTA"
+      title="Using Ripple in SDP sites"
+    >
+      <div
+        class="rpl-grid"
+        :style="{ '--rpl-clr-gradient-horizontal': 'var(--rpl-clr-dark)' }"
+      >
+        <div class="rpl-col-12">
+          <RplPromoCard v-bind="page.framework" highlight>
+            <p>
+              {{ page.framework.description }}
+            </p>
+          </RplPromoCard>
+        </div>
+      </div>
+    </DocsHomeSection>
+
     <DocsHomeSection>
       <ContentRenderer
         tag="DocsContent"
@@ -80,7 +94,11 @@
     </DocsHomeSection>
 
     <template #belowBody>
-      <DocsWhatsNew :title="page.whatsNew.title" :links="page.whatsNew.links">
+      <DocsWhatsNew
+        v-if="page.whatsNew"
+        :title="page.whatsNew.title"
+        :links="page.whatsNew.links"
+      >
         <RplContent>
           <p>{{ page.whatsNew.description }}</p>
         </RplContent>
@@ -92,7 +110,7 @@
 <script setup lang="ts">
 import { useContent, useContentHead } from '#imports'
 const { page, toc } = useContent()
-const { title, subheader, description } = useAppConfig()
+const { title, subheader, description, hideModulesSection } = useAppConfig()
 useContentHead(page)
 </script>
 

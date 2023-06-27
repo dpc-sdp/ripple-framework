@@ -3,6 +3,70 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.0.0-rc.1](https://github.com/dpc-sdp/ripple-framework/compare/v2.1.0-alpha.201...v2.0.0-rc.1) (2023-06-22)
+
+**Note:** Version bump only for package @dpc-sdp/ripple-ui-core
+
+# [2.1.0-alpha.200](https://github.com/dpc-sdp/ripple-framework/compare/v2.1.0-alpha.199...v2.1.0-alpha.200) (2023-06-21)
+
+**Note:** Version bump only for package @dpc-sdp/ripple-ui-core
+
+# [2.1.0-alpha.197](https://github.com/dpc-sdp/ripple-framework/compare/v2.1.0-alpha.196...v2.1.0-alpha.197) (2023-06-20)
+
+**Note:** Version bump only for package @dpc-sdp/ripple-ui-core
+
+# [2.1.0-alpha.195](https://github.com/dpc-sdp/ripple-framework/compare/v2.1.0-alpha.194...v2.1.0-alpha.195) (2023-06-19)
+
+**Note:** Version bump only for package @dpc-sdp/ripple-ui-core
+
+# [2.1.0-alpha.194](https://github.com/dpc-sdp/ripple-framework/compare/v2.1.0-alpha.193...v2.1.0-alpha.194) (2023-06-16)
+
+### Bug Fixes
+
+* **@dpc-sdp/ripple-ui-core:** move deps ([ecf7e30](https://github.com/dpc-sdp/ripple-framework/commit/ecf7e309ca57f464fddfa6f77e0cfa4d42da7831))
+
+# [2.1.0-alpha.193](https://github.com/dpc-sdp/ripple-framework/compare/v2.1.0-alpha.192...v2.1.0-alpha.193) (2023-06-16)
+
+**Note:** Version bump only for package @dpc-sdp/ripple-ui-core
+
+# [2.1.0-alpha.192](https://github.com/dpc-sdp/ripple-framework/compare/v2.1.0-alpha.191...v2.1.0-alpha.192) (2023-06-16)
+
+### Bug Fixes
+
+* fixed vite-svg-loader not getting applied ([8baaa8d](https://github.com/dpc-sdp/ripple-framework/commit/8baaa8da6dadd06cd825f02bae4e202c5a983531))
+
+# [2.1.0-alpha.191](https://github.com/dpc-sdp/ripple-framework/compare/v2.1.0-alpha.190...v2.1.0-alpha.191) (2023-06-16)
+
+### Features
+
+* :sparkles: add selector to help locate el ([670ff49](https://github.com/dpc-sdp/ripple-framework/commit/670ff49872e5651c561de5d8db91b76ebab0c5c2))
+* **@dpc-sdp/ripple-ui-core:** add support for intro buttons (to match ripple 1) ([743fbe4](https://github.com/dpc-sdp/ripple-framework/commit/743fbe4b3ffae98691bcfa0e95444cf294c6dbc9))
+
+# [2.1.0-alpha.190](https://github.com/dpc-sdp/ripple-framework/compare/v2.1.0-alpha.189...v2.1.0-alpha.190) (2023-06-15)
+
+### Bug Fixes
+
+* **@dpc-sdp/ripple-ui-core:** update tag ([58dac08](https://github.com/dpc-sdp/ripple-framework/commit/58dac08401983116d0b68b343bd13db943100a91))
+
+### Features
+
+* **@dpc-sdp/ripple-ui-core:** add fonts to 'external' assets ([557aac5](https://github.com/dpc-sdp/ripple-framework/commit/557aac5ab751ce5aa16be7544445f77be5fe1a48))
+
+# [2.1.0-alpha.189](https://github.com/dpc-sdp/ripple-framework/compare/v2.1.0-alpha.188...v2.1.0-alpha.189) (2023-06-15)
+
+### Bug Fixes
+
+* cleaning up browser console warnings ([06bcb20](https://github.com/dpc-sdp/ripple-framework/commit/06bcb20d0ef2b069973cb532bacd26efa5645e00))
+
+### Features
+
+* **@dpc-sdp/ripple-ui-core:** re-instate stylelint and fix errors, fix eslint warnings ([022d859](https://github.com/dpc-sdp/ripple-framework/commit/022d8598fa2f4f6c791dc6d4dc9a687d981f5a07))
+* **@dpc-sdp/ripple-ui-core:** switch to rgb only ([36d9491](https://github.com/dpc-sdp/ripple-framework/commit/36d9491da8b6650aca56d4b11bef8ded2def1500))
+
+# [2.1.0-alpha.186](https://github.com/dpc-sdp/ripple-framework/compare/v2.1.0-alpha.185...v2.1.0-alpha.186) (2023-06-08)
+
+**Note:** Version bump only for package @dpc-sdp/ripple-ui-core
+
 # [2.1.0-alpha.185](https://github.com/dpc-sdp/ripple-framework/compare/v2.1.0-alpha.184...v2.1.0-alpha.185) (2023-06-06)
 
 ### Features

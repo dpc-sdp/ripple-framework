@@ -1,6 +1,6 @@
 ---
 title: Accordion
-description: An accordion is an expandable panel designed to save space by hiding and revealing content as required.
+description: The Accordion component is a panel designed to save space by hiding and revealing content as required.
 layout: page
 label: Core
 
@@ -47,9 +47,9 @@ The other option is to remove the accordions and display the content without the
 ---
 
 ## Variants
-The accordion component has two variants:
-- Default.
-- Numbered.
+The accordion has 2 variants:
+- default
+- numbered.
 
 ### Default
 
@@ -60,7 +60,7 @@ id: core-containers-accordion--accordion
 ::
 
 ### Numbered
-Use the 'numbered' variant when it is important the content is read in sequential order. 
+Use the numbered variant when it is important the content is read in sequential order. 
 
 ::DocsExample
 ---
@@ -83,4 +83,4 @@ Accordions use colour to:
   ::
 ::
 
-To create your own theme, see theming guidance for designers or theming guidance for developers.
+To create your own theme see [theming guidance for designers](/design-system/design/theming-guidance-for-designers) or [theming guidance for developers](/design-system/develop/theming).

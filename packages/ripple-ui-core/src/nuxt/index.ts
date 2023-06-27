@@ -19,6 +19,14 @@ export default <any>defineNuxtModule({
       } else {
         viteInlineConfig.plugins = vitePlugins
       }
+      // Add external assets
+      if (viteInlineConfig.build?.rollupOptions) {
+        if (Array.isArray(viteInlineConfig.build.rollupOptions?.external)) {
+          viteInlineConfig.build.rollupOptions?.external?.push(/assets\/fonts/)
+        } else if (!viteInlineConfig.build.rollupOptions?.external) {
+          viteInlineConfig.build.rollupOptions.external = [/assets\/fonts/]
+        }
+      }
     }
   },
   async setup(_options, nuxt) {
@@ -30,6 +38,7 @@ export default <any>defineNuxtModule({
       prefix: 'rpl',
       pathPrefix: false
     })
+    console.info('Added Ripple UI Core components')
     // Plugin adds runtime setup tasks, eg: event bus
     addPlugin(resolve('./runtime/plugin'))
     // Adds required PostCss plugins

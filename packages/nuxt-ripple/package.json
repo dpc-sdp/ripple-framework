@@ -3,6 +3,9 @@
   "license": "Apache-2.0",
   "version": "2.1.0-alpha.185",
   "name": "@dpc-sdp/nuxt-ripple",
+  "description": "Nuxt module for integrating Ripple and Tide",
+  "version": "2.0.0-rc.1",
+  "license": "Apache-2.0",
   "main": "./nuxt.config.ts",
   "exports": {
     ".": "./nuxt.config.ts",

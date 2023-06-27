@@ -3,6 +3,71 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.0.0-rc.1](https://github.com/dpc-sdp/ripple-framework/compare/v2.1.0-alpha.201...v2.0.0-rc.1) (2023-06-22)
+
+**Note:** Version bump only for package @dpc-sdp/ripple-ui-forms
+
+# [2.1.0-alpha.200](https://github.com/dpc-sdp/ripple-framework/compare/v2.1.0-alpha.199...v2.1.0-alpha.200) (2023-06-21)
+
+**Note:** Version bump only for package @dpc-sdp/ripple-ui-forms
+
+# [2.1.0-alpha.197](https://github.com/dpc-sdp/ripple-framework/compare/v2.1.0-alpha.196...v2.1.0-alpha.197) (2023-06-20)
+
+**Note:** Version bump only for package @dpc-sdp/ripple-ui-forms
+
+# [2.1.0-alpha.195](https://github.com/dpc-sdp/ripple-framework/compare/v2.1.0-alpha.194...v2.1.0-alpha.195) (2023-06-19)
+
+**Note:** Version bump only for package @dpc-sdp/ripple-ui-forms
+
+# [2.1.0-alpha.194](https://github.com/dpc-sdp/ripple-framework/compare/v2.1.0-alpha.193...v2.1.0-alpha.194) (2023-06-16)
+
+**Note:** Version bump only for package @dpc-sdp/ripple-ui-forms
+
+# [2.1.0-alpha.193](https://github.com/dpc-sdp/ripple-framework/compare/v2.1.0-alpha.192...v2.1.0-alpha.193) (2023-06-16)
+
+**Note:** Version bump only for package @dpc-sdp/ripple-ui-forms
+
+# [2.1.0-alpha.192](https://github.com/dpc-sdp/ripple-framework/compare/v2.1.0-alpha.191...v2.1.0-alpha.192) (2023-06-16)
+
+### Bug Fixes
+
+* fixed vite-svg-loader not getting applied ([8baaa8d](https://github.com/dpc-sdp/ripple-framework/commit/8baaa8da6dadd06cd825f02bae4e202c5a983531))
+
+# [2.1.0-alpha.191](https://github.com/dpc-sdp/ripple-framework/compare/v2.1.0-alpha.190...v2.1.0-alpha.191) (2023-06-16)
+
+### Bug Fixes
+
+* **@dpc-sdp/ripple-ui-forms:** fixed 'required' label always showing for checkboxes ([126ec66](https://github.com/dpc-sdp/ripple-framework/commit/126ec6611e4279a984204f30fb32104e19db0df8))
+
+# [2.1.0-alpha.190](https://github.com/dpc-sdp/ripple-framework/compare/v2.1.0-alpha.189...v2.1.0-alpha.190) (2023-06-15)
+
+### Bug Fixes
+
+* **@dpc-sdp/ripple-ui-forms:** un-wrap date label for better voice over support ([d20d117](https://github.com/dpc-sdp/ripple-framework/commit/d20d117b11779379933b27eda69fc43bf9d1b5e7))
+
+### Features
+
+* **@dpc-sdp/ripple-ui-forms:** update date text ([5d38743](https://github.com/dpc-sdp/ripple-framework/commit/5d38743a7c3daa3dfabba36848e7e4e4325653df))
+
+# [2.1.0-alpha.189](https://github.com/dpc-sdp/ripple-framework/compare/v2.1.0-alpha.188...v2.1.0-alpha.189) (2023-06-15)
+
+### Bug Fixes
+
+* cleaning up browser console warnings ([06bcb20](https://github.com/dpc-sdp/ripple-framework/commit/06bcb20d0ef2b069973cb532bacd26efa5645e00))
+
+# [2.1.0-alpha.188](https://github.com/dpc-sdp/ripple-framework/compare/v2.1.0-alpha.187...v2.1.0-alpha.188) (2023-06-13)
+
+### Bug Fixes
+
+* **@dpc-sdp/ripple-ui-forms:** fix RplFormActions variants ([a06a21e](https://github.com/dpc-sdp/ripple-framework/commit/a06a21e9035279f28421d251d4f6d8752552c673))
+
+# [2.1.0-alpha.186](https://github.com/dpc-sdp/ripple-framework/compare/v2.1.0-alpha.185...v2.1.0-alpha.186) (2023-06-08)
+
+### Bug Fixes
+
+* **@dpc-sdp/ripple-ui-forms:** don't destructure form id ([d61da8f](https://github.com/dpc-sdp/ripple-framework/commit/d61da8f00514fe25b317811b8c7e4e432d54fcdc))
+* **@dpc-sdp/ripple-ui-forms:** don't destructure form id, design feedback, select options with enter ([efcb00e](https://github.com/dpc-sdp/ripple-framework/commit/efcb00e3c16e2b7480898e6bff468855a9dfef37))
+
 # [2.1.0-alpha.185](https://github.com/dpc-sdp/ripple-framework/compare/v2.1.0-alpha.184...v2.1.0-alpha.185) (2023-06-06)
 
 **Note:** Version bump only for package @dpc-sdp/ripple-ui-forms

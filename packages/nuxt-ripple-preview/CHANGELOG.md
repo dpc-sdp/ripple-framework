@@ -3,6 +3,68 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.0.0-rc.1](https://github.com/dpc-sdp/ripple-framework/compare/v2.1.0-alpha.201...v2.0.0-rc.1) (2023-06-22)
+
+**Note:** Version bump only for package @dpc-sdp/nuxt-ripple-preview
+
+# [2.1.0-alpha.200](https://github.com/dpc-sdp/ripple-framework/compare/v2.1.0-alpha.199...v2.1.0-alpha.200) (2023-06-21)
+
+**Note:** Version bump only for package @dpc-sdp/nuxt-ripple-preview
+
+# [2.1.0-alpha.198](https://github.com/dpc-sdp/ripple-framework/compare/v2.1.0-alpha.197...v2.1.0-alpha.198) (2023-06-20)
+
+### Bug Fixes
+
+* **@dpc-sdp/nuxt-ripple-preview:** remove file extensions to fix reference dev mode ([363ea25](https://github.com/dpc-sdp/ripple-framework/commit/363ea25f8fbc54fd6d19a296b788e7aa009871bf))
+
+# [2.1.0-alpha.197](https://github.com/dpc-sdp/ripple-framework/compare/v2.1.0-alpha.196...v2.1.0-alpha.197) (2023-06-20)
+
+**Note:** Version bump only for package @dpc-sdp/nuxt-ripple-preview
+
+# [2.1.0-alpha.195](https://github.com/dpc-sdp/ripple-framework/compare/v2.1.0-alpha.194...v2.1.0-alpha.195) (2023-06-19)
+
+**Note:** Version bump only for package @dpc-sdp/nuxt-ripple-preview
+
+# [2.1.0-alpha.194](https://github.com/dpc-sdp/ripple-framework/compare/v2.1.0-alpha.193...v2.1.0-alpha.194) (2023-06-16)
+
+**Note:** Version bump only for package @dpc-sdp/nuxt-ripple-preview
+
+# [2.1.0-alpha.193](https://github.com/dpc-sdp/ripple-framework/compare/v2.1.0-alpha.192...v2.1.0-alpha.193) (2023-06-16)
+
+**Note:** Version bump only for package @dpc-sdp/nuxt-ripple-preview
+
+# [2.1.0-alpha.192](https://github.com/dpc-sdp/ripple-framework/compare/v2.1.0-alpha.191...v2.1.0-alpha.192) (2023-06-16)
+
+**Note:** Version bump only for package @dpc-sdp/nuxt-ripple-preview
+
+# [2.1.0-alpha.191](https://github.com/dpc-sdp/ripple-framework/compare/v2.1.0-alpha.190...v2.1.0-alpha.191) (2023-06-16)
+
+**Note:** Version bump only for package @dpc-sdp/nuxt-ripple-preview
+
+# [2.1.0-alpha.190](https://github.com/dpc-sdp/ripple-framework/compare/v2.1.0-alpha.189...v2.1.0-alpha.190) (2023-06-15)
+
+### Bug Fixes
+
+* **@dpc-sdp/nuxt-ripple-preview:** fix duplicate import warning ([3d1819b](https://github.com/dpc-sdp/ripple-framework/commit/3d1819ba0a40ed6e59fe27f2013b96be0d3acc55))
+
+# [2.1.0-alpha.189](https://github.com/dpc-sdp/ripple-framework/compare/v2.1.0-alpha.188...v2.1.0-alpha.189) (2023-06-15)
+
+### Features
+
+* **@dpc-sdp/ripple-ui-core:** re-instate stylelint and fix errors, fix eslint warnings ([022d859](https://github.com/dpc-sdp/ripple-framework/commit/022d8598fa2f4f6c791dc6d4dc9a687d981f5a07))
+
+# [2.1.0-alpha.188](https://github.com/dpc-sdp/ripple-framework/compare/v2.1.0-alpha.187...v2.1.0-alpha.188) (2023-06-13)
+
+**Note:** Version bump only for package @dpc-sdp/nuxt-ripple-preview
+
+# [2.1.0-alpha.187](https://github.com/dpc-sdp/ripple-framework/compare/v2.1.0-alpha.186...v2.1.0-alpha.187) (2023-06-08)
+
+**Note:** Version bump only for package @dpc-sdp/nuxt-ripple-preview
+
+# [2.1.0-alpha.186](https://github.com/dpc-sdp/ripple-framework/compare/v2.1.0-alpha.185...v2.1.0-alpha.186) (2023-06-08)
+
+**Note:** Version bump only for package @dpc-sdp/nuxt-ripple-preview
+
 # [2.1.0-alpha.185](https://github.com/dpc-sdp/ripple-framework/compare/v2.1.0-alpha.184...v2.1.0-alpha.185) (2023-06-06)
 
 **Note:** Version bump only for package @dpc-sdp/nuxt-ripple-preview

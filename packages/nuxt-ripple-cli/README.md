@@ -1,8 +1,6 @@
 # Nuxt Ripple CLI
 
-## Description
-
-The Nuxt Ripple CLI is a command line utility for simplifying common setup and scaffolding tasks.
+> CLI for simplifying common setup and scaffolding tasks.
 
 ## Installation
 
@@ -19,8 +17,8 @@ If you've installed the package globally you can now use the `nuxt-ripple` comma
 
 The `init` command will initialise a new site or layer.
 
-```bash
-nuxt-ripple init [TEMPLATE] [DIRECTORY] --name {NAME}
+```
+nuxt-ripple init [TEMPLATE] [DIRECTORY] --name {NAME} --rplVersion {RPL_VERSION}
 ```
 
 `[TEMPLATE]`:
@@ -31,6 +29,8 @@ nuxt-ripple init [TEMPLATE] [DIRECTORY] --name {NAME}
 
 `--name {NAME}`: The name of the site or layer.
 
+`--rplVersion {RPL_VERSION}`: The version of the ripple core dependencies to use.
+
 ### Add
 
 The `add` command will create a ripple component or content type.
@@ -40,7 +40,7 @@ nuxt-ripple add <command> [DIRECTORY]
 ```
 
 `<command>`:
-- `component` Scaffolds a new Ripple (vue) component.
+- `component` Scaffolds a new Ripple (vue) component, note that the component folder is created as well to follow Ripple naming conventions.
 - `content-type` Scaffolds a new Ripple Tide content type.
 
 #### Add Component

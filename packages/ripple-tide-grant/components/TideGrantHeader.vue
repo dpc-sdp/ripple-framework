@@ -6,7 +6,7 @@
     :breadcrumbs="hasBreadcrumbs"
     :title="header.title"
   >
-    <p class="rpl-type-p-large">{{ header.summary }}</p>
+    {{ header.summary }}
   </RplHeroHeader>
 </template>
 
