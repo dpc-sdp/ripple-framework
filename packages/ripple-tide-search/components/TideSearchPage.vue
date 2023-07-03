@@ -2,65 +2,29 @@
 import { computed, ref } from 'vue'
 import { useRuntimeConfig, useFetch, useRoute } from '#imports'
 import useTideSearch from './../composables/use-tide-search'
-import { MappedSearchResult } from 'ripple-tide-search/types'
-import { SearchDriverOptions } from '@elastic/search-ui'
-import type { TideSearchListingPage } from './../types'
+import type {
+  TideSearchListingPage,
+  TideSearchListingResultLayout
+} from './../types'
 
 interface Props {
   title: string
   summary: string
-  filterInputs: TideSearchListingPage['filterInputs']
-  filterConfig: TideSearchListingPage['filterConfig']
-  pageConfig: TideSearchListingPage['pageConfig']
-  searchDriverOptions: Omit<SearchDriverOptions, 'apiConnector'>
-  searchResultsMappingFn: (item: any) => MappedSearchResult<any>
+  searchListingConfig: TideSearchListingPage['searchListingConfig']
+  index: TideSearchListingPage['index']
+  queryConfig: TideSearchListingPage['queryConfig']
+  globalFilters: TideSearchListingPage['globalFilters']
+  userFilters: TideSearchListingPage['userFilters']
+  resultsLayout: TideSearchListingResultLayout
+  searchResultsMappingFn: (item: any) => any
 }
 
 const props = withDefaults(defineProps<Props>(), {
   title: 'Search',
-  filterInputs: () => [],
-  filterConfig: () => {
-    return {
-      hideFilters: false,
-      labels: {
-        submit: 'Submit',
-        reset: 'Reset'
-      }
-    }
-  },
-  pageConfig: () => ({
-    results: 'grid'
-  }),
-  searchDriverOptions: () => ({
-    initialState: { resultsPerPage: 10 },
-    alwaysSearchOnInitialLoad: true,
-    searchQuery: {
-      search_fields: {
-        title: {
-          weight: 10
-        },
-        body: {},
-        field_paragraph_body: {}
-      }
-    },
-    autocompleteQuery: {
-      suggestions: {
-        types: {
-          documents: { fields: ['title'] }
-        },
-        size: 8
-      }
-    }
-  }),
-  searchResultsMappingFn: (item): MappedSearchResult<any> => {
-    return {
-      id: item._meta.id,
-      component: 'TideSearchResult',
-      props: {
-        result: item
-      }
-    }
-  }
+  searchListingConfig: () => ({
+    searchPlaceholder: 'Enter a search term',
+    resultsPerPage: 9
+  })
 })
 
 const route = useRoute()
@@ -74,81 +38,79 @@ const { data: site } = useFetch('/api/tide/site', {
   }
 })
 
-const apiConnectorOptions = {
-  ...config.tide?.appSearch,
-  // The search request is proxied through the API to avoid CORS issues
-  endpointBase: `${config.siteUrl || ''}/api/tide/search`
-}
-
 const {
-  updateSearchTerm,
-  doSearch,
-  goToPage,
-  searchState,
-  searchTermSuggestions,
+  getSearchResults,
+  getSuggestions,
+  filterForm,
+  suggestions,
   results,
-  staticFacetOptions,
-  filterFormValues
+  searchTerm
 } = await useTideSearch(
-  apiConnectorOptions,
-  props.searchDriverOptions,
-  props.filterInputs,
-  props.searchResultsMappingFn
+  props.queryConfig,
+  props.userFilters,
+  props.globalFilters,
+  props.searchResultsMappingFn,
+  props.index
 )
 
 const filtersExpanded = ref(false)
 
-const prevLink = computed(() => {
-  if (searchState.value.current <= 1) {
-    return null
-  }
+// const prevLink = computed(() => {
+//   if (searchState.value.current <= 1) {
+//     return null
+//   }
 
-  const searchParams = new URLSearchParams({
-    ...route.query,
-    current: `n_${searchState.value.current - 1}_n`
-  })
+//   const searchParams = new URLSearchParams({
+//     ...route.query,
+//     current: `n_${searchState.value.current - 1}_n`
+//   })
 
-  return {
-    url: `${route.path}?${searchParams.toString()}`,
-    description: `${searchState.value.current - 1} of ${
-      searchState.value.totalPages
-    }`
-  }
-})
+//   return {
+//     url: `${route.path}?${searchParams.toString()}`,
+//     description: `${searchState.value.current - 1} of ${
+//       searchState.value.totalPages
+//     }`
+//   }
+// })
 
-const nextLink = computed(() => {
-  if (searchState.value.current === searchState.value.totalPages) {
-    return null
-  }
+// const nextLink = computed(() => {
+//   if (searchState.value.current === searchState.value.totalPages) {
+//     return null
+//   }
 
-  const searchParams = new URLSearchParams({
-    ...route.query,
-    current: `n_${searchState.value.current + 1}_n`
-  })
+//   const searchParams = new URLSearchParams({
+//     ...route.query,
+//     current: `n_${searchState.value?.current + 1}_n`
+//   })
 
-  return {
-    url: `${route.path}?${searchParams.toString()}`,
-    description: `${searchState.value.current + 1} of ${
-      searchState.value.totalPages
-    }`
-  }
-})
+//   return {
+//     url: `${route.path}?${searchParams.toString()}`,
+//     description: `${searchState.value.current + 1} of ${
+//       searchState.value.totalPages
+//     }`
+//   }
+// })
 
-const handlePrevClick = () => {
-  goToPage(searchState.value.current - 1)
-}
+// const handlePrevClick = () => {
+//   goToPage(searchState.value.current - 1)
+// }
 
-const handleNextClick = () => {
-  goToPage(searchState.value.current + 1)
+// const handleNextClick = () => {
+//   goToPage(searchState.value.current + 1)
+// }
+
+const updateSearchTerm = () => {
+  getSuggestions()
 }
 
 const handleFilterSubmit = () => {
-  doSearch()
+  getSearchResults()
 }
 
 const handleFilterReset = () => {
-  filterFormValues.value = {}
-  doSearch()
+  console.log('test filter reset')
+  filterForm.value = {}
+  getSearchResults()
 }
 
 const toggleFilters = () => {
@@ -172,27 +134,26 @@ const toggleFilters = () => {
           <RplSearchBar
             id="tide-search-bar"
             variant="default"
-            :input-label="pageConfig.searchLabel"
-            :inputValue="searchState.searchTerm"
-            :suggestions="searchTermSuggestions"
-            :placeholder="pageConfig.searchPlaceholder"
-            @on-submit="doSearch"
+            :input-label="searchListingConfig.searchLabel"
+            :inputValue="searchTerm"
+            :placeholder="searchListingConfig.searchPlaceholder"
+            :suggestions="suggestions"
+            @on-submit="getSearchResults"
             @update:input-value="updateSearchTerm"
           />
           <RplSearchBarRefine
-            v-if="pageConfig.hideFilters"
+            v-if="searchListingConfig.hideFilters"
             class="tide-search-refine-btn"
             :expanded="filtersExpanded"
             @click="toggleFilters"
           />
 
-          <RplExpandable v-if="filterConfig.hideFilters">
+          <RplExpandable v-if="searchListingConfig.hideFilters">
             <TideSearchFilters
-              :staticFacetOptions="staticFacetOptions"
-              :filter-form-values="filterFormValues"
-              :filterInputs="filterInputs"
-              :submitLabel="filterConfig.labels.submit"
-              :resetLabel="filterConfig.labels.submit"
+              :filter-form-values="filterForm"
+              :filterInputs="userFilters"
+              :submitLabel="searchListingConfig.labels.submit"
+              :resetLabel="searchListingConfig.labels.reset"
               @reset="handleFilterReset"
               @submit="handleFilterSubmit"
             >
@@ -200,10 +161,8 @@ const toggleFilters = () => {
           </RplExpandable>
           <div v-else class="rpl-u-margin-t-4">
             <TideSearchFilters
-              :staticFacetOptions="staticFacetOptions"
-              :filter-form-values="filterFormValues"
-              :filterInputs="filterInputs"
-              :filters-config="filterConfig.inputs"
+              :filter-form-values="filterForm"
+              :filterInputs="userFilters"
               @reset="handleFilterReset"
               @submit="handleFilterSubmit"
             >
@@ -213,16 +172,16 @@ const toggleFilters = () => {
       </RplHeroHeader>
     </template>
     <template #body>
-      <RplPageComponent v-if="!searchState.error && searchState.totalResults">
+      <!-- <RplPageComponent v-if="!searchState.error && searchState.totalResults">
         <p class="rpl-type-label rpl-u-padding-b-6">
           Displaying {{ searchState.pagingStart }}-{{
             searchState.pagingEnd
           }}
           of {{ searchState.totalResults }} results
         </p>
-      </RplPageComponent>
+      </RplPageComponent> -->
       <RplPageComponent>
-        <div
+        <!-- <div
           :class="{
             'tide-search-results': true,
             'tide-search-results--loading':
@@ -256,19 +215,19 @@ const toggleFilters = () => {
                 </ul>
               </RplContent>
             </slot>
-          </div>
-          <slot v-else name="results" :results="results">
-            <component :is="pageConfig.resultsLayout" :results="results" />
-          </slot>
-        </div>
+          </div> -->
+        <slot name="results" :results="results">
+          <component :is="resultsLayout.component" :results="results" />
+        </slot>
+        <!-- </div> -->
       </RplPageComponent>
-      <RplPageComponent>
-        <slot
+      <!--
+        <RplPageComponent>
+         <slot
           name="pagination"
           :results="results"
           :hasError="searchState.error"
         >
-          <!-- TODO: Replace this with numbered pagination -->
           <RplPageLinks v-if="results && results.length && !searchState.error">
             <RplPageLinksItem
               v-if="prevLink"
@@ -290,7 +249,7 @@ const toggleFilters = () => {
             </RplPageLinksItem></RplPageLinks
           >
         </slot>
-      </RplPageComponent>
+      </RplPageComponent> -->
     </template>
   </TideBaseLayout>
 </template>

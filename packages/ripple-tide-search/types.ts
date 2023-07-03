@@ -6,11 +6,6 @@ import {
   AutocompleteQueryConfig
 } from '@elastic/search-ui'
 import type { TidePageBase } from '@dpc-sdp/ripple-tide-api/types'
-export interface MappedSearchResult<T> {
-  id: string
-  component: string
-  props: T
-}
 
 export interface FilterConfigItem {
   id: string
@@ -27,7 +22,11 @@ export interface FilterConfigItem {
 
 export type FilterFormModel = Record<string, Filter>
 
-export type TideSearchListingResultConfig = {
+export type TideSearchListingResultItem = {
+  /**
+   * @description search result key
+   */
+  id?: string
   /**
    * @description name of Vue component (globally imported) to render result
    */
@@ -40,15 +39,15 @@ export type TideSearchListingResultConfig = {
   }
 }
 
-export type TideSearchListingResult = {
-  /**
-   * @description search result key
-   */
-  id: string
+export type TideSearchListingResultLayout = {
   /**
    * @description name of Vue component (globally imported) to render result
    */
-  component: string
+  component:
+    | 'TideSearchResultsList'
+    | 'TideSearchResultsGrid'
+    | 'TideSearchResultsTable'
+    | string
   /**
    * @description optionally pass props to component (useful for configuring an existing component)
    */
@@ -58,66 +57,62 @@ export type TideSearchListingResult = {
 }
 
 export interface TideSearchListingPage extends TidePageBase {
+  title: string
   summary: string
-  searchConfig: {
+  /**
+   * @description ES Search index to connect to, defaults to environment
+   */
+  index: string
+  /**
+   * @description optional page level config
+   */
+  searchListingConfig: {
     /**
-     * @description Configuration for search query fields - See https://docs.elastic.co/search-ui/api/core/configuration#search_fields
+     * @description String for search input placeholder
      */
-    searchFields: Record<string, SearchFieldConfiguration>
+    searchPlaceholder?: string
     /**
-     * @description Global filters to scope all results to (applied separately to user defined filters). See https://docs.elastic.co/search-ui/api/core/configuration#filters-global-filters
+     * @description Label for search query submit button
      */
-    globalFilters: Filter[]
-    filterConfig: {
-      /**
-       * @description Whether to hide filters behind toggle button on load
-       */
-      hideFilters?: boolean
-      labels?: {
-        /**
-         * @description Label for submit button
-         */
-        submit?: string
-        /**
-         * @description Label for reset button
-         */
-        reset?: string
-      }
+    searchLabel?: string
+    /**
+     * @description Toggle grid and list view of results, cards need to be a grid view
+     */
+    resultsPerPage?: number
+    /**
+     * @description hide user filter form on load, default is false
+     */
+    hideFilters?: boolean
+    labels: {
+      submit: string
+      reset: string
     }
+  }
+  /**
+   * @description Configuration for search query fields - See https://docs.elastic.co/search-ui/api/core/configuration#search_fields
+   */
+  queryConfig: Record<string, SearchFieldConfiguration>
+  /**
+   * @description Global filters to scope all results to (applied separately to user defined filters). See https://docs.elastic.co/search-ui/api/core/configuration#filters-global-filters
+   */
+  globalFilters: Filter[]
+  /**
+   * @description Filter config for the user facing filter controls
+   */
+  userFilters: FilterConfigItem[]
+  /**
+   * @description Config for how to display results
+   */
+  results: {
     /**
-     * @description Filter config for the user facing filter controls
+     * @description Component to render results layout
      */
-    filterInputs: FilterConfigItem[]
+    layout?: TideSearchListingResultLayout
     /**
-     * @description Search listing page level configuration
+     * @description Component to render result items, can be either '*' for all types, or the content type name if you need to render different types of results differently
      */
-    pageConfig?: {
-      /**
-       * @description String for search input placeholder
-       */
-      searchPlaceholder?: string
-      /**
-       * @description Label for search query submit button
-       */
-      searchLabel?: string
-      /**
-       * @description Toggle grid and list view of results, cards need to be a grid view
-       */
-      resultsLayout: 'grid' | 'list'
-      /**
-       * @description Whether to hide filters behind toggle button on load
-       */
-      hideFilters?: boolean
-      /**
-       * @description How many results to display per page
-       */
-      resultsPerPage?: number
-    }
-    /**
-     * @description Result item configuration
-     */
-    resultsConfig: {
-      [key: string]: TideSearchListingResultConfig
+    item?: {
+      [key: string]: TideSearchListingResultItem
     }
   }
 }

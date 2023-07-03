@@ -16,7 +16,6 @@
           :is="filter.component"
           :id="filter.id"
           v-bind="filter.props"
-          :staticFacetOptions="staticFacetOptions"
         ></component>
       </div>
     </div>

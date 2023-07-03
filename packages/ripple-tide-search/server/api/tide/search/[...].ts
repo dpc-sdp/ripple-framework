@@ -9,7 +9,15 @@ export const createSearchHandler = async (event: H3Event) => {
   const proxyMiddleware = createProxyMiddleware({
     target: config.tide.appSearch.endpointBase,
     pathRewrite: {
-      '^/api/tide/search': ''
+      '^/api/tide/search': '/api/as/v1/engines/'
+    },
+    on: {
+      proxyReq(proxyReq, req, res) {
+        proxyReq.setHeader(
+          'Authorization',
+          `Bearer ${config.tide.appSearch.searchKey}`
+        )
+      }
     },
     logger: logger,
     changeOrigin: true

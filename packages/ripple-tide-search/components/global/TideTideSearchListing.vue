@@ -1,7 +1,9 @@
 <script setup lang="ts">
-import { MappedSearchResult } from '@dpc-sdp/ripple-tide-search/types'
 import { TideSiteData } from '@dpc-sdp/ripple-tide-api/types'
-import type { TideSearchListingPage } from './../../types'
+import type {
+  TideSearchListingPage,
+  TideSearchListingResultItem
+} from './../../types'
 
 interface Props {
   site: TideSiteData
@@ -10,35 +12,26 @@ interface Props {
 
 const props = defineProps<Props>()
 
-const searchDriverOptions = {
-  initialState: {
-    resultsPerPage: props.page.searchConfig?.pageConfig?.resultsPerPage || 10
-  },
-  alwaysSearchOnInitialLoad: true,
-  searchQuery: {
-    filters: props.page.searchConfig?.globalFilters,
-    search_fields: props.page.searchConfig?.searchFields
-  }
-}
-
-const searchResultsMappingFn = (item): MappedSearchResult<any> => {
-  for (const key in props.page.searchConfig?.resultsConfig) {
-    const mapping = props.page.searchConfig?.resultsConfig[key]
-    if (item.type?.raw[0] === key || key === '*') {
-      return {
-        id: item._meta.id,
-        component: mapping.component,
-        props: {
-          result: item
+const searchResultsMappingFn = (item): TideSearchListingResultItem => {
+  if (props.page.results.item) {
+    for (const key in props.page.results.item) {
+      const mapping = props.page.results.item[key]
+      if (item._source?.type[0] === key || key === '*') {
+        return {
+          id: item._id,
+          component: mapping.component,
+          props: {
+            result: item._source
+          }
         }
-      }
-    } else {
-      /* Add default search result mapping if none provided */
-      return {
-        id: item._meta.id,
-        component: 'TideSearchResult',
-        props: {
-          result: item
+      } else {
+        /* Add default search result mapping if none provided */
+        return {
+          id: item._id,
+          component: 'TideSearchResult',
+          props: {
+            result: item._source
+          }
         }
       }
     }
@@ -50,10 +43,12 @@ const searchResultsMappingFn = (item): MappedSearchResult<any> => {
   <TideSearchPage
     :title="page.title"
     :summary="page.summary"
-    :filterConfig="page.searchConfig?.filterConfig || undefined"
-    :filterInputs="page.searchConfig?.filterInputs"
-    :pageConfig="page.searchConfig?.pageConfig"
-    :searchDriverOptions="searchDriverOptions"
+    :searchListingConfig="page.searchListingConfig"
+    :index="page.index"
+    :queryConfig="page.queryConfig"
+    :globalFilters="page.globalFilters"
+    :userFilters="page.userFilters"
+    :resultsLayout="page.results?.layout"
     :searchResultsMappingFn="searchResultsMappingFn"
   />
 </template>

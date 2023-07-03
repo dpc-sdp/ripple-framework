@@ -4,25 +4,9 @@ interface Props {
   field: string
   placeholder: string
   label: string
-  staticFacetOptions: any
   options?: any[]
 }
-const props = defineProps<Props>()
-
-function getFilterOptions(field) {
-  if (!props.staticFacetOptions) {
-    return []
-  }
-  if (!props.staticFacetOptions[field]) {
-    return []
-  }
-
-  return props.staticFacetOptions[field].map((item) => ({
-    id: item,
-    label: item,
-    value: item
-  }))
-}
+defineProps<Props>()
 </script>
 
 <template>
@@ -33,6 +17,6 @@ function getFilterOptions(field) {
     :multiple="true"
     :label="label"
     :placeholder="placeholder"
-    :options="options || getFilterOptions(field)"
+    :options="options"
   />
 </template>
