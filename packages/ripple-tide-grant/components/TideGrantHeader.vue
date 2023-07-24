@@ -1,7 +1,7 @@
 <template>
   <RplHeroHeader
-    :corner-top="true"
-    :corner-bottom="true"
+    :cornerTop="cornerTop?.src || true"
+    :cornerBottom="cornerBottom?.src || true"
     :behind-nav="true"
     :breadcrumbs="hasBreadcrumbs"
     :title="header.title"
@@ -12,9 +12,12 @@
 
 <script setup lang="ts">
 import type { TideGrantHeader } from '../types'
+import type { TideImageField } from '@dpc-sdp/ripple-tide-api/types'
 
 defineProps<{
   header: TideGrantHeader
   hasBreadcrumbs: boolean
+  cornerTop?: TideImageField
+  cornerBottom?: TideImageField
 }>()
 </script>

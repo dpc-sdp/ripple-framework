@@ -22,6 +22,8 @@
       <TideGrantHeader
         :header="page.header"
         :hasBreadcrumbs="hasBreadcrumbs"
+        :cornerTop="site?.cornerGraphic?.top"
+        :cornerBottom="site?.cornerGraphic?.bottom"
       ></TideGrantHeader>
     </template>
     <template #body>
