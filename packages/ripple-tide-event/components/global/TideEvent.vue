@@ -22,6 +22,8 @@
       <TideEventHeader
         :header="page.header"
         :hasBreadcrumbs="hasBreadcrumbs"
+        :cornerTop="site?.cornerGraphic?.top"
+        :cornerBottom="site?.cornerGraphic?.bottom"
       ></TideEventHeader>
     </template>
     <template #body>
