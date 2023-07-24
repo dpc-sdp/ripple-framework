@@ -26,6 +26,8 @@
       <TidePublicationHeader
         :header="page.header"
         :hasBreadcrumbs="hasBreadcrumbs"
+        :cornerTop="site?.cornerGraphic?.top"
+        :cornerBottom="site?.cornerGraphic?.bottom"
       ></TidePublicationHeader>
     </template>
     <template #body>
