@@ -165,8 +165,33 @@ When(
   }
 )
 
+When(
+  `I toggle the {string} option in the search listing dropdown field labelled {string}`,
+  (optionLabel: string, fieldLabel: string) => {
+    cy.get(`label`)
+      .contains(fieldLabel)
+      .invoke('attr', 'for')
+      .then((dropdownId) => {
+        cy.get(`#${dropdownId}`).as('selectedDropdown').click()
+        cy.get('@selectedDropdown')
+          .next()
+          .find('[role="option"]')
+          .contains(optionLabel)
+          .click()
+        cy.get('@selectedDropdown').click()
+      })
+  }
+)
+
 When(`I toggle the search listing filters section`, () => {
   cy.get(`button`).contains('Refine search').click()
+})
+
+When(`I apply the search filters`, () => {
+  // cy.get(`button`).contains('Apply search filters').click({ force: true })
+  cy.get(`#tide-search-filter-form`)
+    .find('button[type="submit"]')
+    .click({ force: true })
 })
 
 When(`I clear the search filters`, () => {
