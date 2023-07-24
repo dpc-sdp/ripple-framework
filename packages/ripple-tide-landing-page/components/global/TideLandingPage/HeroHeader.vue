@@ -1,8 +1,10 @@
 <script setup lang="ts">
 import { computed, inject } from 'vue'
 import { ITideHeroHeader } from '../../../mapping/hero-header/hero-header-mapping'
-import type { IRplFeatureFlags } from '@dpc-sdp/ripple-tide-api/types'
-import { TideImageField } from '@dpc-sdp/nuxt-ripple/types'
+import type {
+  IRplFeatureFlags,
+  TideImageField
+} from '@dpc-sdp/ripple-tide-api/types'
 
 const props = defineProps<{
   header: ITideHeroHeader
