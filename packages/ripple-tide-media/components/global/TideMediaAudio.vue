@@ -18,7 +18,11 @@
       <slot name="breadcrumbs"></slot>
     </template>
     <template #aboveBody>
-      <TideMediaHeader :header="page.header" />
+      <TideMediaHeader
+        :header="page.header"
+        :cornerTop="site?.cornerGraphic?.top"
+        :cornerBottom="site?.cornerGraphic?.bottom"
+      />
     </template>
     <template #body>
       <TideMediaBody :media="page.media">
