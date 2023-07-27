@@ -15,6 +15,17 @@ import webformMapping from './components/webforms/webforms-mapping'
 import complexImageMapping from './components/complex-image/complex-image-mapping'
 import dataTableMapping from './components/data-table/data-table-mapping'
 
+// Not implemented
+const newsListingMapping = {
+  includes: [],
+  mapping: (field: any) => ({
+    component: 'TideLandingPageContent',
+    id: `${field.drupal_internal__id}`,
+    props: {}
+  }),
+  contentTypes: ['landing_page']
+}
+
 export default {
   'paragraph--basic_text': basicTextMapping,
   'paragraph--accordion': accordionMapping,
@@ -31,5 +42,6 @@ export default {
   'paragraph--content_collection_enhanced': contentCollectionMapping,
   'paragraph--embedded_webform': webformMapping,
   'paragraph--complex_image': complexImageMapping,
-  'paragraph--data_table': dataTableMapping
+  'paragraph--data_table': dataTableMapping,
+  'paragraph--news_listing': newsListingMapping
 }

@@ -19,37 +19,42 @@ const grouped: TideDynamicPageComponent<any> | TideDynamicComponentGroup =
   computed(() => {
     return groupDynamicComponents(props.components)
   })
+
+const hasProps = (item: any) =>
+  item.props && Object.entries(item.props).length > 0
 </script>
 
 <template>
   <template v-for="item in grouped" :key="item.id">
-    <RplCardGrid v-if="item.grouping" :hasSidebar="hasSidebar">
+    <template v-if="hasProps(item)">
+      <RplCardGrid v-if="item.grouping" :hasSidebar="hasSidebar">
+        <RplPageComponent
+          v-for="child in item.components"
+          :id="`page-component-${child.id}`"
+          :key="child.id"
+          :data-component-id="child.id"
+          :data-component-type="child.component"
+          :title="child.title"
+          :class="$attrs.class"
+        >
+          <component :is="child.component" v-bind="child.props"></component>
+        </RplPageComponent>
+      </RplCardGrid>
       <RplPageComponent
-        v-for="child in item.components"
-        :id="`page-component-${child.id}`"
-        :key="child.id"
-        :data-component-id="child.id"
-        :data-component-type="child.component"
-        :title="child.title"
+        v-else
+        :id="`page-component-${item.id}`"
+        :data-component-id="item.id"
+        :data-component-type="item.component"
+        :title="item.title"
         :class="$attrs.class"
+        :fullWidth="fullWidth"
       >
-        <component :is="child.component" v-bind="child.props"></component>
+        <component
+          :is="item.component"
+          :hasSidebar="hasSidebar"
+          v-bind="item.props"
+        ></component>
       </RplPageComponent>
-    </RplCardGrid>
-    <RplPageComponent
-      v-else
-      :id="`page-component-${item.id}`"
-      :data-component-id="item.id"
-      :data-component-type="item.component"
-      :title="item.title"
-      :class="$attrs.class"
-      :fullWidth="fullWidth"
-    >
-      <component
-        :is="item.component"
-        :hasSidebar="hasSidebar"
-        v-bind="item.props"
-      ></component>
-    </RplPageComponent>
+    </template>
   </template>
 </template>
