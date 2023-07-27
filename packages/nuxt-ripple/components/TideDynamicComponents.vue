@@ -6,7 +6,7 @@ import type {
 import { computed } from 'vue'
 import groupDynamicComponents from '../utils/groupDynamicComponents'
 interface Props {
-  components: TideDynamicPageComponent[]
+  components: TideDynamicPageComponent<any>[]
   fullWidth?: boolean
   hasSidebar?: boolean
 }
@@ -26,35 +26,33 @@ const hasProps = (item: any) =>
 
 <template>
   <template v-for="item in grouped" :key="item.id">
-    <template v-if="hasProps(item)">
-      <RplCardGrid v-if="item.grouping" :hasSidebar="hasSidebar">
-        <RplPageComponent
-          v-for="child in item.components"
-          :id="`page-component-${child.id}`"
-          :key="child.id"
-          :data-component-id="child.id"
-          :data-component-type="child.component"
-          :title="child.title"
-          :class="$attrs.class"
-        >
-          <component :is="child.component" v-bind="child.props"></component>
-        </RplPageComponent>
-      </RplCardGrid>
+    <RplCardGrid v-if="item.grouping" :hasSidebar="hasSidebar">
       <RplPageComponent
-        v-else
-        :id="`page-component-${item.id}`"
-        :data-component-id="item.id"
-        :data-component-type="item.component"
-        :title="item.title"
+        v-for="child in item.components.filter(hasProps)"
+        :id="`page-component-${child.id}`"
+        :key="child.id"
+        :data-component-id="child.id"
+        :data-component-type="child.component"
+        :title="child.title"
         :class="$attrs.class"
-        :fullWidth="fullWidth"
       >
-        <component
-          :is="item.component"
-          :hasSidebar="hasSidebar"
-          v-bind="item.props"
-        ></component>
+        <component :is="child.component" v-bind="child.props"></component>
       </RplPageComponent>
-    </template>
+    </RplCardGrid>
+    <RplPageComponent
+      v-else-if="hasProps(item)"
+      :id="`page-component-${item.id}`"
+      :data-component-id="item.id"
+      :data-component-type="item.component"
+      :title="item.title"
+      :class="$attrs.class"
+      :fullWidth="fullWidth"
+    >
+      <component
+        :is="item.component"
+        :hasSidebar="hasSidebar"
+        v-bind="item.props"
+      ></component>
+    </RplPageComponent>
   </template>
 </template>
