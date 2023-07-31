@@ -46,3 +46,39 @@ It can also be set as an environment variable.
 # GTM container - this should be common to all SDP sites utilising WoVG analytics
 NUXT_PUBLIC_TIDE_ANALYTICS_GTM=GTM-XXXXXXX
 ```
+
+The [App config](https://nuxt.com/docs/getting-started/configuration#app-configuration) file can be used to add additional event listeners, as well as disable or override the default route change event.
+
+```js
+import { trackEvent } from '@dpc-sdp/nuxt-ripple-analytics/events'
+
+export default defineAppConfig({
+  ripple: {
+    analytics: {
+      // routeChange events are enabled by default
+      // this parameter can be set to false to disable routeChange events
+      // or optionally, an object can be used to extend or override the default routeChange event
+      routeChange: {
+        app: ({ payload, page }) => ({
+          // optionally include default event data
+          ...payload,
+          // add custom event data
+          promoted: true
+        })
+      },
+
+      // custom events listeners can be added here
+      eventListeners: {
+        'my-custom-event': () => {
+          return (payload) => {
+            trackEvent({
+              // custom event data
+              event: payload.action
+            })
+          }
+        }
+      }
+    }
+  }
+})
+```
