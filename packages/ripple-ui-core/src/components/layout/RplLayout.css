@@ -29,7 +29,7 @@
 .rpl-layout__sidebar {
   padding-top: var(--rpl-sp-8);
 
-  @media (--rpl-bp-m) {
+  @media (--rpl-bp-l) {
     padding-top: 0;
   }
 }

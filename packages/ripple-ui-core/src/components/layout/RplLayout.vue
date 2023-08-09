@@ -83,7 +83,7 @@ const skipLinksId = 'rpl-skip-links'
                 :id="mainId"
                 :class="{
                   'rpl-col-12': true,
-                  'rpl-col-7-m': hasSidebar,
+                  'rpl-col-7-l': hasSidebar,
                   [`${language}`]: language
                 }"
                 class="rpl-layout__main"
@@ -94,7 +94,7 @@ const skipLinksId = 'rpl-skip-links'
               <aside
                 v-if="hasSidebar"
                 id="rpl-sidebar"
-                class="rpl-layout__sidebar rpl-col-4-m rpl-col-start-9-m rpl-col-12"
+                class="rpl-layout__sidebar rpl-col-4-l rpl-col-start-9-l rpl-col-12"
               >
                 <slot name="sidebar"></slot>
               </aside>
