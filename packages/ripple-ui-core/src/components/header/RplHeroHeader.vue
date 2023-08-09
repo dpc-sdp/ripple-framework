@@ -54,6 +54,17 @@ const emit = defineEmits<{
 const highlight = computed(
   () => props.theme === 'reverse' || props.theme === 'neutral'
 )
+const showActions = computed(
+  () => (props.primaryAction || props.secondaryAction) && !props.background
+)
+const showLinks = computed(
+  () => props.links?.items?.length && !props.background
+)
+const contentWidth = computed(() => {
+  if (props.fullWidth) return 'full'
+
+  return !showLinks.value ? 'wide' : null
+})
 
 const classes = computed(() => ({
   'rpl-header--hero': true,
@@ -101,7 +112,7 @@ const handleClick = (event) => {
 </script>
 
 <template>
-  <RplHeader :class="classes" :full-width="fullWidth">
+  <RplHeader :class="classes" :content-width="contentWidth">
     <template v-if="background || cornerTop || cornerBottom" #behind>
       <RplImage
         v-if="background"
@@ -131,14 +142,14 @@ const handleClick = (event) => {
     >
       <slot></slot>
     </p>
-    <template v-if="(primaryAction || secondaryAction) && !background" #lower>
+    <template v-if="showActions" #lower>
       <RplHeaderActions
         :primary="primaryAction"
         :secondary="secondaryAction"
         @item-click="handleClick"
       />
     </template>
-    <template v-if="links && !background" #aside>
+    <template v-if="showLinks" #aside>
       <RplHeaderLinks
         :title="links?.title"
         :items="

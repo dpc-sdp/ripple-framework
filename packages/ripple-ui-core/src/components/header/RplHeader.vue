@@ -2,17 +2,18 @@
 import { computed } from 'vue'
 
 interface Props {
-  fullWidth?: boolean
+  contentWidth?: 'wide' | 'full'
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  fullWidth: false
+  contentWidth: undefined
 })
 
 const mainClasses = computed(() => ({
   'rpl-header__main': true,
   'rpl-col-12': true,
-  'rpl-col-7-m': !props.fullWidth
+  'rpl-col-7-m': !props.contentWidth,
+  'rpl-col-10-m': props.contentWidth === 'wide'
 }))
 </script>
 
