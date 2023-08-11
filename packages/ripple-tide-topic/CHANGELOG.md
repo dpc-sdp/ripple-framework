@@ -5,4 +5,4 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 # [2.2.0-next.0](https://github.com/dpc-sdp/ripple-framework/compare/v2.1.0...v2.2.0-next.0) (2023-08-11)
 
-**Note:** Version bump only for package @dpc-sdp/eslint-config-ripple
+**Note:** Version bump only for package @dpc-sdp/ripple-tide-topic

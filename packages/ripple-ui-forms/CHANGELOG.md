@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.2.0-next.0](https://github.com/dpc-sdp/ripple-framework/compare/v2.1.0...v2.2.0-next.0) (2023-08-11)
+
+### Bug Fixes
+
+* **@dpc-sdp/ripple-ui-core:** add min-width to fieldsets, this fixes overflowing dropdowns ([4cd64d7](https://github.com/dpc-sdp/ripple-framework/commit/4cd64d7dd019fc1174dc23203f2243a0206d3084))
+
 # [2.0.0-rc.1](https://github.com/dpc-sdp/ripple-framework/compare/v2.1.0-alpha.201...v2.0.0-rc.1) (2023-06-22)
 
 **Note:** Version bump only for package @dpc-sdp/ripple-ui-forms

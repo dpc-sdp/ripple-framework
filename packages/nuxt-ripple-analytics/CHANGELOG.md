@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.2.0-next.0](https://github.com/dpc-sdp/ripple-framework/compare/v2.1.0...v2.2.0-next.0) (2023-08-11)
+
+### Features
+
+* **@dpc-sdp/ripple-tide-search:** add search listing events ([581fa16](https://github.com/dpc-sdp/ripple-framework/commit/581fa16620dfe14623b65ac444ab08a8aeb1e2cc))
+* **@dpc-sdp/ripple-tide-search:** add tide search page events ([5db04e1](https://github.com/dpc-sdp/ripple-framework/commit/5db04e130dcd1baf8da03e394c411e494ced5e6d))
+* **@dpc-sdp/ripple-tide-search:** add type to search events ([037f1c6](https://github.com/dpc-sdp/ripple-framework/commit/037f1c65e87eed808a0678c42470d841f12ebaa0))
+
 # [2.0.0-rc.1](https://github.com/dpc-sdp/ripple-framework/compare/v2.1.0-alpha.201...v2.0.0-rc.1) (2023-06-22)
 
 **Note:** Version bump only for package @dpc-sdp/nuxt-ripple-analytics

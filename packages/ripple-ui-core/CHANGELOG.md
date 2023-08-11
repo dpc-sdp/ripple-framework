@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.2.0-next.0](https://github.com/dpc-sdp/ripple-framework/compare/v2.1.0...v2.2.0-next.0) (2023-08-11)
+
+### Bug Fixes
+
+* **@dpc-sdp/ripple-ui-core:** allow tables and media elements to span full width ([b54b6cc](https://github.com/dpc-sdp/ripple-framework/commit/b54b6cce3f18d15e4397078b5492c3cd5758dd36))
+* **@dpc-sdp/ripple-ui-core:** ensure wysiwyg images aren't all full width ([2eabe11](https://github.com/dpc-sdp/ripple-framework/commit/2eabe11f5f9ab618503cc6f97b2f901448f9f82c))
+* **@dpc-sdp/ripple-ui-core:** fix quick exit positioning in build mode ([b779e9b](https://github.com/dpc-sdp/ripple-framework/commit/b779e9b9b70f4267f68d2acaab9c5c0e4f7ed870))
+
+### Features
+
+* **@dpc-sdp/ripple-tide-landing-page:** add compact card collection i.e. category grid support ([9f9b2ff](https://github.com/dpc-sdp/ripple-framework/commit/9f9b2ff45010a2dfbc29e7752f55c46ba248afe8))
+* **@dpc-sdp/ripple-tide-search:** add tide search page events ([5db04e1](https://github.com/dpc-sdp/ripple-framework/commit/5db04e130dcd1baf8da03e394c411e494ced5e6d))
+* **@dpc-sdp/ripple-tide-search:** add type to search events ([037f1c6](https://github.com/dpc-sdp/ripple-framework/commit/037f1c65e87eed808a0678c42470d841f12ebaa0))
+* **@dpc-sdp/ripple-ui-core:** make header content 10 cols when there's no 'sidebar' ([09a4918](https://github.com/dpc-sdp/ripple-framework/commit/09a491829f98819f5f7f4f32479cc3e2fc3e1e13))
+* **@dpc-sdp/ripple-ui-core:** move default alt above image attrs so it can be overridden ([f572cdf](https://github.com/dpc-sdp/ripple-framework/commit/f572cdf75048f5130e43ba2299397b78d0819ddc))
+
 # [2.0.0-rc.1](https://github.com/dpc-sdp/ripple-framework/compare/v2.1.0-alpha.201...v2.0.0-rc.1) (2023-06-22)
 
 **Note:** Version bump only for package @dpc-sdp/ripple-ui-core
