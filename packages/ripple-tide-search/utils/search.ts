@@ -29,3 +29,26 @@ export const getSingleQueryStringValue = (
 
   return value || undefined
 }
+
+export const truncateText = (text, stop = 150, clamp) => {
+  if (text && typeof text === 'string') {
+    if (text.length > stop) {
+      return text.slice(0, stop) + (stop < text.length ? clamp || '...' : '')
+    }
+    return text
+  }
+  return ''
+}
+
+/**
+ * @description Helper to get active filter data as URL params
+ */
+export const getActiveFilterURL = (filters) => {
+  const activeFilters = filters
+    ? Object.entries(filters).filter((o) =>
+        Array.isArray(o[1]) ? o[1].length : o[1]
+      )
+    : {}
+
+  return new URLSearchParams(activeFilters).toString()
+}

@@ -13,10 +13,11 @@ interface Props {
 const props = defineProps<Props>()
 
 const searchResultsMappingFn = (item): TideSearchListingResultItem => {
-  if (props.page.results.item) {
-    for (const key in props.page.results.item) {
-      const mapping = props.page.results.item[key]
-      if (item._source?.type[0] === key || key === '*') {
+  if (props.page.config.results.item) {
+    for (const key in props.page.config.results.item) {
+      const mapping = props.page.config.results.item[key]
+      if (!item._source?.type || item._source?.type[0] === key || key === '*') {
+        /* If there is no type, a component will be required */
         return {
           id: item._id,
           component: mapping.component,
@@ -45,13 +46,12 @@ const searchResultsMappingFn = (item): TideSearchListingResultItem => {
     :site="site"
     :contentPage="page"
     :title="page.title"
-    :summary="page.summary"
-    :searchListingConfig="page.searchListingConfig"
-    :index="page.index"
-    :queryConfig="page.queryConfig"
-    :globalFilters="page.globalFilters"
-    :userFilters="page.userFilters"
-    :resultsLayout="page.results?.layout"
+    :introText="page.introText"
+    :searchListingConfig="page.config.searchListingConfig"
+    :queryConfig="page.config.queryConfig"
+    :globalFilters="page.config.globalFilters"
+    :userFilters="page.config.userFilters"
+    :resultsLayout="page.config.results?.layout"
     :searchResultsMappingFn="searchResultsMappingFn"
   />
 </template>

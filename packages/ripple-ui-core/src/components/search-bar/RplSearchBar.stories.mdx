@@ -7,35 +7,31 @@ import {
 import RplSearchBar from './RplSearchBar.vue'
 import { a11yStoryCheck } from './../../../stories/interactions.js'
 import { action } from '@storybook/addon-actions';
+import { mockSuggestions } from './fixtures'
 
 export const SingleTemplate = (args) => ({
   components: { RplSearchBar },
   setup() {
-    return { args }
+    return {
+      args,
+      callAction: action
+    }
   },
   data: () => ({ inputValue: null }),
   computed: {
     suggestions() {
-      const mockSuggestions = [
-        'rip',
-        'ripe',
-        'ripen',
-        'riptide',
-        'ripple',
-        'ripple component',
-        'ripple components',
-      ]
       if (!this.inputValue) {
         return []
       }
       return mockSuggestions.filter((val) => val.startsWith(this.inputValue))
     }
   },
-  template: `<RplSearchBar v-bind="args" @onSubmit="submitAction" @update:input-value="onUpdate" :input-value="inputValue" :suggestions="suggestions" />`,
+  template: `<RplSearchBar v-bind="args" @submit="submitAction" @update:input-value="onUpdate" :input-value="inputValue" :suggestions="suggestions" />`,
   methods: {
-    submitAction: action('onSubmit'),
+    submitAction: action('submit'),
     onUpdate: function(val) {
       this.inputValue = val
+      action('onUpdate')(val)
     }
   }
 })

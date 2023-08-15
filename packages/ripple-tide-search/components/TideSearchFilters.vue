@@ -1,6 +1,7 @@
 <template>
   <RplForm
     id="tide-search-filter-form"
+    :title="title"
     class="rpl-u-margin-t-6"
     @submit="handleFilterSubmit"
   >
@@ -26,9 +27,10 @@
     </div>
     <RplFormActions
       v-if="submitLabel"
+      id="tide-search-filter-form-actions"
       :label="submitLabel"
       :resetLabel="resetLabel"
-      :displayResetButton="resetLabel"
+      :displayResetButton="!!resetLabel"
       @reset="handleFilterReset"
     />
   </RplForm>
@@ -41,6 +43,7 @@ type CollectionFilter = {
 }
 
 interface Props {
+  title: string
   filterInputs: CollectionFilter[]
   filterFormValues: Record<string, any>
   submitLabel?: string | boolean
@@ -52,7 +55,7 @@ const emit = defineEmits<{
   (e: 'reset'): void
 }>()
 
-withDefaults(defineProps<Props>(), {
+const props = withDefaults(defineProps<Props>(), {
   submitLabel: 'Apply search filters',
   resetLabel: 'Clear search filters'
 })
@@ -62,6 +65,10 @@ const handleFilterReset = () => {
 }
 
 const handleFilterSubmit = (formValues) => {
-  emit('submit', formValues.data)
+  emit('submit', {
+    text: props.submitLabel,
+    value: formValues.data,
+    type: 'button'
+  })
 }
 </script>
