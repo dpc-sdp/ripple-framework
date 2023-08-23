@@ -167,6 +167,20 @@
             }
           ]
         }
+      },
+      {
+        "id": "rangeFilterFrom",
+        "component": "TideSearchFilterDate",
+        "filter": {
+          "type": "range",
+          "comparator": "gte",
+          "value": "rangeFilterFrom.value"
+        },
+        "props": {
+          "id": "rangeFilterFrom",
+          "label": "Select a date",
+          "type": "RplFormDate"
+        }
       }
     ]
   }

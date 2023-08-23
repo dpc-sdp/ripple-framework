@@ -22,7 +22,6 @@ Feature: Search listing - Filter
     When I toggle the search listing filters section
     Then the search listing dropdown field labelled "Raw filter example" should have the value "Dogs, Birds"
 
-
   @mockserver
   Example: Term filter - Should reflect a single value from the URL
     Given the page endpoint for path "/filters" returns fixture "/search-listing/filters/page" with status 200
@@ -97,6 +96,20 @@ Feature: Search listing - Filter
 
     When I toggle the search listing filters section
     Then the search listing dropdown field labelled "Custom function filter example" should have the value "Open, Closed"
+
+  @mockserver
+  Example: Range filter - Should reflect a single value from the URL
+    Given the page endpoint for path "/filters" returns fixture "/search-listing/filters/page" with status 200
+    And the search network request is stubbed with fixture "/search-listing/filters/response" and status 200
+
+    When I visit the page "/filters?rangeFilterFrom=2022-05-20"
+    Then the search listing page should have 2 results
+    And the search network request should be called with the "/search-listing/filters/request-range" fixture
+
+    Then the filters toggle should show 1 applied filters
+
+    When I toggle the search listing filters section
+    Then the search listing date field labelled "Select a date" should have the value "2022-05-20"
 
   @mockserver
   Example: Clear filters

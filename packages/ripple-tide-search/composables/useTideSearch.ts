@@ -120,9 +120,11 @@ export default (
   const userFilters = computed(() => {
     return Object.keys(filterForm.value).map((key: string) => {
       const itm = userFilterConfig.find((itm: any) => itm.id === key)
+      let filterVal = filterForm.value[key]
 
-      const filterVal =
-        filterForm.value[key] && Array.from(filterForm.value[key])
+      if (itm.component === 'TideSearchFilterDropdown') {
+        filterVal = filterForm.value[key] && Array.from(filterForm.value[key])
+      }
 
       // Need to work out if form has value - will be different for different controls
       const hasValue = (v: unknown) => {
@@ -150,6 +152,20 @@ export default (
             prefix: {
               [`${itm.filter.value}`]: {
                 value: Array.isArray(filterVal) ? filterVal[0] : filterVal
+              }
+            }
+          }
+        }
+
+        /**
+         * The ES range query expects a single value
+         *  - Comparators are gt, gte, lt and lte: https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-range-query.html
+         */
+        if (itm.filter.type === 'range') {
+          return {
+            range: {
+              [`${itm.filter.value}`]: {
+                [`${itm.filter.comparator}`]: filterVal
               }
             }
           }
@@ -321,12 +337,17 @@ export default (
    * Updates the URL to trigger a new search, always returns to page 1 to avoid empty pages
    */
   const submitSearch = async () => {
+    const filterFormValues = Object.fromEntries(
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      Object.entries(filterForm.value).filter(([key, value]) => value)
+    )
+
     await navigateTo({
       path: route.path,
       query: {
         page: 1,
         q: searchTerm.value || undefined,
-        ...filterForm.value
+        ...filterFormValues
       }
     })
   }

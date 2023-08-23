@@ -168,6 +168,29 @@ When(
   }
 )
 
+Then(
+  `the search listing date field labelled {string} should have the value {string}`,
+  (label: string, value: string) => {
+    cy.get(`legend`)
+      .contains(label)
+      .parent()
+      .invoke('attr', 'id')
+      .then((dropdownId) => {
+        const [year, month, day] = value.split('-')
+        cy.get(`#${dropdownId}`).as('selectedDate')
+        cy.get('@selectedDate')
+          .find(`#${dropdownId}__day`)
+          .should('have.value', Number(day))
+        cy.get('@selectedDate')
+          .find(`#${dropdownId}__month`)
+          .should('have.value', Number(month))
+        cy.get('@selectedDate')
+          .find(`#${dropdownId}__year`)
+          .should('have.value', Number(year))
+      })
+  }
+)
+
 When(`I toggle the search listing filters section`, () => {
   cy.get(`button`).contains('Refine search').click()
 })
