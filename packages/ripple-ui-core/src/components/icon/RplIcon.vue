@@ -21,6 +21,9 @@ const props = withDefaults(defineProps<Props>(), {
 })
 
 const inSprite = ref(RplCoreIconNames.find((key) => key === props.name))
+const inCustomImports = ref(
+  Object.keys(customIconImports).find((key) => key === props.name)
+)
 
 const asyncIcon = computed(() => {
   if (!inSprite.value) {
@@ -47,7 +50,13 @@ const classes = computed(() => [
 
 <template>
   <span :class="classes">
-    <component :is="asyncIcon" v-if="name && !inSprite && asyncIcon" />
+    <template v-if="name && !inSprite">
+      <component :is="asyncIcon" v-if="inCustomImports" />
+      <svg v-else :role="title ? undefined : 'presentation'">
+        <title v-if="title">{{ title }}</title>
+        <use xlink:href="#icon-link-external-square-filled"></use>
+      </svg>
+    </template>
     <svg v-else-if="name" :role="title ? undefined : 'presentation'">
       <title v-if="title">{{ title }}</title>
       <use :xlink:href="`#${name}`"></use>
