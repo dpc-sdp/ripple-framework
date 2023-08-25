@@ -9,11 +9,13 @@ module.exports = {
   modulePathIgnorePatterns: ['node_modules', '.jest-test-results.json', 'dist'],
   testEnvironment: 'jsdom',
   transform: {
-    '^.+\\.js$': '<rootDir>/node_modules/babel-jest',
+    '^.+\\.[m]?js$': '<rootDir>/node_modules/babel-jest',
     '^.+\\.ts$': '<rootDir>/node_modules/ts-jest',
     '.*\\.vue$': '<rootDir>/node_modules/@vue/vue3-jest'
   },
-  transformIgnorePatterns: ['node_modules/(?!.pnpm)(?!(ripple-*|lodash-es)/)'],
+  transformIgnorePatterns: [
+    'node_modules/(?!.pnpm)(?!(ripple-*|lodash-es|uncrypto)/)'
+  ],
   extensionsToTreatAsEsm: ['.ts'],
   moduleNameMapper: {
     '^(\\.{1,2}/.*)\\.js$': '$1',
