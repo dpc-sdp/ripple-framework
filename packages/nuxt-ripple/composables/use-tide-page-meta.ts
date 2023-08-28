@@ -6,10 +6,7 @@ const metaProperty = (str: string) => {
   return p[0] + p[1].charAt(0).toUpperCase() + p[1].slice(1)
 }
 
-export default async (props: any) => {
-  const page = props.page
-  const site = props.site
-
+export default async (page, site, pageTitle) => {
   // Additional <link>s in head
   const links = []
   const additionalMeta = page.meta?.additional || []
@@ -93,7 +90,7 @@ export default async (props: any) => {
   // Define SEO meta
   useSeoMeta({
     description: description,
-    ogTitle: props.pageTitle,
+    ogTitle: pageTitle.value,
     ogDescription: description,
     ogType: 'website',
     ogUrl: $app_origin + page.meta.url,
@@ -101,7 +98,7 @@ export default async (props: any) => {
     ogImageAlt: featuredImageAlt,
     twitterCard: 'summary',
     twitterSite: $app_origin,
-    twitterTitle: props.pageTitle,
+    twitterTitle: pageTitle.value,
     twitterDescription: description,
     twitterImage: twitterImage,
     twitterImageAlt: twitterImageAlt,

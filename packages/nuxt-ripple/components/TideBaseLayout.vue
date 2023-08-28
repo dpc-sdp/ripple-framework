@@ -156,15 +156,20 @@ const style = useSiteTheme(
 
 const { direction, language } = useTideLanguage(props?.page)
 
-const pageTitle = computed(
-  () => `${props.pageTitle || props.page?.title || ''} | `
-)
+const pageTitle = computed(() => {
+  const titleOfPage = `${props.pageTitle || props.page?.title}`
+  const titleOfSite = `${props.site?.name}`
+  if (titleOfPage && titleOfSite) {
+    return `${titleOfPage} | ${titleOfSite}`
+  }
+  return titleOfSite
+})
 
 useHead({
   htmlAttrs: {
     lang: props.pageLanguage || 'en-AU'
   },
-  title: `${pageTitle.value}${props.site?.name}`,
+  title: pageTitle.value,
   style: style && [
     {
       children: `:root, body { ${style} }`
@@ -203,6 +208,6 @@ useHead({
 })
 
 if (props.page && props.page.meta) {
-  useTidePageMeta(props)
+  useTidePageMeta(props.page, props.site, pageTitle)
 }
 </script>
