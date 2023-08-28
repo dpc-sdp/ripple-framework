@@ -156,11 +156,15 @@ const style = useSiteTheme(
 
 const { direction, language } = useTideLanguage(props?.page)
 
+const pageTitle = computed(
+  () => `${props.pageTitle || props.page?.title || ''} | `
+)
+
 useHead({
   htmlAttrs: {
     lang: props.pageLanguage || 'en-AU'
   },
-  title: `${props.page?.title} | ${props.site?.name}`,
+  title: `${pageTitle.value}${props.site?.name}`,
   style: style && [
     {
       children: `:root, body { ${style} }`
