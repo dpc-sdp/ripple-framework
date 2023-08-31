@@ -46,9 +46,9 @@ The details below relate to using this package outside of Tide.
 npm install @dpc-sdp/ripple-ui-forms
 ```
 
-## Usage (Nuxt)
+## Usage (Nuxt 3)
 
-Ripple UI Forms exports a nuxt module that you can add to your nuxt config, note the addition of `/nuxt`.
+Ripple UI Forms exports a nuxt (v3) module that you can add to your nuxt config, note the addition of `/nuxt`.
 
 ```js
 export default defineNuxtConfig({
