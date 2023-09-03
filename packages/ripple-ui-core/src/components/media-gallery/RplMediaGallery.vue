@@ -3,6 +3,7 @@ import RplMediaGalleryContent from './RplMediaGalleryContent.vue'
 import RplImage from '../image/RplImage.vue'
 import RplSlider from '../slider/RplSlider.vue'
 import RplModal from '../modal/RplModal.vue'
+import RplSkipLink from '../skip-link/RplSkipLink.vue'
 import { onMounted, onUnmounted, ref } from 'vue'
 import {
   useRippleEvent,
@@ -20,10 +21,14 @@ interface RplMediaGalleryItem {
 }
 
 interface Props {
+  id: string
   items: RplMediaGalleryItem[]
+  skipText?: string
 }
 
-const props = defineProps<Props>()
+const props = withDefaults(defineProps<Props>(), {
+  skipText: 'Skip media gallery'
+})
 
 const emit = defineEmits<{
   (e: 'paginate', payload: rplEventPayload & { action: 'prev' | 'next' }): void
@@ -119,9 +124,11 @@ onUnmounted(() => {
 
 <template>
   <div class="rpl-media-gallery">
+    <RplSkipLink :target-id="`media-gallery-${id}`">{{ skipText }}</RplSkipLink>
     <RplSlider
       :current-slide="activeImageSlide"
       :show-pagination="false"
+      :change-notice="false"
       class="rpl-media-gallery__primary-images rpl-u-screen-only"
       data-cy="gallery-images"
       @change="imageSlideUpdate"
@@ -135,6 +142,7 @@ onUnmounted(() => {
         sizes="xs:768px"
         data-cy="image"
         class="rpl-media-gallery__image"
+        :aria-describedby="`primary-${id}-${i}`"
       />
     </RplSlider>
     <RplSlider
@@ -147,6 +155,7 @@ onUnmounted(() => {
     >
       <RplMediaGalleryContent
         v-for="(item, index) in items"
+        :id="`primary-${id}-${index}`"
         :key="index"
         :title="item.title"
         :caption="item.caption"
@@ -164,6 +173,7 @@ onUnmounted(() => {
       <RplSlider
         :current-slide="activeModalImageSlide"
         :show-pagination="false"
+        :change-notice="false"
         class="rpl-media-gallery__modal-images"
         @change="modalImageSlideUpdate"
       >
@@ -174,6 +184,7 @@ onUnmounted(() => {
           :alt="item.alt"
           fit="contain"
           class="rpl-media-gallery__image"
+          :aria-describedby="`gallery-${id}-${i}`"
         />
       </RplSlider>
       <template #below>
@@ -186,6 +197,7 @@ onUnmounted(() => {
         >
           <RplMediaGalleryContent
             v-for="(item, index) in items"
+            :id="`gallery-${id}-${index}`"
             :key="index"
             :title="item.title"
             :caption="item.caption"
@@ -195,6 +207,7 @@ onUnmounted(() => {
         </RplSlider>
       </template>
     </RplModal>
+    <div :id="`media-gallery-${id}`" />
   </div>
 </template>
 

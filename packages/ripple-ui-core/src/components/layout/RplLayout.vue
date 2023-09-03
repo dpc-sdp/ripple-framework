@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { Comment, Fragment, computed, useSlots, isVNode } from 'vue'
 import RplLayoutBackToTop from './RplLayoutBackToTop.vue'
-import RplLayoutSkipLink from './RplLayoutSkipLink.vue'
+import RplSkipLink from '../skip-link/RplSkipLink.vue'
 
 interface Props {
   background?: 'default' | 'alt'
@@ -52,8 +52,8 @@ const skipLinksId = 'rpl-skip-links'
 <template>
   <div>
     <div :id="skipLinksId">
-      <RplLayoutSkipLink :targetId="$slots.aboveBody ? aboveBodyId : mainId"
-        >Skip to main content</RplLayoutSkipLink
+      <RplSkipLink :targetId="$slots.aboveBody ? aboveBodyId : mainId"
+        >Skip to main content</RplSkipLink
       >
     </div>
     <div :class="`rpl-layout rpl-layout--${background}`">

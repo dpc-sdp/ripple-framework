@@ -3,6 +3,7 @@ import { computed } from 'vue'
 import { ITideCardCarouselItem } from '../../../mapping/components/card-carousel/card-carousel-mapping'
 
 const props = defineProps<{
+  id: string
   title?: string
   items: ITideCardCarouselItem[]
   hasSidebar: boolean
@@ -15,10 +16,17 @@ const perView = computed(() => {
 
   return { xs: 1, m: 2, l: 3 }
 })
+
+const skipText = computed(() =>
+  props.title ? `Skip ${props.title} carousel` : null
+)
 </script>
 
 <template>
-  <h2 v-if="title" class="rpl-type-h2">{{ title }}</h2>
-
-  <RplCardCarousel :items="items" :per-view="perView" />
+  <RplCardCarousel
+    :id="id"
+    :items="items"
+    :per-view="perView"
+    :skip-text="skipText"
+  />
 </template>

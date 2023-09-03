@@ -2,6 +2,7 @@
 import RplPromoCard from '../card/RplPromoCard.vue'
 import RplKeyDatesCard from '../card/RplKeyDatesCard.vue'
 import RplSlider from '../slider/RplSlider.vue'
+import RplSkipLink from '../skip-link/RplSkipLink.vue'
 import { IRplCardCarouselItem } from './constants'
 import { RplSlidesPerView } from '../slider/constants'
 import { formatDate, formatDateRange } from '../../lib/helpers'
@@ -11,12 +12,15 @@ import {
 } from '../../composables/useRippleEvent'
 
 interface Props {
+  id: string
   perView?: RplSlidesPerView
   items: IRplCardCarouselItem[]
+  skipText: string
 }
 
 withDefaults(defineProps<Props>(), {
-  perView: 1
+  perView: 1,
+  skipText: 'Skip card carousel'
 })
 
 const emit = defineEmits<{
@@ -41,6 +45,7 @@ const handleChange = ({ type, action, text, value }) => {
 
 <template>
   <div class="rpl-card-carousel">
+    <RplSkipLink :target-id="`card-carousel-${id}`">{{ skipText }}</RplSkipLink>
     <RplSlider :per-view="perView" @change="handleChange">
       <template v-for="(card, i) in items" :key="i">
         <RplPromoCard
@@ -81,9 +86,11 @@ const handleChange = ({ type, action, text, value }) => {
         <RplKeyDatesCard
           v-if="card.type === 'keydates'"
           :ctaTitle="card.title"
+          :url="card.url"
           :items="card.keyDates"
         />
       </template>
     </RplSlider>
+    <div :id="`card-carousel-${id}`" />
   </div>
 </template>

@@ -1,6 +1,8 @@
 import { TideDynamicPageComponent } from '@dpc-sdp/ripple-tide-api/types'
 
 export interface ITideMediaGallery {
+  id: string
+  title: string
   items: Array<{
     title: string
     caption: string | null
@@ -17,6 +19,8 @@ export const mediaGalleryMapping = (
     component: 'TideLandingPageMediaGallery',
     id: field.drupal_internal__id.toString(),
     props: {
+      id: field.drupal_internal__id.toString(),
+      title: field.field_paragraph_media_gallery?.info,
       items: field.field_paragraph_media_gallery.field_gallery_media.map(
         (item) => {
           return {

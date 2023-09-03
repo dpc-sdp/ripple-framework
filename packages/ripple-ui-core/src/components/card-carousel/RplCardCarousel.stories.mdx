@@ -82,6 +82,7 @@ export const SingleTemplate = (args) => ({
     name='Default'
     play={a11yStoryCheck}
     args={{
+      id: 'card-carousel-1',
       perView: 1,
       items: examplePromo
     }}
@@ -99,6 +100,7 @@ export const SingleTemplate = (args) => ({
     name='Breakpoints'
     play={a11yStoryCheck}
     args={{
+      id: 'card-carousel-2',
       perView: { xs: 1, m: 2, l: 3 },
       items: [...examplePromo, exampleKeyDates, ...examplePromo]
     }}
@@ -116,6 +118,7 @@ export const SingleTemplate = (args) => ({
     name='Scroll on mobile'
     play={a11yStoryCheck}
     args={{
+      id: 'card-carousel-3',
       perView: { xs: 1, m: 2 },
       items: examplePromo.slice(0, 2)
     }}
@@ -133,6 +136,7 @@ export const SingleTemplate = (args) => ({
     name='Single Card'
     play={a11yStoryCheck}
     args={{
+      id: 'card-carousel-4',
       items: [examplePromo[0]]
     }}
   >

@@ -20,4 +20,4 @@ withDefaults(defineProps<Props>(), {})
   </a>
 </template>
 
-<style src="./RplLayoutSkipLink.css" />
+<style src="./RplSkipLink.css" />

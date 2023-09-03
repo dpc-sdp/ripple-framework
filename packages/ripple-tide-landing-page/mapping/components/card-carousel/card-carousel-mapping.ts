@@ -40,6 +40,8 @@ export interface ITideCardCarouselItem {
 }
 
 export interface ITideCardCarousel {
+  id: string
+  title: string
   items: ITideCardCarouselItem[] | Array<null>
 }
 
@@ -80,6 +82,8 @@ export const cardCarouselMapping = async (
     id: field.drupal_internal__id.toString(),
     title: field.field_paragraph_title,
     props: {
+      id: field.drupal_internal__id.toString(),
+      title: field.field_paragraph_title,
       items: await getCardsFromType(field, tidePageApi)
     }
   }
