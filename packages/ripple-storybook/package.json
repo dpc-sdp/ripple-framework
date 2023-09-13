@@ -37,7 +37,10 @@
     "wait-on": "^7.0.1"
   },
   "dependencies": {
-    "concurrently": "^8.2.1",
+    "@dpc-sdp/ripple-ui-core": "workspace:*",
+    "@dpc-sdp/ripple-ui-maps": "workspace:*",
+    "concurrently": "^8.2.0",
+    "jest-matcher-utils": "29.2.2",
     "vite-svg-loader": "^4.0.0"
   }
 }

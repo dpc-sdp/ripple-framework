@@ -1,6 +1,3 @@
----
-to: src/vite.plugins.ts
----
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 import svgLoader from 'vite-svg-loader'
 export default [
