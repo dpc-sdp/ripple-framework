@@ -1,4 +1,4 @@
-import { createResolver, defineNuxtModule } from 'nuxt/kit'
+import { defineNuxtModule } from 'nuxt/kit'
 import { generate } from './../lib/generate'
 import * as jsonapiParse from 'jsonapi-parse'
 import fs from 'fs'
@@ -83,9 +83,5 @@ export default defineNuxtModule({
         fs.unlinkSync(savedFaviconPath)
       })
     }
-  },
-  setup() {
-    const { resolve } = createResolver(import.meta.url)
-    // console.log(resolve('./../lib/generate'))
   }
 })
