@@ -48,6 +48,27 @@ const imgClasses = computed(() => [
   props.inset ? 'rpl-card__media--inset' : null
 ])
 
+const maintainAspect = computed(() => {
+  const aspect = {
+    xs: 'wide',
+    s: 'ultrawide',
+    m: 'panorama',
+    l: props.highlight ? 'panorama' : 'full'
+  }
+  if (props.image?.width && props.image?.height) {
+    const originalAspect = props.image.width / props.image.height,
+      wide = 16 / 9,
+      full = 4 / 3
+
+    if (originalAspect < wide && originalAspect > full) {
+      aspect.s = 'wide'
+      aspect.m = 'wide'
+      aspect.l = props.highlight ? 'wide' : 'full'
+    }
+  }
+  return aspect
+})
+
 const { container, trigger } = useAccessibleContainer()
 
 const handleClick = () => {
@@ -70,12 +91,7 @@ const handleClick = () => {
       <RplImage
         v-bind="image"
         :class="imgClasses"
-        :aspect="{
-          xs: 'wide',
-          s: 'ultrawide',
-          m: 'panorama',
-          l: highlight ? 'panorama' : 'full'
-        }"
+        :aspect="maintainAspect"
         sizes="xs:768px"
         alt=""
         data-cy="image"
