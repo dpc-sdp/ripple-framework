@@ -1,1 +1,0 @@
-import{o as e,c as o,a as s}from"./entry.ccb7834f.js";const t={xmlns:"http://www.w3.org/2000/svg",viewBox:"0 0 24 24"},c=s("path",{d:"M22 10h-8V2c0-1.1-.9-2-2-2s-2 .9-2 2v8H2c-1.1 0-2 .9-2 2s.9 2 2 2h8v8c0 1.1.9 2 2 2s2-.9 2-2v-8h8c1.1 0 2-.9 2-2s-.9-2-2-2z"},null,-1),n=[c];function r(a,d){return e(),o("svg",t,n)}const _={render:r};export{_ as default,r as render};

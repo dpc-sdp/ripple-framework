@@ -1,1 +1,0 @@
-import{_ as o}from"./_plugin-vue_export-helper.c27b6911.js";import{o as n,c as s,r as c}from"./entry.ccb7834f.js";const t={},_={class:"docs-code-inline"};function r(e,d){return n(),s("code",_,[c(e.$slots,"default",{},void 0,!0)])}const i=o(t,[["render",r],["__scopeId","data-v-2e6046ca"]]);export{i as default};
