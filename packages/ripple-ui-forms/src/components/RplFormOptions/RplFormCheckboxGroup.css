@@ -1,5 +1,0 @@
-.rpl-form-option-group {
-  display: flex;
-  flex-direction: column;
-  gap: var(--rpl-sp-5);
-}

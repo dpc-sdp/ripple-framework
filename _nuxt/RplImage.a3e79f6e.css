@@ -1,0 +1,1 @@
+.rpl-image{align-items:center;display:flex;height:auto;justify-content:center;max-width:100%}.rpl-image--fill{height:100%}.rpl-image--circle{border-radius:var(--rpl-border-radius-full)}.rpl-image--none{object-fit:none}.rpl-image--contain{object-fit:contain}.rpl-image--cover{object-fit:cover}

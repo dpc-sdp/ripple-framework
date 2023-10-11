@@ -1,0 +1,1 @@
+import{_}from"./_plugin-vue_export-helper.c27b6911.js";import{o,c,r as t}from"./entry.ccb7834f.js";const s={},r={class:"docs-card-grid"};function n(e,d){return o(),c("div",r,[t(e.$slots,"default",{},void 0,!0)])}const i=_(s,[["render",n],["__scopeId","data-v-1976c17f"]]);export{i as default};

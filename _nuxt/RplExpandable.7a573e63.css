@@ -1,0 +1,1 @@
+.rpl-expandable{overflow:hidden;transition:height var(--rpl-motion-speed-9) ease-out}@media print{.rpl-expandable{display:block!important;height:auto!important}}
