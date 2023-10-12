@@ -1,6 +1,6 @@
 <template>
   <ClientOnly>
-    <RplMap :id="123" :features="results">
+    <RplMap :id="123" :features="results" ref="rplmap">
       <template #map-provider>
         <rpl-map-provider-esri />
       </template>
@@ -74,6 +74,11 @@ const getClusteredFeatures = (itms) => {
     }
   })
 }
+const rplmap = ref()
+
+onMounted(() => {
+  console.log(rplmap.value)
+})
 </script>
 
 <style>

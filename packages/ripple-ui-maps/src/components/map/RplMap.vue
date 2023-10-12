@@ -40,6 +40,10 @@ const view = ref(null)
 // Reference to ol/map instance
 const mapRef = ref<{ map: Map } | null>(null)
 
+defineExpose({
+  mapRef
+})
+
 const { popupIsOpen, selectedFeatures } = onMapClick(
   mapRef,
   props.closeOnMapClick

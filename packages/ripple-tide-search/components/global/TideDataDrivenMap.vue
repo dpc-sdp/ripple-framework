@@ -127,7 +127,7 @@ const mapResultsMappingFn = (result) => {
 const getMapSearchResults = async () => {
   try {
     const queryDSL = getQueryDSL()
-    delete queryDSL.sort
+
     const mapResponse = await $fetch(searchUrl, {
       method: 'POST',
       body: {
@@ -224,7 +224,7 @@ const handleSearchSubmit = (event) => {
 const handleFilterSubmit = (event) => {
   filterForm.value = event.value
   submitSearch()
-
+  getMapSearchResults()
   emitSearchEvent({ ...event, ...cachedSubmitEvent.value, ...baseEvent() })
 
   cachedSubmitEvent.value = {}

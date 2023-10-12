@@ -47,71 +47,27 @@
         },
         "userFilters": [
           {
-            "id": "termFilter",
-            "component": "TideSearchFilterDropdown",
-            "filter": {
-              "type": "term",
-              "value": "termFilter.keyword"
-            },
-            "aggregations": {
-              "field": "termFilter",
-              "source": "taxonomy"
-            },
-            "props": {
-              "id": "termFilter",
-              "label": "Term filter example",
-              "placeholder": "Select a colour",
-              "multiple": true,
-              "options": [
-                {
-                  "id": "1",
-                  "label": "Red",
-                  "value": "Red"
-                },
-                {
-                  "id": "2",
-                  "label": "Green",
-                  "value": "Green"
-                },
-                {
-                  "id": "3",
-                  "label": "Blue",
-                  "value": "Blue"
-                }
-              ]
-            }
-          },
-          {
-            "id": "termsFilter",
+            "id": "suburb",
             "component": "TideSearchFilterDropdown",
             "filter": {
               "type": "terms",
-              "value": "termsFilter.keyword"
+              "value": "suburb"
             },
             "aggregations": {
-              "field": "termsFilter",
-              "source": "taxonomy"
+              "field": "suburb",
+              "source": "elastic"
             },
             "props": {
-              "id": "termsFilter",
-              "label": "Terms filter example",
-              "placeholder": "Select a colour",
+              "id": "suburb",
+              "label": "Elastic aggregation test",
+              "placeholder": "Select suburb",
+              "type": "RplFormDropdown",
               "multiple": true,
               "options": [
                 {
                   "id": "1",
-                  "label": "Orange",
-                  "value": "Orange"
-                },
-                {
-                  "id": "2",
-                  "label": "Purple",
-                  "value": "Purple"
-                },
-                {
-                  "id": "3",
-                  "label": "Yellow",
-                  "value": "Yellow"
+                  "label": "Hard coded",
+                  "value": "Hard coded"
                 }
               ]
             }
