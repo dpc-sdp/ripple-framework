@@ -57,6 +57,7 @@ const updateActive = (key: string) => {
     'toggleTab',
     {
       action: 'select',
+      id: key,
       text: props.tabs.find((tab) => tab.key === key)?.title
     },
     { global: true }

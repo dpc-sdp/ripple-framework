@@ -38,21 +38,20 @@ const token = `AAPKb4288179ee4c40c99fedf129bcf74633RxWXGuVkAefFF0Iz0GGNu8wjowjpR
 const url = ref(`${props.baseUrl}?tilematrixset=EPSG%3A3857%3A256`)
 
 onMounted(async () => {
-  center.value = props.initialCenter
-  zoom.value = props.initialZoom
-  if (window.ol) {
-    const test = await import('ol-ext')
-    console.log(test)
-  }
+  console.log('ESRI')
+  // center.value = props.initialCenter
+  // zoom.value = props.initialZoom
+  // if (window.ol) {
+  //   const test = await import('ol-ext')
+  //   console.log(test)
+  // }
 })
 </script>
 
 <template>
-  <ol-source-wmts
-    :url="url"
-    :params="requestParams"
-    format="image/png"
-    :layer="layer"
-    :styles="styles"
-  ></ol-source-wmts>
+  <ol-tile-layer>
+    <ol-source-xyz
+      url="https://services.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}"
+    />
+  </ol-tile-layer>
 </template>

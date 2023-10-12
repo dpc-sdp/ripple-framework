@@ -1,20 +1,15 @@
-import { defineNuxtModule, createResolver, addComponentsDir } from '@nuxt/kit'
+import {
+  defineNuxtModule,
+  createResolver,
+  addComponentsDir,
+  addPlugin
+} from '@nuxt/kit'
 import vitePlugins from '../vite.plugins'
 
 export default <any>defineNuxtModule({
   meta: {
     name: 'ripple-ui-maps ',
     configKey: 'ripple'
-  },
-  hooks: {
-    'vite:extendConfig'(viteInlineConfig) {
-      // Add vite plugins
-      if (Array.isArray(viteInlineConfig.plugins)) {
-        viteInlineConfig.plugins?.push(vitePlugins)
-      } else {
-        viteInlineConfig.plugins = vitePlugins
-      }
-    }
   },
   async setup(_options, nuxt) {
     const { resolve } = createResolver(import.meta.url)
@@ -25,20 +20,12 @@ export default <any>defineNuxtModule({
       prefix: 'rpl',
       pathPrefix: false
     })
+
+    addPlugin({
+      src: resolve('./runtime/plugin.js'),
+      mode: 'client'
+    })
     console.info('Added ripple-ui-maps components')
-    // Adds required PostCss plugins
-    nuxt.options.postcss.plugins = {
-      ...nuxt.options.postcss.plugins,
-      autoprefixer: {},
-      'postcss-nested': {},
-      'postcss-normalize': {},
-      'postcss-preset-env': {
-        features: {
-          'custom-properties': false
-        }
-      },
-      'postcss-each': {}
-    }
     // Adds Ripple UI Core global styles
     nuxt.options.css.push('@dpc-sdp/ripple-ui-maps/style')
   }

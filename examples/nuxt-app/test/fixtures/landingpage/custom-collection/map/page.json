@@ -1,0 +1,133 @@
+{
+  "title": "Custom collection",
+  "changed": "2022-11-02T12:47:29+11:00",
+  "created": "2022-11-02T12:47:29+11:00",
+  "type": "landing_page",
+  "nid": "11dede11-10c0-111e1-1100-000000000330",
+  "summary": "Page summary",
+  "showInPageNav": true,
+  "inPageNavHeadingLevel": "h3",
+  "background": "default",
+  "header": {
+    "title": "Custom collection test",
+    "summary": "Test landing page title introduction text",
+    "theme": "default",
+    "backgroundImage": null
+  },
+  "headerComponents": [],
+  "bodyComponents": [
+    {
+      "uuid": "a99aa287-7fac-430b-864e-3a1b044460b1",
+      "component": "TideLandingPageContent",
+      "id": "969",
+      "props": {
+        "html": "<p>This is a collection of grants which have some content above them</p>"
+      }
+    },
+    {
+      "uuid": "55555555-5555-5555-5555-555555555555",
+      "component": "TideCustomCollection",
+      "id": "123",
+      "title": "Cameras save lives",
+      "props": {
+        "searchListingConfig": {
+          "searchProvider": "elasticsearch",
+          "index": "sdp_data_pipelines_scl",
+          "resultsPerPage": 10,
+          "labels": {
+            "submit": "Search",
+            "placeholder": "Enter suburb, postcode, streetname or offence location"
+          },
+          "customSort": [
+            {
+              "suburb": "asc"
+            }
+          ]
+        },
+        "queryConfig": {
+          "multi_match": {
+            "query": "{{query}}",
+            "fields": ["suburb^3", "street^2", "offence_location"]
+          }
+        },
+        "globalFilters": [],
+        "resultsConfig": {
+          "layout": {
+            "component": "TideSearchResultsListingMapTable",
+            "props": {
+              "popup": {
+                "title": {
+                  "objKey": "suburb"
+                },
+                "content": {
+                  "component": "CSLPopupContent"
+                }
+              },
+              "map": {
+                "props": {
+                  "latObjPath": "_source.latitude",
+                  "lngObjPath": "_source.longitude",
+                  "titleObjPath": "_source.suburb"
+                }
+              },
+              "columns": [
+                {
+                  "label": "Suburb",
+                  "key": "suburb",
+                  "isArray": false
+                },
+                {
+                  "label": "Location",
+                  "key": "street",
+                  "isArray": false
+                },
+                {
+                  "label": "Last annual test",
+                  "key": "last_annual_test",
+                  "isArray": false
+                }
+              ]
+            }
+          }
+        }
+      }
+    }
+  ],
+  "meta": {
+    "url": "/demo-landing-page",
+    "langcode": "en",
+    "description": "Nulla ultricies dignissim leo, posuere vestibulum erat cursus vitae",
+    "additional": [
+      {
+        "tag": "link",
+        "attributes": {
+          "rel": "canonical",
+          "href": "https://develop.content.reference.sdp.vic.gov.au/demo-landing-page"
+        }
+      },
+      {
+        "tag": "meta",
+        "attributes": {
+          "name": "title",
+          "content": "Demo Landing Page | Single Digital Presence Content Management System"
+        }
+      },
+      {
+        "tag": "meta",
+        "attributes": {
+          "property": "og:image",
+          "content": "https://develop.content.reference.sdp.vic.gov.au/sites/default/files/tide_demo_content/Melbourne-tram.jpg"
+        }
+      }
+    ],
+    "keywords": "",
+    "image": {
+      "src": "https://develop.content.reference.sdp.vic.gov.au/sites/default/files/tide_demo_content/Melbourne-tram.jpg",
+      "alt": "Demo: Melbourne tram",
+      "title": "Demo: Melbourne tram",
+      "width": 1413,
+      "height": 785,
+      "drupal_internal__target_id": 46
+    }
+  }
+}

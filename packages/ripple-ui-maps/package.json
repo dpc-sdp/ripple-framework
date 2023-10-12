@@ -17,7 +17,7 @@
   "types": "./dist/index.d.ts",
   "exports": {
     ".": "./dist/rpl-lib.es.js",
-    "./nuxt": "./src/nuxt/index.ts",
+    "./nuxt": "./dist/nuxt/index.js",
     "./style": "./dist/global.css",
     "./style/breakpoints": "./src/styles/_breakpoints.css",
     "./style/components": "./dist/style.css"

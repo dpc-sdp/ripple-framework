@@ -247,6 +247,9 @@ importers:
       '@dpc-sdp/ripple-tide-topic':
         specifier: workspace:*
         version: link:../../packages/ripple-tide-topic
+      '@dpc-sdp/ripple-ui-maps':
+        specifier: workspace:*
+        version: link:../../packages/ripple-ui-maps
     devDependencies:
       '@dpc-sdp/ripple-test-utils':
         specifier: workspace:*
@@ -370,6 +373,9 @@ importers:
       '@dpc-sdp/ripple-ui-forms':
         specifier: workspace:*
         version: link:../ripple-ui-forms
+      '@dpc-sdp/ripple-ui-maps':
+        specifier: workspace:*
+        version: link:../ripple-ui-maps
       '@nuxtjs/robots':
         specifier: ^3.0.0
         version: 3.0.0
@@ -560,7 +566,7 @@ importers:
         version: 7.4.0
       wait-on:
         specifier: ^7.0.1
-        version: 7.0.1
+        version: 7.0.1(debug@4.3.4)
 
   packages/ripple-test-utils:
     dependencies:
@@ -4246,6 +4252,16 @@ packages:
       postcss-selector-parser: 6.0.11
     dev: true
 
+  /@csstools/selector-specificity@2.1.1(postcss-selector-parser@6.0.11)(postcss@8.4.27):
+    resolution: {integrity: sha512-jwx+WCqszn53YHOfvFMJJRd/B2GqkCBt+1MJSG6o5/s8+ytHMvDZXsJgUEWLk12UnLd7HYKac4BYU5i/Ron1Cw==}
+    engines: {node: ^14 || ^16 || >=18}
+    peerDependencies:
+      postcss: ^8.4
+      postcss-selector-parser: ^6.0.10
+    dependencies:
+      postcss: 8.4.27
+      postcss-selector-parser: 6.0.11
+
   /@csstools/selector-specificity@2.1.1(postcss-selector-parser@6.0.13)(postcss@8.4.27):
     resolution: {integrity: sha512-jwx+WCqszn53YHOfvFMJJRd/B2GqkCBt+1MJSG6o5/s8+ytHMvDZXsJgUEWLk12UnLd7HYKac4BYU5i/Ron1Cw==}
     engines: {node: ^14 || ^16 || >=18}
@@ -6856,7 +6872,7 @@ packages:
       vite: 4.1.5(@types/node@18.15.10)
       vite-plugin-inspect: 0.7.33(vite@4.1.5)
       vite-plugin-vue-inspector: 3.4.2(vite@4.1.5)
-      wait-on: 7.0.1
+      wait-on: 7.0.1(debug@4.3.4)
       which: 3.0.1
       ws: 8.13.0
     transitivePeerDependencies:
@@ -9288,7 +9304,7 @@ packages:
       ts-dedent: 2.2.0
       type-fest: 2.19.0
       vue: 3.3.4
-      vue-component-type-helpers: 1.8.10
+      vue-component-type-helpers: 1.8.19
     transitivePeerDependencies:
       - encoding
       - supports-color
@@ -23675,9 +23691,9 @@ packages:
     peerDependencies:
       postcss: ^8.4
     dependencies:
-      '@csstools/selector-specificity': 2.1.1(postcss-selector-parser@6.0.13)(postcss@8.4.27)
+      '@csstools/selector-specificity': 2.1.1(postcss-selector-parser@6.0.11)(postcss@8.4.27)
       postcss: 8.4.27
-      postcss-selector-parser: 6.0.13
+      postcss-selector-parser: 6.0.11
 
   /postcss-normalize-charset@6.0.0(postcss@8.4.27):
     resolution: {integrity: sha512-cqundwChbu8yO/gSWkuFDmKrCZ2vJzDAocheT2JTd0sFNA4HMGoKMfbk2B+J0OmO0t5GUkiAkSM5yF2rSLUjgQ==}
@@ -28814,8 +28830,8 @@ packages:
       typescript: 5.0.2
     dev: true
 
-  /vue-component-type-helpers@1.8.10:
-    resolution: {integrity: sha512-FJtmfw2Gn6eQ8kAVNEhw9nYIzWmVQJjdyQRtJXZ7tgXh/FoZhQnZ2KyxR+NuF9U4iZLBvSspeetIpnP9yxxyMw==}
+  /vue-component-type-helpers@1.8.19:
+    resolution: {integrity: sha512-1OANGSZK4pzHF4uc86usWi+o5Y0zgoDtqWkPg6Am6ot+jHSAmpOah59V/4N82So5xRgivgCxGgK09lBy1XNUfQ==}
     dev: true
 
   /vue-demi@0.13.11(vue@3.3.4):
@@ -29016,20 +29032,6 @@ packages:
       - debug
     dev: true
 
-  /wait-on@7.0.1:
-    resolution: {integrity: sha512-9AnJE9qTjRQOlTZIldAaf/da2eW0eSRSgcqq85mXQja/DW3MriHxkpODDSUEg+Gri/rKEcXUZHe+cevvYItaog==}
-    engines: {node: '>=12.0.0'}
-    hasBin: true
-    dependencies:
-      axios: 0.27.2(debug@4.3.4)
-      joi: 17.7.0
-      lodash: 4.17.21
-      minimist: 1.2.8
-      rxjs: 7.8.0
-    transitivePeerDependencies:
-      - debug
-    dev: true
-
   /wait-on@7.0.1(debug@4.3.4):
     resolution: {integrity: sha512-9AnJE9qTjRQOlTZIldAaf/da2eW0eSRSgcqq85mXQja/DW3MriHxkpODDSUEg+Gri/rKEcXUZHe+cevvYItaog==}
     engines: {node: '>=12.0.0'}
@@ -29039,7 +29041,7 @@ packages:
       joi: 17.7.0
       lodash: 4.17.21
       minimist: 1.2.8
-      rxjs: 7.8.1
+      rxjs: 7.8.0
     transitivePeerDependencies:
       - debug
 

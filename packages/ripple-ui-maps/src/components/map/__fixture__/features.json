@@ -71,5 +71,12 @@
     "lat": -38.540444,
     "lng": 143.975556,
     "id": 10
+  },
+  {
+    "title": "Harcourt",
+    "description": "Harcourt is a small Central Highlands town located approximately 9 km northeast of Castlemaine, known for its apple orchards.",
+    "lat": -36.995648,
+    "lng": 144.264662,
+    "id": 8
   }
 ]

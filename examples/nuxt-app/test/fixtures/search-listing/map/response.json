@@ -1,0 +1,319 @@
+{
+  "took": 11,
+  "timed_out": false,
+  "_shards": {
+    "total": 5,
+    "successful": 5,
+    "skipped": 0,
+    "failed": 0
+  },
+  "hits": {
+    "total": {
+      "value": 55,
+      "relation": "eq"
+    },
+    "max_score": null,
+    "hits": [
+      {
+        "_index": "a83890f7a31dea14e1ae83c6f0afacca--elasticsearch_index_production_node",
+        "_type": "_doc",
+        "_id": "entity:node/1:en",
+        "_score": null,
+        "_ignored": ["field_paragraph_body.keyword"],
+        "_source": {
+          "_language": "en",
+          "changed": ["2023-07-07T11:56:56+10:00"],
+          "created": ["2023-06-22T17:25:48+10:00"],
+          "description": [
+            "Melbourne is the capital of Victoria, known for its vibrant culture and diverse neighborhoods."
+          ],
+          "link": ["/melbourne"],
+          "lat": [-37.813611],
+          "lng": [144.963056],
+          "langcode": ["en"],
+          "nid": [33532],
+          "status": [true],
+          "title": ["Melbourne"],
+          "rating": [6],
+          "image": [
+            "https://images.unsplash.com/photo-1545044846-351ba102b6d5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=300&q=80"
+          ],
+          "type": ["publication"],
+          "uid": [9789],
+          "uuid": ["2a4dbe1b-972f-4f39-b07f-10f9a49a7570"]
+        },
+        "sort": [1687418748000]
+      },
+      {
+        "_index": "a83890f7a31dea14e1ae83c6f0afacca--elasticsearch_index_production_node",
+        "_type": "_doc",
+        "_id": "entity:node/2:en",
+        "_score": null,
+        "_ignored": ["field_paragraph_body.keyword"],
+        "_source": {
+          "_language": "en",
+          "changed": ["2023-07-07T11:56:56+10:00"],
+          "created": ["2023-06-22T17:25:48+10:00"],
+          "description": [
+            "Geelong is a coastal city with beautiful beaches and a strong maritime history."
+          ],
+          "link": ["/Geelong"],
+          "lat": [-38.149917],
+          "lng": [144.361667],
+          "langcode": ["en"],
+          "nid": [33532],
+          "status": [true],
+          "title": ["Geelong"],
+          "rating": [3],
+          "image": [
+            "https://media.istockphoto.com/id/995787080/photo/aerial-view-of-geelong-city-and-waterfront.jpg?s=612x612&w=0&k=20&c=U-89HCcT7dkzQOj39ow-G551DcZTQBRT8NAWhuz7hS0="
+          ],
+          "type": ["publication"],
+          "uid": [9789],
+          "uuid": ["2a4dbe1b-972f-4f39-b07f-10f9a49a7570"]
+        },
+        "sort": [1687418748000]
+      },
+      {
+        "_index": "a83890f7a31dea14e1ae83c6f0afacca--elasticsearch_index_production_node",
+        "_type": "_doc",
+        "_id": "entity:node/3:en",
+        "_score": null,
+        "_ignored": ["field_paragraph_body.keyword"],
+        "_source": {
+          "_language": "en",
+          "changed": ["2023-07-07T11:56:56+10:00"],
+          "created": ["2023-06-22T17:25:48+10:00"],
+          "description": [
+            "Ballarat is famous for its gold rush history and stunning Sovereign Hill attraction."
+          ],
+          "link": ["/Ballarat"],
+          "lat": [-37.562222],
+          "lng": [143.856667],
+          "langcode": ["en"],
+          "nid": [33532],
+          "status": [true],
+          "title": ["Ballarat"],
+          "rating": [8],
+          "image": [
+            "https://media.istockphoto.com/id/1203354804/photo/ballarat-australia.jpg?s=612x612&w=0&k=20&c=lTK4mYjM26k66QMfwWFMR7c3KjiyfiCbg2L_7Ng1bYg="
+          ],
+          "type": ["publication"],
+          "uid": [9789],
+          "uuid": ["2a4dbe1b-972f-4f39-b07f-10f9a49a7570"]
+        },
+        "sort": [1687418748000]
+      },
+      {
+        "_index": "a83890f7a31dea14e1ae83c6f0afacca--elasticsearch_index_production_node",
+        "_type": "_doc",
+        "_id": "entity:node/4:en",
+        "_score": null,
+        "_ignored": ["field_paragraph_body.keyword"],
+        "_source": {
+          "_language": "en",
+          "changed": ["2023-07-07T11:56:56+10:00"],
+          "created": ["2023-06-22T17:25:48+10:00"],
+          "description": [
+            "Bendigo is known for its grand Victorian architecture and rich gold mining heritage."
+          ],
+          "link": ["/bendigo"],
+          "lat": [-36.757019],
+          "lng": [144.278795],
+          "langcode": ["en"],
+          "nid": [33532],
+          "status": [true],
+          "title": ["Bendigo"],
+          "rating": [5],
+          "image": [
+            "https://images.unsplash.com/photo-1559117313-991c71a37516?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=300&q=80"
+          ],
+          "type": ["publication"],
+          "uid": [9789],
+          "uuid": ["2a4dbe1b-972f-4f39-b07f-10f9a49a7570"]
+        },
+        "sort": [1687418748000]
+      },
+      {
+        "_index": "a83890f7a31dea14e1ae83c6f0afacca--elasticsearch_index_production_node",
+        "_type": "_doc",
+        "_id": "entity:node/5:en",
+        "_score": null,
+        "_ignored": ["field_paragraph_body.keyword"],
+        "_source": {
+          "_language": "en",
+          "changed": ["2023-07-07T11:56:56+10:00"],
+          "created": ["2023-06-22T17:25:48+10:00"],
+          "description": [
+            "Shepparton is an agricultural hub with a thriving food and wine culture."
+          ],
+          "link": ["/shepparton"],
+          "lat": [-36.375833],
+          "lng": [145.399028],
+          "langcode": ["en"],
+          "nid": [33532],
+          "status": [true],
+          "title": ["Shepparton"],
+          "rating": [9],
+          "image": [
+            "https://media.istockphoto.com/id/1170393307/photo/aerial-view-australian-dairy-farming-country.jpg?s=1024x1024&w=is&k=20&c=W40G55ZJCpHDI0HBOY7YeVtV3ODs1zFHTVqLt7SSDno="
+          ],
+          "type": ["publication"],
+          "uid": [9789],
+          "uuid": ["2a4dbe1b-972f-4f39-b07f-10f9a49a7570"]
+        },
+        "sort": [1687418748000]
+      },
+      {
+        "_index": "a83890f7a31dea14e1ae83c6f0afacca--elasticsearch_index_production_node",
+        "_type": "_doc",
+        "_id": "entity:node/6:en",
+        "_score": null,
+        "_ignored": ["field_paragraph_body.keyword"],
+        "_source": {
+          "_language": "en",
+          "changed": ["2023-07-07T11:56:56+10:00"],
+          "created": ["2023-06-22T17:25:48+10:00"],
+          "description": [
+            "Warrnambool offers stunning coastal views and is a popular whale-watching destination."
+          ],
+          "link": ["/warrnambool"],
+          "lat": [-38.381],
+          "lng": [142.484778],
+          "langcode": ["en"],
+          "nid": [33532],
+          "status": [true],
+          "title": ["Warrnambool"],
+          "rating": [7],
+          "image": [
+            "https://media.istockphoto.com/id/1146154867/photo/sunset-with-sun-flare-over-warrnambool-town-and-ocean-in-australia.jpg?s=1024x1024&w=is&k=20&c=1LubLsNhlXI8jqPf1AkH5n4ruFFYso_KN6vimXz3i3Y="
+          ],
+          "type": ["publication"],
+          "uid": [9789],
+          "uuid": ["2a4dbe1b-972f-4f39-b07f-10f9a49a7570"]
+        },
+        "sort": [1687418748000]
+      },
+      {
+        "_index": "a83890f7a31dea14e1ae83c6f0afacca--elasticsearch_index_production_node",
+        "_type": "_doc",
+        "_id": "entity:node/7:en",
+        "_score": null,
+        "_ignored": ["field_paragraph_body.keyword"],
+        "_source": {
+          "_language": "en",
+          "changed": ["2023-07-07T11:56:56+10:00"],
+          "created": ["2023-06-22T17:25:48+10:00"],
+          "description": [
+            "Mildura is located along the Murray River and is known for its citrus orchards and vineyards."
+          ],
+          "link": ["/mildura"],
+          "lat": [-34.208416],
+          "lng": [142.135611],
+          "langcode": ["en"],
+          "nid": [33532],
+          "status": [true],
+          "title": ["Mildura"],
+          "rating": [2],
+          "image": [
+            "https://media.istockphoto.com/id/923627348/photo/australia-agriculture-aerial-view.jpg?s=1024x1024&w=is&k=20&c=Psv4YLlN1VzEhW0SezdUv3XXWcjq0qd7U-wZr3kpqjs="
+          ],
+          "type": ["publication"],
+          "uid": [9789],
+          "uuid": ["2a4dbe1b-972f-4f39-b07f-10f9a49a7570"]
+        },
+        "sort": [1687418748000]
+      },
+      {
+        "_index": "a83890f7a31dea14e1ae83c6f0afacca--elasticsearch_index_production_node",
+        "_type": "_doc",
+        "_id": "entity:node/8:en",
+        "_score": null,
+        "_ignored": ["field_paragraph_body.keyword"],
+        "_source": {
+          "_language": "en",
+          "changed": ["2023-07-07T11:56:56+10:00"],
+          "created": ["2023-06-22T17:25:48+10:00"],
+          "description": [
+            "Castlemaine is a charming town with a thriving arts scene and historic architecture."
+          ],
+          "link": ["/castlemaine"],
+          "lat": [-37.067389],
+          "lng": [144.214917],
+          "langcode": ["en"],
+          "nid": [33532],
+          "status": [true],
+          "title": ["Castlemaine"],
+          "rating": [4],
+          "image": [
+            "https://h7.alamy.com/zooms/9/faf1260a926c422e8bda830f09db2a9e/jkcx1p.jpg"
+          ],
+          "type": ["publication"],
+          "uid": [9789],
+          "uuid": ["2a4dbe1b-972f-4f39-b07f-10f9a49a7570"]
+        },
+        "sort": [1687418748000]
+      },
+      {
+        "_index": "a83890f7a31dea14e1ae83c6f0afacca--elasticsearch_index_production_node",
+        "_type": "_doc",
+        "_id": "entity:node/9:en",
+        "_score": null,
+        "_ignored": ["field_paragraph_body.keyword"],
+        "_source": {
+          "_language": "en",
+          "changed": ["2023-07-07T11:56:56+10:00"],
+          "created": ["2023-06-22T17:25:48+10:00"],
+          "description": [
+            "Mornington Peninsula offers beautiful beaches, wineries, and natural hot springs."
+          ],
+          "link": ["/mornington"],
+          "lat": [-38.225],
+          "lng": [145.044],
+          "langcode": ["en"],
+          "nid": [33532],
+          "status": [true],
+          "title": ["Mornington"],
+          "rating": [10],
+          "image": [
+            "https://media.istockphoto.com/id/1158957930/photo/wooden-walkways-lead-towards-the-pulpit-rock-sea-stack-on-the-mornington-peninsula.jpg?s=612x612&w=0&k=20&c=d_OSSfuj6rSvQxeBNRiXDvVoImEHU6jzWHo3CzErmpk="
+          ],
+          "type": ["publication"],
+          "uid": [9789],
+          "uuid": ["2a4dbe1b-972f-4f39-b07f-10f9a49a7570"]
+        },
+        "sort": [1687418748000]
+      },
+      {
+        "_index": "a83890f7a31dea14e1ae83c6f0afacca--elasticsearch_index_production_node",
+        "_type": "_doc",
+        "_id": "entity:node/10:en",
+        "_score": null,
+        "_ignored": ["field_paragraph_body.keyword"],
+        "_source": {
+          "_language": "en",
+          "changed": ["2023-07-07T11:56:56+10:00"],
+          "created": ["2023-06-22T17:25:48+10:00"],
+          "description": [
+            "Lorne is a coastal town on the Great Ocean Road, known for its scenic beauty and waterfalls."
+          ],
+          "link": ["/lorne"],
+          "lat": [-38.540444],
+          "lng": [143.975556],
+          "langcode": ["en"],
+          "nid": [33532],
+          "status": [true],
+          "title": ["Lorne"],
+          "rating": [1],
+          "image": [
+            "https://media.istockphoto.com/id/1153555827/photo/lorne-beach.jpg?s=612x612&w=0&k=20&c=tN6UunbfFacmlWSfqjEpZ7Bt-FxTXzMVzP5lxLhvDMU="
+          ],
+          "type": ["publication"],
+          "uid": [9789],
+          "uuid": ["2a4dbe1b-972f-4f39-b07f-10f9a49a7570"]
+        },
+        "sort": [1687418748000]
+      }
+    ]
+  }
+}

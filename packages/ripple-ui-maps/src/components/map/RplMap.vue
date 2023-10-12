@@ -1,45 +1,35 @@
 <script setup lang="ts">
 import { useRippleEvent, rplEventPayload } from '@dpc-sdp/ripple-ui-core'
 import type { IRplMapFeature } from './../../types'
-import { ref, onMounted } from 'vue'
-import type { Ref } from 'vue'
-import { Overlay, Map } from 'ol'
-import RplMapProviderMapbox from './RplMapProviderMapbox.vue'
-import RplMapProviderArcVector from './RplMapProviderArcVector.vue'
-import RplMapProviderVicMap from './RplMapProviderVicMap.vue'
-import RplMapProviderGoogle from './RplMapProviderGoogle.vue'
+import { ref } from 'vue'
+import { Map } from 'ol'
 import RplMapFeaturePin from './../feature-pin/RplMapFeaturePin.vue'
 import RplMapPopUp from './../popup/RplMapPopUp.vue'
+import RplMapCluster from './../cluster/RplMapCluster.vue'
+import onMapClick from './../../composables/onMapClick'
 
 interface Props {
-  id: string
   features?: IRplMapFeature[]
   projection?: 'EPSG:4326' | 'EPSG:3857'
   baseUrl?: string
-  requestParams?: Record<string, any>
-  layer?: string
   format?: string
   styles?: string | string[]
   initialZoom?: number
   initialCenter?: [number, number]
   closeOnMapClick: boolean
+  basemapProvider: string
 }
 
 const props = withDefaults(defineProps<Props>(), {
+  basemapProvider: 'esri',
   baseUrl: `https://base.maps.vic.gov.au/service`,
-  requestParams: () => ({
-    tilematrixset: 'EPSG%3A3857%3A256',
-    version: '1.0.0',
-    request: 'GetTile'
-  }),
   closeOnMapClick: true,
   format: 'image/png',
-  layer: 'CARTO_WM_256',
   projection: 'EPSG:4326',
   styles: 'default',
   features: () => [],
-  initialZoom: 7,
-  initialCenter: () => [144.9631, -37.8136] // melbourne
+  initialZoom: 7.3,
+  initialCenter: () => [144.9631, -36.8136] // melbourne CBD
 })
 
 const center = ref(props.initialCenter)
@@ -47,76 +37,41 @@ const zoom = ref(props.initialZoom)
 const rotation = ref(0)
 const view = ref(null)
 
-const emit = defineEmits<{
-  (
-    e: 'toggleAll',
-    payload: rplEventPayload & { action: 'open' | 'close' }
-  ): void
-}>()
-
-// Example of using event bus
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const { emitRplEvent } = useRippleEvent('rpl-map', emit)
-
-// Define a popup overlay.
+// Reference to ol/map instance
 const mapRef = ref<{ map: Map } | null>(null)
 
-const popupIsOpen = ref(false)
+const { popupIsOpen, selectedFeatures } = onMapClick(
+  mapRef,
+  props.closeOnMapClick
+)
 
 function onPopUpClose() {
   popupIsOpen.value = false
 }
-const selectedFeature = ref(null)
-
-onMounted(() => {
-  const map = mapRef.value?.map
-  if (map) {
-    map.on('singleclick', function (evt) {
-      // IF evt.cordinates match a pin then show
-      const feature = map.forEachFeatureAtPixel(
-        evt.pixel,
-        (feature) => {
-          return feature
-        },
-        { hitTolerance: 5 }
-      )
-      if (feature) {
-        selectedFeature.value = feature
-        popupIsOpen.value = true
-      } else {
-        if (props.closeOnMapClick) {
-          selectedFeature.value = feature
-          popupIsOpen.value = false
-        }
-      }
-    })
-  }
-})
 </script>
 
 <template>
   <div class="rpl-map">
-    <slot
-      name="popup"
-      :is-open="popupIsOpen"
-      :selectedFeature="selectedFeature"
-    >
-      <RplMapPopUp :is-open="popupIsOpen" @close="onPopUpClose">
-        <template v-if="selectedFeature && selectedFeature?.values_" #header>
-          {{ selectedFeature.values_?.title }}
-        </template>
-        <template v-if="selectedFeature && selectedFeature?.values_">
+    <RplMapPopUp :is-open="popupIsOpen" @close="onPopUpClose">
+      <template v-if="selectedFeatures && selectedFeatures.length > 0" #header>
+        <slot name="popupTitle" :selectedFeatures="selectedFeatures">
+          {{ selectedFeatures[0].title }}
+        </slot>
+      </template>
+      <template v-if="selectedFeatures && selectedFeatures.length > 0">
+        <slot name="popupContent" :selectedFeatures="selectedFeatures">
           <p class="rpl-type-p-small">
-            {{ selectedFeature.values_?.description }}
+            {{ selectedFeatures[0].description }}
           </p>
-        </template>
-      </RplMapPopUp>
-    </slot>
+        </slot>
+      </template>
+    </RplMapPopUp>
     <ol-map
       ref="mapRef"
       :loadTilesWhileAnimating="true"
       :loadTilesWhileInteracting="true"
       style="height: 600px"
+      :projection="projection"
       :controls="[]"
     >
       <ol-view
@@ -126,30 +81,30 @@ onMounted(() => {
         :projection="projection"
         :zoom="zoom"
       />
-      <slot name="map-provider">
-        <rpl-map-provider-google />
-      </slot>
-      <!-- <rpl-map-provider-vic-map /> -->
-      <!-- <rpl-map-provider-map-box /> -->
+      <slot name="map-provider"> </slot>
 
       <ol-vector-layer v-if="features && features.length > 0">
-        <slot name="features">
-          <ol-source-vector>
-            <ol-feature
-              v-for="feature in features"
-              :key="feature.id"
-              :properties="feature"
-            >
-              <ol-geom-point
-                :coordinates="[feature.lng, feature.lat]"
-              ></ol-geom-point>
-              <ol-style>
-                <slot name="pin">
-                  <RplMapFeaturePin />
-                </slot>
-              </ol-style>
-            </ol-feature>
-          </ol-source-vector>
+        <slot name="features" :features="features">
+          <ol-animated-clusterlayer :animationDuration="500" :distance="40">
+            <ol-source-vector>
+              <ol-feature
+                v-for="feature in features"
+                :key="feature.id"
+                :properties="feature"
+              >
+                <ol-geom-point
+                  :coordinates="[feature.lng, feature.lat]"
+                ></ol-geom-point>
+                <ol-style>
+                  <slot name="pin">
+                    <RplMapFeaturePin />
+                  </slot>
+                </ol-style>
+              </ol-feature>
+            </ol-source-vector>
+
+            <RplMapCluster></RplMapCluster>
+          </ol-animated-clusterlayer>
         </slot>
       </ol-vector-layer>
       <ol-zoom-control className="rpl-map__control rpl-map__control-zoom" />
