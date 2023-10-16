@@ -45,34 +45,7 @@
             "fields": ["suburb^3", "street^2", "offence_location"]
           }
         },
-        "userFilters": [
-          {
-            "id": "suburb",
-            "component": "TideSearchFilterDropdown",
-            "filter": {
-              "type": "terms",
-              "value": "suburb"
-            },
-            "aggregations": {
-              "field": "suburb",
-              "source": "elastic"
-            },
-            "props": {
-              "id": "suburb",
-              "label": "Elastic aggregation test",
-              "placeholder": "Select suburb",
-              "type": "RplFormDropdown",
-              "multiple": true,
-              "options": [
-                {
-                  "id": "1",
-                  "label": "Hard coded",
-                  "value": "Hard coded"
-                }
-              ]
-            }
-          }
-        ],
+        "userFilters": [],
         "globalFilters": [],
         "tableConfig": {
           "props": {

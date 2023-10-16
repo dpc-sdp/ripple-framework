@@ -1,5 +1,5 @@
 {
-  "title": "Schools",
+  "title": "Custom collection",
   "changed": "2022-11-02T12:47:29+11:00",
   "created": "2022-11-02T12:47:29+11:00",
   "type": "landing_page",
@@ -17,6 +17,14 @@
   "headerComponents": [],
   "bodyComponents": [
     {
+      "uuid": "a99aa287-7fac-430b-864e-3a1b044460b1",
+      "component": "TideLandingPageContent",
+      "id": "969",
+      "props": {
+        "html": "<p>This is a collection of grants which have some content above them</p>"
+      }
+    },
+    {
       "uuid": "55555555-5555-5555-5555-555555555555",
       "component": "TideDataDrivenMap",
       "id": "123",
@@ -24,109 +32,50 @@
       "props": {
         "searchListingConfig": {
           "searchProvider": "elasticsearch",
-          "index": "sdp_data_pipelines_scl",
+          "index": "elasticsearch_index_production_node",
           "resultsPerPage": 20,
           "labels": {
             "submit": "Search",
-            "placeholder": "Enter suburb, postcode, streetname or offence location"
-          }
-        },
-        "queryConfig": {
-          "multi_match": {
-            "query": "{{query}}",
-            "fields": ["suburb^3", "street^2", "offence_location"]
+            "placeholder": "Enter school name"
           }
         },
         "userFilters": [
           {
-            "id": "termFilter",
-            "component": "TideSearchFilterDropdown",
-            "filter": {
-              "type": "term",
-              "value": "termFilter.keyword"
-            },
-            "aggregations": {
-              "field": "termFilter",
-              "source": "taxonomy"
-            },
-            "props": {
-              "id": "termFilter",
-              "label": "Term filter example",
-              "placeholder": "Select a colour",
-              "multiple": true,
-              "options": [
-                {
-                  "id": "1",
-                  "label": "Red",
-                  "value": "Red"
-                },
-                {
-                  "id": "2",
-                  "label": "Green",
-                  "value": "Green"
-                },
-                {
-                  "id": "3",
-                  "label": "Blue",
-                  "value": "Blue"
-                }
-              ]
-            }
-          },
-          {
-            "id": "termsFilter",
+            "id": "pintypes",
             "component": "TideSearchFilterDropdown",
             "filter": {
               "type": "terms",
-              "value": "termsFilter.keyword"
+              "value": "field_mappintype_value"
             },
             "aggregations": {
-              "field": "termsFilter",
-              "source": "taxonomy"
+              "field": "field_mappintype_value",
+              "source": "elastic"
             },
             "props": {
-              "id": "termsFilter",
-              "label": "Terms filter example",
-              "placeholder": "Select a colour",
+              "id": "pintypes",
+              "label": "Filter by",
+              "placeholder": "Select suburb",
+              "type": "RplFormDropdown",
               "multiple": true,
-              "options": [
-                {
-                  "id": "1",
-                  "label": "Orange",
-                  "value": "Orange"
-                },
-                {
-                  "id": "2",
-                  "label": "Purple",
-                  "value": "Purple"
-                },
-                {
-                  "id": "3",
-                  "label": "Yellow",
-                  "value": "Yellow"
-                }
-              ]
+              "options": []
             }
           }
         ],
-        "globalFilters": [],
+        "globalFilters": [
+          { "terms": { "type": ["project_infrastructure"] } },
+          { "terms": { "field_node_site": [622] } },
+          { "exists": { "field": "field_latitude_value" } }
+        ],
         "tableConfig": {
           "props": {
             "columns": [
               {
-                "label": "Suburb",
-                "key": "suburb",
-                "isArray": false
+                "label": "Name",
+                "key": "title"
               },
               {
-                "label": "Location",
-                "key": "street",
-                "isArray": false
-              },
-              {
-                "label": "Last annual test",
-                "key": "last_annual_test",
-                "isArray": false
+                "label": "Project type",
+                "key": "field_mappintype_value"
               }
             ]
           }
@@ -135,15 +84,15 @@
           "props": {
             "popup": {
               "title": {
-                "objKey": "suburb"
+                "objKey": "_source.title"
               },
               "content": {
-                "objKey": "suburb"
+                "objKey": "_source.field_about_project_processed"
               }
             },
-            "latObjPath": "_source.latitude",
-            "lngObjPath": "_source.longitude",
-            "titleObjPath": "_source.suburb"
+            "latObjPath": "_source.field_latitude_value[0]",
+            "lngObjPath": "_source.field_longitude_value[0]",
+            "titleObjPath": "_source.title[0]"
           }
         }
       }

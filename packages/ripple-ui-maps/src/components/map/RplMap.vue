@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { useRippleEvent, rplEventPayload } from '@dpc-sdp/ripple-ui-core'
 import type { IRplMapFeature } from './../../types'
-import { ref } from 'vue'
+import { onMounted, ref, inject } from 'vue'
 import { Map } from 'ol'
 import RplMapFeaturePin from './../feature-pin/RplMapFeaturePin.vue'
 import RplMapPopUp from './../popup/RplMapPopUp.vue'
@@ -37,11 +37,13 @@ const zoom = ref(props.initialZoom)
 const rotation = ref(0)
 const view = ref(null)
 
+const { setRplMapRef } = inject('rplMapInstance')
+
 // Reference to ol/map instance
 const mapRef = ref<{ map: Map } | null>(null)
 
-defineExpose({
-  mapRef
+onMounted(() => {
+  setRplMapRef(mapRef.value.map)
 })
 
 const { popupIsOpen, selectedFeatures } = onMapClick(

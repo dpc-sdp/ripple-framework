@@ -15,9 +15,9 @@ Feature: Data driven map
     And I wait 30 seconds
     Then the landing page component "TideDataDrivenMap" should exist
 
-# Scenario: School buildings
-#   Given the page endpoint for path "/school-buildings" returns fixture "/data-driven-map/schools/page" with status 200
-#   # Given the "/api/tide/elasticsearch/sdp_data_pipelines_scl/_search" network request is stubbed with fixture "/data-driven-map/csl/response" and status 200 as alias "cslReq"
-#   Given I visit the page "/school-buildings"
-#   And I wait 30 seconds
-#   Then the landing page component "TideDataDrivenMap" should exist
+  @focus
+  Scenario: School buildings
+    Given the page endpoint for path "/school-buildings" returns fixture "/data-driven-map/schools/page" with status 200
+    Given I visit the page "/school-buildings"
+    And I wait 30 seconds
+    Then the landing page component "TideDataDrivenMap" should exist

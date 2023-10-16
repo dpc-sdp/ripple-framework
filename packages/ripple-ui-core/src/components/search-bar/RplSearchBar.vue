@@ -25,6 +25,7 @@ interface Props {
   placeholder?: string
   globalEvents?: boolean
   showNoResults?: boolean
+  getSuggestionVal?: Function
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -37,11 +38,13 @@ const props = withDefaults(defineProps<Props>(), {
   suggestions: () => [],
   maxSuggestionsDisplayed: 10,
   placeholder: undefined,
-  globalEvents: true
+  globalEvents: true,
+  getSuggestionVal: (itm) => itm
 })
 
 const emit = defineEmits<{
   (e: 'update:inputValue', value: string): void
+  (e: 'selectOption', value: string): void
   (e: 'submit', payload: rplEventPayload & { action: 'search' }): void
 }>()
 
@@ -98,8 +101,8 @@ const handleSelectOption = (optionValue, focusBackOnInput) => {
     inputRef.value.focus()
   }
 
-  internalValue.value = optionValue
-  emit('update:inputValue', optionValue)
+  internalValue.value = props.getSuggestionVal(optionValue)
+  emit('selectOption', optionValue)
   isOpen.value = false
 
   emitRplEvent(
