@@ -223,18 +223,46 @@ watch(
           <RplSearchBarRefine
             class="tide-search-refine-btn"
             :expanded="filtersExpanded"
+            aria-controls="tide-search-page-filters"
             @click="toggleFilters"
             >{{ toggleFiltersLabel }}</RplSearchBarRefine
           >
-          <RplExpandable :expanded="filtersExpanded">
-            <TideSearchFilters
-              v-if="filtersConfig && filtersConfig.length > 0"
+          <RplExpandable
+            id="tide-search-page-filters"
+            :expanded="filtersExpanded"
+          >
+            <RplForm
+              v-if="staticFacetOptions !== null"
+              id="tide-search-filter-form"
+              v-model:model-value="filterFormValues"
               :title="pageTitle"
-              :filter-form-values="filterFormValues"
-              :filterInputs="filtersConfig"
-              @reset="handleFilterReset"
               @submit="handleFilterSubmit"
-            />
+            >
+              <div class="rpl-grid rpl-grid--no-row-gap tide-search-filters">
+                <div
+                  v-for="filter in filtersConfig"
+                  :key="filter.field"
+                  class="rpl-col-12 rpl-col-6-m"
+                >
+                  <FormKit
+                    :id="filter.field"
+                    :name="filter.field"
+                    type="RplFormDropdown"
+                    :multiple="true"
+                    :label="filter.label"
+                    :placeholder="filter.placeholder"
+                    :options="getFilterOptions(filter.field)"
+                  />
+                </div>
+              </div>
+              <RplFormActions
+                :label="submitFiltersLabel"
+                resetLabel="Clear search filters"
+                :displayResetButton="true"
+                :globalEvents="false"
+                @reset="handleFilterReset"
+              />
+            </RplForm>
           </RplExpandable>
         </div>
       </RplHeroHeader>

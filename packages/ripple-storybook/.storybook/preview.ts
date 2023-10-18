@@ -3,6 +3,7 @@ import { setup, type Preview } from '@storybook/vue3'
 // @ts-ignore-next-line: Missing declaration
 import { registerRplFormPlugin } from '@dpc-sdp/ripple-ui-forms'
 import { registerRplMapsPlugin } from '@dpc-sdp/ripple-ui-maps'
+// Note: rebuild ripple-ui-core after generating sprite to update in storybook
 // @ts-ignore-next-line: Vue SFC
 import { RplIconSprite, RplLink, RplImg } from '@dpc-sdp/ripple-ui-core/vue'
 import '@dpc-sdp/ripple-ui-core/style'

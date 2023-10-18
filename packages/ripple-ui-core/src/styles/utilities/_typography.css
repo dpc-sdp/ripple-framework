@@ -20,7 +20,7 @@ html {
   color: var(--rpl-clr-type-accent-contrast);
   background-color: var(--rpl-clr-accent);
   box-decoration-break: clone;
-  hyphens: auto;
+  font-family: var(--rpl-type-font-family-heading, var(--rpl-type-font-family));
 
   @media (--rpl-bp-l) {
     padding: 0.2rem var(--rpl-sp-4); /* [1] */
@@ -39,7 +39,7 @@ html {
   color: var(--rpl-clr-type-accent-contrast);
   background-color: var(--rpl-clr-accent);
   box-decoration-break: clone;
-  hyphens: auto;
+  font-family: var(--rpl-type-font-family-heading, var(--rpl-type-font-family));
 }
 
 .rpl-type-h1,
@@ -49,7 +49,7 @@ html {
   line-height: var(--rpl-type-lh-7);
   letter-spacing: var(--rpl-type-ls-5);
   color: var(--rpl-clr-primary);
-  hyphens: auto;
+  font-family: var(--rpl-type-font-family-heading, var(--rpl-type-font-family));
 
   @media (--rpl-bp-l) {
     font-size: var(--rpl-type-size-8);
@@ -64,7 +64,7 @@ html {
   line-height: var(--rpl-type-lh-7);
   letter-spacing: var(--rpl-type-ls-5);
   color: var(--rpl-clr-primary);
-  hyphens: auto;
+  font-family: var(--rpl-type-font-family-heading, var(--rpl-type-font-family));
 }
 
 /* h2 */
@@ -74,7 +74,7 @@ html {
   font-weight: var(--rpl-type-weight-bold);
   line-height: var(--rpl-type-lh-6);
   letter-spacing: var(--rpl-type-ls-4);
-  hyphens: auto;
+  font-family: var(--rpl-type-font-family-heading, var(--rpl-type-font-family));
 
   @media (--rpl-bp-l) {
     font-size: var(--rpl-type-size-6);
@@ -88,7 +88,7 @@ html {
   font-weight: var(--rpl-type-weight-bold);
   line-height: var(--rpl-type-lh-6);
   letter-spacing: var(--rpl-type-ls-4);
-  hyphens: auto;
+  font-family: var(--rpl-type-font-family-heading, var(--rpl-type-font-family));
 }
 
 /* h3 */
@@ -102,7 +102,7 @@ html {
   color: var(--rpl-clr-type-primary-contrast);
   background-color: var(--rpl-clr-primary);
   box-decoration-break: clone;
-  hyphens: auto;
+  font-family: var(--rpl-type-font-family-heading, var(--rpl-type-font-family));
 
   @media (--rpl-bp-l) {
     padding: 0 var(--rpl-sp-2);
@@ -122,7 +122,7 @@ html {
   color: var(--rpl-clr-type-primary-contrast);
   background-color: var(--rpl-clr-primary);
   box-decoration-break: clone;
-  hyphens: auto;
+  font-family: var(--rpl-type-font-family-heading, var(--rpl-type-font-family));
 }
 
 .rpl-type-h3,
@@ -131,7 +131,7 @@ html {
   font-weight: var(--rpl-type-weight-bold);
   line-height: var(--rpl-type-lh-5);
   letter-spacing: var(--rpl-type-ls-2);
-  hyphens: auto;
+  font-family: var(--rpl-type-font-family-heading, var(--rpl-type-font-family));
 
   @media (--rpl-bp-l) {
     font-size: var(--rpl-type-size-4);
@@ -145,7 +145,7 @@ html {
   font-weight: var(--rpl-type-weight-bold);
   line-height: var(--rpl-type-lh-5);
   letter-spacing: var(--rpl-type-ls-2);
-  hyphens: auto;
+  font-family: var(--rpl-type-font-family-heading, var(--rpl-type-font-family));
 }
 
 /* h4 */
@@ -155,7 +155,7 @@ html {
   font-weight: var(--rpl-type-weight-bold);
   line-height: var(--rpl-type-lh-4);
   letter-spacing: var(--rpl-type-ls-1);
-  hyphens: auto;
+  font-family: var(--rpl-type-font-family-heading, var(--rpl-type-font-family));
 
   @media (--rpl-bp-l) {
     font-size: var(--rpl-type-size-3);
@@ -169,7 +169,7 @@ html {
   font-weight: var(--rpl-type-weight-bold);
   line-height: var(--rpl-type-lh-4);
   letter-spacing: var(--rpl-type-ls-1);
-  hyphens: auto;
+  font-family: var(--rpl-type-font-family-heading, var(--rpl-type-font-family));
 }
 
 /* h5 */
@@ -179,7 +179,7 @@ html {
   font-weight: var(--rpl-type-weight-bold);
   line-height: var(--rpl-type-lh-3);
   letter-spacing: var(--rpl-type-ls-1);
-  hyphens: auto;
+  font-family: var(--rpl-type-font-family-heading, var(--rpl-type-font-family));
 
   @media (--rpl-bp-l) {
     font-size: var(--rpl-type-size-2);
@@ -193,7 +193,7 @@ html {
   font-weight: var(--rpl-type-weight-bold);
   line-height: var(--rpl-type-lh-3);
   letter-spacing: var(--rpl-type-ls-1);
-  hyphens: auto;
+  font-family: var(--rpl-type-font-family-heading, var(--rpl-type-font-family));
 }
 
 /* Paragraphs */
@@ -260,6 +260,7 @@ html {
   font-weight: var(--rpl-type-weight-bold);
   line-height: var(--rpl-type-lh-3);
   letter-spacing: var(--rpl-type-ls-6);
+  font-family: var(--rpl-type-font-family-heading, var(--rpl-type-font-family));
 }
 
 .rpl-type-label {
@@ -291,4 +292,8 @@ html {
     background-color: transparent !important;
     color: var(--rpl-clr-type-default) !important;
   }
+}
+
+.rpl-u-hyphenate {
+  hyphens: auto;
 }

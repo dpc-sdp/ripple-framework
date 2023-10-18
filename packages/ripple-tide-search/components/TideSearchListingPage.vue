@@ -6,14 +6,17 @@ import type { TidePageBase, TideSiteData } from '@dpc-sdp/ripple-tide-api/types'
 import type {
   TideSearchListingPage,
   MappedSearchResult,
-  TideSearchListingResultLayout
+  TideSearchListingResultLayout,
+  TideSearchListingSortOption
 } from './../types'
+import type { ITideSecondaryCampaign } from '@dpc-sdp/ripple-tide-landing-page/mapping/secondary-campaign/secondary-campaign-mapping'
 import { useRippleEvent } from '@dpc-sdp/ripple-ui-core'
 import type { rplEventPayload } from '@dpc-sdp/ripple-ui-core'
 import { watch } from 'vue'
 
 interface TideContentPage extends TidePageBase {
   afterResults: string
+  secondaryCampaign: ITideSecondaryCampaign
 }
 
 interface Props {
@@ -21,6 +24,7 @@ interface Props {
   title: string
   introText?: string
   searchListingConfig?: TideSearchListingPage['searchListingConfig']
+  sortOptions?: TideSearchListingSortOption[]
   autocompleteQuery?: boolean
   queryConfig: Record<string, any>
   globalFilters?: any[]
@@ -69,7 +73,8 @@ const props = withDefaults(defineProps<Props>(), {
         result: item._source
       }
     }
-  }
+  },
+  sortOptions: () => []
 })
 
 const emit = defineEmits<{
@@ -102,6 +107,8 @@ const {
   goToPage,
   page,
   pageSize,
+  userSelectedSort,
+  changeSortOrder,
   totalResults,
   totalPages,
   pagingStart,
@@ -112,7 +119,8 @@ const {
   props.userFilters,
   props.globalFilters,
   props.searchResultsMappingFn,
-  props.searchListingConfig
+  props.searchListingConfig,
+  props.sortOptions
 )
 
 const uiFilters = ref(props.userFilters)
@@ -226,6 +234,10 @@ const handlePageChange = (event) => {
   )
 }
 
+const handleSortChange = (sortId) => {
+  changeSortOrder(sortId)
+}
+
 const handleToggleFilters = () => {
   filtersExpanded.value = !filtersExpanded.value
 
@@ -320,11 +332,13 @@ watch(
             v-if="userFilters && userFilters.length > 0"
             class="tide-search-refine-btn"
             :expanded="filtersExpanded"
+            aria-controls="tide-search-listing-filters"
             @click="handleToggleFilters"
             >{{ toggleFiltersLabel }}</RplSearchBarRefine
           >
           <RplExpandable
             v-if="userFilters && userFilters.length > 0"
+            id="tide-search-listing-filters"
             :expanded="filtersExpanded"
             class="rpl-u-margin-t-4"
           >
@@ -341,41 +355,54 @@ watch(
       </RplHeroHeader>
     </template>
     <template #body>
-      <slot
-        name="resultsCount"
-        :results="results"
-        :currentPage="page"
-        :pageSize="pageSize"
-        :totalPages="totalPages"
-        :totalResults="totalResults"
+      <TideSearchAboveResults
+        v-if="results?.length || (sortOptions && sortOptions.length)"
       >
-        <RplPageComponent
-          v-if="results?.length"
-          data-component-type="search-listing-result-count"
-        >
-          <TideSearchResultsCount
-            :pagingStart="pagingStart + 1"
-            :pagingEnd="pagingEnd + 1"
+        <template #left>
+          <slot
+            name="resultsCount"
+            :results="results"
+            :currentPage="page"
+            :pageSize="pageSize"
+            :totalPages="totalPages"
             :totalResults="totalResults"
+          >
+            <div data-component-type="search-listing-result-count">
+              <TideSearchResultsCount
+                v-if="!searchError && results?.length"
+                :pagingStart="pagingStart + 1"
+                :pagingEnd="pagingEnd + 1"
+                :totalResults="totalResults"
+              />
+            </div>
+          </slot>
+        </template>
+
+        <template #right>
+          <TideSearchSortOptions
+            v-if="sortOptions && sortOptions.length"
+            :currentValue="userSelectedSort"
+            :sortOptions="sortOptions"
+            @change="handleSortChange"
           />
-        </RplPageComponent>
-      </slot>
+        </template>
+      </TideSearchAboveResults>
 
       <RplPageComponent>
-        <div :class="{ 'tide-search-results--loading': isBusy }">
+        <TideSearchResultsLoadingState :isActive="isBusy">
           <TideSearchError v-if="searchError" />
           <TideSearchNoResults v-else-if="!isBusy && !results?.length" />
 
           <slot name="results" :results="results">
             <component
               :is="resultsLayout.component"
-              v-if="results && results.length > 0"
+              v-if="!searchError && results && results.length > 0"
               :key="`TideSearchListingResultsLayout${resultsLayout.component}`"
               v-bind="resultsLayout.props"
               :results="results"
             />
           </slot>
-        </div>
+        </TideSearchResultsLoadingState>
       </RplPageComponent>
       <RplPageComponent>
         <slot
@@ -387,6 +414,7 @@ watch(
           :totalResults="totalResults"
         >
           <TideSearchPagination
+            v-if="!searchError"
             :currentPage="page"
             :totalPages="totalPages"
             @paginate="handlePageChange"
@@ -400,10 +428,17 @@ watch(
         ></RplContent>
       </RplPageComponent>
     </template>
+    <template #belowBody>
+      <RplPageComponent v-if="contentPage.secondaryCampaign">
+        <RplSecondaryCampaign v-bind="contentPage.secondaryCampaign" />
+      </RplPageComponent>
+    </template>
   </TideBaseLayout>
 </template>
 
 <style>
+@import '@dpc-sdp/ripple-ui-core/style/breakpoints';
+
 .tide-search-header {
   display: flex;
   flex-direction: column;

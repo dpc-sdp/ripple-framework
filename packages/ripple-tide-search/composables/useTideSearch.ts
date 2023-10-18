@@ -29,6 +29,7 @@ export default (
   globalFilters: any[],
   searchResultsMappingFn: (item: any) => any,
   searchListingConfig: TideSearchListingConfig['searchListingConfig'],
+  sortOptions: TideSearchListingConfig['sortOptions'],
   resultsRef: any[]
 ) => {
   const { public: config } = useRuntimeConfig()
@@ -63,6 +64,7 @@ export default (
   const results = resultsRef || ref()
   const totalResults = ref(0)
   const suggestions = ref([])
+  const userSelectedSort = ref(null)
 
   const pagingStart = computed(() => {
     return (page.value - 1) * pageSize.value
@@ -122,9 +124,20 @@ export default (
   }
 
   const getSortClause = () => {
+    if (userSelectedSort.value) {
+      const selected = sortOptions?.find(
+        (itm) => itm.id === userSelectedSort.value
+      )
+
+      if (selected) {
+        return selected.clause
+      }
+    }
+
     if (searchListingConfig.customSort) {
       return searchListingConfig.customSort
     }
+
     return [
       {
         _score: 'desc'
@@ -243,7 +256,10 @@ export default (
   const getQueryDSLForAggregations = () => {
     return {
       query: {
-        match_all: {}
+        bool: {
+          must: [{ match_all: {} }],
+          filter: globalFilters
+        }
       },
       size: 1,
       from: 0,
@@ -393,6 +409,20 @@ export default (
     })
   }
 
+  /**
+   * Navigates to a specific page using the search term and filters in the current URL
+   */
+  const changeSortOrder = async (newSortId: string) => {
+    await navigateTo({
+      ...route,
+      query: {
+        ...route.query,
+        page: 1,
+        sort: newSortId
+      }
+    })
+  }
+
   const getFiltersFromRoute = (newRoute: RouteLocation) => {
     // Re-construct the filter form values from the URL, we find every query param that matches
     // a user filter, then construct the filter values based on that.
@@ -424,6 +454,10 @@ export default (
     searchTerm.value = getSingleQueryStringValue(newRoute.query, 'q') || ''
     page.value =
       parseInt(getSingleQueryStringValue(newRoute.query, 'page'), 10) || 1
+    userSelectedSort.value =
+      getSingleQueryStringValue(newRoute.query, 'sort') ||
+      sortOptions?.[0]?.id ||
+      null
 
     filterForm.value = getFiltersFromRoute(newRoute)
 
@@ -463,6 +497,8 @@ export default (
     totalPages,
     pagingStart,
     pagingEnd,
+    userSelectedSort,
+    changeSortOrder,
     searchUrl,
     getQueryDSL
   }
