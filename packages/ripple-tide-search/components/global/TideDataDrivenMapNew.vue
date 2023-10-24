@@ -1,15 +1,14 @@
 <script setup lang="ts">
-import { getActiveFilterURL, ref, provide } from '#imports'
+import { getActiveFilterURL, useRoute, ref, toRaw } from '#imports'
 import { submitForm } from '@formkit/vue'
 import useTideSearch from './../../composables/useTideSearch'
 import type {
   TideSearchListingPage,
+  TideSearchListingResultLayout,
   TideSearchListingResultItem
 } from './../../types'
 import { useRippleEvent } from '@dpc-sdp/ripple-ui-core'
-
 import type { rplEventPayload } from '@dpc-sdp/ripple-ui-core'
-import { get } from 'lodash'
 
 interface Props {
   id: string
@@ -20,10 +19,9 @@ interface Props {
   queryConfig: Record<string, any>
   globalFilters?: any[]
   userFilters?: any[]
-  tableConfig: {
-    props: {
-      columns: any[]
-    }
+  resultsConfig?: {
+    layout?: TideSearchListingResultLayout
+    item?: Record<string, { component: string }>
   }
   mapConfig: {
     props?: {}
@@ -59,13 +57,10 @@ const props = withDefaults(defineProps<Props>(), {
       placeholder: 'Enter a search term'
     }
   }),
-  tableConfig: () => ({
-    props: {
-      columns: []
+  resultsConfig: () => ({
+    layout: {
+      component: 'TideSearchResultsList'
     }
-  }),
-  mapConfig: () => ({
-    props: {}
   })
 })
 
@@ -85,8 +80,34 @@ const emit = defineEmits<{
 const { emitRplEvent } = useRippleEvent('tide-search', emit)
 
 const searchResultsMappingFn = (item): TideSearchListingResultItem => {
+  if (props.resultsConfig.item) {
+    for (const key in props.resultsConfig.item) {
+      const mapping = props.resultsConfig.item[key]
+      if (!item._source?.type || item._source?.type[0] === key || key === '*') {
+        /* If there is no type, a component will be required */
+        return {
+          id: item._id,
+          component: mapping.component,
+          props: {
+            result: item._source
+          }
+        }
+      } else {
+        /* Add default search result mapping if none provided */
+        return {
+          id: item._id,
+          component: 'TideSearchResult',
+          props: {
+            result: item._source
+          }
+        }
+      }
+    }
+  }
   return item
 }
+
+const filtersExpanded = ref(false)
 
 const {
   isBusy,
@@ -95,6 +116,7 @@ const {
   searchTerm,
   results,
   filterForm,
+  appliedFilters,
   submitSearch,
   goToPage,
   page,
@@ -102,9 +124,7 @@ const {
   totalPages,
   pagingStart,
   pagingEnd,
-  onAggregationUpdateHook,
-  searchUrl,
-  getQueryDSL
+  onAggregationUpdateHook
 } = useTideSearch(
   props.queryConfig,
   props.userFilters,
@@ -112,36 +132,6 @@ const {
   searchResultsMappingFn,
   props.searchListingConfig
 )
-
-const mapResults = ref([])
-const mapResultsMappingFn = (result) => {
-  if (props.mapConfig) {
-    return {
-      ...result._source,
-      title: get(result, props.mapConfig.props.titleObjPath),
-      lat: parseFloat(get(result, props.mapConfig.props.latObjPath)),
-      lng: parseFloat(get(result, props.mapConfig.props.lngObjPath)),
-      id: result._id
-    }
-  }
-}
-const getMapSearchResults = async () => {
-  try {
-    const queryDSL = getQueryDSL()
-
-    const mapResponse = await $fetch(searchUrl, {
-      method: 'POST',
-      body: {
-        ...queryDSL,
-        size: 100
-      }
-    })
-    mapResults.value = mapResponse.hits?.hits.map(mapResultsMappingFn)
-    console.log(mapResults.value[0])
-  } catch (error) {
-    console.error(error)
-  }
-}
 
 const cachedSubmitEvent = ref({})
 
@@ -153,43 +143,9 @@ const baseEvent = () => ({
   value: totalResults.value,
   options: getActiveFilterURL(filterForm.value)
 })
-const uiFilters = ref(props.userFilters)
+
 // Updates filter options with aggregation value
-onAggregationUpdateHook.value = (aggs) => {
-  const updateTimestamp = Date.now()
-
-  Object.keys(aggs).forEach((key) => {
-    uiFilters.value.forEach((uiFilter, idx) => {
-      if (uiFilter.id === key) {
-        const getDynamicOptions = () => {
-          const mappedOptions = aggs[key].map((item) => ({
-            id: item,
-            label: item,
-            value: item
-          }))
-
-          if (uiFilters.value[idx].props.hasOwnProperty('options')) {
-            return [
-              ...toRaw(uiFilters.value[idx].props.options),
-              ...mappedOptions
-            ]
-          }
-
-          return mappedOptions
-        }
-
-        uiFilters.value[idx] = {
-          ...uiFilters.value[idx],
-          props: {
-            ...uiFilters.value[idx].props,
-            timestamp: updateTimestamp,
-            dynamicOptions: getDynamicOptions()
-          }
-        }
-      }
-    })
-  })
-}
+onAggregationUpdateHook.value = (aggs) => {}
 
 const emitSearchEvent = (event) => {
   emitRplEvent(
@@ -221,7 +177,7 @@ const handleSearchSubmit = (event) => {
 const handleFilterSubmit = (event) => {
   filterForm.value = event.value
   submitSearch()
-  getMapSearchResults()
+
   emitSearchEvent({ ...event, ...cachedSubmitEvent.value, ...baseEvent() })
 
   cachedSubmitEvent.value = {}
@@ -253,6 +209,42 @@ const handlePageChange = (event) => {
   )
 }
 
+const handleToggleFilters = () => {
+  filtersExpanded.value = !filtersExpanded.value
+
+  emitRplEvent(
+    'toggleFilters',
+    {
+      ...baseEvent(),
+      action: filtersExpanded.value ? 'open' : 'close',
+      text: toggleFiltersLabel.value
+    },
+    { global: true }
+  )
+}
+
+const numAppliedFilters = computed(() => {
+  return Object.values(appliedFilters.value).filter((value) => {
+    if (!value) {
+      return false
+    }
+
+    if (Array.isArray(value) && !value.length) {
+      return false
+    }
+
+    return true
+  }).length
+})
+
+const toggleFiltersLabel = computed(() => {
+  let label = 'Refine search'
+
+  return numAppliedFilters.value
+    ? `${label} (${numAppliedFilters.value})`
+    : label
+})
+
 const tabs = [
   {
     title: 'Map',
@@ -265,75 +257,127 @@ const tabs = [
     icon: 'list'
   }
 ]
+
 const activeTab = ref('map')
 
-onMounted(() => {
-  getMapSearchResults()
-})
-
-function switchTab(tab: string) {
+const handleTabChange = (tab: string) => {
   activeTab.value = tab.id
-  if (activeTab.value === 'map') {
-    getMapSearchResults()
-  }
+  // if (activeTab.value === 'map') {
+  //   getMapSearchResults()
+  // }
 }
-
-const rplMapRef = ref(null)
-provide('rplMapInstance', {
-  rplMapRef,
-  setRplMapRef
-})
-
-async function onAddressSearch(payload: any) {}
 </script>
 
 <template>
   <div class="rpl-u-margin-t-8">
-    <TideSearchAddressLookup @update="onAddressSearch" :addresses="false">
-    </TideSearchAddressLookup>
-
-    <TideSearchFilters
+    <!-- <TideSearchFilters
       v-if="userFilters && userFilters.length > 0"
       :title="title"
       :filter-form-values="filterForm"
       :filterInputs="userFilters"
       @reset="handleFilterReset"
       @submit="handleFilterSubmit"
-    />
-    <TideSearchResultsCount
-      v-if="results?.length"
-      :pagingStart="pagingStart + 1"
-      :pagingEnd="pagingEnd + 1"
-      :totalResults="totalResults"
-    />
+    /> -->
 
-    <div class="rpl-u-margin-t-8">
-      <TideSearchError v-if="searchError" />
-      <TideSearchNoResults v-else-if="!isBusy && !results?.length" />
+    <div class="tide-search-header">
+      <RplSearchBar
+        id="custom-collection-search-bar"
+        variant="default"
+        :input-label="searchListingConfig.labels?.submit"
+        :inputValue="searchTerm"
+        :placeholder="searchListingConfig.labels?.placeholder"
+        :global-events="false"
+        @submit="handleSearchSubmit"
+        @update:input-value="handleUpdateSearchTerm"
+      />
+      <RplSearchBarRefine
+        v-if="userFilters && userFilters.length > 0"
+        class="tide-search-refine-btn"
+        :expanded="filtersExpanded"
+        @click="handleToggleFilters"
+        >{{ toggleFiltersLabel }}</RplSearchBarRefine
+      >
+      <RplExpandable
+        v-if="userFilters && userFilters.length > 0"
+        :expanded="filtersExpanded"
+        class="rpl-u-margin-t-4"
+      >
+        <TideSearchFilters
+          :title="title"
+          :filter-form-values="filterForm"
+          :filterInputs="userFilters"
+          @reset="handleFilterReset"
+          @submit="handleFilterSubmit"
+        >
+        </TideSearchFilters>
+      </RplExpandable>
     </div>
 
-    <template v-if="results && results.length > 0">
-      <RplTabs :tabs="tabs" :activeTab="activeTab" @toggleTab="switchTab" />
-      <template v-if="activeTab === 'list' && results && results.length > 0">
-        <TideSearchResultsTable
-          :results="results"
-          v-bind="tableConfig.props"
-        ></TideSearchResultsTable>
+    <RplTabs :tabs="tabs" :activeTab="activeTab" @toggleTab="handleTabChange" />
+
+    <template v-if="activeTab === 'list'">
+      <TideSearchResultsCount
+        v-if="results?.length"
+        :pagingStart="pagingStart + 1"
+        :pagingEnd="pagingEnd + 1"
+        :totalResults="totalResults"
+      />
+
+      <div class="rpl-u-margin-t-8">
+        <TideSearchError v-if="searchError" />
+        <TideSearchNoResults v-else-if="!isBusy && !results?.length" />
+      </div>
+
+      <component
+        :is="resultsConfig.layout?.component"
+        v-if="results && results.length > 0"
+        :key="`TideSearchListingResultsLayout${resultsConfig.layout?.component}`"
+        v-bind="resultsConfig.layout?.props"
+        :results="results"
+      />
+
+      <RplPageComponent>
         <TideSearchPagination
           :currentPage="page"
           :totalPages="totalPages"
           @paginate="handlePageChange"
         ></TideSearchPagination>
-      </template>
-      <template
-        v-if="activeTab === 'map' && mapResults && mapResults.length > 0"
+      </RplPageComponent>
+    </template>
+
+    <template v-if="activeTab === 'map'">
+      <TideSearchListingResultsMap
+        :results="mapResults"
+        v-bind="mapConfig.props"
       >
-        <TideSearchListingResultsMap
-          :results="mapResults"
-          v-bind="mapConfig.props"
-        >
-        </TideSearchListingResultsMap>
-      </template>
+      </TideSearchListingResultsMap>
     </template>
   </div>
 </template>
+
+<style>
+.tide-search-header {
+  display: flex;
+  flex-direction: column;
+  margin-top: var(--rpl-sp-6);
+}
+
+.tide-search-filters.rpl-grid {
+  row-gap: var(--rpl-sp-6);
+}
+
+.tide-search-filters .rpl-form__outer {
+  margin: 0;
+}
+
+.tide-search-refine-btn {
+  align-self: flex-end;
+  padding: 0;
+  margin-top: var(--rpl-sp-5);
+}
+
+.tide-search-results--loading {
+  opacity: 0.5;
+  pointer-events: none;
+}
+</style>

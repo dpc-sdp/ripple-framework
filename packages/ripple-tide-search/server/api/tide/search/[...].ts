@@ -15,7 +15,7 @@ export const createSearchHandler = async (event: H3Event) => {
       proxyReq(proxyReq) {
         proxyReq.setHeader(
           'Authorization',
-          `Bearer ${config.tide.appSearch.privateSearchKey}`
+          `ApiKey ${config.tide.appSearch.privateSearchKey}`
         )
       }
     },

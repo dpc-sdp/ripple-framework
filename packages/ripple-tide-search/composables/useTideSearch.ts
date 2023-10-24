@@ -30,7 +30,9 @@ export default (
   searchResultsMappingFn: (item: any) => any,
   searchListingConfig: TideSearchListingConfig['searchListingConfig'],
   sortOptions: TideSearchListingConfig['sortOptions'],
-  resultsRef: any[]
+  includeMapsRequest: boolean,
+  mapResultsMappingFn: (item: any) => any,
+  mapConfig: any
 ) => {
   const { public: config } = useRuntimeConfig()
   const route: RouteLocation = useRoute()
@@ -56,12 +58,14 @@ export default (
   const isBusy = ref(true)
   const searchError = ref(null)
 
+  const locationQuery = ref(null)
+
   const searchTerm = ref('')
   const filterForm = ref({})
   const page = ref(1)
   const pageSize = ref(searchListingConfig.resultsPerPage || 10)
 
-  const results = resultsRef || ref()
+  const results = ref()
   const totalResults = ref(0)
   const suggestions = ref([])
   const userSelectedSort = ref(null)
@@ -80,6 +84,8 @@ export default (
     return pageSize.value ? Math.ceil(totalResults.value / pageSize.value) : 0
   })
   const onAggregationUpdateHook = ref()
+
+  const mapResults = ref([])
 
   const getQueryClause = () => {
     if (searchTerm.value) {
@@ -239,12 +245,28 @@ export default (
     })
   })
 
-  const getQueryDSL = () => {
+  const getQueryDSL = async () => {
+    console.log('mapConfig', mapConfig)
+    const dslTransformFn =
+      appConfig.ripple.search.dslTransformFns[mapConfig?.dslTransformFn]
+
+    if (typeof dslTransformFn !== 'function') {
+      throw new Error(
+        `Search listing: No matching DSL transform function called "${mapConfig?.dslTransformFn}"`
+      )
+    }
+
+    const dsl = await dslTransformFn(locationQuery.value)
+    console.log(dsl)
+
     return {
       query: {
         bool: {
           must: getQueryClause(),
-          filter: getFilterClause()
+          filter: [
+            ...getFilterClause(),
+            ...(dsl.listing.filter ? [dsl.listing.filter] : [])
+          ]
         }
       },
       size: pageSize.value,
@@ -268,12 +290,42 @@ export default (
     }
   }
 
+  const getQueryDSLForMaps = async () => {
+    console.log('mapConfig', mapConfig)
+    const dslTransformFn =
+      appConfig.ripple.search.dslTransformFns[mapConfig?.dslTransformFn]
+
+    if (typeof dslTransformFn !== 'function') {
+      throw new Error(
+        `Search listing: No matching DSL transform function called "${mapConfig?.dslTransformFn}"`
+      )
+    }
+
+    const dsl = await dslTransformFn(locationQuery.value)
+    console.log(dsl)
+
+    return {
+      query: {
+        bool: {
+          must: getQueryClause(),
+          filter: [
+            ...getFilterClause(),
+            ...(dsl.listing.filter ? [dsl.listing.filter] : [])
+          ]
+        }
+      },
+      size: 10000,
+      from: 0,
+      sort: getSortClause()
+    }
+  }
+
   const getSearchResults = async (isFirstRun) => {
     isBusy.value = true
     searchError.value = null
 
     try {
-      const body = getQueryDSL()
+      const body = await getQueryDSL()
 
       if (process.env.NODE_ENV === 'development') {
         console.info(JSON.stringify(body, null, 2))
@@ -284,8 +336,9 @@ export default (
         body
       })
 
-      // Set the aggregations request to a resolved promise, this helps keep the Promise.all logic clean
+      // Set the aggregations and maps request to a resolved promise by default, this helps keep the Promise.all logic clean
       let aggsRequest: Promise<any> = Promise.resolve()
+      let mapsRequest: Promise<any> = Promise.resolve()
 
       if (isFirstRun) {
         // Kick off an 'empty' search in order to get the aggregations (options) for the dropdowns, this
@@ -297,9 +350,17 @@ export default (
         })
       }
 
-      const [searchResponse, aggsResponse] = await Promise.all([
+      if (includeMapsRequest) {
+        mapsRequest = $fetch(searchUrl, {
+          method: 'POST',
+          body: await getQueryDSLForMaps()
+        })
+      }
+
+      const [searchResponse, aggsResponse, mapsResponse] = await Promise.all([
         searchRequest,
-        aggsRequest
+        aggsRequest,
+        mapsRequest
       ])
 
       totalResults.value = searchResponse?.hits?.total?.value || 0
@@ -318,6 +379,10 @@ export default (
           {}
         )
         onAggregationUpdateHook.value(mappedAggs)
+      }
+
+      if (mapsResponse) {
+        mapResults.value = mapsResponse.hits?.hits.map(mapResultsMappingFn)
       }
 
       isBusy.value = false
@@ -386,11 +451,23 @@ export default (
       Object.entries(filterForm.value).filter(([key, value]) => value)
     )
 
+    // flatten locationQuery into an object for adding to the query string
+    const locationParams = Object.entries(locationQuery.value || {}).reduce(
+      (obj, [key, value]) => {
+        return {
+          ...obj,
+          [`location[${key}]`]: value
+        }
+      },
+      {}
+    )
+
     await navigateTo({
       path: route.path,
       query: {
         page: 1,
         q: searchTerm.value || undefined,
+        ...locationParams,
         ...filterFormValues
       }
     })
@@ -445,6 +522,22 @@ export default (
       }, {})
   }
 
+  const getLocationQueryFromRoute = (newRoute: RouteLocation) => {
+    // parse the location query from the route
+    const location = Object.keys(newRoute.query)
+      .filter((key) => key.startsWith('location'))
+      .reduce((obj, key) => {
+        return {
+          ...obj,
+          [key.replace('location[', '').replace(']', '')]: newRoute.query[key]
+        }
+      }, {})
+
+    console.log('asdasd', location)
+
+    return location
+  }
+
   /**
    * The URL is the source of truth for what is shown in the search results.
    *
@@ -460,6 +553,8 @@ export default (
       null
 
     filterForm.value = getFiltersFromRoute(newRoute)
+
+    locationQuery.value = getLocationQueryFromRoute(newRoute)
 
     getSearchResults(isFirstRun)
   }
@@ -500,6 +595,8 @@ export default (
     userSelectedSort,
     changeSortOrder,
     searchUrl,
-    getQueryDSL
+    mapResults,
+    getQueryDSL,
+    locationQuery
   }
 }

@@ -11,6 +11,14 @@ export const createElasticSearchHandler = async (event: H3Event) => {
     pathRewrite: {
       '^/api/tide/elasticsearch': ''
     },
+    on: {
+      proxyReq(proxyReq) {
+        proxyReq.setHeader(
+          'Authorization',
+          `ApiKey ${config.tide.appSearch.privateSearchKey}`
+        )
+      }
+    },
     logger: logger,
     changeOrigin: true
   })
