@@ -13,6 +13,7 @@
   },
   "scripts": {
     "clean": "(rimraf dist* && rimraf tsconfig.tsbuildinfo) | true",
+    "build": "pnpm clean && tsc -p tsconfig.json",
     "watch": "tsc -p tsconfig.json -w"
   },
   "files": [
