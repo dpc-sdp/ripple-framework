@@ -1,0 +1,39 @@
+{
+  "meta": {
+    "alerts": [],
+    "warnings": [],
+    "precision": 2,
+    "engine": {
+      "name": "vic-postcode-localities",
+      "type": "default"
+    },
+    "page": {
+      "current": 1,
+      "total_pages": 3286,
+      "total_results": 3286,
+      "size": 1
+    },
+    "request_id": "d8ab716f3db2170620d61d145a95b5e8"
+  },
+  "results": [
+    {
+      "postcode": {
+        "raw": "3019"
+      },
+      "locality": {
+        "raw": "Robinson"
+      },
+      "location": {
+        "raw": "-37.784683,144.854014"
+      },
+      "id": {
+        "raw": "doc-655d9b42cfe7a91b92647ed1"
+      },
+      "_meta": {
+        "id": "doc-655d9b42cfe7a91b92647ed1",
+        "engine": "vic-postcode-localities",
+        "score": null
+      }
+    }
+  ]
+}

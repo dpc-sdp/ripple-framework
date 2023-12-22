@@ -73,3 +73,29 @@ When(
     cy.get('.rpl-map canvas').click(x, y, { force: true })
   }
 )
+
+When(`I click the map search geolocation button`, () => {
+  cy.get('.tide-search-address-lookup__locate').as('btn')
+  cy.wait(1000)
+  cy.get('@btn').click()
+})
+
+When(
+  'I visit the page {string} from location {float}, {float}',
+  (route: string, latitude: number, longitude: number) => {
+    cy.visit(route, {
+      failOnStatusCode: false,
+      onBeforeLoad({ navigator }) {
+        cy.stub(navigator.geolocation, 'getCurrentPosition').callsArgWith(0, {
+          coords: { latitude, longitude }
+        })
+      }
+    })
+    cy.get('body', { timeout: 10000 }).should(
+      'have.attr',
+      'data-nuxt-hydrated',
+      'true'
+    )
+    cy.wait(200)
+  }
+)

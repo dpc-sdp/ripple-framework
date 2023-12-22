@@ -5,7 +5,7 @@
       :features="features"
       ref="rplmap"
       projection="EPSG:3857"
-      popupType="popover"
+      :popupType="popup.popupType || 'popover'"
       :map-height="550"
       :pinStyle="pinStyle"
     >
@@ -81,6 +81,7 @@ interface Props {
       objKey?: string
       component?: string
     }
+    popupType?: 'sidebar' | 'popover'
   }
   titleObjPath: string
   results: TideSearchListingMapFeature[]

@@ -173,21 +173,17 @@ function onMapMove(evt) {
       :mapHeight="mapHeight"
     >
       <RplMapPopUp :is-open="popup.isOpen" @close="onPopUpClose">
-        <template
-          v-if="selectedFeatures && selectedFeatures.length > 0"
-          #header
-        >
-          <slot name="popupTitle" :selectedFeatures="selectedFeatures">
-            {{ selectedFeatures[0].title }}
+        <template #header>
+          <slot name="popupTitle" :selectedFeatures="popup.feature">
+            {{ popup.feature[0].title }}
           </slot>
         </template>
-        <template v-if="selectedFeatures && selectedFeatures.length > 0">
-          <slot name="popupContent" :selectedFeatures="selectedFeatures">
-            <p class="rpl-type-p-small">
-              {{ selectedFeatures[0].description }}
-            </p>
-          </slot>
-        </template>
+        <slot name="popupContent" :selectedFeatures="popup.feature">
+          {{ popup.feature }}
+          <p class="rpl-type-p-small">
+            {{ popup.feature[0].description }}
+          </p>
+        </slot>
       </RplMapPopUp>
     </slot>
     <ol-map

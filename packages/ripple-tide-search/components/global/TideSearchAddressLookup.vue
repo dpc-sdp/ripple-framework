@@ -6,7 +6,7 @@
       :showLabel="true"
       variant="reverse"
       :submitLabel="false"
-      :inputValue="inputValue"
+      :inputValue="searchTerm"
       :suggestions="results"
       :showNoResults="true"
       :debounce="5000"
@@ -26,6 +26,14 @@
         />
       </template>
     </RplSearchBar>
+    <button
+      v-if="!waitingForGeolocation"
+      class="tide-search-address-lookup__locate rpl-u-margin-t-5"
+      @click="onGeoLocateClick"
+    >
+      <span>USE MY CURRENT LOCATION (PLACEHOLDER)</span>
+      <RplIcon name="icon-chevron-down"></RplIcon>
+    </button>
   </div>
 </template>
 
@@ -44,6 +52,7 @@ const props = withDefaults(defineProps<Props>(), {
 })
 
 const results = ref([])
+const searchTerm = ref(props.inputValue)
 
 type addressResultType = {
   name: string
@@ -61,7 +70,6 @@ const pendingZoomAnimation = ref(false)
 
 async function submitAction(e: any) {
   const item = e.value
-
   // The search bar component sometimes returns a string, sometimes an object, we just ignore the non-empty strings
   if (item && typeof item === 'string') {
     return
@@ -153,4 +161,107 @@ function centerMapOnLocation(map, location, animate: false) {
     map.getView().animate({ center, zoom: targetZoom, duration })
   }
 }
+
+async function queryClosestPostcode(location) {
+  const searchUrl = `/api/tide/app-search/vic-postcode-localities/search`
+  const queryDSL = {
+    query: '',
+    page: {
+      size: 1
+    },
+    sort: [
+      {
+        location: {
+          center: [location.lat, location.lng],
+          order: 'asc'
+        }
+      }
+    ]
+  }
+
+  try {
+    const response = await $fetch(searchUrl, {
+      method: 'POST',
+      body: {
+        ...queryDSL
+      }
+    })
+    if (response && response.meta.page.total_results > 0) {
+      return response.results.map((itm: any) => ({
+        id: itm.id.raw,
+        locality: itm.locality.raw,
+        postcode: itm.postcode.raw,
+        location: itm.location.raw
+      }))[0]
+    }
+  } catch (e) {
+    console.error(e)
+  }
+}
+
+function showPosition(position) {
+  const lat = parseFloat(position.coords.latitude)
+  const lng = parseFloat(position.coords.longitude)
+  const location = fromLonLat([lng, lat], 'EPSG:4326')
+  console.log(location)
+  return location
+}
+
+function handleError(error) {
+  switch (error.code) {
+    case error.PERMISSION_DENIED:
+      console.log('User denied the request for Geolocation.')
+      break
+    case error.POSITION_UNAVAILABLE:
+      console.log('Location information is unavailable.')
+      break
+    case error.TIMEOUT:
+      console.log('The request to get user location timed out.')
+      break
+    case error.UNKNOWN_ERROR:
+      console.log('An unknown error occurred.')
+      break
+  }
+}
+const getCoords = async () => {
+  const pos = await new Promise((resolve, reject) => {
+    navigator.geolocation.getCurrentPosition(resolve, reject)
+  })
+
+  return {
+    lng: parseFloat(pos.coords.longitude),
+    lat: parseFloat(pos.coords.latitude)
+  }
+}
+
+const waitingForGeolocation = ref(false)
+
+async function onGeoLocateClick() {
+  waitingForGeolocation.value = true
+  if (navigator.geolocation) {
+    const location = await getCoords()
+    const result = await queryClosestPostcode(location)
+    searchTerm.value = { locality: result.locality }
+    submitAction({ value: result })
+  } else {
+    console.log('Geolocation is not supported by this browser.')
+  }
+  waitingForGeolocation.value = false
+}
 </script>
+
+<style>
+.tide-search-address-lookup {
+  position: relative;
+}
+.tide-search-address-lookup__locate {
+  position: absolute;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--rpl-sp-2);
+  box-sizing: border-box;
+  text-decoration: none;
+  color: var(--rpl-clr-link);
+}
+</style>
