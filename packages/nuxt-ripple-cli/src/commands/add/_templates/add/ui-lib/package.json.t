@@ -49,7 +49,7 @@ to: package.json
     "postcss-nested": "^6.0.1",
     "postcss-normalize": "^10.0.1",
     "postcss-preset-env": "^8.1.0",
-    "vue": "3.3.4"
+    "vue": "3.3.13"
   },
   "devDependencies": {
     "@dpc-sdp/ripple-tide-api": "workspace:*",
