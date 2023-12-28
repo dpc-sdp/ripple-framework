@@ -59,7 +59,7 @@
     "@lerna-lite/publish": "^1.17.0",
     "@lerna-lite/version": "^1.17.0",
     "@types/jest": "^29.5.0",
-    "@vitejs/plugin-vue": "^4.1.0",
+    "@vitejs/plugin-vue": "^4.6.0",
     "babel-core": "7.0.0-bridge.0",
     "babel-jest": "^29.5.0",
     "babel-loader": "^9.1.2",
