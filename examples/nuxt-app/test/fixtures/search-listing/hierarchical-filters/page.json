@@ -111,23 +111,33 @@
         "id": "dependentFilter",
         "component": "TideSearchFilterDependent",
         "columns": "rpl-grid",
+        "query": {
+          "type": "function",
+          "encode": "dependentEncoding",
+          "decode": "dependentDecoding"
+        },
         "filter": {
-          "type": "raw",
-          "value": "{\"ids\":{\"values\":{{value}}}}"
+          "type": "function",
+          "multiple": false,
+          "value": "dependentValue",
+          "field": "field_species_name"
         },
         "aggregations": {
-          "field": "rawFilter",
+          "field": "topic",
           "source": "taxonomy"
         },
         "props": {
           "id": "dependentFilter",
-          "label": "Dependent filter",
-          "placeholder": "Select a pet",
+          "label": "Terms dependent example",
+          "placeholder": "Select a species",
+          "dependantLabel": "Terms dependent child example",
+          "dependantPlaceholder": "All sub species",
+          "multiple": true,
           "options": [
             {
               "id": "1",
               "label": "Mammals",
-              "value": "mammals"
+              "value": "Mammals"
             },
             {
               "id": "2",
@@ -138,18 +148,18 @@
             {
               "id": "3",
               "label": "Birds",
-              "value": "birds"
+              "value": "Birds"
             },
             {
               "id": "4",
               "label": "Cats",
-              "value": "cats",
+              "value": "Cats",
               "parent": "1"
             },
             {
               "id": "5",
               "label": "Parrot",
-              "value": "parrot",
+              "value": "Parrot",
               "parent": "3"
             }
           ]

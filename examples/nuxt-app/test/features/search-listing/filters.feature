@@ -22,8 +22,6 @@ Feature: Search listing - Filter
     When I toggle the search listing filters section
     Then the search listing dropdown field labelled "Raw filter example" should have the value "Dogs, Birds"
 
-
-
   @mockserver
   Example: Term filter - Should reflect a single value from the URL
     Given the page endpoint for path "/filters" returns fixture "/search-listing/filters/page" with status 200
@@ -178,12 +176,24 @@ Feature: Search listing - Filter
       | Apples  |
       | Oranges |
 
-  @mockserver @focus
+  @mockserver
   Example: Hierarchical filter from taxonomy
     Given the page endpoint for path "/filters" returns fixture "/search-listing/hierarchical-filters/page" with status 200
     And the search network request is stubbed with fixture "/search-listing/hierarchical-filters/response" and status 200
     And the current date is "Fri, 02 Feb 2050 03:04:05 GMT"
 
-    When I visit the page "/filters?rawFilter=Birds&rawFilter=Dogs"
-# Then the search listing page should have 2 results
-# And the search network request should be called with the "/search-listing/hierarchical-filters/request-raw" fixture
+    When I visit the page "/filters?dependentFilter=Mammals:Dogs,Cats"
+    Then the search listing page should have 2 results
+    And the search network request should be called with the "/search-listing/hierarchical-filters/request-raw" fixture
+
+    When I toggle the search listing filters section
+    Then the search listing dropdown field labelled "Terms dependent example" should have the value "Mammals"
+    When I click the search listing dropdown field labelled "Terms dependent example"
+    Then the selected dropdown field should have the items:
+      | Mammals |
+      | Birds   |
+#    And the search listing dropdown field labelled "Terms dependent child example" should have the value "Dogs, Cats"
+#    When I click the search listing dropdown field labelled "Terms dependent example"
+#    Then the selected dropdown field should have the items:
+#      | Dogs |
+#      | Cats |

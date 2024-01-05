@@ -381,8 +381,34 @@ export default (
    */
   const submitSearch = async () => {
     const filterFormValues = Object.fromEntries(
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      Object.entries(filterForm.value).filter(([key, value]) => value)
+      Object.entries(filterForm.value)
+        .map(([key, value]) => {
+          const filterConfig = userFilterConfig.find(
+            (itm: any) => itm.id === key
+          )
+
+          // Allow complex custom fields to supply queryFunctions i.e., a URL encoder
+          if (
+            filterConfig?.query?.type === 'function' &&
+            filterConfig.query?.encode
+          ) {
+            const queryFormatters =
+              appConfig?.ripple?.search?.queryFunctions || {}
+            const fn = queryFormatters[filterConfig.query.encode]
+
+            if (typeof fn !== 'function') {
+              throw new Error(
+                `Search listing: No matching query string encoder function called "${filterConfig.query.encode}"`
+              )
+            }
+
+            return [key, fn(filterConfig, value)]
+          }
+
+          return [key, value]
+        })
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        .filter(([key, value]) => value)
     )
 
     await navigateTo({
@@ -435,6 +461,24 @@ export default (
 
         if (filterConfig.component === 'TideSearchFilterDropdown') {
           parsedValue = Array.isArray(parsedValue) ? parsedValue : [parsedValue]
+        }
+
+        // Allow complex custom fields to supply queryFunctions i.e., a URL decoder
+        if (
+          filterConfig?.query?.type === 'function' &&
+          filterConfig.query?.decode
+        ) {
+          const queryFormatters =
+            appConfig?.ripple?.search?.queryFunctions || {}
+          const fn = queryFormatters[filterConfig.query.decode]
+
+          if (typeof fn !== 'function') {
+            throw new Error(
+              `Search listing: No matching query string decoder function called "${filterConfig.query.decode}"`
+            )
+          }
+
+          parsedValue = fn(filterConfig, parsedValue)
         }
 
         return {

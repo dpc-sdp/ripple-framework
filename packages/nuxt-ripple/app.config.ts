@@ -38,6 +38,10 @@ declare module '@nuxt/schema' {
           string,
           (filterConfig: any, values: string[]) => void
         >
+        queryFunctions?: Record<
+          string,
+          (filterConfig: any, values: string[]) => void
+        >
       }
     }
   }

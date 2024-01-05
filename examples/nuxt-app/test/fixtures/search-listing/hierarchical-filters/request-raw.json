@@ -18,8 +18,8 @@
           }
         },
         {
-          "ids": {
-            "values": ["Birds", "Dogs"]
+          "terms": {
+            "field_species_name": ["Dogs", "Cats"]
           }
         }
       ]
