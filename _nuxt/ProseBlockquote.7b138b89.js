@@ -1,0 +1,1 @@
+import{_ as e}from"./_plugin-vue_export-helper.c27b6911.js";import{b as t,c,D as r}from"./entry.55c30899.js";const s={},l={class:"rpl-callout"};function a(o,n){return t(),c("blockquote",l,[r(o.$slots,"default")])}const u=e(s,[["render",a]]);export{u as default};

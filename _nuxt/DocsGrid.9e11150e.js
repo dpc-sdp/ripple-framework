@@ -1,1 +1,0 @@
-import{_ as s}from"./_plugin-vue_export-helper.c27b6911.js";import{b as o,c as r,D as t}from"./entry.fd76962d.js";const c={},_={class:"rpl-grid"};function n(e,a){return o(),r("div",_,[t(e.$slots,"default")])}const i=s(c,[["render",n]]);export{i as default};
