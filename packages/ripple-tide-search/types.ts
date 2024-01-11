@@ -111,6 +111,13 @@ export type TideSearchListingConfig = {
      * @description custom sort clause
      */
     customSort?: Record<string, 'asc' | 'desc'>[]
+    /**
+     * @description options for utilizing the auto suggestions
+     */
+    suggestions: {
+      key: string
+      enabled: boolean
+    }
   }
   /**
    * @description Elastic Query DSL for query clause

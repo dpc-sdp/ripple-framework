@@ -60,6 +60,10 @@ const props = withDefaults(defineProps<Props>(), {
       submit: 'Submit',
       reset: 'Reset',
       placeholder: 'Enter a search term'
+    },
+    suggestions: {
+      key: 'title',
+      enabled: true
     }
   }),
   resultsLayout: () => ({
@@ -216,7 +220,10 @@ const handleFilterReset = () => {
 
 const handleUpdateSearchTerm = (term) => {
   searchTerm.value = term
-  if (props.autocompleteQuery) {
+  if (
+    props.autocompleteQuery &&
+    props.searchListingConfig?.suggestions?.enabled !== false
+  ) {
     getSuggestions()
   }
 }
