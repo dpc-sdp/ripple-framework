@@ -1,5 +1,18 @@
 # Changelog
 
+## v2.4.9...release/v2.4.10
+
+[compare changes](https://github.com/dpc-sdp/ripple-framework/compare/v2.4.9...release/v2.4.10)
+
+
+### 🚀 Enhancements
+
+  - **@dpc-sdp/ripple-tide-search:** Single selects, manage suggestions via config ([b85695e70](https://github.com/dpc-sdp/ripple-framework/commit/b85695e70))
+
+### ❤️  Contributors
+
+- David Featherston <david.featherstone@dpc.vic.gov.au>
+
 ## v2.4.9
 
 [compare changes](https://github.com/dpc-sdp/ripple-framework/compare/v2.4.8...v2.4.9)
