@@ -196,8 +196,9 @@ Feature: Search listing - Filter
       | Birds   |
     When I click the search listing dropdown field labelled "Terms dependent child example"
     Then the selected dropdown field should have the items:
-      | Dogs |
-      | Cats |
+      | Dogs    |
+      | Cats    |
+      | Canines |
 
   @mockserver
   Example: Dependent filter - Child options should update on parent selection

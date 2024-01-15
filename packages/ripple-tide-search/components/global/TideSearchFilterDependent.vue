@@ -32,7 +32,10 @@ const childOptions = computed(() => {
     (option) => option.value === selectedParent.value
   )
 
-  return props.options.filter((opt) => opt.parent === selectedOption?.id)
+  return props.options.filter(
+    (opt) =>
+      opt.parent === selectedOption?.id || opt.ancestor === selectedOption?.id
+  )
 })
 
 const handleSelect = (value: string) => {

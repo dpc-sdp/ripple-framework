@@ -290,7 +290,9 @@ export default ({
                 [itm?.filter?.value]: itm.props.options
                   ?.filter(
                     (option) =>
-                      option.parent === parentID || option.id === parentID
+                      option.parent === parentID ||
+                      option.ancestor === parentID ||
+                      option.id === parentID
                   )
                   .map((i) => i.value)
               }

@@ -1,3 +1,5 @@
+import { getTermAncestor, getTermMap } from './term-ancestor'
+
 export const getSearchListingConfig = (src) =>
   src.hasOwnProperty('field_search_configuration') &&
   JSON.parse(src.field_search_configuration)
@@ -17,6 +19,7 @@ export const processConfig = async (config, tidePageApi) => {
         const taxonomyResults = await tidePageApi.getTaxonomy(
           uiFilter.aggregations?.field
         )
+        const termMap = getTermMap(taxonomyResults)
         // Taxonomies can be disabled, only return active ones
         // sort taxonomy values by weight value to control order in dropdown
         const activeTaxonomies = taxonomyResults
@@ -26,7 +29,8 @@ export const processConfig = async (config, tidePageApi) => {
             id: item.drupal_internal__tid,
             label: item.name,
             value: item.name,
-            parent: item?.parent?.[0]?.meta.drupal_internal__target_id || null
+            parent: item?.parent?.[0]?.meta.drupal_internal__target_id || null,
+            ancestor: getTermAncestor(termMap, item)
           }))
 
         if (activeTaxonomies && activeTaxonomies.length > 0) {
