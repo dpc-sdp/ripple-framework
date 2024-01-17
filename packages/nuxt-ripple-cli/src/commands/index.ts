@@ -4,6 +4,7 @@ import rplMockCommand from './mock'
 import rplInitCommand from './init'
 import rplAddCommand from './add'
 import rplFaviconCommand from './favicon'
+import rplLocalitiesCommand from './localities'
 
 const program = new commander.Command('ripple')
 
@@ -16,6 +17,7 @@ rippleCli.addCommand(rplMockCommand())
 rippleCli.addCommand(rplInitCommand())
 rippleCli.addCommand(rplAddCommand())
 rippleCli.addCommand(rplFaviconCommand())
+rippleCli.addCommand(rplLocalitiesCommand())
 // TODO Add update command for existing sites
 
 program.parse(process.argv)
