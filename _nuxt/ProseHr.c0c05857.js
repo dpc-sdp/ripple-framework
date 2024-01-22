@@ -1,0 +1,1 @@
+import{_ as e}from"./_plugin-vue_export-helper.c27b6911.js";import{b as _,c as o}from"./entry.f124bd38.js";const s={},c={class:"docs-hr"};function r(t,a){return _(),o("hr",c)}const p=e(s,[["render",r],["__scopeId","data-v-341b6a73"]]);export{p as default};
