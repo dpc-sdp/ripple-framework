@@ -5,7 +5,6 @@ export const useTideSite = async (id?: number): Promise<TideSiteData> => {
   const { public: config } = useRuntimeConfig()
   const siteId = id || config.tide?.site
   const { data: siteData } = useNuxtData(`site-${siteId}`)
-  const nuxt = useNuxtApp()
 
   const sectionRequestId = useSectionId()
 
@@ -39,7 +38,7 @@ export const useTideSite = async (id?: number): Promise<TideSiteData> => {
 
     // Section.io cache tags must be set on the response header to invalidate the cache after a change in drupal
     if (sectionCacheTags) {
-      nuxt.runWithContext(() => useMergeSectionTags(sectionCacheTags))
+      useMergeSectionTags(sectionCacheTags)
     }
 
     return data.value
