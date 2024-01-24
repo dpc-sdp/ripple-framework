@@ -20,6 +20,6 @@ export default <any>defineNuxtModule({
       // precedence over nuxt-ripple-form components
       priority: 0
     })
-    console.info('Added Ripple UI Forms components')
+    console.info('Added ripple-ui-forms components')
   }
 })

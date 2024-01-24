@@ -58,7 +58,7 @@ export default <any>defineNuxtModule({
       // precedence over nuxt-ripple-core components
       priority: 0
     })
-    console.info('Added Ripple UI Core components')
+    console.info('Added ripple-ui-core components')
     // Plugin adds runtime setup tasks, eg: event bus
     addPlugin(resolve('./runtime/plugin'))
     // Adds required PostCss plugins

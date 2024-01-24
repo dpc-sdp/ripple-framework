@@ -166,6 +166,39 @@ Then(
   }
 )
 
+Then(
+  `the search listing checkbox field labelled {string} should be checked`,
+  (label: string) => {
+    cy.get(`label`)
+      .contains(label)
+      .parent('label')
+      .invoke('attr', 'for')
+      .then((checkboxId) => {
+        cy.get(`#${checkboxId}`).should('be.checked')
+      })
+  }
+)
+
+Then(
+  `the search listing checkbox field labelled {string} should not be checked`,
+  (label: string) => {
+    cy.get(`label`)
+      .contains(label)
+      .parent('label')
+      .invoke('attr', 'for')
+      .then((checkboxId) => {
+        cy.get(`#${checkboxId}`).should('not.be.checked')
+      })
+  }
+)
+
+When(
+  `I click the search listing checkbox field labelled {string}`,
+  (label: string) => {
+    cy.get(`label`).contains(label).click()
+  }
+)
+
 When(
   `I click the search listing dropdown field labelled {string}`,
   (label: string) => {
@@ -179,11 +212,17 @@ When(
 )
 
 When(`I toggle the search listing filters section`, () => {
-  cy.get(`button`).contains('Refine search').click()
+  cy.get(`button`).contains('Refine search').as('refineBtn')
+  cy.wait(300)
+  cy.get('@refineBtn').click()
 })
 
 When(`I clear the search filters`, () => {
   cy.get(`button`).contains('Clear search filters').click()
+})
+
+When(`I submit the search filters`, () => {
+  cy.get(`button`).contains('Apply search filters').click()
 })
 
 Then(
@@ -202,6 +241,17 @@ Then(
           expect($div.text().trim()).equal(`Refine search (${filterCount})`)
         })
     }
+  }
+)
+
+Then(
+  `I click the option labelled {string} in the selected dropdown`,
+  (label: string) => {
+    cy.get(`@selectedDropdown`)
+      .siblings('[role="listbox"]')
+      .find('[role="option"]')
+      .contains(label)
+      .click()
   }
 )
 
@@ -258,3 +308,37 @@ Then(
     cy.get(`#search-listing-sort-options`).should('contain', option)
   }
 )
+
+Then('the search form should be hidden', () => {
+  cy.get(`.tide-search-header`).should('not.exist')
+})
+
+Then(
+  `the search suggestions displayed should include`,
+  (dataTable: DataTable) => {
+    const table = dataTable.raw()
+    cy.get('#tide-search-bar__menu')
+      .find('[role="option"]')
+      .as('suggestedOptions')
+
+    table.forEach((row, i: number) => {
+      cy.get('@suggestedOptions')
+        .eq(i)
+        .then((item) => {
+          cy.wrap(item).as('item')
+          cy.get('@item').should('contain', row[0])
+        })
+    })
+  }
+)
+
+When('I click the search suggestion labelled {string}', (label: string) => {
+  cy.get('#tide-search-bar__menu')
+    .find('[role="option"]')
+    .contains(label)
+    .click()
+})
+
+Then('the search suggestions should not be displayed', (option: string) => {
+  cy.get('#tide-search-bar__menu').should('not.exist')
+})
