@@ -45,7 +45,7 @@
     "test:generate-output": "jest --json --outputFile=.jest-test-results.json"
   },
   "dependencies": {
-    "@nuxt/kit": "3.8.2",
+    "@nuxt/kit": "3.9.3",
     "@vueuse/core": "^9.13.0",
     "@vueuse/integrations": "^9.13.0",
     "date-fns": "^2.29.3",
@@ -58,7 +58,7 @@
     "postcss-preset-env": "^8.1.0",
     "swiper": "^8.4.5",
     "vite-svg-loader": "^4.0.0",
-    "vue": "3.3.13"
+    "vue": "3.4.15"
   },
   "devDependencies": {
     "@dpc-sdp/ripple-tide-api": "workspace:*",
