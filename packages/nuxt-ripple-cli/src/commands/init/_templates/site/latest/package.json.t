@@ -29,7 +29,7 @@ to: package.json
   },
   "devDependencies": {
     "@dpc-sdp/eslint-config-ripple": "<%= rplVersion %>",
-    "nuxt": "3.8.2",
+    "nuxt": "3.9.3",
     "eslint": "^8.28.0"
   },
   "engines": {
