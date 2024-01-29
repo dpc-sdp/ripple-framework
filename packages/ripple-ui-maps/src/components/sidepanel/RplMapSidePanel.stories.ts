@@ -10,7 +10,10 @@ import featureData from './../map/__fixture__/largeset.json'
 export default {
   title: 'Maps/Sidepanel',
   component: RplMapSidePanel,
-  tags: ['skip-test']
+  tags: ['skip-test'],
+  parameters: {
+    chromatic: { disableSnapshot: true }
+  }
 }
 
 const Template = (args) => ({

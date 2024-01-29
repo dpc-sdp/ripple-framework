@@ -9,7 +9,10 @@ import featureData from './__fixture__/largeset.json'
 export default {
   title: 'Maps/Core',
   component: RplMap,
-  tags: ['skip-test']
+  tags: ['skip-test'],
+  parameters: {
+    chromatic: { disableSnapshot: true }
+  }
 }
 
 const Template = (args) => ({

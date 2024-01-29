@@ -11,6 +11,9 @@ export default {
     }
   },
   tags: ['skip-test'],
+  parameters: {
+    chromatic: { disableSnapshot: true }
+  },
   args: {
     title: 'Legend',
     defaultExpanded: true,

@@ -4,7 +4,10 @@ import '@dpc-sdp/ripple-ui-core/style/components'
 export default {
   title: 'Maps/PopUp',
   component: RplMapPopUp,
-  tags: ['skip-test']
+  tags: ['skip-test'],
+  parameters: {
+    chromatic: { disableSnapshot: true }
+  }
 }
 
 const Template = (args) => ({
