@@ -1,44 +1,46 @@
-import {
-  Canvas,
-  Meta,
-  Story,
-  ArgsTable
-} from '@storybook/addon-docs'
 import { ref, provide } from 'vue'
 import { RplAccordion } from '@dpc-sdp/ripple-ui-core/vue'
-import { registerRplMapsPlugin } from '@dpc-sdp/ripple-ui-maps'
-import '@dpc-sdp/ripple-ui-core/style/components'
-import { transform } from 'ol/proj'
-import Icon from 'ol/style/Icon'
 import RplMap from './../map/RplMap.vue'
 import RplMapSidePanel from './RplMapSidePanel.vue'
 import RplMapSidePanelCard from './RplMapSidePanelCard.vue'
 import RplMapProviderMapbox from './../map/providers/RplMapProviderMapbox.vue'
-import featureData from './../map/__fixture__/features.json'
 import { truncateText } from './../map/__fixture__/utils.ts'
+import featureData from './../map/__fixture__/largeset.json'
 
-export const Template = (args) => ({
-  components: { RplMap, RplMapProviderMapbox, RplMapSidePanel, RplMapSidePanelCard, RplAccordion },
+export default {
+  title: 'Maps/Sidepanel',
+  component: RplMapSidePanel,
+  tags: ['skip-test']
+}
+
+const Template = (args) => ({
+  components: {
+    RplMap,
+    RplMapProviderMapbox,
+    RplMapSidePanel,
+    RplMapSidePanelCard,
+    RplAccordion
+  },
   setup() {
     const rplMapRef = ref(null)
-    const rplMapSelectedFeatures = ref(null)
+    const popup = ref({
+      isOpen: false,
+      position: [0, 0],
+      feature: null
+    })
     function setRplMapRef(mapInstance) {
       rplMapRef.value = mapInstance
-    }
-    function setRplMapSelectedFeatures(features) {
-      rplMapSelectedFeatures.value = features
     }
     provide('rplMapInstance', {
       rplMapRef,
       setRplMapRef,
-      rplMapSelectedFeatures,
-      setRplMapSelectedFeatures
+      popup
     })
     const getClusteredFeatures = (itms) => {
       return itms.map((itm, idx) => {
         return {
-          id: `${idx}-${itm.city}`,
-          title: itm.city,
+          id: `${idx}-${itm.title}`,
+          title: itm.title,
           content: itm.description
         }
       })
@@ -50,9 +52,7 @@ export const Template = (args) => ({
     }
   },
   template: `
-    <RplMap
-      v-bind="args"
-    >
+    <RplMap v-bind="args">
       <template #map-provider>
         <rpl-map-provider-mapbox />
       </template>
@@ -66,44 +66,34 @@ export const Template = (args) => ({
       </template>
       <template #popupTitle="{ selectedFeatures }">
         <span v-if="selectedFeatures.length === 1">
-          {{ selectedFeatures[0].city}}
+          {{ selectedFeatures[0].title}}
         </span>
         <span v-else>
           {{ selectedFeatures.length }} items found in this area
         </span>
       </template>
       <template #popupContent="{ selectedFeatures }">
-        <p class="rpl-type-p-small" v-if="selectedFeatures.length === 1">
-          {{ selectedFeatures[0].description}}
-        </p>
-        <RplAccordion v-else :items="getClusteredFeatures(selectedFeatures)" :displayToggleAll="false">
-        </RplAccordion>
+        <div class="rpl-u-margin-4">
+          <p class="rpl-type-p-small" v-if="selectedFeatures.length === 1">
+            {{ selectedFeatures[0].description}}
+          </p>
+          <RplAccordion v-else :items="getClusteredFeatures(selectedFeatures)" :displayToggleAll="false">
+          </RplAccordion>
+        </div>
       </template>
     </RplMap>
   `
 })
 
-<Meta
-  title='Maps/side-panel'
-  component={RplMap}
-/>
+export const Mapbox = Template.bind({})
+Mapbox.args = {
+  id: '123',
+  projection: 'EPSG:3857',
+  features: featureData,
+  popupType: 'popover',
+  provider: 'mapbox',
+  searchTerm: 'Melbourne',
+  cards: featureData.slice(0, 10)
+}
 
-# Demo
-
-<ArgsTable of={RplMap} />
-
-<Canvas>
-  <Story
-    name='Popup on click'
-    args={{
-      id: '123',
-      features:featureData,
-      provider: 'mapbox',
-      popupType: 'feature',
-      searchTerm: 'Melbourne',
-      cards: featureData.slice(0,10)
-    }}
-  >
-    {Template.bind()}
-  </Story>
-</Canvas>
+Mapbox.storyName = 'Side panel'

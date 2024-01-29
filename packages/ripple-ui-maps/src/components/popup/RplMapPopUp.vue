@@ -11,7 +11,7 @@
     >
       <slot name="above">
         <LargePinIcon
-          v-if="!isArea && isOpen"
+          v-if="type === 'popover' && !isArea && isOpen"
           class="rpl-map-popup__large-pin"
           :class="{ [`rpl-map-popup__large-pin--open`]: isOpen }"
           :style="{ fill: `${pinColor}` }"

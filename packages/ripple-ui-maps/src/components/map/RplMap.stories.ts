@@ -1,28 +1,30 @@
-import {
-  Canvas,
-  Meta,
-  Story,
-  ArgsTable
-} from '@storybook/addon-docs'
 import { ref, provide } from 'vue'
 import { RplAccordion } from '@dpc-sdp/ripple-ui-core/vue'
 import RplMap from './RplMap.vue'
 import RplMapProviderEsri from './providers/RplMapProviderEsri.vue'
 import RplMapProviderVicMap from './providers/RplMapProviderVicMap.vue'
 import RplMapProviderMapbox from './providers/RplMapProviderMapbox.vue'
-import Icon from 'ol/style/Icon'
 import featureData from './__fixture__/largeset.json'
-import ExampleVectorLayer from './__fixture__/VectorLayer.example.vue'
-import '@dpc-sdp/ripple-ui-core/style/components'
-import { getIconForPopulation } from './__fixture__/utils.ts'
 
-export const Template = (args) => ({
-  components: { RplMap, RplMapProviderEsri, RplMapProviderVicMap, RplMapProviderMapbox, RplAccordion, ExampleVectorLayer },
+export default {
+  title: 'Maps/Core',
+  component: RplMap,
+  tags: ['skip-test']
+}
+
+const Template = (args) => ({
+  components: {
+    RplMap,
+    RplMapProviderEsri,
+    RplMapProviderVicMap,
+    RplMapProviderMapbox,
+    RplAccordion
+  },
   setup() {
     const rplMapRef = ref(null)
     const popup = ref({
       isOpen: false,
-      position: [0,0],
+      position: [0, 0],
       feature: null
     })
     function setRplMapRef(mapInstance) {
@@ -54,9 +56,6 @@ export const Template = (args) => ({
         <rpl-map-provider-vic-map v-if="args.provider === 'vicmap'" />
         <rpl-map-provider-mapbox v-if="args.provider === 'mapbox'" />
       </template>
-      <template v-if="args.vectorLayers" #shapes="{ mapFeatures }">
-        <ExampleVectorLayer :results="mapFeatures" />
-      </template>
       <template #popupTitle="{ selectedFeatures }">
         <span v-if="selectedFeatures.length === 1">
           {{ selectedFeatures[0].title}}
@@ -78,58 +77,31 @@ export const Template = (args) => ({
   `
 })
 
-<Meta
-  title='Maps/core'
-  component={RplMap}
-/>
+export const Mapbox = Template.bind({})
+Mapbox.args = {
+  id: '123',
+  projection: 'EPSG:3857',
+  features: featureData,
+  popupType: 'popover',
+  provider: 'mapbox'
+}
 
-# Demo
+Mapbox.storyName = 'Mapbox'
 
-<ArgsTable of={RplMap} />
+export const Esri = Template.bind({})
+Esri.args = {
+  id: '123',
+  projection: 'EPSG:3857',
+  features: featureData,
+  popupType: 'popover',
+  provider: 'esri'
+}
 
-<Canvas>
-  <Story
-    name='Mapbox'
-    args={{
-      id: '123',
-      features:featureData,
-      provider: 'mapbox'
-    }}
-  >
-    {Template.bind()}
-  </Story>
-  <Story
-    name='Esri'
-    args={{
-      id: '123',
-      features: featureData,
-      provider: 'esri'
-    }}
-  >
-    {Template.bind()}
-  </Story>
-  <Story
-    name='Vicmap'
-    args={{
-      id: '123',
-      provider: 'vicmap',
-      projection: 'EPSG:3857',
-      features:featureData
-    }}
-  >
-    {Template.bind()}
-  </Story>
-  <Story
-    name='Vector Layers'
-    args={{
-      id: '123',
-      projection: 'EPSG:3857',
-      features:featureData,
-      provider: 'mapbox',
-      popupType: 'popover',
-      vectorLayers: true
-    }}
-  >
-    {Template.bind()}
-  </Story>
-</Canvas>
+export const Vicmap = Template.bind({})
+Vicmap.args = {
+  id: '123',
+  provider: 'vicmap',
+  projection: 'EPSG:3857',
+  popupType: 'popover',
+  features: featureData
+}

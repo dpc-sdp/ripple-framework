@@ -184,12 +184,7 @@ const noResultsRef = ref(null)
 
 <template>
   <div class="rpl-map">
-    <slot
-      v-if="popupType === 'sidebar'"
-      name="sidebar"
-      :popupIsOpen="popup.isOpen"
-      :mapHeight="mapHeight"
-    >
+    <slot name="sidebar" :popupIsOpen="popup.isOpen" :mapHeight="mapHeight">
       <RplMapPopUp :is-open="popup.isOpen" @close="onPopUpClose">
         <template
           v-if="selectedFeatures && selectedFeatures.length > 0"

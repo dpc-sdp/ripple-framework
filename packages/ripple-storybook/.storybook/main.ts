@@ -42,14 +42,12 @@ const config: StorybookConfig = {
     '@storybook/addon-links',
     '@storybook/addon-essentials',
     '@storybook/addon-interactions',
-    '@storybook/addon-a11y'
+    '@storybook/addon-a11y',
+    '@storybook/addon-mdx-gfm'
   ],
   framework: {
     name: '@storybook/vue3-vite',
     options: {}
-  },
-  features: {
-    legacyMdx1: true
   },
   staticDirs: ['./public'],
   previewHead: (head) => `
