@@ -25,6 +25,11 @@
                 ? filter.props.dynamicOptions
                 : filter.props?.options
             "
+            :disabled="
+              filter.disableWhenLocationEmpty
+                ? !locationQuery || isEmpty(locationQuery)
+                : false
+            "
           ></component>
         </div>
       </div>
@@ -43,9 +48,11 @@
 
 <script setup lang="ts">
 import type { rplEventPayload } from '@dpc-sdp/ripple-ui-core'
+import { isEmpty } from 'lodash-es'
 
 type CollectionFilter = {
   component: string
+  disableWhenLocationEmpty: boolean
   props: Record<string, any>
 }
 
@@ -56,6 +63,7 @@ interface Props {
   submitLabel?: string | boolean
   resetLabel?: string | boolean
   reverseStyling?: boolean
+  locationQuery?: Record<string, any> | null
 }
 
 const emit = defineEmits<{
@@ -66,7 +74,8 @@ const emit = defineEmits<{
 const props = withDefaults(defineProps<Props>(), {
   submitLabel: 'Apply search filters',
   resetLabel: 'Clear search filters',
-  reverseStyling: false
+  reverseStyling: false,
+  locationQuery: null
 })
 
 const handleFilterReset = (event: rplEventPayload) => {

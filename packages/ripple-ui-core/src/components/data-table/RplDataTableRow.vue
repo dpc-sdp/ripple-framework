@@ -36,6 +36,7 @@ export type extraRowContent = {
 
 interface Props {
   columns: tableColumnConfig[]
+  items?: Array<string>
   row: tableRow
   extraContent?: extraRowContent
   verticalHeader?: boolean
@@ -45,6 +46,7 @@ interface Props {
 }
 
 const props = withDefaults(defineProps<Props>(), {
+  items: () => [],
   verticalHeader: true,
   caption: undefined,
   extraContent: null

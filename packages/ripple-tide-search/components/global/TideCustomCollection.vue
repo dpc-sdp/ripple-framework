@@ -425,6 +425,7 @@ const mapAreas = computed(() => {
             :filter-form-values="filterForm"
             :filterInputs="userFilters"
             :reverseStyling="true"
+            :locationQuery="locationQuery"
             @reset="handleFilterReset"
             @submit="handleFilterSubmit"
           >
