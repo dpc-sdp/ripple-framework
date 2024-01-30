@@ -1,5 +1,6 @@
 import pkg from './package.json'
 import { getDpcPkgs } from '@dpc-sdp/ripple-tide-api/utils'
+import { toLonLat } from 'ol/proj'
 
 export default defineAppConfig({
   project: {
@@ -44,9 +45,37 @@ export default defineAppConfig({
           }
         }
       },
+      sortFunctions: {
+        vicPolDistanceSort: (location) => {
+          if (!location?.bbox) {
+            return {
+              'title.keyword': 'asc'
+            }
+          }
+
+          const lonLat = toLonLat(
+            [location.bbox[0], location.bbox[1]],
+            'EPSG:3857'
+          )
+
+          return {
+            _geo_distance: {
+              field_latitude_longitude_value: {
+                lat: lonLat[1],
+                lon: lonLat[0]
+              },
+              order: 'asc',
+              unit: 'km',
+              mode: 'min',
+              distance_type: 'arc',
+              ignore_unmapped: true
+            }
+          }
+        }
+      },
       locationDSLTransformFunctions: {
         // DSL transform example for VSBA map tests
-        schoolBuildings: async (location) => {
+        schoolBuildings: async (location, filterForm) => {
           return {
             map: {
               filter: null,
@@ -61,6 +90,44 @@ export default defineAppConfig({
                   }
                 : null,
               sort: null
+            }
+          }
+        },
+        geoDistanceExample: async (location, filterForm) => {
+          let filter = null
+
+          if (filterForm?.distance) {
+            // FIXME: This is a hack just to get some kind of lat/lon for the example, it should be the actual centre of the suburb instead
+            const lonLat = toLonLat(
+              [location.bbox[0], location.bbox[1]],
+              'EPSG:3857'
+            )
+
+            filter = {
+              geo_distance: {
+                distance: filterForm.distance,
+                field_latitude_longitude_value: {
+                  lat: lonLat[1],
+                  lon: lonLat[0]
+                }
+              }
+            }
+          } else {
+            filter = location?.name
+              ? {
+                  terms: {
+                    [`field_suburb.keyword`]: [location.name]
+                  }
+                }
+              : null
+          }
+
+          return {
+            map: {
+              filter: filterForm?.distance ? filter : null
+            },
+            listing: {
+              filter
             }
           }
         },
