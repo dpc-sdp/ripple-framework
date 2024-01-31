@@ -1,5 +1,18 @@
 # Changelog
 
+## v2.4.11
+
+[compare changes](https://github.com/dpc-sdp/ripple-framework/compare/v2.4.10...v2.4.11)
+
+
+### 🩹 Fixes
+
+  - **@dpc-sdp/nuxt-ripple:** Fixed unpredictable meta tags by moving from hooks to composibles ([2ea34b4f0](https://github.com/dpc-sdp/ripple-framework/commit/2ea34b4f0))
+
+### ❤️  Contributors
+
+- Jeffrey Dowdle <jeffrey.dowdle@dpc.vic.gov.au>
+
 ## v2.4.9...release/v2.4.10
 
 [compare changes](https://github.com/dpc-sdp/ripple-framework/compare/v2.4.9...release/v2.4.10)
