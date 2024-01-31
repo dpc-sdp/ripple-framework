@@ -1,5 +1,3 @@
-import { useHead } from '#imports'
-
 /**
  * This script needs to be loaded as the very first asset on the page in order to avoid
  * the alerts showing that the user has already dismissed
@@ -46,14 +44,12 @@ try {
   console.error(e)
 }`
 
-export default defineNuxtPlugin((nuxtApp) => {
-  nuxtApp.hook('tide:page', () => {
-    useHead({
-      script: [
-        {
-          innerHTML: hideAlertsOnLoadScript
-        }
-      ]
-    })
+export default () => {
+  useHead({
+    script: [
+      {
+        innerHTML: hideAlertsOnLoadScript
+      }
+    ]
   })
-})
+}
