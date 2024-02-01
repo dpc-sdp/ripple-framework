@@ -87,10 +87,14 @@ importers:
       '@vitejs/plugin-vue':
         specifier: ^4.6.0
 <<<<<<< HEAD
+<<<<<<< HEAD
         version: 4.6.2(vite@4.1.5)(vue@3.3.4)
 =======
         version: 4.6.0(vite@4.1.5)
 >>>>>>> d47bc4c3f (chore: updated vue version to fix build)
+=======
+        version: 4.6.2(vite@4.1.5)(vue@3.4.14)
+>>>>>>> cd721ee64 (chore: :arrow_down: pin vue version to 3.4.14 to address maps issues)
       babel-core:
         specifier: 7.0.0-bridge.0
         version: 7.0.0-bridge.0(@babel/core@7.23.2)
@@ -171,6 +175,7 @@ importers:
         specifier: ^17.0.1
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
         version: 17.0.1(vue@3.4.15)(webpack@5.86.0)
 =======
         version: 17.0.1(vue@3.3.13)(webpack@5.86.0)
@@ -178,6 +183,9 @@ importers:
 =======
         version: 17.0.1(vue@3.4.15)(webpack@5.86.0)
 >>>>>>> 4faac967c (chore: update to latest nuxt and vue)
+=======
+        version: 17.0.1(vue@3.4.14)(webpack@5.86.0)
+>>>>>>> cd721ee64 (chore: :arrow_down: pin vue version to 3.4.14 to address maps issues)
 
   docs:
     dependencies:
@@ -207,6 +215,7 @@ importers:
         specifier: ^4.1.0
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
         version: 4.1.0(vue@3.4.15)
       '@nuxt/content':
         specifier: ^2.9.0
@@ -223,6 +232,12 @@ importers:
         specifier: ^2.9.0
         version: 2.9.0(nuxt@3.9.3)(vue@3.4.15)
 >>>>>>> 4faac967c (chore: update to latest nuxt and vue)
+=======
+        version: 4.1.0(vue@3.4.14)
+      '@nuxt/content':
+        specifier: ^2.9.0
+        version: 2.9.0(nuxt@3.9.3)(vue@3.4.14)
+>>>>>>> cd721ee64 (chore: :arrow_down: pin vue version to 3.4.14 to address maps issues)
       '@nuxt/kit':
         specifier: ^3.8.2
         version: 3.9.3
@@ -324,6 +339,7 @@ importers:
       vue:
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
         specifier: ^3.4.15
         version: 3.4.15(typescript@5.0.2)
       vue-router:
@@ -343,12 +359,20 @@ importers:
         specifier: ^4.1.5
         version: 4.1.6(vue@3.4.15)
 >>>>>>> 4faac967c (chore: update to latest nuxt and vue)
+=======
+        specifier: 3.4.14
+        version: 3.4.14(typescript@5.0.2)
+      vue-router:
+        specifier: ^4.1.5
+        version: 4.1.6(vue@3.4.14)
+>>>>>>> cd721ee64 (chore: :arrow_down: pin vue version to 3.4.14 to address maps issues)
     devDependencies:
       '@cypress/vite-dev-server':
         specifier: ^5.0.5
         version: 5.0.5
       '@cypress/vue':
         specifier: ^5.0.5
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
         version: 5.0.5(cypress@12.8.1)(vue@3.4.15)
@@ -358,6 +382,9 @@ importers:
 =======
         version: 5.0.5(cypress@12.8.1)(vue@3.4.15)
 >>>>>>> 4faac967c (chore: update to latest nuxt and vue)
+=======
+        version: 5.0.5(cypress@12.8.1)(vue@3.4.14)
+>>>>>>> cd721ee64 (chore: :arrow_down: pin vue version to 3.4.14 to address maps issues)
       '@rushstack/eslint-patch':
         specifier: ^1.2.0
         version: 1.2.0
@@ -368,6 +395,7 @@ importers:
         specifier: ^4.1.0
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
         version: 4.6.2(vite@4.1.5)(vue@3.4.15)
 =======
         version: 4.1.0(vite@4.1.5)(vue@3.3.13)
@@ -375,6 +403,9 @@ importers:
 =======
         version: 4.1.0(vite@4.1.5)(vue@3.4.15)
 >>>>>>> 4faac967c (chore: update to latest nuxt and vue)
+=======
+        version: 4.6.2(vite@4.1.5)(vue@3.4.14)
+>>>>>>> cd721ee64 (chore: :arrow_down: pin vue version to 3.4.14 to address maps issues)
       '@vue/eslint-config-prettier':
         specifier: ^7.1.0
         version: 7.1.0(eslint@8.45.0)(prettier@2.8.7)
@@ -452,6 +483,7 @@ importers:
         specifier: ^9.13.0
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
         version: 9.13.0(vue@3.4.15)
 =======
         version: 9.13.0(vue@3.3.13)
@@ -459,6 +491,9 @@ importers:
 =======
         version: 9.13.0(vue@3.4.15)
 >>>>>>> 4faac967c (chore: update to latest nuxt and vue)
+=======
+        version: 9.13.0(vue@3.4.14)
+>>>>>>> cd721ee64 (chore: :arrow_down: pin vue version to 3.4.14 to address maps issues)
       change-case:
         specifier: ^4.1.2
         version: 4.1.2
@@ -629,9 +664,10 @@ importers:
       '@storybook/vue3':
 <<<<<<< HEAD
         specifier: ^7.6.10
-        version: 7.6.10(vue@3.4.15)
+        version: 7.6.10(vue@3.4.14)
       '@storybook/vue3-vite':
         specifier: ^7.6.10
+<<<<<<< HEAD
         version: 7.6.10(typescript@5.0.2)(vite@4.1.5)(vue@3.4.15)
 =======
         specifier: 7.4.0
@@ -644,6 +680,9 @@ importers:
 =======
         version: 7.4.0(@vue/compiler-core@3.4.15)(react-dom@18.2.0)(react@18.2.0)(typescript@5.0.2)(vite@4.1.5)(vue@3.4.15)
 >>>>>>> 4faac967c (chore: update to latest nuxt and vue)
+=======
+        version: 7.6.10(typescript@5.0.2)(vite@4.1.5)(vue@3.4.14)
+>>>>>>> cd721ee64 (chore: :arrow_down: pin vue version to 3.4.14 to address maps issues)
       http-server:
         specifier: ^14.1.1
         version: 14.1.1
@@ -877,6 +916,7 @@ importers:
         specifier: ^9.13.0
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
         version: 9.13.0(vue@3.4.15)
       '@vueuse/integrations':
         specifier: ^9.13.0
@@ -893,6 +933,12 @@ importers:
         specifier: ^9.13.0
         version: 9.13.0(focus-trap@7.4.0)(vue@3.4.15)
 >>>>>>> 4faac967c (chore: update to latest nuxt and vue)
+=======
+        version: 9.13.0(vue@3.4.14)
+      '@vueuse/integrations':
+        specifier: ^9.13.0
+        version: 9.13.0(focus-trap@7.4.0)(vue@3.4.14)
+>>>>>>> cd721ee64 (chore: :arrow_down: pin vue version to 3.4.14 to address maps issues)
       date-fns:
         specifier: ^2.29.3
         version: 2.29.3
@@ -930,6 +976,7 @@ importers:
       vue:
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
         specifier: 3.4.15
         version: 3.4.15(typescript@5.1.3)
 =======
@@ -940,12 +987,17 @@ importers:
         specifier: 3.4.15
         version: 3.4.15(typescript@5.1.3)
 >>>>>>> 4faac967c (chore: update to latest nuxt and vue)
+=======
+        specifier: 3.4.14
+        version: 3.4.14(typescript@5.1.3)
+>>>>>>> cd721ee64 (chore: :arrow_down: pin vue version to 3.4.14 to address maps issues)
     devDependencies:
       '@dpc-sdp/ripple-tide-api':
         specifier: workspace:*
         version: link:../ripple-tide-api
       '@vitejs/plugin-vue':
         specifier: ^4.1.0
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
         version: 4.6.2(vite@4.1.5)(vue@3.4.15)
@@ -955,6 +1007,9 @@ importers:
 =======
         version: 4.1.0(vite@4.1.5)(vue@3.4.15)
 >>>>>>> 4faac967c (chore: update to latest nuxt and vue)
+=======
+        version: 4.6.2(vite@4.1.5)(vue@3.4.14)
+>>>>>>> cd721ee64 (chore: :arrow_down: pin vue version to 3.4.14 to address maps issues)
       '@vue/compiler-sfc':
         specifier: ^3.2.47
         version: 3.2.47
@@ -1010,6 +1065,7 @@ importers:
         specifier: 1.0.0-beta.15
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
         version: 1.0.0-beta.15(vue@3.4.15)
 =======
         version: 1.0.0-beta.15(vue@3.3.13)
@@ -1017,6 +1073,9 @@ importers:
 =======
         version: 1.0.0-beta.15(vue@3.4.15)
 >>>>>>> 4faac967c (chore: update to latest nuxt and vue)
+=======
+        version: 1.0.0-beta.15(vue@3.4.14)
+>>>>>>> cd721ee64 (chore: :arrow_down: pin vue version to 3.4.14 to address maps issues)
       '@formkit/validation':
         specifier: 1.0.0-beta.15
         version: 1.0.0-beta.15
@@ -1024,6 +1083,7 @@ importers:
         specifier: 1.0.0-beta.15
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
         version: 1.0.0-beta.15(vue@3.4.15)
 =======
         version: 1.0.0-beta.15(vue@3.3.13)
@@ -1031,11 +1091,15 @@ importers:
 =======
         version: 1.0.0-beta.15(vue@3.4.15)
 >>>>>>> 4faac967c (chore: update to latest nuxt and vue)
+=======
+        version: 1.0.0-beta.15(vue@3.4.14)
+>>>>>>> cd721ee64 (chore: :arrow_down: pin vue version to 3.4.14 to address maps issues)
       '@nuxt/kit':
         specifier: 3.9.3
         version: 3.9.3
       '@vueuse/core':
         specifier: ^9.13.0
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
         version: 9.13.0(vue@3.4.15)
@@ -1045,6 +1109,9 @@ importers:
 =======
         version: 9.13.0(vue@3.4.15)
 >>>>>>> 4faac967c (chore: update to latest nuxt and vue)
+=======
+        version: 9.13.0(vue@3.4.14)
+>>>>>>> cd721ee64 (chore: :arrow_down: pin vue version to 3.4.14 to address maps issues)
       date-fns:
         specifier: ^2.29.3
         version: 2.29.3
@@ -1059,6 +1126,7 @@ importers:
         specifier: ^4.1.0
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
         version: 4.6.2(vite@4.1.5)(vue@3.4.15)
 =======
         version: 4.1.0(vite@4.1.5)(vue@3.3.13)
@@ -1066,6 +1134,9 @@ importers:
 =======
         version: 4.1.0(vite@4.1.5)(vue@3.4.15)
 >>>>>>> 4faac967c (chore: update to latest nuxt and vue)
+=======
+        version: 4.6.2(vite@4.1.5)(vue@3.4.14)
+>>>>>>> cd721ee64 (chore: :arrow_down: pin vue version to 3.4.14 to address maps issues)
       babel-loader:
         specifier: ^9.1.2
         version: 9.1.2(@babel/core@7.23.2)(webpack@5.86.0)
@@ -1101,9 +1172,13 @@ importers:
         specifier: ^17.0.0
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> 4faac967c (chore: update to latest nuxt and vue)
         version: 17.0.1(vue@3.4.15)(webpack@5.86.0)
+=======
+        version: 17.0.1(vue@3.4.14)(webpack@5.86.0)
+>>>>>>> cd721ee64 (chore: :arrow_down: pin vue version to 3.4.14 to address maps issues)
 
   packages/ripple-ui-maps:
     dependencies:
@@ -1112,6 +1187,7 @@ importers:
         version: 3.3.2
       '@vueuse/core':
         specifier: ^9.13.0
+<<<<<<< HEAD
         version: 9.13.0(vue@3.3.4)
       '@vueuse/integrations':
         specifier: ^9.13.0
@@ -1120,6 +1196,12 @@ importers:
 =======
         version: 9.13.0(vue@3.3.13)
 >>>>>>> 4faac967c (chore: update to latest nuxt and vue)
+=======
+        version: 9.13.0(vue@3.4.14)
+      '@vueuse/integrations':
+        specifier: ^9.13.0
+        version: 9.13.0(focus-trap@7.4.0)(vue@3.4.14)
+>>>>>>> cd721ee64 (chore: :arrow_down: pin vue version to 3.4.14 to address maps issues)
       postcss-each:
         specifier: ^1.1.0
         version: 1.1.0(postcss@8.4.33)
@@ -1137,11 +1219,19 @@ importers:
         specifier: ^8.1.0
         version: 8.1.0(postcss@8.4.33)
       vue:
+<<<<<<< HEAD
         specifier: 3.3.4
         version: 3.3.4
       vue3-openlayers:
         specifier: 1.2.1
         version: 1.2.1(ol-contextmenu@5.3.0)(ol-ext@4.0.11)(ol@7.5.1)(vue@3.3.4)
+=======
+        specifier: 3.4.14
+        version: 3.4.14(typescript@5.0.2)
+      vue3-openlayers:
+        specifier: 1.2.1
+        version: 1.2.1(ol-contextmenu@5.3.0)(ol-ext@4.0.11)(ol@7.5.1)(vue@3.4.14)
+>>>>>>> cd721ee64 (chore: :arrow_down: pin vue version to 3.4.14 to address maps issues)
     devDependencies:
       '@dpc-sdp/ripple-tide-api':
         specifier: workspace:*
@@ -1151,7 +1241,11 @@ importers:
         version: link:../ripple-ui-core
       '@vitejs/plugin-vue':
         specifier: ^4.1.0
+<<<<<<< HEAD
         version: 4.6.2(vite@4.1.5)(vue@3.3.4)
+=======
+        version: 4.6.2(vite@4.1.5)(vue@3.4.14)
+>>>>>>> cd721ee64 (chore: :arrow_down: pin vue version to 3.4.14 to address maps issues)
       '@vue/compiler-sfc':
         specifier: ^3.2.47
         version: 3.2.47
@@ -4814,6 +4908,7 @@ packages:
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
   /@cypress/vue@5.0.5(cypress@12.8.1)(vue@3.4.15):
 =======
   /@cypress/vue@5.0.5(cypress@12.8.1)(vue@3.3.13):
@@ -4821,6 +4916,9 @@ packages:
 =======
   /@cypress/vue@5.0.5(cypress@12.8.1)(vue@3.4.15):
 >>>>>>> 4faac967c (chore: update to latest nuxt and vue)
+=======
+  /@cypress/vue@5.0.5(cypress@12.8.1)(vue@3.4.14):
+>>>>>>> cd721ee64 (chore: :arrow_down: pin vue version to 3.4.14 to address maps issues)
     resolution: {integrity: sha512-gjE0LKixK6XT4lPDFaEc8G6qNzm8YELgmbOiMVDxbVMuTtjYjorWQcIgzQ62uBX90/s7JrldXJ0W23gskoH4Ng==}
     engines: {node: '>=8'}
     peerDependencies:
@@ -4834,6 +4932,7 @@ packages:
       cypress: 12.8.1
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
       vue: 3.4.15(typescript@5.0.2)
 =======
       vue: 3.3.13(typescript@5.0.2)
@@ -4841,6 +4940,9 @@ packages:
 =======
       vue: 3.4.15(typescript@5.0.2)
 >>>>>>> 4faac967c (chore: update to latest nuxt and vue)
+=======
+      vue: 3.4.14(typescript@5.0.2)
+>>>>>>> cd721ee64 (chore: :arrow_down: pin vue version to 3.4.14 to address maps issues)
     dev: true
 
   /@cypress/xvfb@1.2.4(supports-color@8.1.1):
@@ -6129,6 +6231,7 @@ packages:
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
   /@formkit/nuxt@1.0.0-beta.15(vue@3.4.15):
     resolution: {integrity: sha512-/kvKr+Em1lhMgWw/Ihmjznek4BEg0WjkTZuBEPPUCjMAxDEGpRFzigNMpw5c59Sn0vf/gtnr+BrKBGIq93Z5Ig==}
     dependencies:
@@ -6145,6 +6248,12 @@ packages:
     dependencies:
       '@formkit/vue': 1.0.0-beta.15(vue@3.4.15)
 >>>>>>> 4faac967c (chore: update to latest nuxt and vue)
+=======
+  /@formkit/nuxt@1.0.0-beta.15(vue@3.4.14):
+    resolution: {integrity: sha512-/kvKr+Em1lhMgWw/Ihmjznek4BEg0WjkTZuBEPPUCjMAxDEGpRFzigNMpw5c59Sn0vf/gtnr+BrKBGIq93Z5Ig==}
+    dependencies:
+      '@formkit/vue': 1.0.0-beta.15(vue@3.4.14)
+>>>>>>> cd721ee64 (chore: :arrow_down: pin vue version to 3.4.14 to address maps issues)
     transitivePeerDependencies:
       - tailwindcss
       - unocss
@@ -6197,6 +6306,7 @@ packages:
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
   /@formkit/vue@1.0.0-beta.15(vue@3.4.15):
 =======
   /@formkit/vue@1.0.0-beta.15(vue@3.3.13):
@@ -6204,6 +6314,9 @@ packages:
 =======
   /@formkit/vue@1.0.0-beta.15(vue@3.4.15):
 >>>>>>> 4faac967c (chore: update to latest nuxt and vue)
+=======
+  /@formkit/vue@1.0.0-beta.15(vue@3.4.14):
+>>>>>>> cd721ee64 (chore: :arrow_down: pin vue version to 3.4.14 to address maps issues)
     resolution: {integrity: sha512-DxIn+3uYAivbs8fg7EAG7Oui0Cln2DFRcheswuOAiHrXRktVSJ3uDumDyIPUg9ACUAyLSVKHG62/HPpcl9JCsg==}
     peerDependencies:
       vue: ^3.2.1
@@ -6219,6 +6332,7 @@ packages:
       '@formkit/validation': 1.0.0-beta.15
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
       vue: 3.4.15(typescript@5.1.3)
 =======
       vue: 3.3.13(typescript@5.1.3)
@@ -6226,6 +6340,9 @@ packages:
 =======
       vue: 3.4.15(typescript@5.1.3)
 >>>>>>> 4faac967c (chore: update to latest nuxt and vue)
+=======
+      vue: 3.4.14(typescript@5.1.3)
+>>>>>>> cd721ee64 (chore: :arrow_down: pin vue version to 3.4.14 to address maps issues)
     transitivePeerDependencies:
       - tailwindcss
       - unocss
@@ -6374,6 +6491,7 @@ packages:
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
   /@iconify/vue@4.1.0(vue@3.4.15):
 =======
   /@iconify/vue@4.1.0(vue@3.3.13):
@@ -6381,11 +6499,15 @@ packages:
 =======
   /@iconify/vue@4.1.0(vue@3.4.15):
 >>>>>>> 4faac967c (chore: update to latest nuxt and vue)
+=======
+  /@iconify/vue@4.1.0(vue@3.4.14):
+>>>>>>> cd721ee64 (chore: :arrow_down: pin vue version to 3.4.14 to address maps issues)
     resolution: {integrity: sha512-rBQVxNoSDooqgWkQg2MqkIHkH/huNuvXGqui5wijc1zLnU7TKzbBHW9VGmbnV4asNTmIHmqV4Nvt0M2rZ/9nHA==}
     peerDependencies:
       vue: '>=3'
     dependencies:
       '@iconify/types': 2.0.0
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
       vue: 3.4.15(typescript@5.1.3)
@@ -6395,6 +6517,9 @@ packages:
 =======
       vue: 3.4.15(typescript@5.0.2)
 >>>>>>> 4faac967c (chore: update to latest nuxt and vue)
+=======
+      vue: 3.4.14(typescript@5.1.3)
+>>>>>>> cd721ee64 (chore: :arrow_down: pin vue version to 3.4.14 to address maps issues)
     dev: true
 
   /@ioredis/commands@1.2.0:
@@ -7322,6 +7447,7 @@ packages:
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
   /@nuxt/content@2.9.0(nuxt@3.9.3)(vue@3.4.15):
 =======
   /@nuxt/content@2.9.0(nuxt@3.8.2)(vue@3.3.13):
@@ -7329,10 +7455,14 @@ packages:
 =======
   /@nuxt/content@2.9.0(nuxt@3.9.3)(vue@3.4.15):
 >>>>>>> 4faac967c (chore: update to latest nuxt and vue)
+=======
+  /@nuxt/content@2.9.0(nuxt@3.9.3)(vue@3.4.14):
+>>>>>>> cd721ee64 (chore: :arrow_down: pin vue version to 3.4.14 to address maps issues)
     resolution: {integrity: sha512-//mt++/AgOmjT6TpanugNJpJfx6q8g7wV8/vnk7vSSrrgki8tG6jpupuJmxHHB8DcqqTJfuBWFIdaLhv/Z9Gzg==}
     dependencies:
       '@nuxt/kit': 3.9.3
       '@nuxtjs/mdc': 0.2.9
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
       '@vueuse/core': 10.7.2(vue@3.4.15)
@@ -7348,6 +7478,11 @@ packages:
       '@vueuse/head': 2.0.0(vue@3.4.15)
       '@vueuse/nuxt': 10.7.0(nuxt@3.9.3)(vue@3.4.15)
 >>>>>>> 4faac967c (chore: update to latest nuxt and vue)
+=======
+      '@vueuse/core': 10.7.2(vue@3.4.14)
+      '@vueuse/head': 2.0.0(vue@3.4.14)
+      '@vueuse/nuxt': 10.7.2(nuxt@3.9.3)(vue@3.4.14)
+>>>>>>> cd721ee64 (chore: :arrow_down: pin vue version to 3.4.14 to address maps issues)
       consola: 3.2.3
       defu: 6.1.4
       destr: 2.0.2
@@ -7860,10 +7995,14 @@ packages:
     resolution: {integrity: sha512-5gc02Pu1HycOVUWJ8aYsWeeXcSTPe8iX8+KIrhyEtEoOSkY0eMBuo0ssljB8wALuEmepv31DlYe5gpiRwkjESA==}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
   /@nuxt/vite-builder@3.9.3(@types/node@18.15.10)(eslint@8.45.0)(stylelint@15.10.2)(typescript@5.0.2)(vue@3.4.14):
 =======
   /@nuxt/vite-builder@3.9.3(@types/node@18.15.10)(eslint@8.36.0)(stylelint@15.10.2)(typescript@5.0.2)(vue@3.4.15):
 >>>>>>> 4faac967c (chore: update to latest nuxt and vue)
+=======
+  /@nuxt/vite-builder@3.9.3(@types/node@18.15.10)(eslint@8.45.0)(stylelint@15.10.2)(typescript@5.0.2)(vue@3.4.14):
+>>>>>>> cd721ee64 (chore: :arrow_down: pin vue version to 3.4.14 to address maps issues)
     resolution: {integrity: sha512-HruOrxn0g6TS31j3jycJvGZ7pt3JNEbcXNByVh7YJwQx6ToFX8kPWRu4LPeMhrLYvZzeUr2w3iELBECFxbDmvw==}
     engines: {node: ^14.18.0 || >=16.10.0}
     peerDependencies:
@@ -7876,6 +8015,7 @@ packages:
       '@vitejs/plugin-vue': 5.0.3(vite@5.0.11)(vue@3.4.14)
       '@vitejs/plugin-vue-jsx': 3.1.0(vite@5.0.11)(vue@3.4.14)
       autoprefixer: 10.4.17(postcss@8.4.33)
+<<<<<<< HEAD
 =======
       '@nuxt/kit': 3.8.2
       '@rollup/plugin-replace': 5.0.5(rollup@4.9.1)
@@ -7890,6 +8030,8 @@ packages:
       '@vitejs/plugin-vue-jsx': 3.1.0(vite@5.0.11)(vue@3.4.15)
       autoprefixer: 10.4.16(postcss@8.4.33)
 >>>>>>> 4faac967c (chore: update to latest nuxt and vue)
+=======
+>>>>>>> cd721ee64 (chore: :arrow_down: pin vue version to 3.4.14 to address maps issues)
       clear: 0.1.0
       consola: 3.2.3
       cssnano: 6.0.3(postcss@8.4.33)
@@ -7987,11 +8129,14 @@ packages:
       vite-node: 1.2.2(@types/node@18.15.10)
       vite-plugin-checker: 0.6.2(eslint@8.45.0)(stylelint@15.10.2)(typescript@5.1.3)(vite@5.0.11)
       vue: 3.4.14(typescript@5.1.3)
+<<<<<<< HEAD
 =======
       vite-node: 1.2.1(@types/node@18.15.10)
       vite-plugin-checker: 0.6.2(eslint@8.36.0)(stylelint@15.10.2)(typescript@5.0.2)(vite@5.0.11)
       vue: 3.4.15(typescript@5.0.2)
 >>>>>>> 4faac967c (chore: update to latest nuxt and vue)
+=======
+>>>>>>> cd721ee64 (chore: :arrow_down: pin vue version to 3.4.14 to address maps issues)
       vue-bundle-renderer: 2.0.0
     transitivePeerDependencies:
       - '@types/node'
@@ -10231,7 +10376,11 @@ packages:
     dev: true
 
 <<<<<<< HEAD
+<<<<<<< HEAD
   /@storybook/vue3-vite@7.6.10(typescript@5.0.2)(vite@4.1.5)(vue@3.4.15):
+=======
+  /@storybook/vue3-vite@7.6.10(typescript@5.0.2)(vite@4.1.5)(vue@3.4.14):
+>>>>>>> cd721ee64 (chore: :arrow_down: pin vue version to 3.4.14 to address maps issues)
     resolution: {integrity: sha512-5f0Rh4PTVEeAI86ybihfN+rHGXXLNiRsoGKinpJSb7hkfsq/L7u3sVCXJwH/qsG+rUJlZyHs3kfa4/Kgyyi3Mg==}
 =======
   /@storybook/types@7.4.0:
@@ -10254,10 +10403,11 @@ packages:
 <<<<<<< HEAD
       '@storybook/builder-vite': 7.6.10(typescript@5.0.2)(vite@4.1.5)
       '@storybook/core-server': 7.6.10
-      '@storybook/vue3': 7.6.10(vue@3.4.15)
-      '@vitejs/plugin-vue': 4.6.2(vite@4.1.5)(vue@3.4.15)
+      '@storybook/vue3': 7.6.10(vue@3.4.14)
+      '@vitejs/plugin-vue': 4.6.2(vite@4.1.5)(vue@3.4.14)
       magic-string: 0.30.5
       vite: 4.1.5(@types/node@18.15.10)
+<<<<<<< HEAD
       vue-docgen-api: 4.56.4(vue@3.4.15)
 =======
       '@storybook/builder-vite': 7.4.0(typescript@5.0.2)(vite@4.1.5)
@@ -10274,6 +10424,9 @@ packages:
 =======
       vue-docgen-api: 4.56.4(vue@3.4.15)
 >>>>>>> 4faac967c (chore: update to latest nuxt and vue)
+=======
+      vue-docgen-api: 4.56.4(vue@3.4.14)
+>>>>>>> cd721ee64 (chore: :arrow_down: pin vue version to 3.4.14 to address maps issues)
     transitivePeerDependencies:
       - '@preact/preset-vite'
       - bufferutil
@@ -10287,7 +10440,11 @@ packages:
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
   /@storybook/vue3@7.6.10(vue@3.4.15):
+=======
+  /@storybook/vue3@7.6.10(vue@3.4.14):
+>>>>>>> cd721ee64 (chore: :arrow_down: pin vue version to 3.4.14 to address maps issues)
     resolution: {integrity: sha512-FeZ9zjuudQgCdKPs2K8sU6TgEyrMjKrCN3e8+XXX5CAMSwLDV8IfexaaMF0ehYW6Wp0dgCIm0cVNBV3u8vtRRw==}
 =======
   /@storybook/vue3@7.4.0(@vue/compiler-core@3.3.13)(vue@3.3.13):
@@ -10316,6 +10473,7 @@ packages:
       type-fest: 2.19.0
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
       vue: 3.4.15(typescript@5.0.2)
 =======
       vue: 3.3.13(typescript@5.0.2)
@@ -10323,6 +10481,9 @@ packages:
 =======
       vue: 3.4.15(typescript@5.0.2)
 >>>>>>> 4faac967c (chore: update to latest nuxt and vue)
+=======
+      vue: 3.4.14(typescript@5.0.2)
+>>>>>>> cd721ee64 (chore: :arrow_down: pin vue version to 3.4.14 to address maps issues)
       vue-component-type-helpers: 1.8.27
     transitivePeerDependencies:
       - encoding
@@ -11522,6 +11683,7 @@ packages:
       '@unhead/shared': 1.8.10
     dev: true
 
+<<<<<<< HEAD
   /@unhead/ssr@1.8.9:
     resolution: {integrity: sha512-sQaA4FDFD1tRD2JiiHfdEY5rF1i54qFxCRqdX0pB+15JJCYBfIPJMr5T1SLJBgc9pqX4rS3MPg2Fc9DW+0p9yw==}
 >>>>>>> 4faac967c (chore: update to latest nuxt and vue)
@@ -11566,6 +11728,9 @@ packages:
 
 <<<<<<< HEAD
   /@unhead/vue@1.8.10(vue@3.4.15):
+=======
+  /@unhead/vue@1.8.10(vue@3.4.14):
+>>>>>>> cd721ee64 (chore: :arrow_down: pin vue version to 3.4.14 to address maps issues)
     resolution: {integrity: sha512-KF8pftHnxnlBlgNpKXWLTg3ZUtkuDCxRPUFSDBy9CtqRSX/qvAhLZ26mbqRVmHj8KigiRHP/wnPWNyGnUx20Bg==}
     peerDependencies:
       vue: '>=2.7 || >=3'
@@ -11574,7 +11739,7 @@ packages:
       '@unhead/shared': 1.8.10
       hookable: 5.5.3
       unhead: 1.8.10
-      vue: 3.4.15(typescript@5.1.3)
+      vue: 3.4.14(typescript@5.1.3)
     dev: true
 
 =======
@@ -11601,10 +11766,14 @@ packages:
     dev: true
 
 <<<<<<< HEAD
+<<<<<<< HEAD
   /@vitejs/plugin-vue-jsx@3.1.0(vite@5.0.11)(vue@3.4.14):
 =======
   /@vitejs/plugin-vue-jsx@3.1.0(vite@5.0.11)(vue@3.4.15):
 >>>>>>> 4faac967c (chore: update to latest nuxt and vue)
+=======
+  /@vitejs/plugin-vue-jsx@3.1.0(vite@5.0.11)(vue@3.4.14):
+>>>>>>> cd721ee64 (chore: :arrow_down: pin vue version to 3.4.14 to address maps issues)
     resolution: {integrity: sha512-w9M6F3LSEU5kszVb9An2/MmXNxocAnUb3WhRr8bHlimhDrXNt6n6D2nJQR3UXpGlZHh/EsgouOHCsM8V3Ln+WA==}
     engines: {node: ^14.18.0 || >=16.0.0}
     peerDependencies:
@@ -11616,6 +11785,7 @@ packages:
       '@babel/plugin-transform-typescript': 7.23.6(@babel/core@7.23.9)
       '@vue/babel-plugin-jsx': 1.2.1(@babel/core@7.23.9)
       vite: 5.0.11(@types/node@18.15.10)
+<<<<<<< HEAD
       vue: 3.4.14(typescript@5.0.2)
 =======
       '@babel/core': 7.23.6
@@ -11624,10 +11794,14 @@ packages:
       vite: 5.0.11(@types/node@18.15.10)
       vue: 3.4.15(typescript@5.0.2)
 >>>>>>> 4faac967c (chore: update to latest nuxt and vue)
+=======
+      vue: 3.4.14(typescript@5.1.3)
+>>>>>>> cd721ee64 (chore: :arrow_down: pin vue version to 3.4.14 to address maps issues)
     transitivePeerDependencies:
       - supports-color
     dev: true
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
   /@vitejs/plugin-vue@4.6.2(vite@4.1.5)(vue@3.3.4):
@@ -11688,6 +11862,9 @@ packages:
     dev: true
 
   /@vitejs/plugin-vue@4.6.2(vite@4.1.5)(vue@3.4.15):
+=======
+  /@vitejs/plugin-vue@4.6.2(vite@4.1.5)(vue@3.4.14):
+>>>>>>> cd721ee64 (chore: :arrow_down: pin vue version to 3.4.14 to address maps issues)
     resolution: {integrity: sha512-kqf7SGFoG+80aZG6Pf+gsZIVvGSCKE98JbiWqcCV9cThtg91Jav0yvYFC9Zb+jKetNGF6ZKeoaxgZfND21fWKw==}
     engines: {node: ^14.18.0 || >=16.0.0}
     peerDependencies:
@@ -11695,7 +11872,7 @@ packages:
       vue: ^3.2.25
     dependencies:
       vite: 4.1.5(@types/node@18.15.10)
-      vue: 3.4.15(typescript@5.0.2)
+      vue: 3.4.14(typescript@5.0.2)
     dev: true
 
   /@vitejs/plugin-vue@5.0.3(vite@5.0.11)(vue@3.4.14):
@@ -11706,11 +11883,15 @@ packages:
       vue: ^3.2.25
     dependencies:
       vite: 5.0.11(@types/node@18.15.10)
+<<<<<<< HEAD
       vue: 3.4.14(typescript@5.0.2)
 =======
       vite: 5.0.11(@types/node@18.15.10)
       vue: 3.4.15(typescript@5.0.2)
 >>>>>>> 4faac967c (chore: update to latest nuxt and vue)
+=======
+      vue: 3.4.14(typescript@5.1.3)
+>>>>>>> cd721ee64 (chore: :arrow_down: pin vue version to 3.4.14 to address maps issues)
     dev: true
 
   /@volar/language-core@1.3.0-alpha.0:
@@ -11753,6 +11934,9 @@ packages:
     dev: true
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> cd721ee64 (chore: :arrow_down: pin vue version to 3.4.14 to address maps issues)
   /@vue-macros/common@1.10.1(vue@3.4.14):
     resolution: {integrity: sha512-uftSpfwdwitcQT2lM8aVxcfe5rKQBzC9jMrtJM5sG4hEuFyfIvnJihpPpnaWxY+X4p64k+YYXtBFv+1O5Bq3dg==}
 =======
@@ -11778,10 +11962,14 @@ packages:
       local-pkg: 0.5.0
       magic-string-ast: 0.3.0
 <<<<<<< HEAD
+<<<<<<< HEAD
       vue: 3.4.14(typescript@5.0.2)
 =======
       vue: 3.4.15(typescript@5.0.2)
 >>>>>>> 4faac967c (chore: update to latest nuxt and vue)
+=======
+      vue: 3.4.14(typescript@5.1.3)
+>>>>>>> cd721ee64 (chore: :arrow_down: pin vue version to 3.4.14 to address maps issues)
     transitivePeerDependencies:
       - rollup
     dev: true
@@ -11854,6 +12042,7 @@ packages:
       source-map: 0.6.1
     dev: true
 
+<<<<<<< HEAD
   /@vue/compiler-core@3.3.4:
     resolution: {integrity: sha512-cquyDNvZ6jTbf/+x+AgM2Arrp6G4Dzbb0R64jiG804HRMfRiFXWI6kqUVqZ6ZR0bQhIoQjB4+2bhNtVwndW15g==}
     dependencies:
@@ -11878,6 +12067,8 @@ packages:
       estree-walker: 2.0.2
       source-map-js: 1.0.2
 
+=======
+>>>>>>> cd721ee64 (chore: :arrow_down: pin vue version to 3.4.14 to address maps issues)
   /@vue/compiler-core@3.4.14:
     resolution: {integrity: sha512-ro4Zzl/MPdWs7XwxT7omHRxAjMbDFRZEEjD+2m3NBf8YzAe3HuoSEZosXQo+m1GQ1G3LQ1LdmNh1RKTYe+ssEg==}
     dependencies:
@@ -11886,7 +12077,10 @@ packages:
       entities: 4.5.0
       estree-walker: 2.0.2
       source-map-js: 1.0.2
+<<<<<<< HEAD
     dev: true
+=======
+>>>>>>> cd721ee64 (chore: :arrow_down: pin vue version to 3.4.14 to address maps issues)
 
   /@vue/compiler-core@3.4.15:
     resolution: {integrity: sha512-XcJQVOaxTKCnth1vCxEChteGuwG6wqnUHxAm1DO3gCz0+uXKaJNx8/digSz4dLALCy8n2lKq24jSUs8segoqIw==}
@@ -11914,6 +12108,7 @@ packages:
 <<<<<<< HEAD
     dev: true
 
+<<<<<<< HEAD
   /@vue/compiler-dom@3.3.4:
     resolution: {integrity: sha512-wyM+OjOVpuUukIq6p5+nwHYtj9cFroz9cwkfmP9O1nzH68BenTTv0u7/ndggT8cIQlnBeOo6sUT/gvHcIkLA5w==}
     dependencies:
@@ -11928,11 +12123,14 @@ packages:
       '@vue/shared': 3.3.13
 >>>>>>> d47bc4c3f (chore: updated vue version to fix build)
 
+=======
+>>>>>>> cd721ee64 (chore: :arrow_down: pin vue version to 3.4.14 to address maps issues)
   /@vue/compiler-dom@3.4.14:
     resolution: {integrity: sha512-nOZTY+veWNa0DKAceNWxorAbWm0INHdQq7cejFaWM1WYnoNSJbSEKYtE7Ir6lR/+mo9fttZpPVI9ZFGJ1juUEQ==}
     dependencies:
       '@vue/compiler-core': 3.4.14
       '@vue/shared': 3.4.14
+<<<<<<< HEAD
     dev: true
 
   /@vue/compiler-dom@3.4.15:
@@ -11940,6 +12138,8 @@ packages:
     dependencies:
       '@vue/compiler-core': 3.4.15
       '@vue/shared': 3.4.15
+=======
+>>>>>>> cd721ee64 (chore: :arrow_down: pin vue version to 3.4.14 to address maps issues)
 
   /@vue/compiler-dom@3.4.15:
     resolution: {integrity: sha512-wox0aasVV74zoXyblarOM3AZQz/Z+OunYcIHe1OsGclCHt8RsRm04DObjefaI82u6XDzv+qGWZ24tIsRAIi5MQ==}
@@ -11990,6 +12190,19 @@ packages:
       postcss: 8.4.33
       source-map-js: 1.0.2
     dev: true
+
+  /@vue/compiler-sfc@3.4.14:
+    resolution: {integrity: sha512-1vHc9Kv1jV+YBZC/RJxQJ9JCxildTI+qrhtDh6tPkR1O8S+olBUekimY0km0ZNn8nG1wjtFAe9XHij+YLR8cRQ==}
+    dependencies:
+      '@babel/parser': 7.23.9
+      '@vue/compiler-core': 3.4.14
+      '@vue/compiler-dom': 3.4.14
+      '@vue/compiler-ssr': 3.4.14
+      '@vue/shared': 3.4.14
+      estree-walker: 2.0.2
+      magic-string: 0.30.5
+      postcss: 8.4.33
+      source-map-js: 1.0.2
 
   /@vue/compiler-sfc@3.4.15:
     resolution: {integrity: sha512-LCn5M6QpkpFsh3GQvs2mJUOAlBQcCco8D60Bcqmf3O3w5a+KWS5GvYbrrJBkgvL1BDnTp+e8q0lXCLgHhKguBA==}
@@ -12044,6 +12257,7 @@ packages:
 <<<<<<< HEAD
     dev: true
 
+<<<<<<< HEAD
   /@vue/compiler-ssr@3.3.4:
     resolution: {integrity: sha512-m0v6oKpup2nMSehwA6Uuu+j+wEwcy7QmwMkVNVfrV9P2qE5KshC6RwOCq8fjGS/Eak/uNb8AaWekfiXxbBB6gQ==}
     dependencies:
@@ -12058,11 +12272,14 @@ packages:
       '@vue/shared': 3.3.13
 >>>>>>> d47bc4c3f (chore: updated vue version to fix build)
 
+=======
+>>>>>>> cd721ee64 (chore: :arrow_down: pin vue version to 3.4.14 to address maps issues)
   /@vue/compiler-ssr@3.4.14:
     resolution: {integrity: sha512-bXT6+oAGlFjTYVOTtFJ4l4Jab1wjsC0cfSfOe2B4Z0N2vD2zOBSQ9w694RsCfhjk+bC2DY5Gubb1rHZVii107Q==}
     dependencies:
       '@vue/compiler-dom': 3.4.14
       '@vue/shared': 3.4.14
+<<<<<<< HEAD
     dev: true
 
   /@vue/compiler-ssr@3.4.15:
@@ -12070,6 +12287,8 @@ packages:
     dependencies:
       '@vue/compiler-dom': 3.4.15
       '@vue/shared': 3.4.15
+=======
+>>>>>>> cd721ee64 (chore: :arrow_down: pin vue version to 3.4.14 to address maps issues)
 
   /@vue/compiler-ssr@3.4.15:
     resolution: {integrity: sha512-1jdeQyiGznr8gjFDadVmOJqZiLNSsMa5ZgqavkPZ8O2wjHv0tVuAEsw5hTdUoUW4232vpBbL/wJhzVW/JwY1Uw==}
@@ -12179,11 +12398,18 @@ packages:
       '@vue/shared': 3.4.14
     dev: true
 
+  /@vue/reactivity@3.4.14:
+    resolution: {integrity: sha512-xRYwze5Q4tK7tT2J4uy4XLhK/AIXdU5EBUu9PLnIHcOKXO0uyXpNNMzlQKuq7B+zwtq6K2wuUL39pHA6ZQzObw==}
+    dependencies:
+      '@vue/shared': 3.4.14
+
   /@vue/reactivity@3.4.15:
     resolution: {integrity: sha512-55yJh2bsff20K5O84MxSvXKPHHt17I2EomHznvFiJCAZpJTNW8IuLj1xZWMLELRhBK3kkFV/1ErZGHJfah7i7w==}
     dependencies:
       '@vue/shared': 3.4.15
+    dev: true
 
+<<<<<<< HEAD
   /@vue/runtime-core@3.3.4:
     resolution: {integrity: sha512-R+bqxMN6pWO7zGI4OMlmvePOdP2c93GsHFM/siJI7O2nxFRzj55pLwkpCedEY+bTMgp5miZ8CxfIZo3S+gFqvA==}
     dependencies:
@@ -12200,10 +12426,15 @@ packages:
 =======
   /@vue/runtime-core@3.4.15:
     resolution: {integrity: sha512-6E3by5m6v1AkW0McCeAyhHTw+3y17YCOKG0U0HDKDscV4Hs0kgNT5G+GCHak16jKgcCDHpI9xe5NKb8sdLCLdw==}
+=======
+  /@vue/runtime-core@3.4.14:
+    resolution: {integrity: sha512-qu+NMkfujCoZL6cfqK5NOfxgXJROSlP2ZPs4CTcVR+mLrwl4TtycF5Tgo0QupkdBL+2kigc6EsJlTcuuZC1NaQ==}
+>>>>>>> cd721ee64 (chore: :arrow_down: pin vue version to 3.4.14 to address maps issues)
     dependencies:
-      '@vue/reactivity': 3.4.15
-      '@vue/shared': 3.4.15
+      '@vue/reactivity': 3.4.14
+      '@vue/shared': 3.4.14
 
+<<<<<<< HEAD
   /@vue/runtime-dom@3.3.13:
     resolution: {integrity: sha512-JJkpE8R/hJKXqVTgUoODwS5wqKtOsmJPEqmp90PDVGygtJ4C0PtOkcEYXwhiVEmef6xeXcIlrT3Yo5aQ4qkHhQ==}
 >>>>>>> 4faac967c (chore: update to latest nuxt and vue)
@@ -12255,11 +12486,16 @@ packages:
 
   /@vue/runtime-dom@3.4.15:
     resolution: {integrity: sha512-EVW8D6vfFVq3V/yDKNPBFkZKGMFSvZrUQmx196o/v2tHKdwWdiZjYUBS+0Ez3+ohRyF8Njwy/6FH5gYJ75liUw==}
+=======
+  /@vue/runtime-dom@3.4.14:
+    resolution: {integrity: sha512-B85XmcR4E7XsirEHVqhmy4HPbRT9WLFWV9Uhie3OapV9m1MEN9+Er6hmUIE6d8/l2sUygpK9RstFM2bmHEUigA==}
+>>>>>>> cd721ee64 (chore: :arrow_down: pin vue version to 3.4.14 to address maps issues)
     dependencies:
-      '@vue/runtime-core': 3.4.15
-      '@vue/shared': 3.4.15
+      '@vue/runtime-core': 3.4.14
+      '@vue/shared': 3.4.14
       csstype: 3.1.3
 
+<<<<<<< HEAD
   /@vue/server-renderer@3.3.4(vue@3.3.4):
     resolution: {integrity: sha512-Q6jDDzR23ViIb67v+vM1Dqntu+HUexQcsWKhhQa4ARVzxOY2HbC7QRW/ggkDBd5BU+uM1sV6XOAP0b216o34JQ==}
     peerDependencies:
@@ -12286,12 +12522,16 @@ packages:
 
   /@vue/server-renderer@3.4.15(vue@3.4.15):
     resolution: {integrity: sha512-3HYzaidu9cHjrT+qGUuDhFYvF/j643bHC6uUN9BgM11DVy+pM6ATsG6uPBLnkwOgs7BpJABReLmpL3ZPAsUaqw==}
+=======
+  /@vue/server-renderer@3.4.14(vue@3.4.14):
+    resolution: {integrity: sha512-pwSKXQfYdJBTpvWHGEYI+akDE18TXAiLcGn+Q/2Fj8wQSHWztoo7PSvfMNqu6NDhp309QXXbPFEGCU5p85HqkA==}
+>>>>>>> cd721ee64 (chore: :arrow_down: pin vue version to 3.4.14 to address maps issues)
     peerDependencies:
-      vue: 3.4.15
+      vue: 3.4.14
     dependencies:
-      '@vue/compiler-ssr': 3.4.15
-      '@vue/shared': 3.4.15
-      vue: 3.4.15(typescript@5.1.3)
+      '@vue/compiler-ssr': 3.4.14
+      '@vue/shared': 3.4.14
+      vue: 3.4.14(typescript@5.1.3)
 
   /@vue/server-renderer@3.4.15(vue@3.4.15):
     resolution: {integrity: sha512-3HYzaidu9cHjrT+qGUuDhFYvF/j643bHC6uUN9BgM11DVy+pM6ATsG6uPBLnkwOgs7BpJABReLmpL3ZPAsUaqw==}
@@ -12307,6 +12547,7 @@ packages:
 <<<<<<< HEAD
     dev: true
 
+<<<<<<< HEAD
   /@vue/shared@3.3.4:
     resolution: {integrity: sha512-7OjdcV8vQ74eiz1TZLzZP4JwqM5fA94K6yntPS5Z25r9HDuGNzaGdgvwKYq6S+MxwF0TFRwe50fIR/MYnakdkQ==}
 =======
@@ -12321,6 +12562,10 @@ packages:
 
   /@vue/shared@3.4.15:
     resolution: {integrity: sha512-KzfPTxVaWfB+eGcGdbSf4CWdaXcGDqckoeXUh7SB3fZdEtzPCK2Vq9B/lRRL3yutax/LWITz+SwvgyOxz5V75g==}
+=======
+  /@vue/shared@3.4.14:
+    resolution: {integrity: sha512-nmi3BtLpvqXAWoRZ6HQ+pFJOHBU4UnH3vD3opgmwXac7vhaHKA9nj1VeGjMggdB9eLtW83eHyPCmOU1qzdsC7Q==}
+>>>>>>> cd721ee64 (chore: :arrow_down: pin vue version to 3.4.14 to address maps issues)
 
   /@vue/shared@3.4.15:
     resolution: {integrity: sha512-KzfPTxVaWfB+eGcGdbSf4CWdaXcGDqckoeXUh7SB3fZdEtzPCK2Vq9B/lRRL3yutax/LWITz+SwvgyOxz5V75g==}
@@ -12363,11 +12608,16 @@ packages:
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
   /@vueuse/core@10.7.2(vue@3.4.15):
+=======
+  /@vueuse/core@10.7.2(vue@3.4.14):
+>>>>>>> cd721ee64 (chore: :arrow_down: pin vue version to 3.4.14 to address maps issues)
     resolution: {integrity: sha512-AOyAL2rK0By62Hm+iqQn6Rbu8bfmbgaIMXcE3TSr7BdQ42wnSFlwIdPjInO62onYsEMK/yDMU8C6oGfDAtZ2qQ==}
     dependencies:
       '@types/web-bluetooth': 0.0.20
       '@vueuse/metadata': 10.7.2
+<<<<<<< HEAD
       '@vueuse/shared': 10.7.2(vue@3.4.15)
       vue-demi: 0.14.6(vue@3.4.15)
 =======
@@ -12387,11 +12637,16 @@ packages:
       '@vueuse/shared': 10.7.0(vue@3.4.15)
       vue-demi: 0.14.6(vue@3.4.15)
 >>>>>>> 4faac967c (chore: update to latest nuxt and vue)
+=======
+      '@vueuse/shared': 10.7.2(vue@3.4.14)
+      vue-demi: 0.14.6(vue@3.4.14)
+>>>>>>> cd721ee64 (chore: :arrow_down: pin vue version to 3.4.14 to address maps issues)
     transitivePeerDependencies:
       - '@vue/composition-api'
       - vue
     dev: true
 
+<<<<<<< HEAD
   /@vueuse/core@9.13.0(vue@3.3.13):
     resolution: {integrity: sha512-pujnclbeHWxxPRqXWmdkKV5OX4Wk4YeK7wusHqRwU0Q7EFusHoqNA/aPhB6KCh9hEqJkLAJo7bb0Lh9b+OIVzw==}
     dependencies:
@@ -12414,17 +12669,21 @@ packages:
 =======
 >>>>>>> 4faac967c (chore: update to latest nuxt and vue)
   /@vueuse/core@9.13.0(vue@3.4.15):
+=======
+  /@vueuse/core@9.13.0(vue@3.4.14):
+>>>>>>> cd721ee64 (chore: :arrow_down: pin vue version to 3.4.14 to address maps issues)
     resolution: {integrity: sha512-pujnclbeHWxxPRqXWmdkKV5OX4Wk4YeK7wusHqRwU0Q7EFusHoqNA/aPhB6KCh9hEqJkLAJo7bb0Lh9b+OIVzw==}
     dependencies:
       '@types/web-bluetooth': 0.0.16
       '@vueuse/metadata': 9.13.0
-      '@vueuse/shared': 9.13.0(vue@3.4.15)
-      vue-demi: 0.14.6(vue@3.4.15)
+      '@vueuse/shared': 9.13.0(vue@3.4.14)
+      vue-demi: 0.14.6(vue@3.4.14)
     transitivePeerDependencies:
       - '@vue/composition-api'
       - vue
     dev: false
 
+<<<<<<< HEAD
   /@vueuse/head@2.0.0(vue@3.4.15):
 <<<<<<< HEAD
 =======
@@ -12432,6 +12691,9 @@ packages:
 >>>>>>> d47bc4c3f (chore: updated vue version to fix build)
 =======
 >>>>>>> 4faac967c (chore: update to latest nuxt and vue)
+=======
+  /@vueuse/head@2.0.0(vue@3.4.14):
+>>>>>>> cd721ee64 (chore: :arrow_down: pin vue version to 3.4.14 to address maps issues)
     resolution: {integrity: sha512-ykdOxTGs95xjD4WXE4na/umxZea2Itl0GWBILas+O4oqS7eXIods38INvk3XkJKjqMdWPcpCyLX/DioLQxU1KA==}
     peerDependencies:
       vue: '>=2.7 || >=3'
@@ -12441,10 +12703,11 @@ packages:
       '@unhead/dom': 1.8.10
       '@unhead/schema': 1.8.10
       '@unhead/ssr': 1.8.10
-      '@unhead/vue': 1.8.10(vue@3.4.15)
-      vue: 3.4.15(typescript@5.1.3)
+      '@unhead/vue': 1.8.10(vue@3.4.14)
+      vue: 3.4.14(typescript@5.1.3)
     dev: true
 
+<<<<<<< HEAD
   /@vueuse/integrations@9.13.0(focus-trap@7.4.0)(vue@3.4.15):
 =======
       '@unhead/dom': 1.8.9
@@ -12455,6 +12718,9 @@ packages:
     dev: true
 
   /@vueuse/integrations@9.13.0(focus-trap@7.4.0)(vue@3.4.15):
+=======
+  /@vueuse/integrations@9.13.0(focus-trap@7.4.0)(vue@3.4.14):
+>>>>>>> cd721ee64 (chore: :arrow_down: pin vue version to 3.4.14 to address maps issues)
     resolution: {integrity: sha512-I1kX/tsfcvWWLZD7HZaP0LsSfchK13YxReLfharXhk72SFXp87doLbRaTfIF5w8m/gr/vPtcNyQPAXW7Ubpuww==}
     peerDependencies:
       async-validator: '*'
@@ -12492,10 +12758,10 @@ packages:
       universal-cookie:
         optional: true
     dependencies:
-      '@vueuse/core': 9.13.0(vue@3.4.15)
-      '@vueuse/shared': 9.13.0(vue@3.4.15)
+      '@vueuse/core': 9.13.0(vue@3.4.14)
+      '@vueuse/shared': 9.13.0(vue@3.4.14)
       focus-trap: 7.4.0
-      vue-demi: 0.14.6(vue@3.4.15)
+      vue-demi: 0.14.6(vue@3.4.14)
     transitivePeerDependencies:
       - '@vue/composition-api'
       - vue
@@ -12628,16 +12894,21 @@ packages:
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
   /@vueuse/nuxt@10.7.2(nuxt@3.9.3)(vue@3.4.15):
+=======
+  /@vueuse/nuxt@10.7.2(nuxt@3.9.3)(vue@3.4.14):
+>>>>>>> cd721ee64 (chore: :arrow_down: pin vue version to 3.4.14 to address maps issues)
     resolution: {integrity: sha512-yv2hY4AiRoSqg9ELNpN6gOkDWxGuLiKE/bEbuTAAuUBhS5OeEDf5aB/kY0e/V6ZXj5XiU4LX3nE8YV8c+UKfmQ==}
     peerDependencies:
       nuxt: ^3.0.0
     dependencies:
       '@nuxt/kit': 3.9.3
-      '@vueuse/core': 10.7.2(vue@3.4.15)
+      '@vueuse/core': 10.7.2(vue@3.4.14)
       '@vueuse/metadata': 10.7.2
       local-pkg: 0.5.0
       nuxt: 3.9.3(@types/node@18.15.10)(eslint@8.45.0)(stylelint@15.10.2)(typescript@5.1.3)(vite@4.1.5)
+<<<<<<< HEAD
       vue-demi: 0.14.6(vue@3.4.15)
 =======
   /@vueuse/nuxt@10.7.0(nuxt@3.8.2)(vue@3.3.13):
@@ -12660,6 +12931,9 @@ packages:
       nuxt: 3.9.3(@types/node@18.15.10)(eslint@8.36.0)(stylelint@15.10.2)(typescript@5.0.2)(vite@4.1.5)
       vue-demi: 0.14.6(vue@3.4.15)
 >>>>>>> 4faac967c (chore: update to latest nuxt and vue)
+=======
+      vue-demi: 0.14.6(vue@3.4.14)
+>>>>>>> cd721ee64 (chore: :arrow_down: pin vue version to 3.4.14 to address maps issues)
     transitivePeerDependencies:
       - '@vue/composition-api'
       - rollup
@@ -12667,6 +12941,7 @@ packages:
       - vue
     dev: true
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
   /@vueuse/shared@10.7.2(vue@3.4.15):
@@ -12685,11 +12960,18 @@ packages:
     dependencies:
       vue-demi: 0.14.6(vue@3.4.15)
 >>>>>>> 4faac967c (chore: update to latest nuxt and vue)
+=======
+  /@vueuse/shared@10.7.2(vue@3.4.14):
+    resolution: {integrity: sha512-qFbXoxS44pi2FkgFjPvF4h7c9oMDutpyBdcJdMYIMg9XyXli2meFMuaKn+UMgsClo//Th6+beeCgqweT/79BVA==}
+    dependencies:
+      vue-demi: 0.14.6(vue@3.4.14)
+>>>>>>> cd721ee64 (chore: :arrow_down: pin vue version to 3.4.14 to address maps issues)
     transitivePeerDependencies:
       - '@vue/composition-api'
       - vue
     dev: true
 
+<<<<<<< HEAD
   /@vueuse/shared@9.13.0(vue@3.3.13):
     resolution: {integrity: sha512-UrnhU+Cnufu4S6JLCPZnkWh0WwZGUp72ktOF2DFptMlOs3TOdVv8xJN53zhHGARmVOsz5KqOls09+J1NR6sBKw==}
     dependencies:
@@ -12713,9 +12995,12 @@ packages:
     dev: false
 
   /@vueuse/shared@9.13.0(vue@3.4.15):
+=======
+  /@vueuse/shared@9.13.0(vue@3.4.14):
+>>>>>>> cd721ee64 (chore: :arrow_down: pin vue version to 3.4.14 to address maps issues)
     resolution: {integrity: sha512-UrnhU+Cnufu4S6JLCPZnkWh0WwZGUp72ktOF2DFptMlOs3TOdVv8xJN53zhHGARmVOsz5KqOls09+J1NR6sBKw==}
     dependencies:
-      vue-demi: 0.14.6(vue@3.4.15)
+      vue-demi: 0.14.6(vue@3.4.14)
     transitivePeerDependencies:
       - '@vue/composition-api'
       - vue
@@ -24288,6 +24573,7 @@ packages:
       '@nuxt/telemetry': 2.5.3
       '@nuxt/ui-templates': 1.3.1
 <<<<<<< HEAD
+<<<<<<< HEAD
       '@nuxt/vite-builder': 3.9.3(@types/node@18.15.10)(eslint@8.45.0)(stylelint@15.10.2)(typescript@5.0.2)(vue@3.4.14)
       '@types/node': 18.15.10
       '@unhead/dom': 1.8.10
@@ -24300,6 +24586,13 @@ packages:
       '@unhead/ssr': 1.8.10
       '@unhead/vue': 1.8.10(vue@3.4.15)
 >>>>>>> 4faac967c (chore: update to latest nuxt and vue)
+=======
+      '@nuxt/vite-builder': 3.9.3(@types/node@18.15.10)(eslint@8.45.0)(stylelint@15.10.2)(typescript@5.0.2)(vue@3.4.14)
+      '@types/node': 18.15.10
+      '@unhead/dom': 1.8.10
+      '@unhead/ssr': 1.8.10
+      '@unhead/vue': 1.8.10(vue@3.4.14)
+>>>>>>> cd721ee64 (chore: :arrow_down: pin vue version to 3.4.14 to address maps issues)
       '@vue/shared': 3.4.15
       acorn: 8.11.3
       c12: 1.6.1
@@ -24451,6 +24744,7 @@ packages:
       unimport: 3.7.1(rollup@4.9.6)
       unplugin: 1.6.0
       unplugin-vue-router: 0.7.0(vue-router@4.2.5)(vue@3.4.14)
+<<<<<<< HEAD
       untyped: 1.4.0
       vue: 3.4.14(typescript@5.1.3)
       vue-bundle-renderer: 2.0.0
@@ -24466,6 +24760,13 @@ packages:
       vue-devtools-stub: 0.1.0
       vue-router: 4.2.5(vue@3.4.15)
 >>>>>>> 4faac967c (chore: update to latest nuxt and vue)
+=======
+      untyped: 1.4.0
+      vue: 3.4.14(typescript@5.1.3)
+      vue-bundle-renderer: 2.0.0
+      vue-devtools-stub: 0.1.0
+      vue-router: 4.2.5(vue@3.4.14)
+>>>>>>> cd721ee64 (chore: :arrow_down: pin vue version to 3.4.14 to address maps issues)
     transitivePeerDependencies:
       - '@azure/app-configuration'
       - '@azure/cosmos'
@@ -31085,10 +31386,14 @@ packages:
     engines: {node: '>= 0.8'}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
   /unplugin-vue-router@0.7.0(vue-router@4.2.5)(vue@3.4.14):
 =======
   /unplugin-vue-router@0.7.0(vue-router@4.2.5)(vue@3.4.15):
 >>>>>>> 4faac967c (chore: update to latest nuxt and vue)
+=======
+  /unplugin-vue-router@0.7.0(vue-router@4.2.5)(vue@3.4.14):
+>>>>>>> cd721ee64 (chore: :arrow_down: pin vue version to 3.4.14 to address maps issues)
     resolution: {integrity: sha512-ddRreGq0t5vlSB7OMy4e4cfU1w2AwBQCwmvW3oP/0IHQiokzbx4hd3TpwBu3eIAFVuhX2cwNQwp1U32UybTVCw==}
     peerDependencies:
       vue-router: ^4.1.0
@@ -31100,11 +31405,14 @@ packages:
       '@babel/types': 7.23.9
       '@rollup/pluginutils': 5.1.0(rollup@4.9.6)
       '@vue-macros/common': 1.10.1(vue@3.4.14)
+<<<<<<< HEAD
 =======
       '@babel/types': 7.23.6
       '@rollup/pluginutils': 5.1.0(rollup@4.9.1)
       '@vue-macros/common': 1.10.0(vue@3.4.15)
 >>>>>>> 4faac967c (chore: update to latest nuxt and vue)
+=======
+>>>>>>> cd721ee64 (chore: :arrow_down: pin vue version to 3.4.14 to address maps issues)
       ast-walker-scope: 0.5.0
       chokidar: 3.5.3
       fast-glob: 3.3.2
@@ -31115,10 +31423,14 @@ packages:
       scule: 1.2.0
       unplugin: 1.6.0
 <<<<<<< HEAD
+<<<<<<< HEAD
       vue-router: 4.2.5(vue@3.4.14)
 =======
       vue-router: 4.2.5(vue@3.4.15)
 >>>>>>> 4faac967c (chore: update to latest nuxt and vue)
+=======
+      vue-router: 4.2.5(vue@3.4.14)
+>>>>>>> cd721ee64 (chore: :arrow_down: pin vue version to 3.4.14 to address maps issues)
       yaml: 2.3.4
     transitivePeerDependencies:
       - rollup
@@ -32077,6 +32389,7 @@ packages:
     dev: true
 
 <<<<<<< HEAD
+<<<<<<< HEAD
   /vue-demi@0.14.6(vue@3.3.4):
 =======
   /vue-demi@0.13.11(vue@3.3.13):
@@ -32115,6 +32428,9 @@ packages:
 =======
 >>>>>>> 4faac967c (chore: update to latest nuxt and vue)
   /vue-demi@0.14.6(vue@3.4.15):
+=======
+  /vue-demi@0.14.6(vue@3.4.14):
+>>>>>>> cd721ee64 (chore: :arrow_down: pin vue version to 3.4.14 to address maps issues)
     resolution: {integrity: sha512-8QA7wrYSHKaYgUxDA5ZC24w+eHm3sYCbp0EzcDwKqN3p6HqtTCGR/GVsPyZW92unff4UlcSh++lmqDWN3ZIq4w==}
     engines: {node: '>=12'}
     hasBin: true
@@ -32127,6 +32443,7 @@ packages:
         optional: true
     dependencies:
 <<<<<<< HEAD
+<<<<<<< HEAD
       vue: 3.4.15(typescript@5.1.3)
 =======
       vue: 3.3.13(typescript@5.0.2)
@@ -32135,6 +32452,9 @@ packages:
 =======
       vue: 3.4.15(typescript@5.0.2)
 >>>>>>> 4faac967c (chore: update to latest nuxt and vue)
+=======
+      vue: 3.4.14(typescript@5.1.3)
+>>>>>>> cd721ee64 (chore: :arrow_down: pin vue version to 3.4.14 to address maps issues)
 
   /vue-devtools-stub@0.1.0:
     resolution: {integrity: sha512-RutnB7X8c5hjq39NceArgXg28WZtZpGc3+J16ljMiYnFhKvd8hITxSWQSQ5bvldxMDU6gG5mkxl1MTQLXckVSQ==}
@@ -32142,7 +32462,11 @@ packages:
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
   /vue-docgen-api@4.56.4(vue@3.4.15):
+=======
+  /vue-docgen-api@4.56.4(vue@3.4.14):
+>>>>>>> cd721ee64 (chore: :arrow_down: pin vue version to 3.4.14 to address maps issues)
     resolution: {integrity: sha512-Z59qNUYZNHMZL0QITNbqobGKJgmqyOs4OiAdzr1Ug7ys1gkFBGewiuwPURTsoM2zi4GWZWy2eW4B5FevwT7gpA==}
     dependencies:
       '@babel/parser': 7.23.9
@@ -32175,6 +32499,7 @@ packages:
       ts-map: 1.0.3
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
       vue-inbrowser-compiler-independent-utils: 4.56.2(vue@3.4.15)
 =======
       vue-inbrowser-compiler-independent-utils: 4.56.2(vue@3.3.13)
@@ -32182,6 +32507,9 @@ packages:
 =======
       vue-inbrowser-compiler-independent-utils: 4.56.2(vue@3.4.15)
 >>>>>>> 4faac967c (chore: update to latest nuxt and vue)
+=======
+      vue-inbrowser-compiler-independent-utils: 4.56.2(vue@3.4.14)
+>>>>>>> cd721ee64 (chore: :arrow_down: pin vue version to 3.4.14 to address maps issues)
     transitivePeerDependencies:
       - vue
     dev: true
@@ -32205,6 +32533,7 @@ packages:
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
   /vue-inbrowser-compiler-independent-utils@4.56.2(vue@3.4.15):
 =======
   /vue-inbrowser-compiler-independent-utils@4.56.2(vue@3.3.13):
@@ -32212,10 +32541,14 @@ packages:
 =======
   /vue-inbrowser-compiler-independent-utils@4.56.2(vue@3.4.15):
 >>>>>>> 4faac967c (chore: update to latest nuxt and vue)
+=======
+  /vue-inbrowser-compiler-independent-utils@4.56.2(vue@3.4.14):
+>>>>>>> cd721ee64 (chore: :arrow_down: pin vue version to 3.4.14 to address maps issues)
     resolution: {integrity: sha512-szE2vZDSkZlItq+K4MevgvCGKt5IzM6OkIjyCuj/09ty2akixeQGNFRXyDELMdmVVzmN+9nJn02YKnoPkhXHwA==}
     peerDependencies:
       vue: '>=2'
     dependencies:
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
       vue: 3.4.15(typescript@5.0.2)
@@ -32225,6 +32558,9 @@ packages:
 =======
       vue: 3.4.15(typescript@5.0.2)
 >>>>>>> 4faac967c (chore: update to latest nuxt and vue)
+=======
+      vue: 3.4.14(typescript@5.0.2)
+>>>>>>> cd721ee64 (chore: :arrow_down: pin vue version to 3.4.14 to address maps issues)
     dev: true
 
   /vue-jest@3.0.7(babel-core@7.0.0-bridge.0)(vue-template-compiler@2.7.14):
@@ -32253,6 +32589,7 @@ packages:
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
   /vue-loader@17.0.1(vue@3.4.15)(webpack@5.86.0):
 =======
   /vue-loader@17.0.1(vue@3.3.13)(webpack@5.86.0):
@@ -32260,6 +32597,9 @@ packages:
 =======
   /vue-loader@17.0.1(vue@3.4.15)(webpack@5.86.0):
 >>>>>>> 4faac967c (chore: update to latest nuxt and vue)
+=======
+  /vue-loader@17.0.1(vue@3.4.14)(webpack@5.86.0):
+>>>>>>> cd721ee64 (chore: :arrow_down: pin vue version to 3.4.14 to address maps issues)
     resolution: {integrity: sha512-/OOyugJnImKCkAKrAvdsWMuwoCqGxWT5USLsjohzWbMgOwpA5wQmzQiLMzZd7DjhIfunzAGIApTOgIylz/kwcg==}
     peerDependencies:
       '@vue/compiler-sfc': '*'
@@ -32274,6 +32614,7 @@ packages:
       chalk: 4.1.2
       hash-sum: 2.0.0
       loader-utils: 2.0.4
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
       vue: 3.4.15(typescript@5.1.3)
@@ -32295,11 +32636,19 @@ packages:
 
   /vue-router@4.1.6(vue@3.4.15):
 >>>>>>> 4faac967c (chore: update to latest nuxt and vue)
+=======
+      vue: 3.4.14(typescript@5.1.3)
+      webpack: 5.86.0(esbuild@0.19.12)
+    dev: true
+
+  /vue-router@4.1.6(vue@3.4.14):
+>>>>>>> cd721ee64 (chore: :arrow_down: pin vue version to 3.4.14 to address maps issues)
     resolution: {integrity: sha512-DYWYwsG6xNPmLq/FmZn8Ip+qrhFEzA14EI12MsMgVxvHFDYvlr4NXpVF5hrRH1wVcDP8fGi5F4rxuJSl8/r+EQ==}
     peerDependencies:
       vue: ^3.2.0
     dependencies:
       '@vue/devtools-api': 6.5.0
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
       vue: 3.4.15(typescript@5.0.2)
@@ -32315,16 +32664,26 @@ packages:
 
   /vue-router@4.2.5(vue@3.4.15):
 >>>>>>> 4faac967c (chore: update to latest nuxt and vue)
+=======
+      vue: 3.4.14(typescript@5.0.2)
+    dev: false
+
+  /vue-router@4.2.5(vue@3.4.14):
+>>>>>>> cd721ee64 (chore: :arrow_down: pin vue version to 3.4.14 to address maps issues)
     resolution: {integrity: sha512-DIUpKcyg4+PTQKfFPX88UWhlagBEBEfJ5A8XDXRJLUnZOvcpMF8o/dnL90vpVkGaPbjvXazV/rC1qBKrZlFugw==}
     peerDependencies:
       vue: ^3.2.0
     dependencies:
       '@vue/devtools-api': 6.5.0
 <<<<<<< HEAD
+<<<<<<< HEAD
       vue: 3.4.14(typescript@5.0.2)
 =======
       vue: 3.4.15(typescript@5.0.2)
 >>>>>>> 4faac967c (chore: update to latest nuxt and vue)
+=======
+      vue: 3.4.14(typescript@5.1.3)
+>>>>>>> cd721ee64 (chore: :arrow_down: pin vue version to 3.4.14 to address maps issues)
     dev: true
 
   /vue-template-compiler@2.7.14:
@@ -32337,7 +32696,11 @@ packages:
     resolution: {integrity: sha512-4gDntzrifFnCEvyoO8PqyJDmguXgVPxKiIxrBKjIowvL9l+N66196+72XVYR8BBf1Uv1Fgt3bGevJ+sEmxfZzw==}
     dev: false
 
+<<<<<<< HEAD
   /vue3-openlayers@1.2.1(ol-contextmenu@5.3.0)(ol-ext@4.0.11)(ol@7.5.1)(vue@3.3.4):
+=======
+  /vue3-openlayers@1.2.1(ol-contextmenu@5.3.0)(ol-ext@4.0.11)(ol@7.5.1)(vue@3.4.14):
+>>>>>>> cd721ee64 (chore: :arrow_down: pin vue version to 3.4.14 to address maps issues)
     resolution: {integrity: sha512-8Z+kzLn20E7JxI5To26IiBk9h4lZZ6TG9cBKEMJcFlGzAOd2cMVpOf+wXV8bVJqugwoPN+J2ojZt2mPG6FflMQ==}
     peerDependencies:
       ol: ^7.4.0
@@ -32352,7 +32715,11 @@ packages:
       ol-contextmenu: 5.3.0(ol@7.5.1)
       ol-ext: 4.0.11(ol@7.5.1)
       proj4: 2.9.2
+<<<<<<< HEAD
       vue: 3.3.4
+=======
+      vue: 3.4.14(typescript@5.0.2)
+>>>>>>> cd721ee64 (chore: :arrow_down: pin vue version to 3.4.14 to address maps issues)
     dev: false
 =======
       '@vue/compiler-dom': 3.3.13
@@ -32425,34 +32792,34 @@ packages:
       typescript: 5.1.3
     dev: true
 
-  /vue@3.4.15(typescript@5.0.2):
-    resolution: {integrity: sha512-jC0GH4KkWLWJOEQjOpkqU1bQsBwf4R1rsFtw5GQJbjHVKWDzO6P0nWWBTmjp1xSemAioDFj1jdaK1qa3DnMQoQ==}
+  /vue@3.4.14(typescript@5.0.2):
+    resolution: {integrity: sha512-Rop5Al/ZcBbBz+KjPZaZDgHDX0kUP4duEzDbm+1o91uxYUNmJrZSBuegsNIJvUGy+epLevNRNhLjm08VKTgGyw==}
     peerDependencies:
       typescript: '*'
     peerDependenciesMeta:
       typescript:
         optional: true
     dependencies:
-      '@vue/compiler-dom': 3.4.15
-      '@vue/compiler-sfc': 3.4.15
-      '@vue/runtime-dom': 3.4.15
-      '@vue/server-renderer': 3.4.15(vue@3.4.15)
-      '@vue/shared': 3.4.15
+      '@vue/compiler-dom': 3.4.14
+      '@vue/compiler-sfc': 3.4.14
+      '@vue/runtime-dom': 3.4.14
+      '@vue/server-renderer': 3.4.14(vue@3.4.14)
+      '@vue/shared': 3.4.14
       typescript: 5.0.2
 
-  /vue@3.4.15(typescript@5.1.3):
-    resolution: {integrity: sha512-jC0GH4KkWLWJOEQjOpkqU1bQsBwf4R1rsFtw5GQJbjHVKWDzO6P0nWWBTmjp1xSemAioDFj1jdaK1qa3DnMQoQ==}
+  /vue@3.4.14(typescript@5.1.3):
+    resolution: {integrity: sha512-Rop5Al/ZcBbBz+KjPZaZDgHDX0kUP4duEzDbm+1o91uxYUNmJrZSBuegsNIJvUGy+epLevNRNhLjm08VKTgGyw==}
     peerDependencies:
       typescript: '*'
     peerDependenciesMeta:
       typescript:
         optional: true
     dependencies:
-      '@vue/compiler-dom': 3.4.15
-      '@vue/compiler-sfc': 3.4.15
-      '@vue/runtime-dom': 3.4.15
-      '@vue/server-renderer': 3.4.15(vue@3.4.15)
-      '@vue/shared': 3.4.15
+      '@vue/compiler-dom': 3.4.14
+      '@vue/compiler-sfc': 3.4.14
+      '@vue/runtime-dom': 3.4.14
+      '@vue/server-renderer': 3.4.14(vue@3.4.14)
+      '@vue/shared': 3.4.14
       typescript: 5.1.3
 
   /w3c-xmlserializer@4.0.0:
