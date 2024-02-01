@@ -36,6 +36,13 @@ Then(
   }
 )
 
+Then('the URL should reflect that the current page has been reset', () => {
+  cy.location().should((loc) => {
+    const params = new URLSearchParams(loc.search)
+    expect(params.get('page')).to.eq(null)
+  })
+})
+
 Then(
   'the URL should reflect that the current sort option is {string}',
   (sortId: string) => {
@@ -166,6 +173,39 @@ Then(
   }
 )
 
+Then(
+  `the search listing checkbox field labelled {string} should be checked`,
+  (label: string) => {
+    cy.get(`label`)
+      .contains(label)
+      .parent('label')
+      .invoke('attr', 'for')
+      .then((checkboxId) => {
+        cy.get(`#${checkboxId}`).should('be.checked')
+      })
+  }
+)
+
+Then(
+  `the search listing checkbox field labelled {string} should not be checked`,
+  (label: string) => {
+    cy.get(`label`)
+      .contains(label)
+      .parent('label')
+      .invoke('attr', 'for')
+      .then((checkboxId) => {
+        cy.get(`#${checkboxId}`).should('not.be.checked')
+      })
+  }
+)
+
+When(
+  `I click the search listing checkbox field labelled {string}`,
+  (label: string) => {
+    cy.get(`label`).contains(label).click()
+  }
+)
+
 When(
   `I click the search listing dropdown field labelled {string}`,
   (label: string) => {
@@ -186,6 +226,10 @@ When(`I toggle the search listing filters section`, () => {
 
 When(`I clear the search filters`, () => {
   cy.get(`button`).contains('Clear search filters').click()
+})
+
+When(`I submit the search filters`, () => {
+  cy.get(`button`).contains('Apply search filters').click()
 })
 
 Then(

@@ -64,6 +64,9 @@ export default ({
     searchprovider === 'elasticsearch' ? `_search` : `elasticsearch/_search`
   const searchUrl = `${config.apiUrl}/api/tide/${searchprovider}/${index}/${searchEndpoint}`
 
+  // Need to cache the current path on first load to check if we're navigating to another page when the route changes
+  const initialPath = route.path
+
   const processTemplate = (
     obj: Record<string, any>,
     key: string,
@@ -75,9 +78,8 @@ export default ({
     return JSON.parse(JSON.stringify(obj).replace(re, escapedValue))
   }
 
-  const activeTab: TideSearchListingTabKey = ref(
-    searchListingConfig?.displayMapTab ? 'map' : null
-  )
+  const initialTab = searchListingConfig?.displayMapTab ? 'map' : null
+  const activeTab: TideSearchListingTabKey = ref(initialTab)
 
   const isBusy = ref(true)
   const searchError = ref(null)
@@ -561,9 +563,8 @@ export default ({
     await navigateTo({
       path: route.path,
       query: {
-        page: 1,
         q: searchTerm.value || undefined,
-        activeTab: activeTab.value,
+        activeTab: activeTab.value !== initialTab ? activeTab.value : undefined,
         ...locationParams,
         ...filterFormValues
       }
@@ -578,7 +579,7 @@ export default ({
       ...route,
       query: {
         ...route.query,
-        page: newPage
+        page: newPage > 1 ? newPage : undefined
       }
     })
   }
@@ -599,7 +600,7 @@ export default ({
       ...route,
       query: {
         ...route.query,
-        activeTab: newActiveTab
+        activeTab: newActiveTab !== initialTab ? newActiveTab : undefined
       }
     })
   }
@@ -716,6 +717,12 @@ export default ({
 
   // Subsequently watch for any route changes and trigger a new search
   watch(route, (newRoute) => {
+    // When a user navigates to another page client side, this page will try to search again with an empty query string
+    // The map was zooming back to center when navigating to another page, which was jarring. This check prevents that from happening
+    if (initialPath !== newRoute.path) {
+      return
+    }
+
     searchFromRoute(newRoute, false)
   })
 
