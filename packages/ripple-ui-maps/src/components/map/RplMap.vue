@@ -210,8 +210,8 @@ const noResultsRef = ref(null)
     </slot>
     <div
       v-if="noresults && !hideNoResults"
-      class="rpl-map__noresults"
       ref="noResultsRef"
+      class="rpl-map__noresults"
     >
       <button
         title="dismiss no results message"

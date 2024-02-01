@@ -148,7 +148,7 @@ Given(
 )
 Given(
   'the {string} aggregation request is stubbed with fixture {string} and status {int} as alias {string}',
-  (url: string, fixture: string, status: number, alias: string) => {
+  (url: string, fixture: string, status: number) => {
     cy.intercept('POST', url, (req) => {
       // Filter out the aggregation requests (they have size=1)
       if (req.body.size === 0) {
