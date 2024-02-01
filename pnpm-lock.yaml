@@ -7,7 +7,7 @@ settings:
 overrides:
   '@types/react': file:./stub/types__react
   jest-matcher-utils@29.2.2>chalk: 5.2.0
-  cypress: 12.8.1
+  cypress: 13.6.4
   glob-parent@<5.1.2: ~6.0.2
   json5@<2.2.2: ~2.2.2
   nth-check@<2.1.1: ~2.1.1
@@ -112,8 +112,8 @@ importers:
         specifier: ^0.5.3
         version: 0.5.3
       cypress:
-        specifier: 12.8.1
-        version: 12.8.1
+        specifier: 13.6.4
+        version: 13.6.4
       detab:
         specifier: ^3.0.2
         version: 3.0.2
@@ -264,8 +264,8 @@ importers:
         specifier: ^0.6.7
         version: 0.6.7(nuxt@3.6.5)(vite@4.1.5)
       cypress:
-        specifier: 12.8.1
-        version: 12.8.1
+        specifier: 13.6.4
+        version: 13.6.4
       node-fetch-native:
         specifier: ^1.0.2
         version: 1.0.2
@@ -296,7 +296,7 @@ importers:
         version: 5.0.5
       '@cypress/vue':
         specifier: ^5.0.5
-        version: 5.0.5(cypress@12.8.1)(vue@3.3.4)
+        version: 5.0.5(cypress@13.6.4)(vue@3.3.4)
       '@rushstack/eslint-patch':
         specifier: ^1.2.0
         version: 1.2.0
@@ -316,8 +316,8 @@ importers:
         specifier: ^0.1.3
         version: 0.1.3(@types/node@18.15.10)
       cypress:
-        specifier: 12.8.1
-        version: 12.8.1
+        specifier: 13.6.4
+        version: 13.6.4
       eslint:
         specifier: ^8.36.0
         version: 8.36.0
@@ -569,25 +569,25 @@ importers:
         version: 7.4.0
       wait-on:
         specifier: ^7.0.1
-        version: 7.0.1(debug@4.3.4)
+        version: 7.0.1
 
   packages/ripple-test-utils:
     dependencies:
       '@badeball/cypress-cucumber-preprocessor':
         specifier: ^18.0.4
-        version: 18.0.4(cypress@12.8.1)
+        version: 18.0.4(cypress@13.6.4)
       '@bahmutov/cypress-esbuild-preprocessor':
         specifier: ^2.2.0
         version: 2.2.0(esbuild@0.19.0)
       '@frsource/cypress-plugin-visual-regression-diff':
         specifier: ^3.3.10
-        version: 3.3.10(cypress@12.8.1)
+        version: 3.3.10(cypress@13.6.4)
       '@testing-library/cypress':
         specifier: ^9.0.0
-        version: 9.0.0(cypress@12.8.1)
+        version: 9.0.0(cypress@13.6.4)
       cypress:
-        specifier: 12.8.1
-        version: 12.8.1
+        specifier: 13.6.4
+        version: 13.6.4
       mockttp:
         specifier: ^3.9.1
         version: 3.9.1
@@ -2581,7 +2581,7 @@ packages:
       - supports-color
     dev: false
 
-  /@badeball/cypress-cucumber-preprocessor@18.0.4(cypress@12.8.1):
+  /@badeball/cypress-cucumber-preprocessor@18.0.4(cypress@13.6.4):
     resolution: {integrity: sha512-KUXjwKVZ+8ALZu5yCKeune2Ca7OIaJV0b5kiUBYDFIFGc2IE4j/cH2VpzT7MmejOy7W5KpEuE/PDj8GaSzWJng==}
     engines: {node: '>=18.0.0'}
     hasBin: true
@@ -2606,7 +2606,7 @@ packages:
       cli-table: 0.3.11
       common-ancestor-path: 1.0.1
       cosmiconfig: 8.2.0
-      cypress: 12.8.1
+      cypress: 13.6.4
       debug: 4.3.4(supports-color@8.1.1)
       error-stack-parser: 2.1.4
       esbuild: 0.19.0
@@ -3294,8 +3294,8 @@ packages:
     resolution: {integrity: sha512-ZxWjLRa5K7UUPXxHaLkNx1KjVrcMHQ4vE6PvbPrxIXlaLCllp5Se7ET+vC/xsfgVjMEJ15Mr9UQ3PB1QpK3bEg==}
     dev: false
 
-  /@cypress/request@2.88.11:
-    resolution: {integrity: sha512-M83/wfQ1EkspjkE2lNWNV5ui2Cv7UCv1swW1DqljahbzLVWltcsexQh8jYtuS/vzFXP+HySntGM83ZXA9fn17w==}
+  /@cypress/request@3.0.1:
+    resolution: {integrity: sha512-TWivJlJi8ZDx2wGOw1dbLuHJKUYX7bWySw377nlnGOW3hP9/MUKIsEdXT/YngWxVdgNCHRBmFlBipE+5/2ZZlQ==}
     engines: {node: '>= 6'}
     dependencies:
       aws-sign2: 0.7.0
@@ -3313,7 +3313,7 @@ packages:
       performance-now: 2.1.0
       qs: 6.10.4
       safe-buffer: 5.2.1
-      tough-cookie: 2.5.0
+      tough-cookie: 4.1.3
       tunnel-agent: 0.6.0
       uuid: 8.3.2
 
@@ -3328,7 +3328,7 @@ packages:
       - supports-color
     dev: true
 
-  /@cypress/vue@5.0.5(cypress@12.8.1)(vue@3.3.4):
+  /@cypress/vue@5.0.5(cypress@13.6.4)(vue@3.3.4):
     resolution: {integrity: sha512-gjE0LKixK6XT4lPDFaEc8G6qNzm8YELgmbOiMVDxbVMuTtjYjorWQcIgzQ62uBX90/s7JrldXJ0W23gskoH4Ng==}
     engines: {node: '>=8'}
     peerDependencies:
@@ -3339,7 +3339,7 @@ packages:
       '@cypress/webpack-dev-server':
         optional: true
     dependencies:
-      cypress: 12.8.1
+      cypress: 13.6.4
       vue: 3.3.4
     dev: true
 
@@ -4424,14 +4424,14 @@ packages:
     resolution: {integrity: sha512-QyMv52jCRIMUIlDM6ysSVPc6Cp3KCTu6/YeLUyJpTEhleXssYB3CT5PqmQijGGwu4819qvan8Eu4PWJRAW5Akg==}
     dev: false
 
-  /@frsource/cypress-plugin-visual-regression-diff@3.3.10(cypress@12.8.1):
+  /@frsource/cypress-plugin-visual-regression-diff@3.3.10(cypress@13.6.4):
     resolution: {integrity: sha512-ZjfOpdmXUgNRfLpsbrYiDujUzNEgLx+3dMtvMJHO3d+Yri0wniMB3mukf5+58QUMXuw8mr1cLoBkeWr1UxCOpA==}
     engines: {node: '>=10'}
     peerDependencies:
       cypress: '>=4.5.0'
     dependencies:
       '@frsource/base64': 1.0.17
-      cypress: 12.8.1
+      cypress: 13.6.4
       glob: 8.1.0
       meta-png: 1.0.6
       move-file: 2.1.0
@@ -5737,7 +5737,7 @@ packages:
       vite: 4.1.5(@types/node@18.15.10)
       vite-plugin-inspect: 0.7.33(vite@4.1.5)
       vite-plugin-vue-inspector: 3.4.2(vite@4.1.5)
-      wait-on: 7.0.1(debug@4.3.4)
+      wait-on: 7.0.1
       which: 3.0.1
       ws: 8.13.0
     transitivePeerDependencies:
@@ -8261,7 +8261,7 @@ packages:
       ts-dedent: 2.2.0
       type-fest: 2.19.0
       vue: 3.3.4
-      vue-component-type-helpers: 1.8.25
+      vue-component-type-helpers: 1.8.27
     transitivePeerDependencies:
       - encoding
       - supports-color
@@ -8421,7 +8421,7 @@ packages:
     engines: {node: '>=10.17'}
     dev: false
 
-  /@testing-library/cypress@9.0.0(cypress@12.8.1):
+  /@testing-library/cypress@9.0.0(cypress@13.6.4):
     resolution: {integrity: sha512-c1XiCGeHGGTWn0LAU12sFUfoX3qfId5gcSE2yHode+vsyHDWraxDPALjVnHd4/Fa3j4KBcc5k++Ccy6A9qnkMA==}
     engines: {node: '>=12', npm: '>=6'}
     peerDependencies:
@@ -8429,7 +8429,7 @@ packages:
     dependencies:
       '@babel/runtime': 7.20.13
       '@testing-library/dom': 8.20.0
-      cypress: 12.8.1
+      cypress: 13.6.4
     dev: false
 
   /@testing-library/dom@8.20.0:
@@ -8809,9 +8809,6 @@ packages:
   /@types/node@13.13.52:
     resolution: {integrity: sha512-s3nugnZumCC//n4moGGe6tkNMyYEdaDBitVjwPxXmR5lnMG5dHePinH2EdxkG3Rh1ghFHHixAG4NJhpJW1rthQ==}
     dev: true
-
-  /@types/node@14.18.36:
-    resolution: {integrity: sha512-FXKWbsJ6a1hIrRxv+FoukuHnGTgEzKYGi7kilfMae96AL9UNkPFNWJEEYWzdRI9ooIkbr4AKldyuSTLql06vLQ==}
 
   /@types/node@16.18.12:
     resolution: {integrity: sha512-vzLe5NaNMjIE3mcddFVGlAXN1LEWueUsMsOJWaT6wWMJGyljHAWHznqfnKUQWGzu7TLPrGvWdNAsvQYW+C0xtw==}
@@ -12112,11 +12109,11 @@ packages:
   /commander@5.1.0:
     resolution: {integrity: sha512-P0CysNDQ7rtVw4QIQtm+MRxV66vKFSvlsQvGYXZWR3qFU0jlMKHZZZgw8e+8DSah4UDKMqnknRDQz+xuQXQ/Zg==}
     engines: {node: '>= 6'}
+    dev: true
 
   /commander@6.2.1:
     resolution: {integrity: sha512-U7VdrJFnJgo4xjrHpTzu0yrHPGImdsmD95ZlgYSEajAn2JKzDhDTPG9kBTefmObL2w/ngeZnilk+OV9CG3d7UA==}
     engines: {node: '>= 6'}
-    dev: true
 
   /commander@7.2.0:
     resolution: {integrity: sha512-QrWXB+ZQSVPmIWIhtEO9H+gwHaMGYiF5ChvoJ+K9ZGHG/sVsa6yiesAD1GC/x46sET00Xlwo1u49RVVVzvcSkw==}
@@ -12852,14 +12849,14 @@ packages:
       fs-exists-sync: 0.1.0
     dev: true
 
-  /cypress@12.8.1:
-    resolution: {integrity: sha512-lIFbKdaSYAOarNLHNFa2aPZu6YSF+8UY4VRXMxJrFUnk6RvfG0AWsZ7/qle/aIz30TNUD4aOihz2ZgS4vuQVSA==}
-    engines: {node: ^14.0.0 || ^16.0.0 || >=18.0.0}
+  /cypress@13.6.4:
+    resolution: {integrity: sha512-pYJjCfDYB+hoOoZuhysbbYhEmNW7DEDsqn+ToCLwuVowxUXppIWRr7qk4TVRIU471ksfzyZcH+mkoF0CQUKnpw==}
+    engines: {node: ^16.0.0 || ^18.0.0 || >=20.0.0}
+    hasBin: true
     requiresBuild: true
     dependencies:
-      '@cypress/request': 2.88.11
+      '@cypress/request': 3.0.1
       '@cypress/xvfb': 1.2.4(supports-color@8.1.1)
-      '@types/node': 14.18.36
       '@types/sinonjs__fake-timers': 8.1.1
       '@types/sizzle': 2.3.3
       arch: 2.2.0
@@ -12871,7 +12868,7 @@ packages:
       check-more-types: 2.24.0
       cli-cursor: 3.1.0
       cli-table3: 0.6.3
-      commander: 5.1.0
+      commander: 6.2.1
       common-tags: 1.8.2
       dayjs: 1.11.7
       debug: 4.3.4(supports-color@8.1.1)
@@ -12892,9 +12889,10 @@ packages:
       minimist: 1.2.8
       ospath: 1.2.2
       pretty-bytes: 5.6.0
+      process: 0.11.10
       proxy-from-env: 1.0.0
       request-progress: 3.0.0
-      semver: 7.3.8
+      semver: 7.5.4
       supports-color: 8.1.1
       tmp: 0.2.1
       untildify: 4.0.0
@@ -14821,6 +14819,7 @@ packages:
   /extract-zip@2.0.1(supports-color@8.1.1):
     resolution: {integrity: sha512-GDhU9ntwuKyGXdZBUgTIe+vXnWj0fppUEtMDL0+idd5Sta8TGpHssn/eusA9mrPr9qNDym6SxAYZjNvCn/9RBg==}
     engines: {node: '>= 10.17.0'}
+    hasBin: true
     dependencies:
       debug: 4.3.4(supports-color@8.1.1)
       get-stream: 5.2.0
@@ -15263,7 +15262,7 @@ packages:
     resolution: {integrity: sha512-oRXApq54ETRj4eMiFzGnHWGy+zo5raudjuxN0b8H7s/RU2oW0Wvsx9O0ACRN/kRq9E8Vu/ReskGB5o3ji+FzHQ==}
     engines: {node: '>=12'}
     dependencies:
-      graceful-fs: 4.2.10
+      graceful-fs: 4.2.11
       jsonfile: 6.1.0
       universalify: 2.0.0
 
@@ -15299,7 +15298,7 @@ packages:
     engines: {node: '>=10'}
     dependencies:
       at-least-node: 1.0.0
-      graceful-fs: 4.2.10
+      graceful-fs: 4.2.11
       jsonfile: 6.1.0
       universalify: 2.0.0
 
@@ -16877,6 +16876,7 @@ packages:
 
   /is-ci@3.0.1:
     resolution: {integrity: sha512-ZYvCgrefwqoQ6yTyYUbQu64HsITZ3NfKX1lzaEYdkTDcfKzzCI/wthRRYKkdjHKFVgNiXKAKm65Zo1pk2as/QQ==}
+    hasBin: true
     dependencies:
       ci-info: 3.8.0
 
@@ -18469,7 +18469,7 @@ packages:
       parse5: 7.1.2
       saxes: 6.0.0
       symbol-tree: 3.2.4
-      tough-cookie: 4.1.2
+      tough-cookie: 4.1.3
       w3c-xmlserializer: 4.0.0
       webidl-conversions: 7.0.0
       whatwg-encoding: 2.0.0
@@ -18895,7 +18895,7 @@ packages:
       log-update: 4.0.0
       p-map: 4.0.0
       rfdc: 1.3.0
-      rxjs: 7.8.0
+      rxjs: 7.8.1
       through: 2.3.8
       wrap-ansi: 7.0.0
 
@@ -23259,7 +23259,6 @@ packages:
   /process@0.11.10:
     resolution: {integrity: sha512-cdGef/drWFoydD1JsMzuFf8100nZl+GT+yacc2bEced5f9Rjk4z+WtFUTBu9PhOi9j/jfmBPu0mMEY4wIdAF8A==}
     engines: {node: '>= 0.6.0'}
-    dev: true
 
   /progress@2.0.3:
     resolution: {integrity: sha512-7PiHtLll5LdnKIMw100I+8xJXR5gW2QwWYkT6iJva0bXitZKa/XMrSbdmg3r2Xnaidz9Qumd0VPaMrZlF9V9sA==}
@@ -23579,7 +23578,6 @@ packages:
 
   /querystringify@2.2.0:
     resolution: {integrity: sha512-FIqgj2EUvTa7R50u0rGsyTftzjYmv/a3hO345bZNrqabNqjtgiDMgmo4mkUjd+nzU5oF3dClKqFIPUKybUyqoQ==}
-    dev: true
 
   /queue-microtask@1.2.3:
     resolution: {integrity: sha512-NuaNSa6flKT5JaSYQzJok04JzTL1CA6aGhv5rfLW3PgqA+M2ChpZQnAC8h8i4ZFkBS8X5RqkDBHA7r4hej3K9A==}
@@ -24544,6 +24542,7 @@ packages:
     resolution: {integrity: sha512-F2+gxDshqmIub1KdvZkaEfGDwLNpPvk9Fs6LD/MyQxNgMds/WH9OdDDXOmxUZpME+iSK3rQCctkL0DYyytUqMg==}
     dependencies:
       tslib: 2.5.0
+    dev: true
 
   /rxjs@7.8.1:
     resolution: {integrity: sha512-AA3TVj+0A2iuIoQkWEK/tqFjBq2j+6PO6Y0zJcvzLAFhEFIO3HL0vls9hWLncZbAAbK0mar7oZ4V079I/qPMxg==}
@@ -25293,6 +25292,7 @@ packages:
   /sshpk@1.17.0:
     resolution: {integrity: sha512-/9HIEs1ZXGhSPE8X6Ccm7Nam1z8KcoCqPdI7ecm1N33EzAetWahvQWVqLZtaZQ+IDKX4IyA2o0gBzqIMkAagHQ==}
     engines: {node: '>=0.10.0'}
+    hasBin: true
     dependencies:
       asn1: 0.2.6
       assert-plus: 1.0.0
@@ -26274,13 +26274,6 @@ packages:
     engines: {node: '>=6'}
     dev: true
 
-  /tough-cookie@2.5.0:
-    resolution: {integrity: sha512-nlLsUzgm1kfLXSXfRZMc1KLAugd4hqJHDTvc2hDIwS3mZAfMEuMbc03SujMF+GEcpaX/qboeycw6iO8JwVv2+g==}
-    engines: {node: '>=0.8'}
-    dependencies:
-      psl: 1.9.0
-      punycode: 2.3.0
-
   /tough-cookie@3.0.1:
     resolution: {integrity: sha512-yQyJ0u4pZsv9D4clxO69OEjLWYw+jbgspjTue4lTQZLfV0c5l1VmK2y1JK8E9ahdpltPOaAThPcp5nKPUgSnsg==}
     engines: {node: '>=6'}
@@ -26290,15 +26283,14 @@ packages:
       punycode: 2.3.0
     dev: false
 
-  /tough-cookie@4.1.2:
-    resolution: {integrity: sha512-G9fqXWoYFZgTc2z8Q5zaHy/vJMjm+WV0AkAeHxVCQiEB1b+dGvWzFW6QV07cY5jQ5gRkeid2qIkzkxUnmoQZUQ==}
+  /tough-cookie@4.1.3:
+    resolution: {integrity: sha512-aX/y5pVRkfRnfmuX+OdbSdXvPe6ieKX/G2s7e98f4poJHnqH3281gDPm/metm6E/WRamfx7WC4HUqkWHfQHprw==}
     engines: {node: '>=6'}
     dependencies:
       psl: 1.9.0
       punycode: 2.3.0
       universalify: 0.2.0
       url-parse: 1.5.10
-    dev: true
 
   /tr46@0.0.3:
     resolution: {integrity: sha512-N3WMsuqV66lT30CrXNbEjx4GEwlow3v6rr4mCcv6prnfwhS01rkgyFdjPNBYd9br7LpXV1+Emh01fHnq2Gdgrw==}
@@ -27174,7 +27166,6 @@ packages:
   /universalify@0.2.0:
     resolution: {integrity: sha512-CJ1QgKmNg3CwvAv/kOFmtnEN05f0D/cn9QntgNOQlQF9dgvVTHj3t+8JPdjqawCHk7V/KA+fbUqzZ9XWhcqPUg==}
     engines: {node: '>= 4.0.0'}
-    dev: true
 
   /universalify@2.0.0:
     resolution: {integrity: sha512-hAZsKq7Yy11Zu1DE0OzWjw7nnLZmJZYTDZZyEFHZdUhV8FkH5MCfoU1XMaxXovpyW5nq5scPqq0ZDP9Zyl04oQ==}
@@ -27469,7 +27460,6 @@ packages:
     dependencies:
       querystringify: 2.2.0
       requires-port: 1.0.0
-    dev: true
 
   /use-callback-ref@1.3.0(react@18.2.0):
     resolution: {integrity: sha512-3FT9PRuRdbB9HfXhEq35u4oZkvpJ5kuYbpqhCfmiZyReuRgpnhDlbr2ZEnnuS0RrJAPn6l23xjFg9kpDM+Ms7w==}
@@ -28000,8 +27990,8 @@ packages:
       typescript: 5.1.3
     dev: true
 
-  /vue-component-type-helpers@1.8.25:
-    resolution: {integrity: sha512-NCA6sekiJIMnMs4DdORxATXD+/NRkQpS32UC+I1KQJUasx+Z7MZUb3Y+MsKsFmX+PgyTYSteb73JW77AibaCCw==}
+  /vue-component-type-helpers@1.8.27:
+    resolution: {integrity: sha512-0vOfAtI67UjeO1G6UiX5Kd76CqaQ67wrRZiOe7UAb9Jm6GzlUr/fC7CV90XfwapJRjpCMaZFhv1V0ajWRmE9Dg==}
     dev: true
 
   /vue-demi@0.13.11(vue@3.3.4):
@@ -28202,7 +28192,7 @@ packages:
       - debug
     dev: true
 
-  /wait-on@7.0.1(debug@4.3.4):
+  /wait-on@7.0.1:
     resolution: {integrity: sha512-9AnJE9qTjRQOlTZIldAaf/da2eW0eSRSgcqq85mXQja/DW3MriHxkpODDSUEg+Gri/rKEcXUZHe+cevvYItaog==}
     engines: {node: '>=12.0.0'}
     hasBin: true
@@ -28212,6 +28202,20 @@ packages:
       lodash: 4.17.21
       minimist: 1.2.8
       rxjs: 7.8.0
+    transitivePeerDependencies:
+      - debug
+    dev: true
+
+  /wait-on@7.0.1(debug@4.3.4):
+    resolution: {integrity: sha512-9AnJE9qTjRQOlTZIldAaf/da2eW0eSRSgcqq85mXQja/DW3MriHxkpODDSUEg+Gri/rKEcXUZHe+cevvYItaog==}
+    engines: {node: '>=12.0.0'}
+    hasBin: true
+    dependencies:
+      axios: 0.27.2(debug@4.3.4)
+      joi: 17.7.0
+      lodash: 4.17.21
+      minimist: 1.2.8
+      rxjs: 7.8.1
     transitivePeerDependencies:
       - debug
 

@@ -7,6 +7,7 @@ Feature: Publication page
     And the page endpoint for path "/victorian-skills-plan-2023-implementation-update/2022-victorian-skills-plan-actions-and-initiatives" returns fixture "/publication/sample-publication-page" with status 200
     And the endpoint "/api/tide/publication-index" with query "?id=ecb799a1-a1a3-4989-89f6-1657f786e12e" returns fixture "/publication/sample-index" with status 200
     And the site endpoint returns fixture "/site/vic" with status 200
+    And I am using a "macbook-16" device
 
   @mockserver
   Example: Publication parent

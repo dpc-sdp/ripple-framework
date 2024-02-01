@@ -39,7 +39,7 @@
     "@dpc-sdp/ripple-test-utils": "workspace:*",
     "@dpc-sdp/ripple-tide-api": "workspace:*",
     "@nuxt/devtools": "^0.6.7",
-    "cypress": "12.8.1",
+    "cypress": "13.6.4",
     "node-fetch-native": "^1.0.2",
     "nuxt": "3.6.5",
     "start-server-and-test": "^2.0.0"
