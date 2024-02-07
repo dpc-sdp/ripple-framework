@@ -22,7 +22,7 @@ export interface FilterConfigItem {
    */
   component: 'TideSearchFilterDropdown' | string
   filter?: {
-    type: 'raw' | 'term' | 'terms' | 'function'
+    type: 'raw' | 'term' | 'terms' | 'dependent' | 'function'
     value: string
   }
   aggregations?: {
@@ -41,6 +41,23 @@ export interface FilterConfigItem {
    */
   props?: {
     [key: string]: unknown
+  }
+}
+
+export type TideSearchListingResultsConfig = {
+  /**
+   * @description Component to render the results layout
+   */
+  layout?: TideSearchListingResultLayout
+  /**
+   * @description Component to render no results layout
+   */
+  empty?: any
+  /**
+   * @description Component to render result items, can be either '*' for all types, or the content type name if you need to render different types of results differently
+   */
+  item?: {
+    [key: string]: TideSearchListingResultItem
   }
 }
 
@@ -84,6 +101,22 @@ export type TideSearchListingSortOption = {
   clause: any
 }
 
+export type TideSearchLocationQueryConfig = {
+  component?: string
+  props?: {
+    [key: string]: unknown
+  }
+  dslTransformFn?: (location: any) => any
+}
+
+export type TideSearchListingMapConfig = {
+  props?: {
+    [key: string]: unknown
+  }
+}
+
+export type TideSearchListingTabKey = { id: 'map' | 'listing' }
+
 export type TideSearchListingConfig = {
   /**
    * @description general configuration for search listing
@@ -99,18 +132,42 @@ export type TideSearchListingConfig = {
      */
     index: string
     /**
-     * @description Toggle grid and list view of results, cards need to be a grid view
+     * @description Set the number of results to show per page
      */
     resultsPerPage?: number
+    /**
+     * @description Override the default labels
+     */
     labels: {
       submit: string
       reset: string
       placeholder: string
+      mapTab?: string
+      listingTab?: string
     }
     /**
      * @description custom sort clause
      */
     customSort?: Record<string, 'asc' | 'desc'>[]
+    /**
+     * @description whether to display map tab and include map search results
+     */
+    displayMapTab?: boolean
+    /**
+     * @description optionally hide the search form
+     */
+    hideSearchForm?: boolean
+    /**
+     * @description options for utilizing the auto suggestions
+     */
+    suggestions: {
+      key: string
+      enabled: boolean
+    }
+    /**
+     * @description The theme to use for the display of form section and fields
+     */
+    formTheme: 'default' | 'reverse'
   }
   /**
    * @description Elastic Query DSL for query clause
@@ -126,20 +183,25 @@ export type TideSearchListingConfig = {
   userFilters: FilterConfigItem[]
   /**
    * @description Config for how to display results
+   * @deprecated please use resultsConfig instead
    */
-  results: {
-    /**
-     * @description Component to render results layout
-     */
-    layout?: TideSearchListingResultLayout
-    /**
-     * @description Component to render result items, can be either '*' for all types, or the content type name if you need to render different types of results differently
-     */
-    item?: {
-      [key: string]: TideSearchListingResultItem
-    }
-  }
+  results: TideSearchListingResultsConfig
+  /**
+   * @description Config for how to display results
+   */
+  resultsConfig: TideSearchListingResultsConfig
+  /**
+   * @description Config for custom sort options
+   */
   sortOptions?: TideSearchListingSortOption[]
+  /**
+   * @description Config for the location query
+   */
+  locationQueryConfig?: TideSearchLocationQueryConfig
+  /**
+   * @description Config for results map
+   */
+  mapConfig?: TideSearchListingMapConfig
 }
 
 export interface TideSearchListingPage extends TidePageBase {

@@ -69,7 +69,7 @@
       <slot name="sidebar"></slot>
     </template>
     <template #belowSidebar>
-      <slot name="aboveSidebar"></slot>
+      <slot name="belowSidebar"></slot>
     </template>
     <template #footer>
       <slot name="footer">
@@ -142,6 +142,7 @@ onMounted(() => {
   document.body.setAttribute('data-nuxt-hydrated', 'true')
 })
 
+const nuxtApp = useNuxtApp()
 const route = useRoute()
 const showBreadcrumbs = computed(() => route.path !== '/')
 const showDraftAlert = computed(() => props.page?.status === 'draft')
@@ -163,9 +164,13 @@ const footerNav = computed(() => {
   return menuMain
 })
 
-const nuxtApp = useNuxtApp()
 /*
  * This hook can be called from plugins to extend Tide managed pages behaviour - see /plugins folder for examples
  */
-nuxtApp.callHook('tide:page', props)
+await nuxtApp.callHook('tide:page', props)
+
+useTideSiteTheme(props.site)
+useTideHideAlerts()
+useTideSiteMeta(props, nuxtApp?.$app_origin)
+useTideFavicons()
 </script>

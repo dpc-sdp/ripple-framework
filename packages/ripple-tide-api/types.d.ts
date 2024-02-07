@@ -215,6 +215,10 @@ export interface IRplFeatureFlags {
    */
   disablePrimaryLogo?: boolean
   /**
+   * @description Disable the footer vic.gov.au logo for sites that are not co-branded
+   */
+  disableFooterLogo?: boolean
+  /**
    * @description Sets which search connector to use for content collection queries
    */
   contentCollectionSearchConnector?: 'appSearch' | 'elasticsearch'
@@ -254,6 +258,7 @@ declare module 'nitropack' {
 
 // Mapping util interfaces
 export function getAddress(address: any): string
+export function getBody(body: any): string
 export function getBodyFromField(field: string, path: string | string[]): string
 export function getField(
   field: string,
@@ -266,3 +271,5 @@ export function getImageFromField(
 ): string
 export function getLinkFromField(field: any, path: string | string[]): any
 export function humanizeFilesize(fileSize: number): string
+export function getSiteKeyValues(key: string, src: any): any
+export function getSiteSection(sectionId: string, src: any): any

@@ -21,6 +21,7 @@ export const getIconForUrl = (urlString: string) => {
     case 'instagr.am':
       return 'icon-instagram'
     case 'linkedin.com':
+    case 'au.linkedin.com':
       return 'icon-linkedin'
     case 'twitter.com':
     case 'x.com':
@@ -39,8 +40,6 @@ interface RawLink {
 
 const processSiteSocialLinks = (rawLinks: RawLink[]): TideMenuItem[] => {
   return (rawLinks || []).map((link, i) => {
-    console.log(getIconForUrl(link.uri))
-
     return {
       id: `social_link-${i}`,
       text: link.title,

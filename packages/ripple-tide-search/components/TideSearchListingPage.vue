@@ -1,13 +1,18 @@
 <script setup lang="ts">
-import { getActiveFilterURL, ref, toRaw, computed } from '#imports'
+import {
+  getActiveFilterURL,
+  getActiveFiltersTally,
+  ref,
+  toRaw,
+  computed
+} from '#imports'
 import { submitForm } from '@formkit/vue'
 import useTideSearch from './../composables/useTideSearch'
 import type { TidePageBase, TideSiteData } from '@dpc-sdp/ripple-tide-api/types'
 import type {
-  TideSearchListingPage,
   MappedSearchResult,
   TideSearchListingResultLayout,
-  TideSearchListingSortOption
+  TideSearchListingConfig
 } from './../types'
 import type { ITideSecondaryCampaign } from '@dpc-sdp/ripple-tide-landing-page/mapping/secondary-campaign/secondary-campaign-mapping'
 import { useRippleEvent } from '@dpc-sdp/ripple-ui-core'
@@ -23,13 +28,15 @@ interface Props {
   id: string
   title: string
   introText?: string
-  searchListingConfig?: TideSearchListingPage['searchListingConfig']
-  sortOptions?: TideSearchListingSortOption[]
   autocompleteQuery?: boolean
-  queryConfig: Record<string, any>
-  globalFilters?: any[]
-  userFilters?: any[]
+  autocompleteMinimumCharacters?: number
+  searchListingConfig?: TideSearchListingConfig['searchListingConfig']
+  sortOptions?: TideSearchListingConfig['sortOptions']
+  queryConfig: TideSearchListingConfig['queryConfig']
+  globalFilters?: TideSearchListingConfig['globalFilters']
+  userFilters?: TideSearchListingConfig['userFilters']
   resultsLayout: TideSearchListingResultLayout
+  noResultsLayout: any
   searchResultsMappingFn?: (item: any) => MappedSearchResult<any>
   contentPage: TideContentPage
   site: TideSiteData
@@ -40,6 +47,7 @@ const props = withDefaults(defineProps<Props>(), {
   title: 'Search',
   introText: '',
   autocompleteQuery: true,
+  autocompleteMinimumCharacters: 3,
   globalFilters: () => [],
   userFilters: () => [],
   queryConfig: () => ({
@@ -55,15 +63,23 @@ const props = withDefaults(defineProps<Props>(), {
     }
   }),
   searchListingConfig: () => ({
+    hideSearchForm: false,
     resultsPerPage: 9,
     labels: {
       submit: 'Submit',
       reset: 'Reset',
       placeholder: 'Enter a search term'
+    },
+    suggestions: {
+      key: 'title',
+      enabled: true
     }
   }),
   resultsLayout: () => ({
     component: 'TideSearchResultsList'
+  }),
+  noResultsLayout: () => ({
+    component: 'TideSearchNoResults'
   }),
   searchResultsMappingFn: (item): MappedSearchResult<any> => {
     return {
@@ -88,6 +104,7 @@ const emit = defineEmits<{
     e: 'toggleFilters',
     payload: rplEventPayload & { action: 'open' | 'close' }
   ): void
+  (e: 'reset', payload: rplEventPayload & { action: 'clear_search' }): void
 }>()
 
 const { emitRplEvent } = useRippleEvent('tide-search', emit)
@@ -98,11 +115,13 @@ const {
   isBusy,
   searchError,
   getSuggestions,
+  clearSuggestions,
   searchTerm,
   results,
   suggestions,
   filterForm,
   appliedFilters,
+  resetFilters,
   submitSearch,
   goToPage,
   page,
@@ -114,14 +133,14 @@ const {
   pagingStart,
   pagingEnd,
   onAggregationUpdateHook
-} = useTideSearch(
-  props.queryConfig,
-  props.userFilters,
-  props.globalFilters,
-  props.searchResultsMappingFn,
-  props.searchListingConfig,
-  props.sortOptions
-)
+} = useTideSearch({
+  queryConfig: props.queryConfig,
+  userFilters: props.userFilters,
+  globalFilters: props.globalFilters,
+  searchResultsMappingFn: props.searchResultsMappingFn,
+  searchListingConfig: props.searchListingConfig,
+  sortOptions: props.sortOptions
+})
 
 const uiFilters = ref(props.userFilters)
 const cachedSubmitEvent = ref({})
@@ -132,7 +151,8 @@ const baseEvent = () => ({
   index: page.value,
   label: searchTerm.value,
   value: totalResults.value,
-  options: getActiveFilterURL(filterForm.value)
+  options: getActiveFilterURL(filterForm.value),
+  section: 'search-listing'
 })
 
 // Updates filter options with aggregation value
@@ -208,16 +228,34 @@ const handleFilterSubmit = (event) => {
   cachedSubmitEvent.value = {}
 }
 
-const handleFilterReset = () => {
+const handleFilterReset = (event: rplEventPayload) => {
+  emitRplEvent(
+    'reset',
+    {
+      ...event,
+      ...baseEvent(),
+      action: 'clear_search'
+    },
+    { global: true }
+  )
+
   searchTerm.value = ''
-  filterForm.value = {}
+  resetFilters()
   submitSearch()
 }
 
 const handleUpdateSearchTerm = (term) => {
   searchTerm.value = term
-  if (props.autocompleteQuery) {
-    getSuggestions()
+
+  if (
+    props.autocompleteQuery &&
+    props.searchListingConfig?.suggestions?.enabled !== false
+  ) {
+    if (term.length >= props.autocompleteMinimumCharacters) {
+      getSuggestions()
+    } else if (suggestions.value?.length) {
+      clearSuggestions()
+    }
   }
 }
 
@@ -253,17 +291,7 @@ const handleToggleFilters = () => {
 }
 
 const numAppliedFilters = computed(() => {
-  return Object.values(appliedFilters.value).filter((value) => {
-    if (!value) {
-      return false
-    }
-
-    if (Array.isArray(value) && !value.length) {
-      return false
-    }
-
-    return true
-  }).length
+  return getActiveFiltersTally(appliedFilters.value)
 })
 
 const toggleFiltersLabel = computed(() => {
@@ -316,7 +344,10 @@ watch(
         :corner-bottom="false"
       >
         <p v-if="introText" class="rpl-type-p-large">{{ introText }}</p>
-        <div class="tide-search-header">
+        <div
+          v-if="!searchListingConfig.hideSearchForm"
+          class="tide-search-header"
+        >
           <RplSearchBar
             id="tide-search-bar"
             variant="default"
@@ -391,7 +422,10 @@ watch(
       <RplPageComponent>
         <TideSearchResultsLoadingState :isActive="isBusy">
           <TideSearchError v-if="searchError" />
-          <TideSearchNoResults v-else-if="!isBusy && !results?.length" />
+          <component
+            :is="noResultsLayout.component"
+            v-else-if="!isBusy && !results?.length"
+          />
 
           <slot name="results" :results="results">
             <component

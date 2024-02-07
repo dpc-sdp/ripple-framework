@@ -21,6 +21,16 @@
           "terms": {
             "termFilter.keyword": ["Green"]
           }
+        },
+        {
+          "terms": {
+            "singleTermFilter.keyword": ["Aqua"]
+          }
+        },
+        {
+          "terms": {
+            "checkboxFilter.keyword": ["Archived"]
+          }
         }
       ]
     }
