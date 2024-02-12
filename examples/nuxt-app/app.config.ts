@@ -47,22 +47,17 @@ export default defineAppConfig({
       },
       sortFunctions: {
         vicPolDistanceSort: (location) => {
-          if (!location?.bbox) {
+          if (!location?.center) {
             return {
               'title.keyword': 'asc'
             }
           }
 
-          const lonLat = toLonLat(
-            [location.bbox[0], location.bbox[1]],
-            'EPSG:3857'
-          )
-
           return {
             _geo_distance: {
               field_latitude_longitude_value: {
-                lat: lonLat[1],
-                lon: lonLat[0]
+                lat: location.center.lat,
+                lon: location.center.lng
               },
               order: 'asc',
               unit: 'km',
@@ -90,6 +85,38 @@ export default defineAppConfig({
                   }
                 : null,
               sort: null
+            }
+          }
+        },
+        vicPolExample: async (location, filterForm) => {
+          let filter = null
+
+          if (location?.center) {
+            filter = {
+              geo_distance: {
+                distance: filterForm.distance || '200km',
+                field_latitude_longitude_value: {
+                  lat: location.center.lat,
+                  lon: location.center.lng
+                }
+              }
+            }
+          } else {
+            filter = location?.name
+              ? {
+                  terms: {
+                    [`field_suburb.keyword`]: [location.name]
+                  }
+                }
+              : null
+          }
+
+          return {
+            map: {
+              filter: null
+            },
+            listing: {
+              filter
             }
           }
         },

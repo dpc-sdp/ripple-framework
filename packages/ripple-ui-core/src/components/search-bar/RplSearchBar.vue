@@ -30,6 +30,7 @@ interface Props {
   getOptionId?: (item: any) => string
   isOptionSelectable?: Function
   showLabel?: boolean
+  isBusy?: boolean
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -47,7 +48,8 @@ const props = withDefaults(defineProps<Props>(), {
   getOptionLabel: (opt) => opt,
   getOptionId: (opt) => opt,
   isOptionSelectable: (opt) => true,
-  showLabel: false
+  showLabel: false,
+  isBusy: false
 })
 
 const emit = defineEmits<{
@@ -289,6 +291,7 @@ const slug = (label: string) => {
             'rpl-u-focusable--force-on': isOpen
           }"
           type="search"
+          :disabled="isBusy"
           @input="handleInputChange"
           @focus="handleOpen(false)"
           @keydown.enter.prevent="handleSubmit('enter')"

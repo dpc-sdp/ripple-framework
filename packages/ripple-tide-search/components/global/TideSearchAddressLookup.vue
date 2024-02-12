@@ -6,14 +6,19 @@
       :showLabel="true"
       variant="reverse"
       :submitLabel="false"
-      :inputValue="inputValue"
+      :inputValue="
+        inputValue?.useGeolocation && userGeolocation
+          ? userGeolocation.name
+          : inputValue
+      "
       :suggestions="results"
       :showNoResults="true"
       :debounce="5000"
       :maxSuggestionsDisplayed="8"
       placeholder="Search by postcode or suburb"
       :getOptionId="(itm:any) => itm.name"
-      :getSuggestionVal="(itm:any) => itm?.name || ''"
+      :getSuggestionVal="(itm:any) => typeof itm === 'string' ? itm : (itm?.name || '')"
+      :isBusy="isGettingLocation"
       @submit="submitAction"
       @update:input-value="onUpdate"
     >
@@ -42,11 +47,15 @@ import { Extent } from 'ol/extent'
 interface Props {
   inputValue?: any
   resultsloaded?: boolean
+  isGettingLocation?: boolean
+  userGeolocation: any
 }
 
 const props = withDefaults(defineProps<Props>(), {
   inputValue: null,
-  resultsloaded: false
+  resultsloaded: false,
+  isGettingLocation: false,
+  userGeolocation: null
 })
 
 const results = ref([])
@@ -197,6 +206,39 @@ async function centerMapOnLocation(
   location: addressResultType,
   animate: boolean
 ) {
+  if (location.useGeolocation && props.userGeolocation) {
+    // reset back to initial view on empty query
+    const center = [
+      props.userGeolocation.center.lng,
+      props.userGeolocation.center.lat
+    ]
+    const initialZoom = 16
+    map?.getView().animate({
+      center: fromLonLat(center),
+      duration: 0,
+      zoom: initialZoom
+    })
+
+    return
+  }
+
+  // if (!location || location?.useGeolocation) {
+  //   return
+  // }
+
+  // // if (location?.center) {
+  // //   // reset back to initial view on empty query
+  // //   const center = [location?.center.lng, location?.center.lat]
+  // //   const initialZoom = 16
+  // //   map?.getView().animate({
+  // //     center: fromLonLat(center),
+  // //     duration: 0,
+  // //     zoom: initialZoom
+  // //   })
+
+  // //   return
+  // // }
+
   if (map && location?.bbox) {
     // fetch the geometry of the postcode so we can zoom to its extent
     if (location?.bbox) {
@@ -215,7 +257,7 @@ async function centerMapOnLocation(
     // reset back to initial view on empty query
     const center = [144.9631, -36.8136]
     const initialZoom = 7.3
-    map.getView().animate({
+    map?.getView().animate({
       center: fromLonLat(center),
       duration: 1200,
       zoom: initialZoom
