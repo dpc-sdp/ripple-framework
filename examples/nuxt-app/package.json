@@ -9,7 +9,7 @@
   "sdp_version": "6.6.6",
   "scripts": {
     "dev": "nuxt dev",
-    "dev:mock": "NUXT_PUBLIC_API_URL=http://localhost:3001 API_PORT=3001 concurrently 'pnpm mockserver' 'pnpm dev'",
+    "dev:mock": "NUXT_PUBLIC_API_URL=http://localhost:3001 API_PORT=3001 pnpm dev",
     "build": "nuxi build",
     "preview": "nuxi preview",
     "compile": "tsc --build",
@@ -26,13 +26,13 @@
     "@dpc-sdp/nuxt-ripple-analytics": "workspace:*",
     "@dpc-sdp/nuxt-ripple-preview": "workspace:*",
     "@dpc-sdp/ripple-tide-event": "workspace:*",
-    "@dpc-sdp/ripple-tide-topic": "workspace:*",
     "@dpc-sdp/ripple-tide-grant": "workspace:*",
     "@dpc-sdp/ripple-tide-landing-page": "workspace:*",
     "@dpc-sdp/ripple-tide-media": "workspace:*",
     "@dpc-sdp/ripple-tide-news": "workspace:*",
     "@dpc-sdp/ripple-tide-publication": "workspace:*",
     "@dpc-sdp/ripple-tide-search": "workspace:*",
+    "@dpc-sdp/ripple-tide-topic": "workspace:*",
     "@dpc-sdp/ripple-ui-maps": "workspace:*"
   },
   "devDependencies": {
@@ -41,7 +41,7 @@
     "@nuxt/devtools": "^0.6.7",
     "cypress": "12.8.1",
     "node-fetch-native": "^1.4.1",
-    "nuxt": "3.9.3",
+    "nuxt": "3.10.0",
     "start-server-and-test": "^2.0.0"
   }
 }
