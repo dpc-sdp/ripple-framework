@@ -45,13 +45,14 @@
     "postcss-nested": "^6.0.1",
     "postcss-normalize": "^10.0.1",
     "postcss-preset-env": "^8.1.0",
-    "vue3-openlayers": "1.2.1"
+    "vue3-openlayers": "1.2.1",
+    "vue": "3.4.14"
   },
   "peerDependencies": {
     "ol": "^7.4.0",
     "ol-contextmenu": "^5.2.1",
-    "ol-ext": "^4.0.8",
-    "vue": "3.3.4"
+    "ol-ext": "^4.0.8"
+
   },
   "devDependencies": {
     "@dpc-sdp/ripple-tide-api": "workspace:*",

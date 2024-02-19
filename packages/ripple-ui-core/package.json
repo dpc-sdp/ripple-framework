@@ -57,8 +57,11 @@
     "postcss-normalize": "^10.0.1",
     "postcss-preset-env": "^8.1.0",
     "swiper": "^8.4.5",
-    "vite-svg-loader": "^4.0.0",
-    "vue": "3.4.15"
+    "vite-svg-loader": "^4.0.0"
+
+  },
+  "peerDependencies": {
+    "vue": "3.4.14"
   },
   "devDependencies": {
     "@dpc-sdp/ripple-tide-api": "workspace:*",
