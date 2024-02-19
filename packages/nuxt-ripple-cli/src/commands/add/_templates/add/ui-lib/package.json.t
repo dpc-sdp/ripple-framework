@@ -42,13 +42,15 @@ to: package.json
     "test:generate-output": "jest --json --outputFile=.jest-test-results.json"
   },
   "dependencies": {
-    "@nuxt/kit": "3.9.3",
+    "@nuxt/kit": "^3.10.2",
     "@vueuse/core": "^9.13.0",
     "@vueuse/integrations": "^9.13.0",
     "postcss-each": "^1.1.0",
     "postcss-nested": "^6.0.1",
     "postcss-normalize": "^10.0.1",
     "postcss-preset-env": "^8.1.0",
+  },
+  "peerDependencies": {
     "vue": "3.4.14"
   },
   "devDependencies": {

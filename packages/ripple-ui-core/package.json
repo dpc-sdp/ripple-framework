@@ -45,7 +45,7 @@
     "test:generate-output": "jest --json --outputFile=.jest-test-results.json"
   },
   "dependencies": {
-    "@nuxt/kit": "3.9.3",
+    "@nuxt/kit": "^3.10.2",
     "@vueuse/core": "^9.13.0",
     "@vueuse/integrations": "^9.13.0",
     "date-fns": "^2.29.3",
