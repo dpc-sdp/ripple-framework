@@ -354,10 +354,11 @@ export default ({
             )
           }
 
-          return fn(itm, filterVal)
+            return fn(itm, filterVal)
+          }
         }
-      }
-    })
+      })
+      .filter(Boolean)
   })
 
   const getQueryDSL = async () => {
