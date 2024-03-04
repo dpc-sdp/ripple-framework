@@ -18,6 +18,7 @@ rippleCli.addCommand(rplInitCommand())
 rippleCli.addCommand(rplAddCommand())
 rippleCli.addCommand(rplFaviconCommand())
 rippleCli.addCommand(rplLocalitiesCommand())
+rippleCli.showHelpAfterError()
 // TODO Add update command for existing sites
 
 program.parse(process.argv)
