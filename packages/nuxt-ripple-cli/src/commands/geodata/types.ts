@@ -26,6 +26,6 @@ export interface ILocalitySearchData {
     x: string
     y: string
   }
-  postcode?: string
+  postcode?: string[] | string
   bbox?: number[] | []
 }
