@@ -23,7 +23,7 @@ export async function writeFile(
     )
     console.log(`Data written :  ${JSON.stringify(data)}`)
   } catch (err) {
-    console.error('Error writing to file:', err)
+    onWriteError(err)
   }
 }
 

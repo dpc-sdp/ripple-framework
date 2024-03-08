@@ -7,7 +7,7 @@
     "noImplicitAny": false,
     "declaration": false,
     "jsx": "preserve",
-    "sourceMap": false
+    "sourceMap": true
   },
   "exclude": ["./src/cypress", "./test"]
 }

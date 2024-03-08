@@ -11,13 +11,13 @@
   ],
   "configurations": [
     {
-      "name": "CLI",
+      "name": "Nuxt Ripple CLI",
       "type": "node",
       "request": "launch",
-      "cwd": "${workspaceFolder}",
-      "runtimeExecutable": "pnpm",
-      "runtimeArgs": ["-F", "@dpc-sdp/nuxt-ripple-cli", "nuxt-ripple", "init"],
-      "console": "integratedTerminal"
+      "console": "integratedTerminal",
+      "program": "${workspaceFolder}/packages/nuxt-ripple-cli/src/commands/index.ts",
+      "outFiles": ["${workspaceFolder}/packages/nuxt-ripple-cli/dist/**/*.js"],
+      "args": ["geodata", "localities"]
     },
     {
       "name": "client: Chrome",
