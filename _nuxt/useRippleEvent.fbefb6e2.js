@@ -1,1 +1,0 @@
-import{G as f}from"./entry.6971c6f2.js";function v(s,c){const i=f("$rplEvent"),r=f("eventContext",{});return{emitRplEvent:(n,t={},e={})=>{r&&(t={...r,...t}),c&&c(n,t),e!=null&&e.global&&(i==null||i.emit(`${s}/${n}`,t))},withOptions:(n,t)=>Object.keys(n).filter(e=>t.includes(e)&&n[e])}}export{v as u};
