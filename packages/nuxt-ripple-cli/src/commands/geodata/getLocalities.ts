@@ -4,26 +4,11 @@ import {
   vicMapFeatureServerIds,
   fetchData,
   fetchUsingSimplifiedGeometry,
-  fetchPostCodesMatchingPointGeometry,
+  fetchPostCodesMatchingGeometry,
   fetchLGAsMatchingGeometry,
-  fetchBboxForFeature
+  fetchBboxForFeature,
+  fetchLocalityData
 } from './arcGisApi'
-
-const geometryPrecision = 7
-
-async function fetchLocalityData(
-  offset: number,
-  where = '1=1'
-): Promise<ILocalityVicMapData> {
-  return fetchData(vicMapFeatureServerIds.localities, {
-    where,
-    returnGeometry: true,
-    geometryPrecision,
-    returnCentroid: true,
-    orderByFields: 'LOCALITY_NAME',
-    resultOffset: offset
-  })
-}
 
 async function getLgaName(itm) {
   const lga = await fetchUsingSimplifiedGeometry(
@@ -90,9 +75,11 @@ async function getLocalities(
     for (let index = 0; index < localities.length; index++) {
       const itm = localities[index]
       itm.bbox = await fetchBboxForFeature(`LOCALITY_NAME='${itm.name}'`)
-      itm.postcode = await fetchPostCodesMatchingPointGeometry(
-        `${itm.centroid.x},${itm.centroid.y}`
-      )
+      if (itm.centroid) {
+        itm.postcode = await fetchPostCodesMatchingGeometry(
+          `${itm.centroid.x},${itm.centroid.y}`
+        )
+      }
       itm.lga = await getLgaName(itm)
       delete itm.centroid
       delete itm.geometry
