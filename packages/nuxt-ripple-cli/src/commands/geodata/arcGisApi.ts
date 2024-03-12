@@ -1,5 +1,10 @@
 import { buffer, polygon, truncate, simplify } from '@turf/turf'
 import type { Position } from '@turf/turf'
+import type {
+  ILocalityVicMapData,
+  IArcGisGeoJSONResponse,
+  esriGeometryTypes
+} from './types'
 import { convertToTitleCase } from './utilities'
 
 export const baseArcGISURL =
@@ -49,6 +54,24 @@ export async function fetchData(layer: string, options): Promise<any> {
 }
 
 /**
+ * @description Here we use turf (https://turfjs.org/docs) buffer to reduce the size of the polygon slightly so that overlapping edges dont affect queries
+ */
+export function bufferPolygon(
+  geometry,
+  bufferValue = -40,
+  convertToPolygon = true
+): Position[][] {
+  const steps = 2
+  let polygonGeometry = convertToPolygon ? polygon(geometry) : geometry
+  const buffered = buffer(polygonGeometry, bufferValue, {
+    units: 'meters',
+    steps
+  })
+
+  return buffered.geometry?.coordinates
+}
+
+/**
  * @description Here we use turf (https://turfjs.org/docs) buffer, tuncate and simplify to reduce the size of the polygon. Some areas have complex geometry that cannot be queried for directly without simplifying
  */
 export function simplifyGeometry(
@@ -56,7 +79,6 @@ export function simplifyGeometry(
   bufferValue = -40,
   precision = 0
 ): Position[][] | 'error' {
-  const steps = 2
   let geometryToSimplify = polygon(geometry)
   try {
     if (bufferValue === 0) {
@@ -74,12 +96,9 @@ export function simplifyGeometry(
       })
     }
 
-    const buffered = buffer(geometryToSimplify, bufferValue, {
-      units: 'meters',
-      steps
-    })
+    const buffered = bufferPolygon(geometryToSimplify, bufferValue, false)
 
-    return buffered.geometry?.coordinates
+    return buffered
   } catch (error) {
     console.log(`Error simplifying geometry`, bufferValue)
     return 'error'
@@ -119,43 +138,14 @@ export async function fetchUsingSimplifiedGeometry(
 }
 
 /**
- * @description Fetch a postcode for a specific Polygon geometry
+ * @description Fetch a postcode for a specific geometry
+ * @param geometry GeoJson Geometry shape
+ * @param geometryType GeoJson Geometry shape
  */
-export async function fetchPostCodesMatchingPolygonGeometry(
+export async function fetchPostCodesMatchingGeometry(
   geometry,
-  options: {
-    geometryType: 'esriGeometryPolygon'
-    spatialRel: 'esriSpatialRelIntersects'
-    units: 'esriSRUnit_Meter'
-    where: '1=1'
-    defaultSR: '4326'
-    returnGeometry: false
-    outFields: 'postcode'
-  }
-): Promise<string[] | 'error'> {
-  return fetchData(vicMapFeatureServerIds.postcodes, {
-    geometry: `{"rings": ${JSON.stringify(geometry)} }`,
-    ...options
-  })
-    .then((response) => {
-      if (response.features && response.features.length > 0) {
-        return response.features.map((feature) => feature.attributes.postcode)
-      }
-      return 'error'
-    })
-    .catch((error) => {
-      console.error('There was a problem fetching data:', error)
-      return 'error'
-    })
-}
-
-/**
- * @description Fetch a postcode for a specific Point geometry
- */
-export async function fetchPostCodesMatchingPointGeometry(
-  geometry,
+  geometryType: esriGeometryTypes = 'esriGeometryPoint',
   options = {
-    geometryType: 'esriGeometryPoint',
     spatialRel: 'esriSpatialRelIntersects',
     units: 'esriSRUnit_Meter',
     where: '1=1',
@@ -166,6 +156,7 @@ export async function fetchPostCodesMatchingPointGeometry(
 ): Promise<string[] | 'error'> {
   return fetchData(vicMapFeatureServerIds.postcodes, {
     geometry: geometry,
+    geometryType,
     ...options
   })
     .then((response) => {
@@ -202,9 +193,7 @@ export async function fetchLGAsMatchingGeometry(
     .then((response) => {
       if (response.features && response.features.length > 0) {
         return response.features.map((feature) => ({
-          lga_official_name: convertToTitleCase(
-            feature.attributes.lga_official_name
-          ),
+          lga_official_name: feature.attributes.lga_official_name,
           lga_name: feature.attributes.lga_name,
           lga_code: feature.attributes.lga_code
         }))
@@ -246,4 +235,106 @@ export async function fetchBboxForFeature(
       console.log(err)
       return []
     })
+}
+
+export async function fetchLocalityData(
+  offset: number,
+  where = '1=1',
+  options?: Record<string, any>
+): Promise<ILocalityVicMapData> {
+  const defaultOptions = {
+    returnGeometry: true,
+    geometryPrecision: defaultGeometryPrecision,
+    returnCentroid: true,
+    orderByFields: 'LOCALITY_NAME',
+    resultOffset: offset
+  }
+  return fetchData(vicMapFeatureServerIds.localities, {
+    where,
+    ...defaultOptions,
+    ...options
+  })
+}
+
+export async function fetchLGAData(
+  offset: number,
+  where = '1=1',
+  options
+): Promise<ILocalityVicMapData> {
+  const defaultOptions = {
+    returnGeometry: true,
+    geometryPrecision: defaultGeometryPrecision,
+    returnCentroid: true,
+    orderByFields: 'LOCALITY_NAME',
+    resultOffset: offset,
+    returnExtentOnly: false,
+    outFields: ''
+  }
+
+  return fetchData(vicMapFeatureServerIds.lgas, {
+    where,
+    defaultOptions,
+    ...options
+  })
+}
+
+export async function fetchPostCodeData(
+  offset: number,
+  where = '1=1',
+  options
+): Promise<ILocalityVicMapData> {
+  const defaultOptions = {
+    returnGeometry: true,
+    geometryPrecision: defaultGeometryPrecision,
+    returnCentroid: true,
+    orderByFields: 'postcode',
+    resultOffset: offset,
+    returnExtentOnly: false,
+    outFields: ''
+  }
+
+  return fetchData(vicMapFeatureServerIds.postcodes, {
+    where,
+    defaultOptions,
+    ...options
+  })
+}
+
+export async function fetchPaginatedCollection(
+  collection,
+  queryOptions,
+  options = { delay: 1000, offset: 0, perPage: 2000 }
+): Promise<unknown[]> {
+  let hasData = true
+  const results: unknown[] = []
+  let offset = options.offset || 0 // starting offset to make requests, can use this to resume interupted requests
+  let delay = options.delay || 1000 // add delay between requests to prevent flooding API
+  const perPage = options.perPage || 2000 // number of items to return per request
+  while (hasData) {
+    try {
+      const data: IArcGisGeoJSONResponse = await fetchData(collection, {
+        ...queryOptions,
+        resultRecordCount: perPage,
+        resultOffset: offset
+      })
+      if (!data) {
+        break
+      } else if (data.features?.length > 0) {
+        results.push(...data.features)
+        offset = offset + perPage
+        continue
+      }
+      if (data.exceededTransferLimit) {
+        await new Promise((resolve) => setTimeout(resolve, delay))
+        continue
+      } else {
+        hasData = false
+        break
+      }
+    } catch (error: unknown) {
+      console.log('error', error)
+      break
+    }
+  }
+  return results
 }

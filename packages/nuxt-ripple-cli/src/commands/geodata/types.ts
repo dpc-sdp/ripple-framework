@@ -11,6 +11,11 @@ export type LocalityFeature = {
   }
 }
 
+export interface IArcGisGeoJSONResponse {
+  features: unknown[]
+  exceededTransferLimit?: boolean
+}
+
 export interface ILocalityVicMapData {
   features: LocalityFeature[]
   exceededTransferLimit: boolean
@@ -29,3 +34,10 @@ export interface ILocalitySearchData {
   postcode?: string[] | string
   bbox?: number[] | []
 }
+
+export type esriGeometryTypes =
+  | 'esriGeometryPoint'
+  | 'esriGeometryMultipoint'
+  | 'esriGeometryPolyline'
+  | 'esriGeometryPolygon'
+  | 'esriGeometryEnvelope'
