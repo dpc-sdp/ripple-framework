@@ -249,7 +249,10 @@ const noResultsRef = ref(null)
         :zoom="zoom"
       />
       <slot name="map-provider"> </slot>
-      <slot name="shapes" :mapFeatures="mapFeatures"></slot>
+      <slot
+        name="shapes"
+        :mapFeatures="mapFeatures && mapFeatures.length > 0"
+      ></slot>
 
       <!-- This enlarged pin is rendered for the sidebar/fixed popup style only -->
       <ol-vector-layer
