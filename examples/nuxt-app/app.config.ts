@@ -42,10 +42,33 @@ export default defineAppConfig({
             providedFilterConfig: filterConfig,
             providedValues: values
           }
+        },
+        budgetMapLocationTypeFilter: (filterConfig, value) => {
+          if (value === 'statewide') {
+            return {
+              term: {
+                feature_type: 'Statewide'
+              }
+            }
+          }
+
+          if (value === 'councilArea') {
+            return {
+              bool: {
+                must_not: {
+                  term: {
+                    feature_type: 'Statewide'
+                  }
+                }
+              }
+            }
+          }
+
+          return null
         }
       },
       sortFunctions: {
-        exampleDistanceSort: (location) => {
+        vicPolDistanceSort: (location) => {
           if (!location?.center) {
             return {
               'title.keyword': 'asc'
@@ -68,6 +91,34 @@ export default defineAppConfig({
         }
       },
       locationDSLTransformFunctions: {
+        budgetMapLocationQuery: async (location) => {
+          let filter = null
+
+          if (location.name) {
+            filter = {
+              bool: {
+                should: [
+                  {
+                    term: {
+                      lga: location.name
+                    }
+                  },
+                  {
+                    term: {
+                      feature_type: 'Statewide'
+                    }
+                  }
+                ]
+              }
+            }
+          }
+
+          return {
+            listing: {
+              filter
+            }
+          }
+        },
         // DSL transform example for VSBA map tests
         schoolBuildings: async (location) => {
           return {
@@ -119,6 +170,12 @@ export default defineAppConfig({
         }
       },
       mapPinStyleFn: {
+        budgetPinColours: (feature) => {
+          return getBudgetMapPinColour(feature)
+        },
+        stationFinderPinStyle: (feature) => {
+          return '#274B93'
+        },
         vsbaPinIcons: (feature) => {
           const projectType =
             feature && feature['field_mappintype_name']

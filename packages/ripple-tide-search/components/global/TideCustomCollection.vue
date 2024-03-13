@@ -9,6 +9,7 @@ import type {
 } from './../../types'
 import { useRippleEvent } from '@dpc-sdp/ripple-ui-core'
 import type { rplEventPayload } from '@dpc-sdp/ripple-ui-core'
+import { fromLonLat } from 'ol/proj'
 import { get } from 'lodash-es'
 
 interface Props {
@@ -121,11 +122,17 @@ const searchResultsMappingFn = (item): TideSearchListingResultItem => {
       }
     }
   }
-  return item
+
+  return {
+    id: item._id,
+    props: {
+      result: item._source
+    }
+  }
 }
 
 const mapResultsMappingFn = (result) => {
-  const location = get(result, props.mapConfig.props.locationObjPath)
+  const location = get(result._source, props.mapConfig.props.locationObjPath)
   if (location && props.mapConfig && result._source) {
     const locationLatLng = location.split(',')
     return {
@@ -415,6 +422,28 @@ const reverseFields = computed(
     (reverseTheme.value && !altBackground.value) ||
     (altBackground.value && !reverseTheme.value)
 )
+
+const handleSidePanelClick = (item, activatePin) => {
+  const location = get(
+    item.props.result,
+    props.mapConfig?.props?.locationObjPath
+  )
+
+  console.log(location)
+  if (location && props.mapConfig && item.props) {
+    const locationLatLng = location.split(',')
+    const lat = parseFloat(locationLatLng[0])
+    const lng = parseFloat(locationLatLng[1])
+
+    console.log(item)
+    console.log(lat, lng)
+
+    activatePin(fromLonLat([lng, lat]), item.props.result)
+  }
+}
+function getTitle(feature) {
+  return get(feature, props.mapConfig.props.titleObjPath)
+}
 </script>
 
 <template>
@@ -551,9 +580,98 @@ const reverseFields = computed(
         :areas="mapAreas"
         v-bind="mapConfig?.props"
         :noresults="!isBusy && !results?.length"
+        :hasSidePanel="mapConfig?.sidePanel?.enabled"
       >
         <template #noresults>
           <TideCustomCollectionNoResults v-if="!isBusy && !results?.length" />
+        </template>
+
+        <template #sidepanel="{ mapHeight, activatePin }">
+          <RplMapSidePanel
+            :mapHeight="mapHeight"
+            class="tide-search-sidepanel--desktop"
+          >
+            <template #aboveItems>
+              <RplMapSidePanelCount
+                :pagingStart="pagingStart + 1"
+                :pagingEnd="pagingEnd + 1"
+                :totalResults="totalResults"
+              />
+            </template>
+            <component
+              :is="
+                mapConfig.sidePanel?.resultsComponent ||
+                'TideSearchResultMapSidepanelItem'
+              "
+              v-for="item in results"
+              :key="item.id"
+              v-bind="item.props"
+              :isActive="
+                item.props.result.unique_id ===
+                (popup?.feature ? popup?.feature[0].unique_id : '')
+              "
+              @click="handleSidePanelClick(item, activatePin)"
+            />
+            <template #belowItems>
+              <RplMapSidePanelPagination
+                :currentPage="page"
+                :totalPages="totalPages"
+                @paginate="handlePageChange"
+              />
+            </template>
+          </RplMapSidePanel>
+        </template>
+        <template #sidepanelMobile="{ activatePin }">
+          <RplMapSidePanel
+            v-if="!popup.isOpen"
+            class="tide-search-sidepanel--mobile"
+          >
+            <template #aboveItems>
+              <RplMapSidePanelCount
+                :pagingStart="pagingStart + 1"
+                :pagingEnd="pagingEnd + 1"
+                :totalResults="totalResults"
+              />
+            </template>
+            <component
+              :is="
+                mapConfig.sidePanel?.resultsComponent ||
+                'TideSearchResultMapSidepanelItem'
+              "
+              v-for="item in results"
+              :key="item.id"
+              v-bind="item.props"
+              :isActive="
+                item.props.result.unique_id ===
+                (popup?.feature ? popup?.feature[0].unique_id : '')
+              "
+              @click="handleSidePanelClick(item, activatePin)"
+            />
+            <template #belowItems>
+              <RplMapSidePanelPagination
+                :currentPage="page"
+                :totalPages="totalPages"
+                @paginate="handlePageChange"
+              />
+            </template>
+          </RplMapSidePanel>
+          <RplMapPopUp
+            class="tide-search-sidepanel--mobile"
+            type="standalone"
+            :isOpen="popup.isOpen"
+            @close="popup.isOpen = false"
+          >
+            <template #header>
+              <TideSearchListingResultsPopupTitle
+                :popupConfig="mapConfig.props.popup"
+                :titleObjPath="mapConfig.props.titleObjPath"
+              />
+            </template>
+            <TideSearchListingResultsPopupContent
+              :popupConfig="mapConfig.props.popup"
+              :titleObjPath="mapConfig.props.titleObjPath"
+            />
+          </RplMapPopUp>
         </template>
       </TideSearchListingResultsMap>
     </template>
@@ -602,5 +720,19 @@ const reverseFields = computed(
 .tide-search-results--loading {
   opacity: 0.5;
   pointer-events: none;
+}
+
+.tide-search-sidepanel--mobile {
+  @media (--rpl-bp-m) {
+    display: none;
+  }
+}
+
+.tide-search-sidepanel--desktop {
+  display: none;
+
+  @media (--rpl-bp-m) {
+    display: block;
+  }
 }
 </style>

@@ -2,7 +2,7 @@
   <RplMapPopUpAccordionItem
     v-for="(feature, i) in features"
     :key="i"
-    :feature="feature"
+    :title="getTitle(feature)"
   >
     <slot name="feature" :feature="feature" />
   </RplMapPopUpAccordionItem>
@@ -13,10 +13,12 @@ import RplMapPopUpAccordionItem from './RplMapPopUpAccordionItem.vue'
 
 interface Props {
   features: any[]
+  getTitle: (feature: any) => string
 }
 
 withDefaults(defineProps<Props>(), {
-  features: () => []
+  features: () => [],
+  getTitle: (feature: any) => feature.title[0]
 })
 </script>
 <style src="./RplMapPopUp.css" />

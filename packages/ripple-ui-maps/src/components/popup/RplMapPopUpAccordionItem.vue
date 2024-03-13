@@ -12,7 +12,7 @@
       @click="handleToggle"
     >
       <h4 class="rpl-type-p-small">
-        {{ feature.title[0] }}
+        {{ title }}
       </h4>
 
       <!-- Icon -->
@@ -36,7 +36,7 @@ import { ref } from 'vue'
 import { RplExpandable, RplIcon } from '@dpc-sdp/ripple-ui-core/vue'
 
 interface Props {
-  feature: any
+  title: string
   defaultExpanded?: boolean
 }
 

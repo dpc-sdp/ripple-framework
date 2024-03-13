@@ -29,6 +29,7 @@ interface Props {
   pinStyle?: Function
   mapHeight?: number
   popupType?: 'sidebar' | 'popover'
+  hasSidePanel?: boolean
   noresults?: boolean
 }
 
@@ -39,6 +40,7 @@ const props = withDefaults(defineProps<Props>(), {
   initialZoom: 7.3,
   mapHeight: 600,
   popupType: 'sidebar',
+  hasSidePanel: false,
   initialCenter: () => [144.9631, -36.8136], // melbourne CBD
   pinStyle: (feature) => {
     let color = feature.color || 'red'
@@ -70,6 +72,28 @@ onMounted(() => {
 
 onUnmounted(() => {
   setRplMapRef(null)
+})
+
+const activatePin = (coordinates, featureProperties, zoom) => {
+  const map = mapRef.value.map
+
+  const pinStyle = props.pinStyle(featureProperties)
+  const pinColor =
+    typeof pinStyle === 'string' ? pinStyle : pinStyle?.getColor()
+
+  popup.value.feature = [featureProperties]
+  popup.value.color = asString(pinColor)
+  popup.value.isOpen = true
+  popup.value.isArea = false
+  popup.value.position = coordinates
+
+  const offset =
+    props.popupType === 'sidebar' ? { y: 0, x: -160 } : { y: -100, x: 0 }
+  centerMap(map, coordinates, offset, zoom)
+}
+
+defineExpose({
+  activatePin
 })
 
 const center = computed(() => {
@@ -148,6 +172,8 @@ function onMapSingleClick(evt) {
       // if we click on a pin we open the popup
       const clickedFeature = point.features[0]
       const coordinates = clickedFeature.getGeometry().flatCoordinates
+
+      console.log(coordinates)
       const featureProperties = clickedFeature.getProperties()
       const pinStyle = props.pinStyle(featureProperties)
       const pinColor =
@@ -210,8 +236,18 @@ const noResultsRef = ref(null)
 </script>
 
 <template>
-  <div class="rpl-map">
-    <slot v-if="$slots.sidepanel" name="sidepanel" :mapHeight="mapHeight" />
+  <slot
+    v-if="$slots.sidepanelMobile"
+    name="sidepanelMobile"
+    :mapHeight="mapHeight"
+    :selectedFeatures="popup.feature"
+  />
+  <div
+    :class="{
+      'rpl-map': true,
+      'rpl-map--has-sidepanel': hasSidePanel
+    }"
+  >
     <div
       v-if="noresults && !hideNoResults"
       class="rpl-map__noresults"
@@ -254,7 +290,9 @@ const noResultsRef = ref(null)
 
       <!-- This enlarged pin is rendered for the sidebar/fixed popup style only -->
       <ol-vector-layer
-        v-if="popupType === 'sidebar' && popup.isOpen"
+        v-if="
+          (popupType === 'sidebar' || popupType === 'sidepanel') && popup.isOpen
+        "
         :zIndex="5"
       >
         <ol-source-vector>
@@ -337,6 +375,8 @@ const noResultsRef = ref(null)
         </button>
       </div>
 
+      <slot v-if="$slots.sidepanel" name="sidepanel" :mapHeight="mapHeight" />
+
       <slot
         v-if="popupType === 'sidebar'"
         name="sidebar"
@@ -357,7 +397,6 @@ const noResultsRef = ref(null)
             </slot>
           </template>
           <slot name="popupContent" :selectedFeatures="popup.feature">
-            {{ popup.feature }}
             <p class="rpl-type-p-small">
               {{ popup.feature[0].description }}
             </p>

@@ -85,6 +85,7 @@ async function submitAction(e: any) {
 }
 
 const fetchSuggestions = async (query: string) => {
+  console.log(rplMapRef.value)
   const searchUrl = `/api/tide/app-search/${props.suggestionsIndex}/elasticsearch/_search`
   const queryDSL = {
     query: {
@@ -230,7 +231,7 @@ async function centerMapOnLocation(
     // reset back to initial view on empty query
     const center = [144.9631, -36.8136]
     const initialZoom = 7.3
-    map.getView().animate({
+    map?.getView().animate({
       center: fromLonLat(center),
       duration: 1200,
       zoom: initialZoom

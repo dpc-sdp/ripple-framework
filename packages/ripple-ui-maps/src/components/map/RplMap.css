@@ -12,8 +12,8 @@
     flex-direction: row;
   }
 
-    /* Magic number to account for the height of the zoom controls, which are positioned absolutely */
-    --local-zoom-controls-height: 88px;
+  /* Magic number to account for the height of the zoom controls, which are positioned absolutely */
+  --local-zoom-controls-height: 88px;
 }
 
 .rpl-map__map {
@@ -121,8 +121,6 @@
     fill: currentcolor;
   }
 
-
-
   /* Margin + zoom controls height + button spacing */
   bottom: calc(
     var(--rpl-sp-2) + var(--local-zoom-controls-height) + var(--rpl-sp-2)
@@ -158,4 +156,12 @@
   position: absolute;
   right: var(--rpl-sp-4);
   top: var(--rpl-sp-4);
+}
+
+.rpl-map__desktop-sidebar {
+  display: none;
+
+  @media (--rpl-bp-m) {
+    display: block;
+  }
 }

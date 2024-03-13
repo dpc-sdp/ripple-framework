@@ -44,7 +44,7 @@ interface Props {
 withDefaults(defineProps<Props>(), {
   el: 'ul',
   panelLocation: 'left',
-  showToggle: true
+  showToggle: false
 })
 
 const isOpen = ref(true)
