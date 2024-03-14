@@ -39,8 +39,8 @@
   },
   "dependencies": {
     "@nuxt/kit": "3.3.2",
-    "@vueuse/core": "^9.13.0",
-    "@vueuse/integrations": "^9.13.0",
+    "@vueuse/core": "^10.9.0",
+    "@vueuse/integrations": "^10.9.0",
     "postcss-each": "^1.1.0",
     "postcss-nested": "^6.0.1",
     "postcss-normalize": "^10.0.1",

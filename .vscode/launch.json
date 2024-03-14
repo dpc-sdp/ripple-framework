@@ -34,6 +34,12 @@
       "cwd": "${workspaceFolder}/examples/nuxt-app",
       "runtimeExecutable": "pnpm",
       "runtimeArgs": ["-F", "nuxt-app", "dev"],
+      "env": {
+        "NUXT_PUBLIC_TIDE_SITE": "TEST_SITE",
+        "NUXT_PUBLIC_TIDE_BASE_URL": "https://test.base.url/",
+        "NUXT_PUBLIC_API_URL": "http://localhost:3001",
+        "API_PORT": "3001"
+      },
       "console": "integratedTerminal"
     }
   ]
