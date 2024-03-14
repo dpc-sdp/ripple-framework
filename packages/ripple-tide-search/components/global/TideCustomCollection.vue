@@ -209,9 +209,9 @@ onAggregationUpdateHook.value = (aggs) => {
       if (uiFilter.id === key) {
         const getDynamicOptions = () => {
           const mappedOptions = aggs[key].map((item) => ({
-            id: item,
-            label: item,
-            value: item
+            id: item.key,
+            label: `${item.key} (${item.doc_count})`,
+            value: item.key
           }))
 
           if (uiFilters.value[idx].props.hasOwnProperty('options')) {

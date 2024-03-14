@@ -28,6 +28,7 @@ export interface FilterConfigItem {
      * Can multiple options be selected?
      */
     multiple: boolean
+    excludeFromAggregations?: boolean
   }
   aggregations?: {
     /**
@@ -202,6 +203,7 @@ export type TideSearchListingConfig = {
      * @description The theme to use for the display of form section and fields
      */
     formTheme: 'default' | 'reverse'
+    dynamicAggregations?: boolean
   }
   /**
    * @description Filter panel open on page load

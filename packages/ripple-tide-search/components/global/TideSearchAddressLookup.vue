@@ -134,7 +134,9 @@ const fetchSuggestions = async (query: string) => {
         return {
           name: getSingleResultValue(itm._source.name),
           postcode: getSingleResultValue(itm._source.postcode),
-          bbox: itm._source.bbox,
+          // bbox: itm._source.bbox,
+          bbox: itm._source.lga_bbox,
+          lga_code: itm._source.lga_code,
           center: center?.length === 2 ? [center[1], center[0]] : undefined
         }
       })

@@ -2,19 +2,20 @@
 
 .rpl-map-side-panel {
   --local-map-side-panel-padding: var(--rpl-sp-4);
+  --local-map-side-panel-height-mobile: 400px;
   --local-map-side-panel-background: var(--rpl-clr-light);
 
   position: relative;
   flex: 1 0 auto;
   order: 1;
   z-index: var(--rpl-layer-1);
-  height: 100%;
+  height: var(--local-map-side-panel-height-mobile);
   transition: transform var(--rpl-motion-speed-5) cubic-bezier(0, 0, 0.2, 1);
 
   @media (--rpl-bp-m) {
     position: absolute;
     width: var(--local-map-side-panel-width);
-    height: 100%;
+    height: var(--local-map-side-panel-height);
     background-color: var(--local-map-side-panel-background);
     transform: translateX(calc(var(--local-map-side-panel-width) * -1));
   }
@@ -136,8 +137,6 @@
   color: var(--rpl-clr-primary);
   text-decoration: underline;
   margin-bottom: var(--rpl-sp-3);
-  text-align: start;
-  display: block;
 
   &:hover {
     text-decoration: none;
