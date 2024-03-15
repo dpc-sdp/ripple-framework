@@ -140,7 +140,7 @@ export const createRplFormGroup = (
           fieldName: `$node.name`
         }
       }))(),
-      rplInputGrid(createSection('input', () => cmp)())
+      rplInputGrid(inner(createSection('input', () => cmp)()))
     )
   ) as unknown as FormKitExtendableSchemaRoot
 }

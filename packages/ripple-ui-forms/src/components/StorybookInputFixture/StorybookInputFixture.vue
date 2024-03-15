@@ -23,7 +23,9 @@ const fakeError = { test: { value: 'Field is invalid' } }
       >
         <RplFormLabel isRequired tag="legend">Label</RplFormLabel>
         <RplFormValidationError v-if="invalid" :messages="fakeError" />
-        <slot />
+        <div class="rpl-form__inner">
+          <slot />
+        </div>
       </fieldset>
       <div v-else class="rpl-form__wrapper">
         <RplFormLabel isRequired>Label</RplFormLabel>

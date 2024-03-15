@@ -35,6 +35,10 @@
   }
 }
 
+.rpl-form__inner {
+  margin-top: var(--rpl-sp-4);
+}
+
 .rpl-form__fieldset {
   border: 0;
   padding: 0;
