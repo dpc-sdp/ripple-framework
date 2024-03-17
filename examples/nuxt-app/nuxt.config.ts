@@ -28,9 +28,6 @@ export default defineNuxtConfig({
     '@dpc-sdp/ripple-tide-news',
     '@dpc-sdp/ripple-tide-search'
   ],
-  experimental: {
-    externalVue: false
-  },
   // Nuxt devtools
   devtools: {
     enabled: true
