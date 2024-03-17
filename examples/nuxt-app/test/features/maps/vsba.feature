@@ -14,6 +14,7 @@ Feature: School buildings map
   Scenario: On load
     Given the "/api/tide/elasticsearch/elasticsearch_index_develop_node/_search" network request is stubbed with fixture "/map-table/vsba/response-all" and status 200 as alias "searchReq"
     Given I visit the page "/map"
+    And I wait 4 seconds
     Then the landing page component "TideCustomCollection" should exist
     Then the custom collection component should have a search input bar
     And the ripple map component should be visible
@@ -29,6 +30,7 @@ Feature: School buildings map
     Given the "/api/tide/elasticsearch/elasticsearch_index_develop_node/_search" network request is stubbed with fixture "/map-table/vsba/response-all" and status 200 as alias "searchReq"
     Given the "/api/tide/app-search/vic-postcode-localities/elasticsearch/_search" network request is stubbed with fixture "/map-table/vsba/localities-all" and status 200 as alias "localitiesReq"
     And I visit the page "/map"
+    And I wait 4 seconds
     Then the ripple map component should be visible
     When I enter the term "3012" into the location search input
     Then the location search results should contain "West Footscray"
