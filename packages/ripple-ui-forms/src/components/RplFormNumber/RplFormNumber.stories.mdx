@@ -36,6 +36,9 @@ export const FormElementTemplate = (args) => ({
 <Canvas>
   <Story
     name='Number'
+    args={{
+      label: 'Label'
+    }}
   >
     {FormElementTemplate.bind()}
   </Story>
@@ -45,6 +48,7 @@ export const FormElementTemplate = (args) => ({
   <Story
     name='Number with buttons'
     args={{
+      label: 'Label',
       value: "1",
       min: 0,
       max: 10,
