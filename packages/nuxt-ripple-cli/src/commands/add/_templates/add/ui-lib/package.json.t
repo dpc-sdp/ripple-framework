@@ -51,7 +51,7 @@ to: package.json
     "postcss-preset-env": "^8.1.0",
   },
   "peerDependencies": {
-    "vue": "3.4.14"
+    "vue": "3.4.21"
   },
   "devDependencies": {
     "@dpc-sdp/ripple-tide-api": "workspace:*",
