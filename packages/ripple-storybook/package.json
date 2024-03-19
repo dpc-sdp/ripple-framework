@@ -24,7 +24,7 @@
     "@storybook/addon-links": "^7.6.10",
     "@storybook/blocks": "^7.6.10",
     "@storybook/jest": "^0.2.2",
-    "@storybook/test-runner": "0.16.0",
+    "@storybook/test-runner": "^0.17.0",
     "@storybook/testing-library": "^0.2.0",
     "@storybook/vue3": "^7.6.10",
     "@storybook/vue3-vite": "^7.6.10",
