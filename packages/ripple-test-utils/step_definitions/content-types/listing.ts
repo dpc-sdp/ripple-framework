@@ -164,13 +164,23 @@ Then('the search error message should be displayed', () => {
 Then(
   `the search listing dropdown field labelled {string} should have the value {string}`,
   (label: string, value: string) => {
-    cy.get(`label`)
-      .contains(label)
+    cy.contains('label', label)
       .invoke('attr', 'for')
       .then((dropdownId) => {
         cy.get(`#${dropdownId}`).as('selectedDropdown')
         cy.get('@selectedDropdown').should('have.text', value)
       })
+  }
+)
+
+Then(
+  `the selected dropdown field should allow {string} selection`,
+  (type: string) => {
+    const isMultiSelect = type === 'multi' ? 'true' : 'false'
+
+    cy.get(`@selectedDropdown`)
+      .siblings('[role="listbox"]')
+      .should('have.attr', 'aria-multiselectable', isMultiSelect)
   }
 )
 
@@ -210,8 +220,7 @@ When(
 When(
   `I click the search listing dropdown field labelled {string}`,
   (label: string) => {
-    cy.get(`label`)
-      .contains(label)
+    cy.contains('label', label)
       .invoke('attr', 'for')
       .then((dropdownId) => {
         cy.get(`#${dropdownId}`).as('selectedDropdown').click()
@@ -222,8 +231,7 @@ When(
 When(
   `the search listing dropdown field labelled {string} should be disabled`,
   (label: string) => {
-    cy.get(`label`)
-      .contains(label)
+    cy.contains('label', label)
       .invoke('attr', 'for')
       .then((dropdownId) => {
         cy.get(`#${dropdownId}`).should('have.attr', 'disabled')
