@@ -89,8 +89,12 @@ export const centerMap = (
   map,
   position = [0, 0],
   offset = { y: -100, x: 0 },
-  zoom
+  zoom?
 ) => {
+  if (!map) {
+    return
+  }
+
   const view = map.getView()
   const resolution = view.getResolution()
   const offsetCoord = [

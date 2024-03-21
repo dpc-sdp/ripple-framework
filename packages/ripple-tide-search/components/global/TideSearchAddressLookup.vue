@@ -2,7 +2,7 @@
   <div class="tide-search-address-lookup">
     <RplSearchBar
       id="tide-address-lookup"
-      inputLabel="Search by postcode or suburb"
+      :inputLabel="label"
       :showLabel="true"
       variant="reverse"
       :submitLabel="false"
@@ -11,7 +11,7 @@
       :showNoResults="true"
       :debounce="5000"
       :maxSuggestionsDisplayed="8"
-      placeholder="Search by postcode or suburb"
+      :placeholder="placeholder"
       :getOptionId="(itm:any) => itm.name"
       :getSuggestionVal="(itm:any) => itm?.name || ''"
       @submit="submitAction"
@@ -31,10 +31,10 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from '#imports'
+import { ref, getSingleResultValue } from '#imports'
 import { useDebounceFn } from '@vueuse/core'
 import { inAndOut } from 'ol/easing'
-import { fromLonLat } from 'ol/proj'
+import { fromLonLat, transformExtent } from 'ol/proj'
 import { Extent } from 'ol/extent'
 // TODO must add analytics events
 // import { useRippleEvent } from '@dpc-sdp/ripple-ui-core'
@@ -42,11 +42,19 @@ import { Extent } from 'ol/extent'
 interface Props {
   inputValue?: any
   resultsloaded?: boolean
+  suggestionsIndex?: string
+  controlMapZooming?: boolean
+  label?: string
+  placeholder?: string
 }
 
 const props = withDefaults(defineProps<Props>(), {
   inputValue: null,
-  resultsloaded: false
+  resultsloaded: false,
+  suggestionsIndex: 'vic-postcode-localities',
+  controlMapZooming: true,
+  label: 'Search by postcode or suburb',
+  placeholder: 'Enter postcode or suburb'
 })
 
 const results = ref([])
@@ -81,14 +89,14 @@ async function submitAction(e: any) {
 }
 
 const fetchSuggestions = async (query: string) => {
-  const searchUrl = `/api/tide/app-search/vic-postcode-localities/elasticsearch/_search`
+  const searchUrl = `/api/tide/app-search/${props.suggestionsIndex}/elasticsearch/_search`
   const queryDSL = {
     query: {
       bool: {
         should: [
           {
             match: {
-              locality: {
+              name: {
                 query,
                 operator: 'and'
               }
@@ -96,7 +104,7 @@ const fetchSuggestions = async (query: string) => {
           },
           {
             prefix: {
-              locality: {
+              name: {
                 value: query,
                 case_insensitive: true
               }
@@ -124,10 +132,13 @@ const fetchSuggestions = async (query: string) => {
     })
     if (response && response.hits.total.value > 0) {
       return response.hits.hits.map((itm: any) => {
+        const center = getSingleResultValue(itm._source.center)?.split(',')
+
         return {
-          name: itm._source.locality,
-          postcode: itm._source.postcode,
-          bbox: itm._source.bbox
+          name: getSingleResultValue(itm._source.name),
+          postcode: getSingleResultValue(itm._source.postcode),
+          bbox: itm._source.bbox,
+          center: center?.length === 2 ? [center[1], center[0]] : undefined
         }
       })
     }
@@ -197,10 +208,18 @@ async function centerMapOnLocation(
   location: addressResultType,
   animate: boolean
 ) {
+  if (!props.controlMapZooming) {
+    return
+  }
+
   if (map && location?.bbox) {
     // fetch the geometry of the postcode so we can zoom to its extent
     if (location?.bbox) {
-      const bbox: Extent = location.bbox.map((val) => parseFloat(val))
+      const bbox: Extent = transformExtent(
+        location.bbox.map((val) => parseFloat(val)),
+        'EPSG:4326',
+        'EPSG:3857'
+      )
       const mapSize = map.getSize()
       if (mapSize) {
         map.getView().fit(bbox, {

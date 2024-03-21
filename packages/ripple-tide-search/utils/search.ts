@@ -1,3 +1,5 @@
+import { LocationQuery } from 'vue-router'
+
 /**
  * @description Helper to get value from elastic search response
  * @param result Elasticsearch result
@@ -15,19 +17,29 @@ export const getSearchResultValue = (
 }
 
 /**
+ * @description Helper to get a single string value from elastic search response, which are always arrays
+ */
+export const getSingleResultValue = (value?: string | string[]): string => {
+  if (Array.isArray(value)) {
+    return value.length ? value[0] : ''
+  }
+  return value || ''
+}
+
+/**
  * @description Helper to get a single string value from a query string in the case that there are multiple of the same key
  */
 export const getSingleQueryStringValue = (
-  query: string | string[],
+  query: LocationQuery,
   property: string
 ): string | undefined => {
   const value = query[property]
 
   if (Array.isArray(value)) {
-    return value.length ? value[0] : undefined
+    return value.length ? (value[0] as string) : undefined
   }
 
-  return value || undefined
+  return (value as string) || undefined
 }
 
 export const truncateText = (text, stop = 150, clamp) => {

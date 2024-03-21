@@ -8,7 +8,8 @@
   "summary": "",
   "config": {
     "searchListingConfig": {
-      "resultsPerPage": 10
+      "resultsPerPage": 10,
+      "showFiltersOnLoad": true
     },
     "queryConfig": {
       "multi_match": {
@@ -33,8 +34,20 @@
       }
     },
     "globalFilters": [
-      { "terms": { "type": ["grant"] } },
-      { "terms": { "field_node_site": [8888] } }
+      {
+        "terms": {
+          "type": [
+            "grant"
+          ]
+        }
+      },
+      {
+        "terms": {
+          "field_node_site": [
+            8888
+          ]
+        }
+      }
     ],
     "userFilters": [
       {
@@ -110,57 +123,99 @@
       {
         "id": "dependentFilter",
         "component": "TideSearchFilterDependent",
-        "columns": "rpl-grid",
+        "columns": "rpl-grid--inherit",
         "filter": {
           "type": "dependent",
           "multiple": false,
           "value": "field_species_name"
         },
         "aggregations": {
-          "field": "topic",
+          "field": "species",
           "source": "taxonomy"
         },
         "props": {
           "id": "dependentFilter",
-          "label": "Terms dependent example",
-          "placeholder": "Select a species",
-          "dependantLabel": "Terms dependent child example",
-          "dependantPlaceholder": "All sub species",
           "multiple": true,
+          "levels": [
+            {
+              "label": "Terms dependent example",
+              "placeholder": "Select a species"
+            },
+            {
+              "label": "Terms dependent child example",
+              "placeholder": "All sub species"
+            },
+            {
+              "label": "Terms dependent grandchild example",
+              "placeholder": "All sub sub species"
+            }
+          ],
           "options": [
             {
-              "id": "1",
+              "id": 1,
               "label": "Mammals",
-              "value": "Mammals"
+              "value": "Mammals",
+              "parent": null
             },
             {
-              "id": "2",
+              "id": 2,
               "label": "Dogs",
               "value": "Dogs",
-              "parent": "1"
+              "parent": 1
             },
             {
-              "id": "3",
+              "id": 3,
               "label": "Birds",
-              "value": "Birds"
+              "value": "Birds",
+              "parent": null
             },
             {
-              "id": "4",
+              "id": 4,
               "label": "Cats",
               "value": "Cats",
-              "parent": "1"
+              "parent": 1
             },
             {
-              "id": "5",
-              "label": "Parrot",
-              "value": "Parrot",
-              "parent": "3"
+              "id": 5,
+              "label": "Parrots",
+              "value": "Parrots",
+              "parent": 3
             },
             {
-              "id": "6",
-              "label": "Cockatoo",
-              "value": "Cockatoo",
-              "parent": "3"
+              "id": 6,
+              "label": "Eagles",
+              "value": "Eagles",
+              "parent": 3
+            },
+            {
+              "id": 7,
+              "label": "Cockatoos",
+              "value": "Cockatoos",
+              "parent": 5
+            },
+            {
+              "id": 8,
+              "label": "Budgerigars",
+              "value": "Budgerigars",
+              "parent": 5
+            },
+            {
+              "id": 9,
+              "label": "Foxes",
+              "value": "Foxes",
+              "parent": 1
+            },
+            {
+              "id": 10,
+              "label": "Beagle",
+              "value": "Beagle",
+              "parent": 2
+            },
+            {
+              "id": 11,
+              "label": "Spaniel",
+              "value": "Spaniel",
+              "parent": 2
             }
           ]
         }

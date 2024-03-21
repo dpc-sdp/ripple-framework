@@ -26,6 +26,7 @@ export type extraRowContentItem = {
   content?: string
   objectKey?: string
   component?: string
+  props?: any
 }
 
 export type extraRowContent = {
@@ -37,15 +38,18 @@ export type extraRowContent = {
 
 interface Props {
   columns: tableColumnConfig[]
+  items?: Array<string>
   row: tableRow
   extraContent?: extraRowContent
   verticalHeader?: boolean
   offset: number
   caption?: string
   index: number
+  showExtraContent: boolean
 }
 
 const props = withDefaults(defineProps<Props>(), {
+  items: () => [],
   verticalHeader: true,
   caption: undefined,
   extraContent: null
@@ -125,8 +129,9 @@ const getCellText = (col?: number | string, value = '') => {
           </template>
         </template>
       </component>
-      <td v-if="extraContent" class="rpl-data-table__actions">
+      <td v-if="showExtraContent" class="rpl-data-table__actions">
         <RplButton
+          v-if="extraContent"
           class="rpl-data-table__toggle"
           variant="transparent"
           :icon-name="state.enabled ? 'icon-chevron-up' : 'icon-chevron-down'"
@@ -152,13 +157,20 @@ const getCellText = (col?: number | string, value = '') => {
             :key="i"
             class="rpl-data-table__details-content"
           >
-            <p>
-              <strong>{{ item.heading }}</strong>
-            </p>
             <template v-if="hasComponent(item)">
-              <component :is="item.component" :item="row" :column="item" />
+              <component
+                :is="item.component"
+                v-bind="item?.props"
+                :item="row"
+                :column="item"
+              />
             </template>
-            <p v-else>{{ getCellText(item?.objectKey, item.content) }}</p>
+            <template v-else>
+              <p>
+                <strong>{{ item.heading }}</strong>
+              </p>
+              <p>{{ getCellText(item?.objectKey, item.content) }}</p>
+            </template>
           </div>
         </template>
         <RplContent

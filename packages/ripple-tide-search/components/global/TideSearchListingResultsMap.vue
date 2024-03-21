@@ -5,7 +5,7 @@
       ref="rplmap"
       :features="features"
       projection="EPSG:3857"
-      popupType="popover"
+      :popupType="popupType"
       :map-height="550"
       :pinStyle="pinStyle"
       :noresults="noresults"
@@ -24,7 +24,7 @@
           <component
             :is="popup.title.component"
             v-if="popup.title.component"
-            :selectedFeature="selectedFeatures[0]"
+            :feature="selectedFeatures[0]"
           ></component>
           <span v-else-if="popup.title.objKey">
             {{ getTitle(selectedFeatures[0]) }}
@@ -78,6 +78,7 @@ type TideSearchListingMapFeature = {
 }
 
 interface Props {
+  popupType: 'popover' | 'sidebar'
   popup: {
     title: {
       objKey?: string
@@ -103,6 +104,7 @@ interface Props {
 }
 
 const props = withDefaults(defineProps<Props>(), {
+  popupType: 'popover',
   titleObjPath: '_source.title[0]',
   vectorLayerComponent: undefined,
   pinIconFn: 'defaultPinStyleFn',

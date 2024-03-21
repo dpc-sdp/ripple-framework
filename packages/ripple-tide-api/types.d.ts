@@ -135,6 +135,16 @@ export type TideSiteSection = {
   name: string
 }
 
+export interface TideSocialShare {
+  Facebook?: boolean
+  LinkedIn?: boolean
+  X?: boolean
+  WhatsApp?: boolean
+  email: boolean
+  emailSubject: string
+  emailBody: string
+}
+
 export interface RplTideModuleMappingConfig {
   /**
    * ContentType Mapping or path to file
@@ -211,6 +221,10 @@ export interface IRplFeatureFlags {
    */
   footerTheme?: 'neutral' | 'default'
   /**
+   * @description Sets the display of the footer menu to one single level i.e. no children
+   */
+  footerMenuSingleLevel?: boolean
+  /**
    * @description Disable the primary vic.gov.au logo for sites that are not co-branded
    */
   disablePrimaryLogo?: boolean
@@ -226,6 +240,10 @@ export interface IRplFeatureFlags {
    * @description Option to disable the display of topics and tags on all content types
    */
   disableTopicTags?: boolean
+  /**
+   * @description Option to disable the display of the updated date on all content types
+   */
+  disableUpdatedDate?: boolean
   /**
    * @description Option to disable the display of the search form within the primary navigation
    */
@@ -246,6 +264,14 @@ export interface IRplFeatureFlags {
    * @description Sets a secondary GTM container ID
    */
   gtmContainerID?: string
+  /**
+   * @description Extends the default social share options
+   */
+  socialShare?: TideSocialShare
+  /**
+   * @description Custom flags
+   */
+  [key: string]: any
 }
 
 declare module 'nitropack' {
@@ -259,7 +285,11 @@ declare module 'nitropack' {
 // Mapping util interfaces
 export function getAddress(address: any): string
 export function getBody(body: any): string
-export function getBodyFromField(field: string, path: string | string[]): string
+export function getBodyFromField(
+  field: string,
+  path: string | string[],
+  fallback: any
+): string
 export function getField(
   field: string,
   path: string | string[],

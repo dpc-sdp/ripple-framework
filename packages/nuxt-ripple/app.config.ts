@@ -36,7 +36,16 @@ declare module '@nuxt/schema' {
         >
         filterFunctions?: Record<
           string,
-          (filterConfig: any, values: string[]) => void
+          (filterConfig: any, values: string[]) => any
+        >
+        sortFunctions?: Record<string, (location: any, filterForm: any) => any>
+        locationDSLTransformFunctions?: Record<
+          string,
+          (location: any, filterForm: any) => Promise<any>
+        >
+        mapResultHooks?: Record<
+          string,
+          (map: any, results: any, location: any) => void
         >
       }
     }

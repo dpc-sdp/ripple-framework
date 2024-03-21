@@ -22,8 +22,12 @@ export interface FilterConfigItem {
    */
   component: 'TideSearchFilterDropdown' | string
   filter?: {
-    type: 'raw' | 'term' | 'terms' | 'dependent' | 'function'
+    type: 'raw' | 'term' | 'terms' | 'dependent' | 'function' | 'prefix'
     value: string
+    /**
+     * Can multiple options be selected?
+     */
+    multiple: boolean
   }
   aggregations?: {
     /**
@@ -36,11 +40,12 @@ export interface FilterConfigItem {
      */
     size?: number
   }
+
   /**
    * @description the relevant props that will be passed into the Vue component (see `component` key)
    */
   props?: {
-    [key: string]: unknown
+    [key: string]: any
   }
 }
 
@@ -59,6 +64,13 @@ export type TideSearchListingResultsConfig = {
   item?: {
     [key: string]: TideSearchListingResultItem
   }
+}
+
+export type TideSearchListingLayoutConfig = {
+  /**
+   * @description Arbitrary component to render in the page header, below filters
+   */
+  belowFilter?: any
 }
 
 export type TideSearchListingResultItem = {
@@ -98,7 +110,8 @@ export type TideSearchListingResultLayout = {
 export type TideSearchListingSortOption = {
   id: string
   label: string
-  clause: any
+  clause?: any
+  function?: string
 }
 
 export type TideSearchLocationQueryConfig = {
@@ -109,13 +122,32 @@ export type TideSearchLocationQueryConfig = {
   dslTransformFn?: (location: any) => any
 }
 
+export type TideSearchListingTab = {
+  title: string
+  key: TideSearchListingTabKey
+  icon: string
+}
+
 export type TideSearchListingMapConfig = {
+  /**
+   * @description name of a function in appConfig.ripple.search.mapResultHooks
+   * that is called whenever the map results are updated
+   *
+   * The function is passed:
+   * - the map instance
+   * - the new results
+   * - the location query
+   *
+   * This is useful for customising the zoom behaviour of the map, for example zooming
+   * to the nearest item.
+   */
+  onResultsHook?: string
   props?: {
     [key: string]: unknown
   }
 }
 
-export type TideSearchListingTabKey = { id: 'map' | 'listing' }
+export type TideSearchListingTabKey = 'map' | 'listing'
 
 export type TideSearchListingConfig = {
   /**
@@ -142,8 +174,6 @@ export type TideSearchListingConfig = {
       submit: string
       reset: string
       placeholder: string
-      mapTab?: string
-      listingTab?: string
     }
     /**
      * @description custom sort clause
@@ -153,6 +183,10 @@ export type TideSearchListingConfig = {
      * @description whether to display map tab and include map search results
      */
     displayMapTab?: boolean
+    /**
+     * @description which tab to display by default if not specified in URL
+     */
+    defaultTab?: TideSearchListingTabKey
     /**
      * @description optionally hide the search form
      */
@@ -168,7 +202,15 @@ export type TideSearchListingConfig = {
      * @description The theme to use for the display of form section and fields
      */
     formTheme: 'default' | 'reverse'
+    /**
+     * @description Filter panel open on page load
+     */
+    showFiltersOnLoad: boolean
   }
+  /**
+   * @description Tabs to display, key needs to be one of TideSearchListingTabKey
+   */
+  tabs: TideSearchListingTab[]
   /**
    * @description Elastic Query DSL for query clause
    */
@@ -190,6 +232,10 @@ export type TideSearchListingConfig = {
    * @description Config for how to display results
    */
   resultsConfig: TideSearchListingResultsConfig
+  /**
+   * @description Config for layout components
+   */
+  layoutConfig?: TideSearchListingLayoutConfig
   /**
    * @description Config for custom sort options
    */

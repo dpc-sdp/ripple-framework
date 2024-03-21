@@ -2,14 +2,14 @@ import { ref, computed, onMounted, watch } from 'vue'
 // IMPORTANT: Need to use useRoute from vue-router here instead of the nuxt one from #imports after nuxt 3.6.5
 // The nuxt version of the route stopped being watchable after the update.
 // See this issue for details: https://github.com/nuxt/nuxt/issues/14595
-import { useRoute, RouteLocation } from 'vue-router'
+import { useRoute, RouteLocation, LocationQueryValue } from 'vue-router'
 import {
   useAppConfig,
   useRuntimeConfig,
   navigateTo,
   getSingleQueryStringValue
 } from '#imports'
-import type { TideSearchListingConfig } from './../types'
+import type { TideSearchListingConfig, FilterConfigItem } from './../types'
 
 const escapeJSONString = (raw: string): string => {
   return `${raw}`
@@ -78,13 +78,15 @@ export default ({
     return JSON.parse(JSON.stringify(obj).replace(re, escapedValue))
   }
 
-  const initialTab = searchListingConfig?.displayMapTab ? 'map' : null
+  const initialTab = searchListingConfig?.displayMapTab
+    ? searchListingConfig?.defaultTab || 'map'
+    : null
   const activeTab: TideSearchListingTabKey = ref(initialTab)
 
   const isBusy = ref(true)
   const searchError = ref(null)
 
-  const locationQuery = ref(null)
+  const locationQuery = ref<any | null>(null)
 
   const searchTerm = ref('')
   const filterForm = ref({})
@@ -94,7 +96,7 @@ export default ({
   const results = ref()
   const totalResults = ref(0)
   const suggestions = ref([])
-  const userSelectedSort = ref(null)
+  const userSelectedSort = ref<string | null>(null)
 
   const pagingStart = computed(() => {
     return (page.value - 1) * pageSize.value
@@ -113,6 +115,7 @@ export default ({
   const mapResults = ref([])
 
   const onAggregationUpdateHook = ref()
+  const onMapResultsHook = ref()
 
   const getQueryClause = () => {
     if (searchTerm.value) {
@@ -132,9 +135,12 @@ export default ({
     return _filters
   }
 
-  const getLocationFilterClause = async () => {
+  const getLocationFilterClause = async (type: 'map' | 'listing') => {
     const transformFnName = locationQueryConfig?.dslTransformFunction
-    const fns = appConfig?.ripple?.search?.locationDSLTransformFunctions || {}
+    const fns: Record<
+      string,
+      (location: any, filterForm: any) => Promise<any>
+    > = appConfig?.ripple?.search?.locationDSLTransformFunctions || {}
 
     // If no transform function is defined, return an empty array
     if (!transformFnName) {
@@ -149,11 +155,16 @@ export default ({
       )
     }
 
-    const transformedDSL = await transformFn(locationQuery.value)
-    const listingFilters = transformedDSL?.listing?.filter || []
+    const transformedDSL = await transformFn(
+      locationQuery.value,
+      filterForm.value
+    )
+
+    const mapOrListing = transformedDSL ? transformedDSL[type] : null
+    const locationFilters = mapOrListing?.filter || []
 
     // return transformedDSL as an array to match the format of the other filters, transformedDSL might not be an array
-    return Array.isArray(listingFilters) ? listingFilters : [listingFilters]
+    return Array.isArray(locationFilters) ? locationFilters : [locationFilters]
   }
 
   const getAggregations = () => {
@@ -187,6 +198,29 @@ export default ({
       )
 
       if (selected) {
+        if (selected.function) {
+          const sortFnName = selected.function
+          const fns: Record<string, (location: any, filterForm: any) => void> =
+            appConfig?.ripple?.search?.sortFunctions || {}
+
+          // If no transform function is defined, return an empty array
+          if (!sortFnName) {
+            return []
+          }
+
+          const sortFn = fns[sortFnName]
+
+          if (typeof sortFn !== 'function') {
+            throw new Error(
+              `Search listing: No matching sort function called "${sortFnName}"`
+            )
+          }
+
+          const sortDSL = sortFn(locationQuery.value, filterForm.value)
+
+          return sortDSL
+        }
+
         return selected.clause
       }
     }
@@ -206,101 +240,122 @@ export default ({
   }
 
   const userFilters = computed(() => {
-    const filterValues = { ...filterForm.value, ...getFallbackValues() }
+    const filterValues: Record<string, any> = {
+      ...filterForm.value,
+      ...getFallbackValues()
+    }
 
-    return Object.keys(filterValues).map((key: string) => {
-      const itm = userFilterConfig.find((itm: any) => itm.id === key)
-      let filterVal = filterValues[key]
+    return Object.keys(filterValues)
+      .filter((key: string) => {
+        const itm = userFilterConfig.find((itm: any) => itm.id === key)
+        return !!itm?.filter
+      })
+      .map((key: string) => {
+        const itm: FilterConfigItem = userFilterConfig.find(
+          (itm: any) => itm.id === key
+        )
+        let filterVal = filterValues[key]
 
-      if (itm.filter?.multiple !== false) {
-        filterVal = filterValues[key] && Array.from(filterValues[key])
-      }
-
-      // Need to work out if form has value - will be different for different controls
-      const hasValue = (v: unknown) => {
-        if (
-          itm.component === 'TideSearchFilterDropdown' &&
-          itm?.props?.multiple
-        ) {
-          return Array.isArray(v) && v.length > 0
-        }
-        return v
-      }
-
-      if (itm.filter && hasValue(filterVal)) {
-        /**
-         * Raw ES Filter clause from Tide config, replaces {{value}} with user value
-         */
-        if (itm.filter.type === 'raw') {
-          const re = new RegExp('{{value}}', 'g')
-          const result = itm.filter.value.replace(re, JSON.stringify(filterVal))
-          return JSON.parse(result)
+        if (itm.filter?.multiple !== false) {
+          filterVal = filterValues[key] && Array.from(filterValues[key])
         }
 
-        /**
-         * The ES prefix query expects a single value
-         */
-        if (itm.filter.type === 'prefix') {
-          return {
-            prefix: {
-              [`${itm.filter.value}`]: {
-                value: Array.isArray(filterVal) ? filterVal[0] : filterVal
+        // Need to work out if form has value - will be different for different controls
+        const hasValue = (v: unknown) => {
+          if (
+            itm.component === 'TideSearchFilterDropdown' &&
+            itm?.props?.multiple
+          ) {
+            return Array.isArray(v) && v.length > 0
+          }
+          return v
+        }
+
+        if (itm.filter && hasValue(filterVal)) {
+          /**
+           * Raw ES Filter clause from Tide config, replaces {{value}} with user value
+           */
+          if (itm.filter.type === 'raw') {
+            const re = new RegExp('{{value}}', 'g')
+            const result = itm.filter.value.replace(
+              re,
+              JSON.stringify(filterVal)
+            )
+            return JSON.parse(result)
+          }
+
+          /**
+           * The ES prefix query expects a single value
+           */
+          if (itm.filter.type === 'prefix') {
+            return {
+              prefix: {
+                [`${itm.filter.value}`]: {
+                  value: Array.isArray(filterVal) ? filterVal[0] : filterVal
+                }
               }
             }
           }
-        }
 
-        /**
-         * Term and Terms querys - To simplify things we transform all term queries into terms queries with a single value array
-         *   - Term query: https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-term-query.html
-         *   - Terms query: https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-terms-query.html
-         */
-        if (itm.filter.type === 'term' || itm.filter.type === 'terms') {
-          return {
-            terms: {
-              [`${itm.filter.value}`]: Array.isArray(filterVal)
-                ? filterVal
-                : [filterVal]
-            }
-          }
-        }
-
-        /**
-         * Dependent queries - create a custom query based off the values of a parent and child field combo
-         */
-        if (itm.filter.type === 'dependent') {
-          const parent = filterVal?.[`${itm?.id}-parent`]
-          const child = filterVal?.[`${itm?.id}-child`]
-
-          // If we're searching for specific subcategories, let's use those subcategories
-          if (child?.length) {
+          /**
+           * Term and Terms querys - To simplify things we transform all term queries into terms queries with a single value array
+           *   - Term query: https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-term-query.html
+           *   - Terms query: https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-terms-query.html
+           */
+          if (itm.filter.type === 'term' || itm.filter.type === 'terms') {
             return {
               terms: {
-                [itm?.filter?.value]: Array.isArray(child) ? child : [child]
+                [`${itm.filter.value}`]: Array.isArray(filterVal)
+                  ? filterVal
+                  : [filterVal]
               }
             }
           }
 
-          // Otherwise we'll search for the selected parent category and all subcategories
-          if (parent) {
-            const parentID = itm.props.options?.find(
-              (i) => i.value === parent
-            )?.id
+          /**
+           * Dependent queries - create a custom query based off the values of multiple dependent options
+           */
+          if (itm.filter.type === 'dependent') {
+            const dependentFields = Object.entries(filterVal).reduce(
+              (acc: any, [key, value]) => {
+                if (value) acc[key] = value
+                return acc
+              },
+              {}
+            )
 
-            return {
-              terms: {
-                [itm?.filter?.value]: itm.props.options
-                  ?.filter(
-                    (option) =>
-                      option.parent === parentID || option.id === parentID
-                  )
-                  .map((i) => i.value)
+            // Children items are included in search, for example;
+            // if the item selected in the first dropdown has direct children,
+            // then all items children will also be included in the term query
+            // provided no children have been selected
+            if (Object.keys(dependentFields).length) {
+              const depOptions = itm.props?.options || []
+              const depValues = Object.values(dependentFields)
+              const lastValues = depValues[depValues.length - 1]
+
+              const lastIDs = depOptions
+                .filter((opt: any) =>
+                  Array.isArray(lastValues)
+                    ? lastValues.includes(opt.value)
+                    : opt.value === lastValues
+                )
+                .map((opt: any) => opt.id)
+
+              return {
+                terms: {
+                  [itm.filter.value]: depOptions
+                    .filter(
+                      (option: any) =>
+                        lastIDs.includes(option.parent) ||
+                        lastIDs.includes(option.id)
+                    )
+                    .map((opt: any) => opt.value)
+                }
               }
             }
           }
-        }
 
-        /**
+          /**
          * Call a function passed from app.config to to allow extending and overriding. The function should
          * return a valid DSL query.
          * When called the function is passed the filter config and the value of the filter from the user
@@ -318,24 +373,28 @@ export default ({
          *    }
          * }
          */
-        if (itm.filter.type === 'function') {
-          const filterFuncs = appConfig?.ripple?.search?.filterFunctions || {}
-          const fn = filterFuncs[itm.filter.value]
+          if (itm.filter.type === 'function') {
+            const filterFuncs: Record<
+              string,
+              (filterConfig: any, values: string[]) => void
+            > = appConfig?.ripple?.search?.filterFunctions || {}
+            const fn = filterFuncs[itm.filter.value]
 
-          if (typeof fn !== 'function') {
-            throw new Error(
-              `Search listing: No matching filter function called "${itm.filter.value}"`
-            )
+            if (typeof fn !== 'function') {
+              throw new Error(
+                `Search listing: No matching filter function called "${itm.filter.value}"`
+              )
+            }
+
+            return fn(itm, filterVal)
           }
-
-          return fn(itm, filterVal)
         }
-      }
-    })
+      })
+      .filter(Boolean)
   })
 
   const getQueryDSL = async () => {
-    const locationFilters = await getLocationFilterClause()
+    const locationFilters = await getLocationFilterClause('listing')
 
     return {
       query: {
@@ -366,11 +425,13 @@ export default ({
   }
 
   const getQueryDSLForMaps = async () => {
+    const locationFilters = await getLocationFilterClause('map')
+
     return {
       query: {
         bool: {
           must: getQueryClause(),
-          filter: getUserFilterClause()
+          filter: [...getUserFilterClause(), ...locationFilters]
         }
       },
       // ES queries have a 10k result limit, maps struggle drawing more than this anyway. If you need more you will need to implement a loading strategy see : https://openlayers.org/en/latest/apidoc/module-ol_loadingstrategy.html
@@ -380,7 +441,7 @@ export default ({
     }
   }
 
-  const getSearchResults = async (isFirstRun) => {
+  const getSearchResults = async (isFirstRun: boolean) => {
     isBusy.value = true
     searchError.value = null
 
@@ -443,6 +504,10 @@ export default ({
 
       if (mapsResponse && mapsResponse.hits) {
         mapResults.value = mapsResponse.hits?.hits.map(mapResultsMappingFn)
+      }
+
+      if (typeof onMapResultsHook.value === 'function') {
+        onMapResultsHook.value()
       }
 
       isBusy.value = false
@@ -525,21 +590,22 @@ export default ({
             (itm: any) => itm.id === key
           )
 
-          if (filterConfig.component === 'TideSearchFilterDependent') {
-            const parent = value[`${filterConfig.id}-parent`]
-            const child = value[`${filterConfig.id}-child`]
-            value = null
+          // Map the dependent filter object values to be URL friendly
+          if (filterConfig?.component === 'TideSearchFilterDependent') {
+            const depValues = Object.fromEntries(
+              // eslint-disable-next-line @typescript-eslint/no-unused-vars
+              Object.entries(value as object).filter(([_key, value]) =>
+                Array.isArray(value) ? value.filter(Boolean).length : value
+              )
+            )
 
-            if (parent) {
-              value = encodeCommasAndColons(parent)
-
-              if (child) {
-                const childValue = Array.isArray(child) ? child : [child]
-
-                value = `${value}:${childValue
-                  .map(encodeCommasAndColons)
-                  .join(',')}`
-              }
+            if (Object.keys(depValues).length) {
+              value = Object.entries(depValues).map(([key, val]) => {
+                const v = Array.isArray(val) ? val : [val]
+                return `${key}:${v.map(encodeCommasAndColons).join(',')}`
+              })
+            } else {
+              value = null
             }
           }
 
@@ -611,35 +677,37 @@ export default ({
     return Object.keys(newRoute.query)
       .filter((key) => userFilterConfig.some((filter) => filter.id === key))
       .reduce((obj, key) => {
-        let parsedValue = newRoute.query[key]
+        let parsedValue: LocationQueryValue | LocationQueryValue[] | {} =
+          newRoute.query[key]
         const filterConfig = userFilterConfig.find(
           (filter) => filter.id === key
         )
 
         if (
-          filterConfig.component === 'TideSearchFilterDropdown' &&
-          filterConfig?.props?.multiple
+          (filterConfig?.component === 'TideSearchFilterDropdown' &&
+            filterConfig?.props?.multiple) ||
+          filterConfig?.component === 'TideSearchFilterDependent'
         ) {
           parsedValue = Array.isArray(parsedValue) ? parsedValue : [parsedValue]
         }
 
-        if (filterConfig.component === 'TideSearchFilterDependent') {
-          const [parent, child = ''] = parsedValue.split(':')
+        // Convert the URL friendly values back into the dependent object
+        if (filterConfig?.component === 'TideSearchFilterDependent') {
+          parsedValue = Object.fromEntries(
+            (parsedValue as []).map((dep: string) => {
+              const [dependentKey, dependentValue] = (dep || '').split(':')
 
-          parsedValue = {
-            [`${filterConfig.id}-parent`]: decodeURIComponent(parent)
-          }
+              const depth = Number(dependentKey.match(/\d+$/)?.[0])
 
-          if (child) {
-            const childValue = child.split(',').map(decodeURIComponent)
-
-            parsedValue = {
-              ...parsedValue,
-              [`${filterConfig.id}-child`]: filterConfig?.props?.multiple
-                ? childValue
-                : childValue[0]
-            }
-          }
+              return [
+                dependentKey,
+                filterConfig?.props?.levels?.[depth - 1]?.multiple ||
+                filterConfig?.props?.multiple
+                  ? dependentValue.split(',').map(decodeURIComponent)
+                  : decodeURIComponent(dependentValue)
+              ]
+            })
+          )
         }
 
         return {
@@ -686,12 +754,12 @@ export default ({
    */
   const searchFromRoute = (newRoute: RouteLocation, isFirstRun = false) => {
     activeTab.value = searchListingConfig?.displayMapTab
-      ? getSingleQueryStringValue(newRoute.query, 'activeTab') || 'map'
+      ? getSingleQueryStringValue(newRoute.query, 'activeTab') || initialTab
       : null
 
     searchTerm.value = getSingleQueryStringValue(newRoute.query, 'q') || ''
     page.value =
-      parseInt(getSingleQueryStringValue(newRoute.query, 'page'), 10) || 1
+      parseInt(getSingleQueryStringValue(newRoute.query, 'page') || '', 10) || 1
     userSelectedSort.value =
       getSingleQueryStringValue(newRoute.query, 'sort') ||
       sortOptions?.[0]?.id ||
@@ -733,6 +801,7 @@ export default ({
     getSuggestions,
     clearSuggestions,
     onAggregationUpdateHook,
+    onMapResultsHook,
     searchTerm,
     results,
     suggestions,
