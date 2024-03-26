@@ -1,5 +1,26 @@
 # Changelog
 
+## v2.6.4...release/v2.6.5
+
+[compare changes](https://github.com/dpc-sdp/ripple-framework/compare/v2.6.4...release/v2.6.5)
+
+
+### 🚀 Enhancements
+
+  - **@dpc-sdp/ripple-tide-search:** Infinite dependent filters, fix utils css generation ([1fc1ad464](https://github.com/dpc-sdp/ripple-framework/commit/1fc1ad464))
+
+### 🩹 Fixes
+
+  - **@dpc-sdp/ripple-tide-search:** Allow multiple to be set per level ([0055d2c91](https://github.com/dpc-sdp/ripple-framework/commit/0055d2c91))
+  - **@dpc-sdp/ripple-tide-search:** Fix dependent filter reset for content collection ([abc9fc160](https://github.com/dpc-sdp/ripple-framework/commit/abc9fc160))
+  - **nuxt-app:** Fix dependent filter tests ([db4374e7c](https://github.com/dpc-sdp/ripple-framework/commit/db4374e7c))
+  - **@dpc-sdp/ripple-tide-search:** Fix for dependent filter using elasticsearch ([681190934](https://github.com/dpc-sdp/ripple-framework/commit/681190934))
+
+### ❤️  Contributors
+
+- David Featherston <david.featherstone@dpc.vic.gov.au>
+- Dylan Kelly <dylan.kelly@dpc.vic.gov.au>
+
 ## v2.6.3...release/v2.6.4
 
 [compare changes](https://github.com/dpc-sdp/ripple-framework/compare/v2.6.3...release/v2.6.4)
