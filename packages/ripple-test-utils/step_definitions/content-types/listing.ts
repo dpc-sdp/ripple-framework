@@ -223,6 +223,17 @@ When(
   }
 )
 
+When(
+  `the search listing dropdown field labelled {string} should be disabled`,
+  (label: string) => {
+    cy.contains('label', label)
+      .invoke('attr', 'for')
+      .then((dropdownId) => {
+        cy.get(`#${dropdownId}`).should('have.attr', 'disabled')
+      })
+  }
+)
+
 When(`I toggle the search listing filters section`, () => {
   cy.get(`button`).contains('Refine search').as('refineBtn')
   cy.wait(300)
