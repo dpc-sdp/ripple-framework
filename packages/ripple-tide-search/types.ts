@@ -41,6 +41,7 @@ export interface FilterConfigItem {
    */
   props?: {
     [key: string]: unknown
+    options?: any
   }
 }
 

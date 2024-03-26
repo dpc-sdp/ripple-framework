@@ -69,13 +69,14 @@ Then(
     cy.location().should((loc) => {
       const params = new URLSearchParams(loc.search)
 
-      table.forEach((row) => {
-        const actualValue = params.get(row.id)
+      table.forEach((row, i: number) => {
+        const actualValue = params.getAll(row.id)
+        const index = actualValue.length === 1 ? 0 : i
 
         if (!row.value) {
-          expect(actualValue).to.not.be.ok // should be falsey
+          expect(actualValue[index]).to.not.be.ok // should be falsey
         } else {
-          expect(actualValue).to.eq(row.value)
+          expect(actualValue[index]).to.eq(row.value)
         }
       })
     })
