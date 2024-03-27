@@ -1,8 +1,17 @@
 <script setup lang="ts">
 import { RplIcon } from '@dpc-sdp/ripple-ui-core/vue'
 import type { IRplMapFeature } from './../../types'
-import { onMounted, onUnmounted, ref, inject, computed, watch } from 'vue'
+import {
+  onMounted,
+  onUnmounted,
+  ref,
+  inject,
+  computed,
+  watch,
+  nextTick
+} from 'vue'
 import { useFullscreen } from '@vueuse/core'
+import { withDefaults, defineProps, defineExpose } from '@vue/composition-api'
 import { Map } from 'ol'
 import { Point } from 'ol/geom'
 import Icon from 'ol/style/Icon'
@@ -18,8 +27,9 @@ import useMapControls from './../../composables/useMapControls.ts'
 import {
   getfeaturesAtMapPixel,
   zoomToClusterExtent,
-  centerMap
-} from './utils.ts'
+  centerMap,
+  fitVictoria
+} from './utils'
 
 interface Props {
   features?: IRplMapFeature[]
@@ -29,7 +39,9 @@ interface Props {
   pinStyle?: Function
   mapHeight?: number
   popupType?: 'sidebar' | 'popover'
+  hasSidePanel?: boolean
   noresults?: boolean
+  getFeatureTitle?: (feature: any) => string
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -39,7 +51,9 @@ const props = withDefaults(defineProps<Props>(), {
   initialZoom: 7.3,
   mapHeight: 600,
   popupType: 'sidebar',
+  hasSidePanel: false,
   initialCenter: () => [144.9631, -36.8136], // melbourne CBD
+  homeViewExtent: () => [144.9631, -36.8136], // melbourne CBD
   pinStyle: (feature) => {
     let color = feature.color || 'red'
     const ic = new Icon({
@@ -52,14 +66,15 @@ const props = withDefaults(defineProps<Props>(), {
     ic.load()
     return ic
   },
-  noresults: false
+  noresults: false,
+  getFeatureTitle: (feature: any) => (feature ? feature.title : '')
 })
 
 const zoom = ref(props.initialZoom)
 const rotation = ref(0)
 const view = ref(null)
 
-const { setRplMapRef, popup } = inject('rplMapInstance')
+const { setRplMapRef, popup, deadSpace } = inject('rplMapInstance')
 
 // Reference to ol/map instance
 const mapRef = ref<{ map: Map } | null>(null)
@@ -70,6 +85,41 @@ onMounted(() => {
 
 onUnmounted(() => {
   setRplMapRef(null)
+})
+
+const activatePin = (featureProperties, coordinates, zoom) => {
+  const map = mapRef.value.map
+
+  const pinStyle = props.pinStyle(featureProperties)
+  const pinColor =
+    typeof pinStyle === 'string' ? pinStyle : pinStyle?.getColor()
+
+  popup.value.feature = [featureProperties]
+  popup.value.color = asString(pinColor)
+  popup.value.isOpen = true
+  popup.value.isArea = false
+
+  popup.value.position = coordinates
+
+  // Figure out offset based on the amount of space taken up by the sidepanel/sidebar
+  const mapSize = map.getSize()
+  const mapWidth = mapSize ? mapSize[0] : 0
+  const leftDeadSpace = deadSpace.value?.left || 0
+  const remaingingSpaceStart = mapWidth / 2 - leftDeadSpace
+  const remaingingSpaceWidth = mapWidth - leftDeadSpace
+  const xOffset = leftDeadSpace
+    ? remaingingSpaceStart - remaingingSpaceWidth / 2
+    : 0
+
+  const yOffset = props.popupType === 'popover' ? -100 : 0
+
+  const offset = { x: xOffset, y: yOffset }
+
+  centerMap(map, coordinates, offset, zoom)
+}
+
+defineExpose({
+  activatePin
 })
 
 const center = computed(() => {
@@ -95,7 +145,7 @@ const selectedPinStyle = (feature, style) => {
 const { isFullscreen } = useFullscreen()
 
 const { onHomeClick, onZoomInClick, onZoomOutClick, onFullScreenClick } =
-  useMapControls(mapRef, center, props.initialZoom)
+  useMapControls(mapRef)
 
 const mapFeatures = computed(() => {
   if (Array.isArray(props.features)) {
@@ -117,7 +167,7 @@ function onPopUpClose() {
   popup.value.isOpen = false
 }
 
-function onMapSingleClick(evt) {
+async function onMapSingleClick(evt) {
   onNoResultsDismiss()
 
   const map = mapRef.value.map
@@ -142,25 +192,23 @@ function onMapSingleClick(evt) {
         })
       } else {
         // if there are fewer items we zoom into view all items in the cluster
-        zoomToClusterExtent(point.features, popup, map, props.projection)
+        await nextTick()
+        zoomToClusterExtent(
+          point.features,
+          popup,
+          map,
+          props.projection,
+          20,
+          deadSpace.value
+        )
       }
     } else if (point.features.length === 1) {
       // if we click on a pin we open the popup
       const clickedFeature = point.features[0]
       const coordinates = clickedFeature.getGeometry().flatCoordinates
       const featureProperties = clickedFeature.getProperties()
-      const pinStyle = props.pinStyle(featureProperties)
-      const pinColor =
-        typeof pinStyle === 'string' ? pinStyle : pinStyle?.getColor()
-      popup.value.feature = [featureProperties]
-      popup.value.color = asString(pinColor)
-      popup.value.isOpen = true
-      popup.value.isArea = false
-      popup.value.position = coordinates
 
-      const offset =
-        props.popupType === 'sidebar' ? { y: 0, x: -160 } : { y: -100, x: 0 }
-      centerMap(map, coordinates, offset)
+      activatePin(featureProperties, coordinates, null)
     }
   }
 
@@ -171,22 +219,26 @@ function onMapSingleClick(evt) {
 
 function onMapMove(evt) {
   const map = mapRef.value.map
-  if (map) {
+  const canvas: HTMLCanvasElement | null =
+    document.querySelector('.rpl-map canvas')
+  if (map && canvas) {
     const point = getfeaturesAtMapPixel(map, evt.pixel)
+
     if (point && point.features) {
-      document.querySelector('.rpl-map canvas').style.cursor = 'pointer'
+      canvas.style.cursor = 'pointer'
+      const pinTitle = point.features.length
+        ? props.getFeatureTitle(point.features[0].getProperties())
+        : ''
 
       // if there is only one feature, set the title attribute to the feature title
-      if (point.features.length === 1) {
-        document
-          .querySelector('.rpl-map canvas')
-          .setAttribute('title', point.features[0].getProperties().title)
+      if (pinTitle) {
+        canvas.setAttribute('title', pinTitle)
       }
     } else {
-      document.querySelector('.rpl-map canvas').style.cursor = 'default'
+      canvas.style.cursor = 'default'
 
       // clear the title attribute
-      document.querySelector('.rpl-map canvas').setAttribute('title', '')
+      canvas.setAttribute('title', '')
     }
   }
 }
@@ -211,11 +263,26 @@ watch(
   }
 )
 
+onMounted(() => {
+  fitVictoria(mapRef.value.map, deadSpace.value)
+})
+
 const noResultsRef = ref(null)
 </script>
 
 <template>
-  <div class="rpl-map">
+  <slot
+    v-if="hasSidePanel && $slots.sidepanelMobile"
+    name="sidepanelMobile"
+    :mapHeight="mapHeight"
+    :selectedFeatures="popup.feature"
+  />
+  <div
+    :class="{
+      'rpl-map': true,
+      'rpl-map--has-sidepanel': hasSidePanel
+    }"
+  >
     <div
       v-if="noresults && !hideNoResults"
       class="rpl-map__noresults"
@@ -250,15 +317,19 @@ const noResultsRef = ref(null)
         :center="center"
         :rotation="rotation"
         :projection="projection"
-        :minZoom="7"
         :zoom="zoom"
+        :minZoom="5"
       />
       <slot name="map-provider"> </slot>
       <slot name="shapes" :mapFeatures="mapFeatures"></slot>
 
       <!-- This enlarged pin is rendered for the sidebar/fixed popup style only -->
       <ol-vector-layer
-        v-if="popupType === 'sidebar' && popup.isOpen"
+        v-if="
+          (popupType === 'sidebar' || popupType === 'sidepanel') &&
+          popup.isOpen &&
+          popup.position
+        "
         :zIndex="5"
       >
         <ol-source-vector>
@@ -342,6 +413,12 @@ const noResultsRef = ref(null)
       </div>
 
       <slot
+        v-if="hasSidePanel && $slots.sidepanel"
+        name="sidepanel"
+        :mapHeight="mapHeight"
+      />
+
+      <slot
         v-if="popupType === 'sidebar'"
         name="sidebar"
         :popupIsOpen="popup.isOpen"
@@ -361,7 +438,6 @@ const noResultsRef = ref(null)
             </slot>
           </template>
           <slot name="popupContent" :selectedFeatures="popup.feature">
-            {{ popup.feature }}
             <p class="rpl-type-p-small">
               {{ popup.feature[0].description }}
             </p>
