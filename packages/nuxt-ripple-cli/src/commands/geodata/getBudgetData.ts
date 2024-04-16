@@ -1,5 +1,4 @@
 import {
-  fetchLocalityData,
   fetchPaginatedCollection,
   fetchPostCodeData,
   fetchLGAsMatchingGeometry,
@@ -15,7 +14,7 @@ async function getAllLocalities() {
   const allLocalities = await fetchPaginatedCollection(
     vicMapFeatureServerIds.localities,
     {
-      where: `state='VIC'`,
+      where: `state = 'VIC' AND name <> 'vic'`,
       returnGeometry: true,
       geometryPrecision: defaultGeometryPrecision,
       returnCentroid: true,
@@ -32,7 +31,25 @@ async function getAllLocalities() {
 }
 
 async function fetchLGAsFromLocalityGeometry(feature) {
-  const simplifedGeometry = bufferPolygon(feature.geometry.rings)
+  let bufferVal = -20
+  const difficultLocalities = {
+    DONVALE: -200,
+    DRUMMARTIN: -200,
+    EAGLEMONT: -200,
+    GEMBROOK: -500,
+    'GRAND RIDGE': -500,
+    'MOUNT BRUNO': -500,
+    'NORTH MELBOURNE': -300,
+    'POMBORNEIT EAST': -500,
+    'SOUTH WHARF': -200,
+    TREMONT: -200
+  }
+
+  if (difficultLocalities[feature.attributes.NAME]) {
+    bufferVal = difficultLocalities[feature.attributes.NAME]
+  }
+
+  const simplifedGeometry = bufferPolygon(feature.geometry.rings, bufferVal)
   const matchingLGAs = await fetchLGAsMatchingGeometry(simplifedGeometry)
 
   const localitiesWithLGAData: any[] = []
@@ -171,20 +188,12 @@ async function fetchLGAsFromPostcodeGeometry(feature) {
   return Promise.resolve(postcodesWithLGAData)
 }
 
-async function getBudgetData(
-  savePath: string,
-  options: {
-    where: string
-    initialOffset: number
-    delay: number
-    perPage: number
-  }
-): Promise<void> {
+async function getBudgetData(savePath: string): Promise<void> {
   const results: any[] = []
   const localities = await getAllLocalities()
-  // const lgas = await getAllLGAs()
-  // const postcodes = await getAllPostCodes()
-  results.push(...localities)
+  const lgas = await getAllLGAs()
+  const postcodes = await getAllPostCodes()
+  results.push(...localities, ...lgas, ...postcodes)
   await writeFile(savePath, JSON.stringify(results, null, 2), false, false)
   console.log(`wrote ${results.length} items to ${savePath}`)
 }

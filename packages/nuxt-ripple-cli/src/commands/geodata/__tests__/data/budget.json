@@ -9790,17 +9790,6 @@
     "lga_code": "340"
   },
   {
-    "name": "Donvale",
-    "area_type": "locality",
-    "lga_bbox": [
-      145.09503994194026, -37.86531663431388, 145.21366194512163,
-      -37.79215873636042
-    ],
-    "lga_official_name": "WHITEHORSE CITY",
-    "lga_name": "WHITEHORSE",
-    "lga_code": "372"
-  },
-  {
     "name": "Dooboobetic",
     "area_type": "locality",
     "lga_bbox": [
@@ -10096,17 +10085,6 @@
     "lga_official_name": "GREATER BENDIGO CITY",
     "lga_name": "GREATER BENDIGO",
     "lga_code": "325"
-  },
-  {
-    "name": "Drummartin",
-    "area_type": "locality",
-    "lga_bbox": [
-      144.25141860484342, -36.76336054817784, 145.15814379795142,
-      -35.88203553453478
-    ],
-    "lga_official_name": "CAMPASPE SHIRE",
-    "lga_name": "CAMPASPE",
-    "lga_code": "310"
   },
   {
     "name": "Drummond",
@@ -10503,17 +10481,6 @@
     "lga_official_name": "BANYULE CITY",
     "lga_name": "BANYULE",
     "lga_code": "303"
-  },
-  {
-    "name": "Eaglemont",
-    "area_type": "locality",
-    "lga_bbox": [
-      145.06713030216383, -37.811994605440056, 145.29428362646618,
-      -37.70245223350837
-    ],
-    "lga_official_name": "MANNINGHAM CITY",
-    "lga_name": "MANNINGHAM",
-    "lga_code": "340"
   },
   {
     "name": "Earlston",
@@ -12551,17 +12518,6 @@
     "lga_code": "311"
   },
   {
-    "name": "Gembrook",
-    "area_type": "locality",
-    "lga_bbox": [
-      145.28100966817703, -37.97531864271635, 146.19860768371748,
-      -37.52100385710143
-    ],
-    "lga_official_name": "YARRA RANGES SHIRE",
-    "lga_name": "YARRA RANGES",
-    "lga_code": "377"
-  },
-  {
     "name": "Genoa",
     "area_type": "locality",
     "lga_bbox": [
@@ -13924,17 +13880,6 @@
     "lga_official_name": "WELLINGTON SHIRE",
     "lga_name": "WELLINGTON",
     "lga_code": "370"
-  },
-  {
-    "name": "Grand Ridge",
-    "area_type": "locality",
-    "lga_bbox": [
-      145.6051435893329, -39.142584525122906, 146.5390149430544,
-      -38.254019942880305
-    ],
-    "lga_official_name": "SOUTH GIPPSLAND SHIRE",
-    "lga_name": "SOUTH GIPPSLAND",
-    "lga_code": "361"
   },
   {
     "name": "Grangefields",
@@ -22828,17 +22773,6 @@
     "name": "Mount Bruno",
     "area_type": "locality",
     "lga_bbox": [
-      146.12823510082248, -37.16872207688918, 146.74181597577504,
-      -36.0616962759911
-    ],
-    "lga_official_name": "WANGARATTA RURAL CITY",
-    "lga_name": "WANGARATTA",
-    "lga_code": "368"
-  },
-  {
-    "name": "Mount Bruno",
-    "area_type": "locality",
-    "lga_bbox": [
       145.77362665737093, -36.92943233127392, 146.28087315443358,
       -36.25276815765584
     ],
@@ -25245,17 +25179,6 @@
     "lga_code": "343"
   },
   {
-    "name": "North Melbourne",
-    "area_type": "locality",
-    "lga_bbox": [
-      144.84604035380556, -37.78968548077479, 144.94042997465527,
-      -37.70914664996732
-    ],
-    "lga_official_name": "MOONEE VALLEY CITY",
-    "lga_name": "MOONEE VALLEY",
-    "lga_code": "349"
-  },
-  {
     "name": "North Shore",
     "area_type": "locality",
     "lga_bbox": [
@@ -26860,17 +26783,6 @@
     "lga_official_name": "CORANGAMITE SHIRE",
     "lga_name": "CORANGAMITE",
     "lga_code": "315"
-  },
-  {
-    "name": "Pomborneit East",
-    "area_type": "locality",
-    "lga_bbox": [
-      143.2435237298847, -38.8623703247644, 143.95421693913104,
-      -38.01344811047705
-    ],
-    "lga_official_name": "COLAC OTWAY SHIRE",
-    "lga_name": "COLAC OTWAY",
-    "lga_code": "314"
   },
   {
     "name": "Pomborneit North",
@@ -29665,17 +29577,6 @@
     "lga_official_name": "CORANGAMITE SHIRE",
     "lga_name": "CORANGAMITE",
     "lga_code": "315"
-  },
-  {
-    "name": "South Wharf",
-    "area_type": "locality",
-    "lga_bbox": [
-      144.91183894184925, -37.89172333608622, 145.0105316517196,
-      -37.82584895108108
-    ],
-    "lga_official_name": "PORT PHILLIP CITY",
-    "lga_name": "PORT PHILLIP",
-    "lga_code": "358"
   },
   {
     "name": "South Wharf",
@@ -33124,17 +33025,6 @@
     "name": "Tremont",
     "area_type": "locality",
     "lga_bbox": [
-      145.19074338777457, -37.964194126595096, 145.3481069980886,
-      -37.832716362919534
-    ],
-    "lga_official_name": "KNOX CITY",
-    "lga_name": "KNOX",
-    "lga_code": "336"
-  },
-  {
-    "name": "Tremont",
-    "area_type": "locality",
-    "lga_bbox": [
       145.28100966817703, -37.97531864271635, 146.19860768371748,
       -37.52100385710143
     ],
@@ -33878,325 +33768,6 @@
     "lga_official_name": "BAW BAW SHIRE",
     "lga_name": "BAW BAW",
     "lga_code": "305"
-  },
-  {
-    "name": "Vic",
-    "area_type": "locality",
-    "lga_bbox": [
-      145.20785414938052, -38.42282321069864, 145.50540816921315,
-      -38.280678947463294
-    ],
-    "lga_official_name": "FRENCH-ELIZABETH-SANDSTONE ISLANDS (UNINCORPO",
-    "lga_name": "FRENCH-ELIZABETH-SANDSTONE ISLANDS",
-    "lga_code": "379"
-  },
-  {
-    "name": "Vic",
-    "area_type": "locality",
-    "lga_bbox": [
-      149.90347826258065, -37.570176335791054, 149.9186349772842,
-      -37.54778088826536
-    ],
-    "lga_official_name": "GABO ISLAND (UNINCORPORATED)",
-    "lga_name": "GABO ISLAND",
-    "lga_code": "389"
-  },
-  {
-    "name": "Vic",
-    "area_type": "locality",
-    "lga_bbox": [
-      145.20785414938052, -38.42282321069864, 145.50540816921315,
-      -38.280678947463294
-    ],
-    "lga_official_name": "FRENCH-ELIZABETH-SANDSTONE ISLANDS (UNINCORPO",
-    "lga_name": "FRENCH-ELIZABETH-SANDSTONE ISLANDS",
-    "lga_code": "379"
-  },
-  {
-    "name": "Vic",
-    "area_type": "locality",
-    "lga_bbox": [
-      145.20785414938052, -38.42282321069864, 145.50540816921315,
-      -38.280678947463294
-    ],
-    "lga_official_name": "FRENCH-ELIZABETH-SANDSTONE ISLANDS (UNINCORPO",
-    "lga_name": "FRENCH-ELIZABETH-SANDSTONE ISLANDS",
-    "lga_code": "379"
-  },
-  {
-    "name": "Vic",
-    "area_type": "locality",
-    "lga_bbox": [
-      145.11493764251725, -38.682708196681794, 145.81900181683616,
-      -38.28998155605656
-    ],
-    "lga_official_name": "BASS COAST SHIRE",
-    "lga_name": "BASS COAST",
-    "lga_code": "304"
-  },
-  {
-    "name": "Vic",
-    "area_type": "locality",
-    "lga_bbox": [
-      144.44297174272089, -38.00512048640922, 144.82751837557268,
-      -37.78088379131267
-    ],
-    "lga_official_name": "WYNDHAM CITY",
-    "lga_name": "WYNDHAM",
-    "lga_code": "375"
-  },
-  {
-    "name": "Vic",
-    "area_type": "locality",
-    "lga_bbox": [
-      144.982580682507, -37.99665757226478, 145.05522392143823,
-      -37.883247913922546
-    ],
-    "lga_official_name": "BAYSIDE CITY",
-    "lga_name": "BAYSIDE",
-    "lga_code": "306"
-  },
-  {
-    "name": "Vic",
-    "area_type": "locality",
-    "lga_bbox": [
-      144.7513810607824, -37.90020327429928, 144.91564728051614,
-      -37.813645195654466
-    ],
-    "lga_official_name": "HOBSONS BAY CITY",
-    "lga_name": "HOBSONS BAY",
-    "lga_code": "331"
-  },
-  {
-    "name": "Vic",
-    "area_type": "locality",
-    "lga_bbox": [
-      145.11493764251725, -38.682708196681794, 145.81900181683616,
-      -38.28998155605656
-    ],
-    "lga_official_name": "BASS COAST SHIRE",
-    "lga_name": "BASS COAST",
-    "lga_code": "304"
-  },
-  {
-    "name": "Vic",
-    "area_type": "locality",
-    "lga_bbox": [
-      145.11493764251725, -38.682708196681794, 145.81900181683616,
-      -38.28998155605656
-    ],
-    "lga_official_name": "BASS COAST SHIRE",
-    "lga_name": "BASS COAST",
-    "lga_code": "304"
-  },
-  {
-    "name": "Vic",
-    "area_type": "locality",
-    "lga_bbox": [
-      145.03437548685193, -38.085157334233166, 145.15627658651456,
-      -37.92391177064301
-    ],
-    "lga_official_name": "KINGSTON CITY",
-    "lga_name": "KINGSTON",
-    "lga_code": "335"
-  },
-  {
-    "name": "Vic",
-    "area_type": "locality",
-    "lga_bbox": [
-      145.36317551355185, -38.33334589004427, 145.76846660627137,
-      -37.85765248804425
-    ],
-    "lga_official_name": "CARDINIA SHIRE",
-    "lga_name": "CARDINIA",
-    "lga_code": "311"
-  },
-  {
-    "name": "Vic",
-    "area_type": "locality",
-    "lga_bbox": [
-      147.1611554003248, -38.08380735037394, 150.00919269421968,
-      -36.547201834473036
-    ],
-    "lga_official_name": "EAST GIPPSLAND SHIRE",
-    "lga_name": "EAST GIPPSLAND",
-    "lga_code": "319"
-  },
-  {
-    "name": "Vic",
-    "area_type": "locality",
-    "lga_bbox": [
-      145.2141681449543, -38.249882936985976, 145.43185428204126,
-      -37.941334679941136
-    ],
-    "lga_official_name": "CASEY CITY",
-    "lga_name": "CASEY",
-    "lga_code": "312"
-  },
-  {
-    "name": "Vic",
-    "area_type": "locality",
-    "lga_bbox": [
-      146.28676477456165, -38.7940334823904, 147.75182772857113,
-      -37.10103538287372
-    ],
-    "lga_official_name": "WELLINGTON SHIRE",
-    "lga_name": "WELLINGTON",
-    "lga_code": "370"
-  },
-  {
-    "name": "Vic",
-    "area_type": "locality",
-    "lga_bbox": [
-      142.80120535181598, -38.77704523774689, 143.6624487670925,
-      -37.6494710210565
-    ],
-    "lga_official_name": "CORANGAMITE SHIRE",
-    "lga_name": "CORANGAMITE",
-    "lga_code": "315"
-  },
-  {
-    "name": "Vic",
-    "area_type": "locality",
-    "lga_bbox": [
-      145.6051435893329, -39.142584525122906, 146.5390149430544,
-      -38.254019942880305
-    ],
-    "lga_official_name": "SOUTH GIPPSLAND SHIRE",
-    "lga_name": "SOUTH GIPPSLAND",
-    "lga_code": "361"
-  },
-  {
-    "name": "Vic",
-    "area_type": "locality",
-    "lga_bbox": [
-      143.2435237298847, -38.8623703247644, 143.95421693913104,
-      -38.01344811047705
-    ],
-    "lga_official_name": "COLAC OTWAY SHIRE",
-    "lga_name": "COLAC OTWAY",
-    "lga_code": "314"
-  },
-  {
-    "name": "Vic",
-    "area_type": "locality",
-    "lga_bbox": [
-      143.82418181006113, -38.582522710073306, 144.40730433757403,
-      -38.09823970788911
-    ],
-    "lga_official_name": "SURF COAST SHIRE",
-    "lga_name": "SURF COAST",
-    "lga_code": "365"
-  },
-  {
-    "name": "Vic",
-    "area_type": "locality",
-    "lga_bbox": [
-      141.78969224561348, -38.613885787878125, 143.10926223693428,
-      -37.74003031131439
-    ],
-    "lga_official_name": "MOYNE SHIRE",
-    "lga_name": "MOYNE",
-    "lga_code": "354"
-  },
-  {
-    "name": "Vic",
-    "area_type": "locality",
-    "lga_bbox": [
-      140.91642764563218, -38.44257997207543, 141.94000498518585,
-      -37.340699539503504
-    ],
-    "lga_official_name": "GLENELG SHIRE",
-    "lga_name": "GLENELG",
-    "lga_code": "323"
-  },
-  {
-    "name": "Vic",
-    "area_type": "locality",
-    "lga_bbox": [
-      144.60116881978215, -38.29275328562721, 144.70154309165443,
-      -38.237415142991296
-    ],
-    "lga_official_name": "QUEENSCLIFFE BOROUGH",
-    "lga_name": "QUEENSCLIFFE",
-    "lga_code": "360"
-  },
-  {
-    "name": "Vic",
-    "area_type": "locality",
-    "lga_bbox": [
-      144.60116881978215, -38.29275328562721, 144.70154309165443,
-      -38.237415142991296
-    ],
-    "lga_official_name": "QUEENSCLIFFE BOROUGH",
-    "lga_name": "QUEENSCLIFFE",
-    "lga_code": "360"
-  },
-  {
-    "name": "Vic",
-    "area_type": "locality",
-    "lga_bbox": [
-      144.91183894184925, -37.89172333608622, 145.0105316517196,
-      -37.82584895108108
-    ],
-    "lga_official_name": "PORT PHILLIP CITY",
-    "lga_name": "PORT PHILLIP",
-    "lga_code": "358"
-  },
-  {
-    "name": "Vic",
-    "area_type": "locality",
-    "lga_bbox": [
-      145.09780326333436, -38.20071462919178, 145.23977399375624,
-      -38.06730312071211
-    ],
-    "lga_official_name": "FRANKSTON CITY",
-    "lga_name": "FRANKSTON",
-    "lga_code": "320"
-  },
-  {
-    "name": "Vic",
-    "area_type": "locality",
-    "lga_bbox": [
-      144.64736255173267, -38.49971668224617, 145.26391208474487,
-      -38.16192726847427
-    ],
-    "lga_official_name": "MORNINGTON PENINSULA SHIRE",
-    "lga_name": "MORNINGTON PENINSULA",
-    "lga_code": "352"
-  },
-  {
-    "name": "Vic",
-    "area_type": "locality",
-    "lga_bbox": [
-      142.41993370541866, -38.45035641027401, 142.6234850780401,
-      -38.30540023301963
-    ],
-    "lga_official_name": "WARRNAMBOOL CITY",
-    "lga_name": "WARRNAMBOOL",
-    "lga_code": "369"
-  },
-  {
-    "name": "Vic",
-    "area_type": "locality",
-    "lga_bbox": [
-      144.8969332566053, -37.85065479225363, 144.99136110069938,
-      -37.7753678440917
-    ],
-    "lga_official_name": "MELBOURNE CITY",
-    "lga_name": "MELBOURNE",
-    "lga_code": "343"
-  },
-  {
-    "name": "Vic",
-    "area_type": "locality",
-    "lga_bbox": [
-      144.1987842241119, -38.3045688966428, 144.72143717221533,
-      -37.79980315070488
-    ],
-    "lga_official_name": "GREATER GEELONG CITY",
-    "lga_name": "GREATER GEELONG",
-    "lga_code": "327"
   },
   {
     "name": "Victoria Point",
@@ -38103,7 +37674,963 @@
     "lga_name": "NORTHERN GRAMPIANS",
     "lga_code": "357"
   },
-
+  {
+    "name": "Alpine Shire",
+    "area_type": "lga",
+    "bbox": [
+      146.55950639818815, -37.288008334039915, 147.39952030276254,
+      -36.385942786546565
+    ],
+    "lga_official_name": "ALPINE SHIRE",
+    "lga_code": "300",
+    "lga_name": "ALPINE SHIRE"
+  },
+  {
+    "name": "Ararat Rural City",
+    "area_type": "lga",
+    "bbox": [
+      142.34544021997755, -37.84451288040866, 143.29432197829118,
+      -37.133793863364076
+    ],
+    "lga_official_name": "ARARAT RURAL CITY",
+    "lga_code": "301",
+    "lga_name": "ARARAT RURAL CITY"
+  },
+  {
+    "name": "Ballarat City",
+    "area_type": "lga",
+    "bbox": [
+      143.59169593927794, -37.7164096997681, 143.95416034501318,
+      -37.32082406606013
+    ],
+    "lga_official_name": "BALLARAT CITY",
+    "lga_code": "302",
+    "lga_name": "BALLARAT CITY"
+  },
+  {
+    "name": "Banyule City",
+    "area_type": "lga",
+    "bbox": [
+      145.02778958532738, -37.78508856843355, 145.14390482014136,
+      -37.68260925604004
+    ],
+    "lga_official_name": "BANYULE CITY",
+    "lga_code": "303",
+    "lga_name": "BANYULE CITY"
+  },
+  {
+    "name": "Bass Coast Shire",
+    "area_type": "lga",
+    "bbox": [
+      145.11493764251725, -38.682708196681794, 145.81900181683616,
+      -38.28998155605656
+    ],
+    "lga_official_name": "BASS COAST SHIRE",
+    "lga_code": "304",
+    "lga_name": "BASS COAST SHIRE"
+  },
+  {
+    "name": "Baw Baw Shire",
+    "area_type": "lga",
+    "bbox": [
+      145.69507001442557, -38.36325555754005, 146.5952396954328,
+      -37.575321884750174
+    ],
+    "lga_official_name": "BAW BAW SHIRE",
+    "lga_code": "305",
+    "lga_name": "BAW BAW SHIRE"
+  },
+  {
+    "name": "Bayside City",
+    "area_type": "lga",
+    "bbox": [
+      144.982580682507, -37.99665757226478, 145.05522392143823,
+      -37.883247913922546
+    ],
+    "lga_official_name": "BAYSIDE CITY",
+    "lga_code": "306",
+    "lga_name": "BAYSIDE CITY"
+  },
+  {
+    "name": "Boroondara City",
+    "area_type": "lga",
+    "bbox": [
+      144.99919060004504, -37.87600612909141, 145.1068196562237,
+      -37.77683528331495
+    ],
+    "lga_official_name": "BOROONDARA CITY",
+    "lga_code": "307",
+    "lga_name": "BOROONDARA CITY"
+  },
+  {
+    "name": "Brimbank City",
+    "area_type": "lga",
+    "bbox": [
+      144.7438292096103, -37.822883298188174, 144.88853588776848,
+      -37.662886407830754
+    ],
+    "lga_official_name": "BRIMBANK CITY",
+    "lga_code": "308",
+    "lga_name": "BRIMBANK CITY"
+  },
+  {
+    "name": "Buloke Shire",
+    "area_type": "lga",
+    "bbox": [
+      142.49794114331954, -36.5021555277254, 143.58574193169994,
+      -35.190778405420325
+    ],
+    "lga_official_name": "BULOKE SHIRE",
+    "lga_code": "309",
+    "lga_name": "BULOKE SHIRE"
+  },
+  {
+    "name": "Campaspe Shire",
+    "area_type": "lga",
+    "bbox": [
+      144.25141860484342, -36.76336054817784, 145.15814379795142,
+      -35.88203553453478
+    ],
+    "lga_official_name": "CAMPASPE SHIRE",
+    "lga_code": "310",
+    "lga_name": "CAMPASPE SHIRE"
+  },
+  {
+    "name": "Cardinia Shire",
+    "area_type": "lga",
+    "bbox": [
+      145.36317551355185, -38.33334589004427, 145.76846660627137,
+      -37.85765248804425
+    ],
+    "lga_official_name": "CARDINIA SHIRE",
+    "lga_code": "311",
+    "lga_name": "CARDINIA SHIRE"
+  },
+  {
+    "name": "Casey City",
+    "area_type": "lga",
+    "bbox": [
+      145.2141681449543, -38.249882936985976, 145.43185428204126,
+      -37.941334679941136
+    ],
+    "lga_official_name": "CASEY CITY",
+    "lga_code": "312",
+    "lga_name": "CASEY CITY"
+  },
+  {
+    "name": "Central Goldfields Shire",
+    "area_type": "lga",
+    "bbox": [
+      143.45387530156782, -37.24004920992608, 144.01932692197528,
+      -36.71900164490049
+    ],
+    "lga_official_name": "CENTRAL GOLDFIELDS SHIRE",
+    "lga_code": "313",
+    "lga_name": "CENTRAL GOLDFIELDS SHIRE"
+  },
+  {
+    "name": "Colac Otway Shire",
+    "area_type": "lga",
+    "bbox": [
+      143.2435237298847, -38.8623703247644, 143.95421693913104,
+      -38.01344811047705
+    ],
+    "lga_official_name": "COLAC OTWAY SHIRE",
+    "lga_code": "314",
+    "lga_name": "COLAC OTWAY SHIRE"
+  },
+  {
+    "name": "Corangamite Shire",
+    "area_type": "lga",
+    "bbox": [
+      142.80120535181598, -38.77704523774689, 143.6624487670925,
+      -37.6494710210565
+    ],
+    "lga_official_name": "CORANGAMITE SHIRE",
+    "lga_code": "315",
+    "lga_name": "CORANGAMITE SHIRE"
+  },
+  {
+    "name": "Darebin City",
+    "area_type": "lga",
+    "bbox": [
+      144.9703077354254, -37.78562299263724, 145.07548260538454,
+      -37.690971165863594
+    ],
+    "lga_official_name": "DAREBIN CITY",
+    "lga_code": "316",
+    "lga_name": "DAREBIN CITY"
+  },
+  {
+    "name": "East Gippsland Shire",
+    "area_type": "lga",
+    "bbox": [
+      147.1611554003248, -38.08380735037394, 150.00919269421968,
+      -36.547201834473036
+    ],
+    "lga_official_name": "EAST GIPPSLAND SHIRE",
+    "lga_code": "319",
+    "lga_name": "EAST GIPPSLAND SHIRE"
+  },
+  {
+    "name": "Frankston City",
+    "area_type": "lga",
+    "bbox": [
+      145.09780326333436, -38.20071462919178, 145.23977399375624,
+      -38.06730312071211
+    ],
+    "lga_official_name": "FRANKSTON CITY",
+    "lga_code": "320",
+    "lga_name": "FRANKSTON CITY"
+  },
+  {
+    "name": "Gannawarra Shire",
+    "area_type": "lga",
+    "bbox": [
+      143.27849234296002, -36.02772241769577, 144.4216338269264,
+      -35.43928397834568
+    ],
+    "lga_official_name": "GANNAWARRA SHIRE",
+    "lga_code": "321",
+    "lga_name": "GANNAWARRA SHIRE"
+  },
+  {
+    "name": "Glen Eira City",
+    "area_type": "lga",
+    "bbox": [
+      144.99674867692858, -37.938721185310435, 145.0851483954017,
+      -37.86018247658889
+    ],
+    "lga_official_name": "GLEN EIRA CITY",
+    "lga_code": "322",
+    "lga_name": "GLEN EIRA CITY"
+  },
+  {
+    "name": "Glenelg Shire",
+    "area_type": "lga",
+    "bbox": [
+      140.91642764563218, -38.44257997207543, 141.94000498518585,
+      -37.340699539503504
+    ],
+    "lga_official_name": "GLENELG SHIRE",
+    "lga_code": "323",
+    "lga_name": "GLENELG SHIRE"
+  },
+  {
+    "name": "Golden Plains Shire",
+    "area_type": "lga",
+    "bbox": [
+      143.43333128045023, -38.14713096158458, 144.29130624584954,
+      -37.554793061139065
+    ],
+    "lga_official_name": "GOLDEN PLAINS SHIRE",
+    "lga_code": "324",
+    "lga_name": "GOLDEN PLAINS SHIRE"
+  },
+  {
+    "name": "Greater Bendigo City",
+    "area_type": "lga",
+    "bbox": [
+      144.02382826399784, -37.06118590017046, 144.85428653279894,
+      -36.3829865917615
+    ],
+    "lga_official_name": "GREATER BENDIGO CITY",
+    "lga_code": "325",
+    "lga_name": "GREATER BENDIGO CITY"
+  },
+  {
+    "name": "Greater Dandenong City",
+    "area_type": "lga",
+    "bbox": [
+      145.1289791029754, -38.07764288114693, 145.25227294136073,
+      -37.924507609392776
+    ],
+    "lga_official_name": "GREATER DANDENONG CITY",
+    "lga_code": "326",
+    "lga_name": "GREATER DANDENONG CITY"
+  },
+  {
+    "name": "Greater Geelong City",
+    "area_type": "lga",
+    "bbox": [
+      144.1987842241119, -38.3045688966428, 144.72143717221533,
+      -37.79980315070488
+    ],
+    "lga_official_name": "GREATER GEELONG CITY",
+    "lga_code": "327",
+    "lga_name": "GREATER GEELONG CITY"
+  },
+  {
+    "name": "Greater Shepparton City",
+    "area_type": "lga",
+    "bbox": [
+      145.03121145453312, -36.7006763950724, 145.80326144258285,
+      -36.1515811618806
+    ],
+    "lga_official_name": "GREATER SHEPPARTON CITY",
+    "lga_code": "328",
+    "lga_name": "GREATER SHEPPARTON CITY"
+  },
+  {
+    "name": "Hepburn Shire",
+    "area_type": "lga",
+    "bbox": [
+      143.64509090318194, -37.489040036574494, 144.4207412939,
+      -37.14361455080038
+    ],
+    "lga_official_name": "HEPBURN SHIRE",
+    "lga_code": "329",
+    "lga_name": "HEPBURN SHIRE"
+  },
+  {
+    "name": "Hindmarsh Shire",
+    "area_type": "lga",
+    "bbox": [
+      141.20891711719875, -36.572897563800105, 142.2564946578354,
+      -35.47708294521932
+    ],
+    "lga_official_name": "HINDMARSH SHIRE",
+    "lga_code": "330",
+    "lga_name": "HINDMARSH SHIRE"
+  },
+  {
+    "name": "Hobsons Bay City",
+    "area_type": "lga",
+    "bbox": [
+      144.7513810607824, -37.90020327429928, 144.91564728051614,
+      -37.813645195654466
+    ],
+    "lga_official_name": "HOBSONS BAY CITY",
+    "lga_code": "331",
+    "lga_name": "HOBSONS BAY CITY"
+  },
+  {
+    "name": "Horsham Rural City",
+    "area_type": "lga",
+    "bbox": [
+      141.646245552343, -37.23729756812889, 142.5849299388763,
+      -36.41980321432422
+    ],
+    "lga_official_name": "HORSHAM RURAL CITY",
+    "lga_code": "332",
+    "lga_name": "HORSHAM RURAL CITY"
+  },
+  {
+    "name": "Hume City",
+    "area_type": "lga",
+    "bbox": [
+      144.63155764172933, -37.712485595833925, 144.97783633286633,
+      -37.48171292915475
+    ],
+    "lga_official_name": "HUME CITY",
+    "lga_code": "333",
+    "lga_name": "HUME CITY"
+  },
+  {
+    "name": "Indigo Shire",
+    "area_type": "lga",
+    "bbox": [
+      146.17389176764127, -36.46593175351774, 147.20061666601347,
+      -35.946762506698434
+    ],
+    "lga_official_name": "INDIGO SHIRE",
+    "lga_code": "334",
+    "lga_name": "INDIGO SHIRE"
+  },
+  {
+    "name": "Kingston City",
+    "area_type": "lga",
+    "bbox": [
+      145.03437548685193, -38.085157334233166, 145.15627658651456,
+      -37.92391177064301
+    ],
+    "lga_official_name": "KINGSTON CITY",
+    "lga_code": "335",
+    "lga_name": "KINGSTON CITY"
+  },
+  {
+    "name": "Knox City",
+    "area_type": "lga",
+    "bbox": [
+      145.19074338777457, -37.964194126595096, 145.3481069980886,
+      -37.832716362919534
+    ],
+    "lga_official_name": "KNOX CITY",
+    "lga_code": "336",
+    "lga_name": "KNOX CITY"
+  },
+  {
+    "name": "Latrobe City",
+    "area_type": "lga",
+    "bbox": [
+      146.20404945453123, -38.53788814648721, 146.72078606443418,
+      -37.96996122630159
+    ],
+    "lga_official_name": "LATROBE CITY",
+    "lga_code": "337",
+    "lga_name": "LATROBE CITY"
+  },
+  {
+    "name": "Loddon Shire",
+    "area_type": "lga",
+    "bbox": [
+      143.30577042139655, -36.905785337935846, 144.34892638432402,
+      -35.89841817885379
+    ],
+    "lga_official_name": "LODDON SHIRE",
+    "lga_code": "338",
+    "lga_name": "LODDON SHIRE"
+  },
+  {
+    "name": "Macedon Ranges Shire",
+    "area_type": "lga",
+    "bbox": [
+      144.3080795795611, -37.56817493302767, 144.9215086450358,
+      -37.09781997859394
+    ],
+    "lga_official_name": "MACEDON RANGES SHIRE",
+    "lga_code": "339",
+    "lga_name": "MACEDON RANGES SHIRE"
+  },
+  {
+    "name": "Manningham City",
+    "area_type": "lga",
+    "bbox": [
+      145.06713030216383, -37.811994605440056, 145.29428362646618,
+      -37.70245223350837
+    ],
+    "lga_official_name": "MANNINGHAM CITY",
+    "lga_code": "340",
+    "lga_name": "MANNINGHAM CITY"
+  },
+  {
+    "name": "Maribyrnong City",
+    "area_type": "lga",
+    "bbox": [
+      144.83908055286696, -37.82696641134057, 144.91660910990686,
+      -37.75577571739788
+    ],
+    "lga_official_name": "MARIBYRNONG CITY",
+    "lga_code": "341",
+    "lga_name": "MARIBYRNONG CITY"
+  },
+  {
+    "name": "Maroondah City",
+    "area_type": "lga",
+    "bbox": [
+      145.21309043511175, -37.84413807511804, 145.31878057459534,
+      -37.76173182052548
+    ],
+    "lga_official_name": "MAROONDAH CITY",
+    "lga_code": "342",
+    "lga_name": "MAROONDAH CITY"
+  },
+  {
+    "name": "Melbourne City",
+    "area_type": "lga",
+    "bbox": [
+      144.8969332566053, -37.85065479225363, 144.99136110069938,
+      -37.7753678440917
+    ],
+    "lga_official_name": "MELBOURNE CITY",
+    "lga_code": "343",
+    "lga_name": "MELBOURNE CITY"
+  },
+  {
+    "name": "Melton City",
+    "area_type": "lga",
+    "bbox": [
+      144.47744301509746, -37.81045322634112, 144.76854893820172,
+      -37.551970712227536
+    ],
+    "lga_official_name": "MELTON CITY",
+    "lga_code": "344",
+    "lga_name": "MELTON CITY"
+  },
+  {
+    "name": "Mildura Rural City",
+    "area_type": "lga",
+    "bbox": [
+      140.87185282069325, -35.79611355035582, 142.77436686243178,
+      -33.981171291467376
+    ],
+    "lga_official_name": "MILDURA RURAL CITY",
+    "lga_code": "345",
+    "lga_name": "MILDURA RURAL CITY"
+  },
+  {
+    "name": "Mitchell Shire",
+    "area_type": "lga",
+    "bbox": [
+      144.52776800727796, -37.51460007534549, 145.4323506176215,
+      -36.83368103118501
+    ],
+    "lga_official_name": "MITCHELL SHIRE",
+    "lga_code": "346",
+    "lga_name": "MITCHELL SHIRE"
+  },
+  {
+    "name": "Moira Shire",
+    "area_type": "lga",
+    "bbox": [
+      144.82953884900434, -36.30344044435922, 146.24843767124642,
+      -35.79662784204739
+    ],
+    "lga_official_name": "MOIRA SHIRE",
+    "lga_code": "347",
+    "lga_name": "MOIRA SHIRE"
+  },
+  {
+    "name": "Monash City",
+    "area_type": "lga",
+    "bbox": [
+      145.07411905099403, -37.940417707426164, 145.2201393389023,
+      -37.853172722884715
+    ],
+    "lga_official_name": "MONASH CITY",
+    "lga_code": "348",
+    "lga_name": "MONASH CITY"
+  },
+  {
+    "name": "Moonee Valley City",
+    "area_type": "lga",
+    "bbox": [
+      144.84604035380556, -37.78968548077479, 144.94042997465527,
+      -37.70914664996732
+    ],
+    "lga_official_name": "MOONEE VALLEY CITY",
+    "lga_code": "349",
+    "lga_name": "MOONEE VALLEY CITY"
+  },
+  {
+    "name": "Moorabool Shire",
+    "area_type": "lga",
+    "bbox": [
+      143.88059260280892, -37.86462763345019, 144.55720485364176,
+      -37.39924676917975
+    ],
+    "lga_official_name": "MOORABOOL SHIRE",
+    "lga_code": "350",
+    "lga_name": "MOORABOOL SHIRE"
+  },
+  {
+    "name": "Merri-Bek City",
+    "area_type": "lga",
+    "bbox": [
+      144.88601907337767, -37.780256384678594, 144.9887181279924,
+      -37.69084342536878
+    ],
+    "lga_official_name": "MERRI-BEK CITY",
+    "lga_code": "351",
+    "lga_name": "MERRI-BEK CITY"
+  },
+  {
+    "name": "Mornington Peninsula Shire",
+    "area_type": "lga",
+    "bbox": [
+      144.64736255173267, -38.49971668224617, 145.26391208474487,
+      -38.16192726847427
+    ],
+    "lga_official_name": "MORNINGTON PENINSULA SHIRE",
+    "lga_code": "352",
+    "lga_name": "MORNINGTON PENINSULA SHIRE"
+  },
+  {
+    "name": "Mount Alexander Shire",
+    "area_type": "lga",
+    "bbox": [
+      143.82613340770678, -37.27329490302596, 144.54699216969362,
+      -36.881315569467134
+    ],
+    "lga_official_name": "MOUNT ALEXANDER SHIRE",
+    "lga_code": "353",
+    "lga_name": "MOUNT ALEXANDER SHIRE"
+  },
+  {
+    "name": "Moyne Shire",
+    "area_type": "lga",
+    "bbox": [
+      141.78969224561348, -38.613885787878125, 143.10926223693428,
+      -37.74003031131439
+    ],
+    "lga_official_name": "MOYNE SHIRE",
+    "lga_code": "354",
+    "lga_name": "MOYNE SHIRE"
+  },
+  {
+    "name": "Murrindindi Shire",
+    "area_type": "lga",
+    "bbox": [
+      145.1618937516149, -37.625327850001916, 146.18729960523535,
+      -36.93375231644082
+    ],
+    "lga_official_name": "MURRINDINDI SHIRE",
+    "lga_code": "355",
+    "lga_name": "MURRINDINDI SHIRE"
+  },
+  {
+    "name": "Nillumbik Shire",
+    "area_type": "lga",
+    "bbox": [
+      145.06757335222855, -37.74195000718848, 145.36858684823792,
+      -37.487416850211595
+    ],
+    "lga_official_name": "NILLUMBIK SHIRE",
+    "lga_code": "356",
+    "lga_name": "NILLUMBIK SHIRE"
+  },
+  {
+    "name": "Northern Grampians Shire",
+    "area_type": "lga",
+    "bbox": [
+      142.2279681248057, -37.31035736812285, 143.51975485273275,
+      -36.38647305582302
+    ],
+    "lga_official_name": "NORTHERN GRAMPIANS SHIRE",
+    "lga_code": "357",
+    "lga_name": "NORTHERN GRAMPIANS SHIRE"
+  },
+  {
+    "name": "Port Phillip City",
+    "area_type": "lga",
+    "bbox": [
+      144.91183894184925, -37.89172333608622, 145.0105316517196,
+      -37.82584895108108
+    ],
+    "lga_official_name": "PORT PHILLIP CITY",
+    "lga_code": "358",
+    "lga_name": "PORT PHILLIP CITY"
+  },
+  {
+    "name": "Pyrenees Shire",
+    "area_type": "lga",
+    "bbox": [
+      143.05965450962432, -37.76225900627397, 143.67953315019315,
+      -36.89607975364141
+    ],
+    "lga_official_name": "PYRENEES SHIRE",
+    "lga_code": "359",
+    "lga_name": "PYRENEES SHIRE"
+  },
+  {
+    "name": "Queenscliffe Borough",
+    "area_type": "lga",
+    "bbox": [
+      144.60116881978215, -38.29275328562721, 144.70154309165443,
+      -38.237415142991296
+    ],
+    "lga_official_name": "QUEENSCLIFFE BOROUGH",
+    "lga_code": "360",
+    "lga_name": "QUEENSCLIFFE BOROUGH"
+  },
+  {
+    "name": "South Gippsland Shire",
+    "area_type": "lga",
+    "bbox": [
+      145.6051435893329, -39.142584525122906, 146.5390149430544,
+      -38.254019942880305
+    ],
+    "lga_official_name": "SOUTH GIPPSLAND SHIRE",
+    "lga_code": "361",
+    "lga_name": "SOUTH GIPPSLAND SHIRE"
+  },
+  {
+    "name": "Southern Grampians Shire",
+    "area_type": "lga",
+    "bbox": [
+      141.40038571135653, -37.98739901728644, 142.6372609264016,
+      -37.06333011140315
+    ],
+    "lga_official_name": "SOUTHERN GRAMPIANS SHIRE",
+    "lga_code": "362",
+    "lga_name": "SOUTHERN GRAMPIANS SHIRE"
+  },
+  {
+    "name": "Stonnington City",
+    "area_type": "lga",
+    "bbox": [
+      144.98331918031843, -37.89299438420738, 145.0922117239844,
+      -37.82969527482193
+    ],
+    "lga_official_name": "STONNINGTON CITY",
+    "lga_code": "363",
+    "lga_name": "STONNINGTON CITY"
+  },
+  {
+    "name": "Strathbogie Shire",
+    "area_type": "lga",
+    "bbox": [
+      144.78408822577393, -37.02415979535817, 145.87635794817587,
+      -36.42265520293751
+    ],
+    "lga_official_name": "STRATHBOGIE SHIRE",
+    "lga_code": "364",
+    "lga_name": "STRATHBOGIE SHIRE"
+  },
+  {
+    "name": "Surf Coast Shire",
+    "area_type": "lga",
+    "bbox": [
+      143.82418181006113, -38.582522710073306, 144.40730433757403,
+      -38.09823970788911
+    ],
+    "lga_official_name": "SURF COAST SHIRE",
+    "lga_code": "365",
+    "lga_name": "SURF COAST SHIRE"
+  },
+  {
+    "name": "Swan Hill Rural City",
+    "area_type": "lga",
+    "bbox": [
+      142.49027804070604, -35.662471742612425, 143.83240807861213,
+      -34.54098774019008
+    ],
+    "lga_official_name": "SWAN HILL RURAL CITY",
+    "lga_code": "366",
+    "lga_name": "SWAN HILL RURAL CITY"
+  },
+  {
+    "name": "Towong Shire",
+    "area_type": "lga",
+    "bbox": [
+      147.0267666913463, -36.82055320270483, 148.2277248676982,
+      -35.916589799972535
+    ],
+    "lga_official_name": "TOWONG SHIRE",
+    "lga_code": "367",
+    "lga_name": "TOWONG SHIRE"
+  },
+  {
+    "name": "Wangaratta Rural City",
+    "area_type": "lga",
+    "bbox": [
+      146.12823510082248, -37.16872207688918, 146.74181597577504,
+      -36.0616962759911
+    ],
+    "lga_official_name": "WANGARATTA RURAL CITY",
+    "lga_code": "368",
+    "lga_name": "WANGARATTA RURAL CITY"
+  },
+  {
+    "name": "Warrnambool City",
+    "area_type": "lga",
+    "bbox": [
+      142.41993370541866, -38.45035641027401, 142.6234850780401,
+      -38.30540023301963
+    ],
+    "lga_official_name": "WARRNAMBOOL CITY",
+    "lga_code": "369",
+    "lga_name": "WARRNAMBOOL CITY"
+  },
+  {
+    "name": "Wellington Shire",
+    "area_type": "lga",
+    "bbox": [
+      146.28676477456165, -38.7940334823904, 147.75182772857113,
+      -37.10103538287372
+    ],
+    "lga_official_name": "WELLINGTON SHIRE",
+    "lga_code": "370",
+    "lga_name": "WELLINGTON SHIRE"
+  },
+  {
+    "name": "West Wimmera Shire",
+    "area_type": "lga",
+    "bbox": [
+      140.87297342848348, -37.47093788661527, 141.869894276319,
+      -35.73633259040711
+    ],
+    "lga_official_name": "WEST WIMMERA SHIRE",
+    "lga_code": "371",
+    "lga_name": "WEST WIMMERA SHIRE"
+  },
+  {
+    "name": "Whitehorse City",
+    "area_type": "lga",
+    "bbox": [
+      145.09503994194026, -37.86531663431388, 145.21366194512163,
+      -37.79215873636042
+    ],
+    "lga_official_name": "WHITEHORSE CITY",
+    "lga_code": "372",
+    "lga_name": "WHITEHORSE CITY"
+  },
+  {
+    "name": "Whittlesea City",
+    "area_type": "lga",
+    "bbox": [
+      144.9463627732859, -37.69998049397894, 145.24174018017334,
+      -37.40309945583528
+    ],
+    "lga_official_name": "WHITTLESEA CITY",
+    "lga_code": "373",
+    "lga_name": "WHITTLESEA CITY"
+  },
+  {
+    "name": "Wodonga City",
+    "area_type": "lga",
+    "bbox": [
+      146.6849041924783, -36.261813302087674, 147.07648787284703,
+      -36.02382237251259
+    ],
+    "lga_official_name": "WODONGA CITY",
+    "lga_code": "374",
+    "lga_name": "WODONGA CITY"
+  },
+  {
+    "name": "Wyndham City",
+    "area_type": "lga",
+    "bbox": [
+      144.44297174272089, -38.00512048640922, 144.82751837557268,
+      -37.78088379131267
+    ],
+    "lga_official_name": "WYNDHAM CITY",
+    "lga_code": "375",
+    "lga_name": "WYNDHAM CITY"
+  },
+  {
+    "name": "Yarra City",
+    "area_type": "lga",
+    "bbox": [
+      144.96144993665706, -37.834500634881664, 145.0453320301003,
+      -37.77529081904839
+    ],
+    "lga_official_name": "YARRA CITY",
+    "lga_code": "376",
+    "lga_name": "YARRA CITY"
+  },
+  {
+    "name": "Yarra Ranges Shire",
+    "area_type": "lga",
+    "bbox": [
+      145.28100966817703, -37.97531864271635, 146.19860768371748,
+      -37.52100385710143
+    ],
+    "lga_official_name": "YARRA RANGES SHIRE",
+    "lga_code": "377",
+    "lga_name": "YARRA RANGES SHIRE"
+  },
+  {
+    "name": "Yarriambiack Shire",
+    "area_type": "lga",
+    "bbox": [
+      141.94686530617344, -36.76830547029678, 142.85261032472962,
+      -35.2836216934969
+    ],
+    "lga_official_name": "YARRIAMBIACK SHIRE",
+    "lga_code": "378",
+    "lga_name": "YARRIAMBIACK SHIRE"
+  },
+  {
+    "name": "French-Elizabeth-Sandstone Islands (Unincorpo",
+    "area_type": "unincorporated",
+    "bbox": [
+      145.20785414938052, -38.42282321069864, 145.50540816921315,
+      -38.280678947463294
+    ],
+    "lga_official_name": "FRENCH-ELIZABETH-SANDSTONE ISLANDS (UNINCORPO",
+    "lga_code": "379",
+    "lga_name": "FRENCH-ELIZABETH-SANDSTONE ISLANDS (UNINCORPO"
+  },
+  {
+    "name": "Benalla Rural City",
+    "area_type": "lga",
+    "bbox": [
+      145.77362665737093, -36.92943233127392, 146.28087315443358,
+      -36.25276815765584
+    ],
+    "lga_official_name": "BENALLA RURAL CITY",
+    "lga_code": "381",
+    "lga_name": "BENALLA RURAL CITY"
+  },
+  {
+    "name": "Mansfield Shire",
+    "area_type": "lga",
+    "bbox": [
+      145.64792919924236, -37.635402473680706, 146.65747590749052,
+      -36.84610133083459
+    ],
+    "lga_official_name": "MANSFIELD SHIRE",
+    "lga_code": "382",
+    "lga_name": "MANSFIELD SHIRE"
+  },
+  {
+    "name": "Mount Baw Baw Alpine Resort (Unincorporated)",
+    "area_type": "unincorporated",
+    "bbox": [
+      146.23148957308902, -37.85622626007419, 146.27967040609724,
+      -37.83175880614818
+    ],
+    "lga_official_name": "MOUNT BAW BAW ALPINE RESORT (UNINCORPORATED)",
+    "lga_code": "383",
+    "lga_name": "MOUNT BAW BAW ALPINE RESORT (UNINCORPORATED)"
+  },
+  {
+    "name": "Mount Buller Alpine Resort (Unincorporated)",
+    "area_type": "unincorporated",
+    "bbox": [
+      146.39545386279858, -37.16530508858091, 146.4931637098197,
+      -37.10782410592266
+    ],
+    "lga_official_name": "MOUNT BULLER ALPINE RESORT (UNINCORPORATED)",
+    "lga_code": "384",
+    "lga_name": "MOUNT BULLER ALPINE RESORT (UNINCORPORATED)"
+  },
+  {
+    "name": "Lake Mountain Alpine Resort (Unincorporated)",
+    "area_type": "unincorporated",
+    "bbox": [
+      145.83643473386945, -37.53207354404317, 145.88565165831463,
+      -37.49192762762295
+    ],
+    "lga_official_name": "LAKE MOUNTAIN ALPINE RESORT (UNINCORPORATED)",
+    "lga_code": "385",
+    "lga_name": "LAKE MOUNTAIN ALPINE RESORT (UNINCORPORATED)"
+  },
+  {
+    "name": "Falls Creek Alpine Resort (Unincorporated)",
+    "area_type": "unincorporated",
+    "bbox": [
+      147.2352577528242, -36.88444043640226, 147.29286856867148,
+      -36.83577262295669
+    ],
+    "lga_official_name": "FALLS CREEK ALPINE RESORT (UNINCORPORATED)",
+    "lga_code": "386",
+    "lga_name": "FALLS CREEK ALPINE RESORT (UNINCORPORATED)"
+  },
+  {
+    "name": "Mount Stirling Alpine Resort (Unincorporated)",
+    "area_type": "unincorporated",
+    "bbox": [
+      146.3957349590759, -37.15285533084523, 146.5418733152289,
+      -37.098710793933975
+    ],
+    "lga_official_name": "MOUNT STIRLING ALPINE RESORT (UNINCORPORATED)",
+    "lga_code": "387",
+    "lga_name": "MOUNT STIRLING ALPINE RESORT (UNINCORPORATED)"
+  },
+  {
+    "name": "Mount Hotham Alpine Resort (Unincorporated)",
+    "area_type": "unincorporated",
+    "bbox": [
+      147.06025573808162, -37.02471844731832, 147.1980816498343,
+      -36.95687742239779
+    ],
+    "lga_official_name": "MOUNT HOTHAM ALPINE RESORT (UNINCORPORATED)",
+    "lga_code": "388",
+    "lga_name": "MOUNT HOTHAM ALPINE RESORT (UNINCORPORATED)"
+  },
+  {
+    "name": "Gabo Island (Unincorporated)",
+    "area_type": "unincorporated",
+    "bbox": [
+      149.90347826258065, -37.570176335791054, 149.9186349772842,
+      -37.54778088826536
+    ],
+    "lga_official_name": "GABO ISLAND (UNINCORPORATED)",
+    "lga_code": "389",
+    "lga_name": "GABO ISLAND (UNINCORPORATED)"
+  },
   {
     "name": "3000",
     "area_type": "postcode",
@@ -53767,962 +54294,5 @@
     "lga_official_name": "SOUTH GIPPSLAND SHIRE",
     "lga_name": "SOUTH GIPPSLAND",
     "lga_code": "361"
-  },
-  {
-    "name": "Alpine Shire",
-    "area_type": "lga",
-    "bbox": [
-      146.55950639818815, -37.288008334039915, 147.39952030276254,
-      -36.385942786546565
-    ],
-    "lga_official_name": "ALPINE SHIRE",
-    "lga_code": "300",
-    "lga_name": "ALPINE SHIRE"
-  },
-  {
-    "name": "Ararat Rural City",
-    "area_type": "lga",
-    "bbox": [
-      142.34544021997755, -37.84451288040866, 143.29432197829118,
-      -37.133793863364076
-    ],
-    "lga_official_name": "ARARAT RURAL CITY",
-    "lga_code": "301",
-    "lga_name": "ARARAT RURAL CITY"
-  },
-  {
-    "name": "Ballarat City",
-    "area_type": "lga",
-    "bbox": [
-      143.59169593927794, -37.7164096997681, 143.95416034501318,
-      -37.32082406606013
-    ],
-    "lga_official_name": "BALLARAT CITY",
-    "lga_code": "302",
-    "lga_name": "BALLARAT CITY"
-  },
-  {
-    "name": "Banyule City",
-    "area_type": "lga",
-    "bbox": [
-      145.02778958532738, -37.78508856843355, 145.14390482014136,
-      -37.68260925604004
-    ],
-    "lga_official_name": "BANYULE CITY",
-    "lga_code": "303",
-    "lga_name": "BANYULE CITY"
-  },
-  {
-    "name": "Bass Coast Shire",
-    "area_type": "lga",
-    "bbox": [
-      145.11493764251725, -38.682708196681794, 145.81900181683616,
-      -38.28998155605656
-    ],
-    "lga_official_name": "BASS COAST SHIRE",
-    "lga_code": "304",
-    "lga_name": "BASS COAST SHIRE"
-  },
-  {
-    "name": "Baw Baw Shire",
-    "area_type": "lga",
-    "bbox": [
-      145.69507001442557, -38.36325555754005, 146.5952396954328,
-      -37.575321884750174
-    ],
-    "lga_official_name": "BAW BAW SHIRE",
-    "lga_code": "305",
-    "lga_name": "BAW BAW SHIRE"
-  },
-  {
-    "name": "Bayside City",
-    "area_type": "lga",
-    "bbox": [
-      144.982580682507, -37.99665757226478, 145.05522392143823,
-      -37.883247913922546
-    ],
-    "lga_official_name": "BAYSIDE CITY",
-    "lga_code": "306",
-    "lga_name": "BAYSIDE CITY"
-  },
-  {
-    "name": "Boroondara City",
-    "area_type": "lga",
-    "bbox": [
-      144.99919060004504, -37.87600612909141, 145.1068196562237,
-      -37.77683528331495
-    ],
-    "lga_official_name": "BOROONDARA CITY",
-    "lga_code": "307",
-    "lga_name": "BOROONDARA CITY"
-  },
-  {
-    "name": "Brimbank City",
-    "area_type": "lga",
-    "bbox": [
-      144.7438292096103, -37.822883298188174, 144.88853588776848,
-      -37.662886407830754
-    ],
-    "lga_official_name": "BRIMBANK CITY",
-    "lga_code": "308",
-    "lga_name": "BRIMBANK CITY"
-  },
-  {
-    "name": "Buloke Shire",
-    "area_type": "lga",
-    "bbox": [
-      142.49794114331954, -36.5021555277254, 143.58574193169994,
-      -35.190778405420325
-    ],
-    "lga_official_name": "BULOKE SHIRE",
-    "lga_code": "309",
-    "lga_name": "BULOKE SHIRE"
-  },
-  {
-    "name": "Campaspe Shire",
-    "area_type": "lga",
-    "bbox": [
-      144.25141860484342, -36.76336054817784, 145.15814379795142,
-      -35.88203553453478
-    ],
-    "lga_official_name": "CAMPASPE SHIRE",
-    "lga_code": "310",
-    "lga_name": "CAMPASPE SHIRE"
-  },
-  {
-    "name": "Cardinia Shire",
-    "area_type": "lga",
-    "bbox": [
-      145.36317551355185, -38.33334589004427, 145.76846660627137,
-      -37.85765248804425
-    ],
-    "lga_official_name": "CARDINIA SHIRE",
-    "lga_code": "311",
-    "lga_name": "CARDINIA SHIRE"
-  },
-  {
-    "name": "Casey City",
-    "area_type": "lga",
-    "bbox": [
-      145.2141681449543, -38.249882936985976, 145.43185428204126,
-      -37.941334679941136
-    ],
-    "lga_official_name": "CASEY CITY",
-    "lga_code": "312",
-    "lga_name": "CASEY CITY"
-  },
-  {
-    "name": "Central Goldfields Shire",
-    "area_type": "lga",
-    "bbox": [
-      143.45387530156782, -37.24004920992608, 144.01932692197528,
-      -36.71900164490049
-    ],
-    "lga_official_name": "CENTRAL GOLDFIELDS SHIRE",
-    "lga_code": "313",
-    "lga_name": "CENTRAL GOLDFIELDS SHIRE"
-  },
-  {
-    "name": "Colac Otway Shire",
-    "area_type": "lga",
-    "bbox": [
-      143.2435237298847, -38.8623703247644, 143.95421693913104,
-      -38.01344811047705
-    ],
-    "lga_official_name": "COLAC OTWAY SHIRE",
-    "lga_code": "314",
-    "lga_name": "COLAC OTWAY SHIRE"
-  },
-  {
-    "name": "Corangamite Shire",
-    "area_type": "lga",
-    "bbox": [
-      142.80120535181598, -38.77704523774689, 143.6624487670925,
-      -37.6494710210565
-    ],
-    "lga_official_name": "CORANGAMITE SHIRE",
-    "lga_code": "315",
-    "lga_name": "CORANGAMITE SHIRE"
-  },
-  {
-    "name": "Darebin City",
-    "area_type": "lga",
-    "bbox": [
-      144.9703077354254, -37.78562299263724, 145.07548260538454,
-      -37.690971165863594
-    ],
-    "lga_official_name": "DAREBIN CITY",
-    "lga_code": "316",
-    "lga_name": "DAREBIN CITY"
-  },
-  {
-    "name": "East Gippsland Shire",
-    "area_type": "lga",
-    "bbox": [
-      147.1611554003248, -38.08380735037394, 150.00919269421968,
-      -36.547201834473036
-    ],
-    "lga_official_name": "EAST GIPPSLAND SHIRE",
-    "lga_code": "319",
-    "lga_name": "EAST GIPPSLAND SHIRE"
-  },
-  {
-    "name": "Frankston City",
-    "area_type": "lga",
-    "bbox": [
-      145.09780326333436, -38.20071462919178, 145.23977399375624,
-      -38.06730312071211
-    ],
-    "lga_official_name": "FRANKSTON CITY",
-    "lga_code": "320",
-    "lga_name": "FRANKSTON CITY"
-  },
-  {
-    "name": "Gannawarra Shire",
-    "area_type": "lga",
-    "bbox": [
-      143.27849234296002, -36.02772241769577, 144.4216338269264,
-      -35.43928397834568
-    ],
-    "lga_official_name": "GANNAWARRA SHIRE",
-    "lga_code": "321",
-    "lga_name": "GANNAWARRA SHIRE"
-  },
-  {
-    "name": "Glen Eira City",
-    "area_type": "lga",
-    "bbox": [
-      144.99674867692858, -37.938721185310435, 145.0851483954017,
-      -37.86018247658889
-    ],
-    "lga_official_name": "GLEN EIRA CITY",
-    "lga_code": "322",
-    "lga_name": "GLEN EIRA CITY"
-  },
-  {
-    "name": "Glenelg Shire",
-    "area_type": "lga",
-    "bbox": [
-      140.91642764563218, -38.44257997207543, 141.94000498518585,
-      -37.340699539503504
-    ],
-    "lga_official_name": "GLENELG SHIRE",
-    "lga_code": "323",
-    "lga_name": "GLENELG SHIRE"
-  },
-  {
-    "name": "Golden Plains Shire",
-    "area_type": "lga",
-    "bbox": [
-      143.43333128045023, -38.14713096158458, 144.29130624584954,
-      -37.554793061139065
-    ],
-    "lga_official_name": "GOLDEN PLAINS SHIRE",
-    "lga_code": "324",
-    "lga_name": "GOLDEN PLAINS SHIRE"
-  },
-  {
-    "name": "Greater Bendigo City",
-    "area_type": "lga",
-    "bbox": [
-      144.02382826399784, -37.06118590017046, 144.85428653279894,
-      -36.3829865917615
-    ],
-    "lga_official_name": "GREATER BENDIGO CITY",
-    "lga_code": "325",
-    "lga_name": "GREATER BENDIGO CITY"
-  },
-  {
-    "name": "Greater Dandenong City",
-    "area_type": "lga",
-    "bbox": [
-      145.1289791029754, -38.07764288114693, 145.25227294136073,
-      -37.924507609392776
-    ],
-    "lga_official_name": "GREATER DANDENONG CITY",
-    "lga_code": "326",
-    "lga_name": "GREATER DANDENONG CITY"
-  },
-  {
-    "name": "Greater Geelong City",
-    "area_type": "lga",
-    "bbox": [
-      144.1987842241119, -38.3045688966428, 144.72143717221533,
-      -37.79980315070488
-    ],
-    "lga_official_name": "GREATER GEELONG CITY",
-    "lga_code": "327",
-    "lga_name": "GREATER GEELONG CITY"
-  },
-  {
-    "name": "Greater Shepparton City",
-    "area_type": "lga",
-    "bbox": [
-      145.03121145453312, -36.7006763950724, 145.80326144258285,
-      -36.1515811618806
-    ],
-    "lga_official_name": "GREATER SHEPPARTON CITY",
-    "lga_code": "328",
-    "lga_name": "GREATER SHEPPARTON CITY"
-  },
-  {
-    "name": "Hepburn Shire",
-    "area_type": "lga",
-    "bbox": [
-      143.64509090318194, -37.489040036574494, 144.4207412939,
-      -37.14361455080038
-    ],
-    "lga_official_name": "HEPBURN SHIRE",
-    "lga_code": "329",
-    "lga_name": "HEPBURN SHIRE"
-  },
-  {
-    "name": "Hindmarsh Shire",
-    "area_type": "lga",
-    "bbox": [
-      141.20891711719875, -36.572897563800105, 142.2564946578354,
-      -35.47708294521932
-    ],
-    "lga_official_name": "HINDMARSH SHIRE",
-    "lga_code": "330",
-    "lga_name": "HINDMARSH SHIRE"
-  },
-  {
-    "name": "Hobsons Bay City",
-    "area_type": "lga",
-    "bbox": [
-      144.7513810607824, -37.90020327429928, 144.91564728051614,
-      -37.813645195654466
-    ],
-    "lga_official_name": "HOBSONS BAY CITY",
-    "lga_code": "331",
-    "lga_name": "HOBSONS BAY CITY"
-  },
-  {
-    "name": "Horsham Rural City",
-    "area_type": "lga",
-    "bbox": [
-      141.646245552343, -37.23729756812889, 142.5849299388763,
-      -36.41980321432422
-    ],
-    "lga_official_name": "HORSHAM RURAL CITY",
-    "lga_code": "332",
-    "lga_name": "HORSHAM RURAL CITY"
-  },
-  {
-    "name": "Hume City",
-    "area_type": "lga",
-    "bbox": [
-      144.63155764172933, -37.712485595833925, 144.97783633286633,
-      -37.48171292915475
-    ],
-    "lga_official_name": "HUME CITY",
-    "lga_code": "333",
-    "lga_name": "HUME CITY"
-  },
-  {
-    "name": "Indigo Shire",
-    "area_type": "lga",
-    "bbox": [
-      146.17389176764127, -36.46593175351774, 147.20061666601347,
-      -35.946762506698434
-    ],
-    "lga_official_name": "INDIGO SHIRE",
-    "lga_code": "334",
-    "lga_name": "INDIGO SHIRE"
-  },
-  {
-    "name": "Kingston City",
-    "area_type": "lga",
-    "bbox": [
-      145.03437548685193, -38.085157334233166, 145.15627658651456,
-      -37.92391177064301
-    ],
-    "lga_official_name": "KINGSTON CITY",
-    "lga_code": "335",
-    "lga_name": "KINGSTON CITY"
-  },
-  {
-    "name": "Knox City",
-    "area_type": "lga",
-    "bbox": [
-      145.19074338777457, -37.964194126595096, 145.3481069980886,
-      -37.832716362919534
-    ],
-    "lga_official_name": "KNOX CITY",
-    "lga_code": "336",
-    "lga_name": "KNOX CITY"
-  },
-  {
-    "name": "Latrobe City",
-    "area_type": "lga",
-    "bbox": [
-      146.20404945453123, -38.53788814648721, 146.72078606443418,
-      -37.96996122630159
-    ],
-    "lga_official_name": "LATROBE CITY",
-    "lga_code": "337",
-    "lga_name": "LATROBE CITY"
-  },
-  {
-    "name": "Loddon Shire",
-    "area_type": "lga",
-    "bbox": [
-      143.30577042139655, -36.905785337935846, 144.34892638432402,
-      -35.89841817885379
-    ],
-    "lga_official_name": "LODDON SHIRE",
-    "lga_code": "338",
-    "lga_name": "LODDON SHIRE"
-  },
-  {
-    "name": "Macedon Ranges Shire",
-    "area_type": "lga",
-    "bbox": [
-      144.3080795795611, -37.56817493302767, 144.9215086450358,
-      -37.09781997859394
-    ],
-    "lga_official_name": "MACEDON RANGES SHIRE",
-    "lga_code": "339",
-    "lga_name": "MACEDON RANGES SHIRE"
-  },
-  {
-    "name": "Manningham City",
-    "area_type": "lga",
-    "bbox": [
-      145.06713030216383, -37.811994605440056, 145.29428362646618,
-      -37.70245223350837
-    ],
-    "lga_official_name": "MANNINGHAM CITY",
-    "lga_code": "340",
-    "lga_name": "MANNINGHAM CITY"
-  },
-  {
-    "name": "Maribyrnong City",
-    "area_type": "lga",
-    "bbox": [
-      144.83908055286696, -37.82696641134057, 144.91660910990686,
-      -37.75577571739788
-    ],
-    "lga_official_name": "MARIBYRNONG CITY",
-    "lga_code": "341",
-    "lga_name": "MARIBYRNONG CITY"
-  },
-  {
-    "name": "Maroondah City",
-    "area_type": "lga",
-    "bbox": [
-      145.21309043511175, -37.84413807511804, 145.31878057459534,
-      -37.76173182052548
-    ],
-    "lga_official_name": "MAROONDAH CITY",
-    "lga_code": "342",
-    "lga_name": "MAROONDAH CITY"
-  },
-  {
-    "name": "Melbourne City",
-    "area_type": "lga",
-    "bbox": [
-      144.8969332566053, -37.85065479225363, 144.99136110069938,
-      -37.7753678440917
-    ],
-    "lga_official_name": "MELBOURNE CITY",
-    "lga_code": "343",
-    "lga_name": "MELBOURNE CITY"
-  },
-  {
-    "name": "Melton City",
-    "area_type": "lga",
-    "bbox": [
-      144.47744301509746, -37.81045322634112, 144.76854893820172,
-      -37.551970712227536
-    ],
-    "lga_official_name": "MELTON CITY",
-    "lga_code": "344",
-    "lga_name": "MELTON CITY"
-  },
-  {
-    "name": "Mildura Rural City",
-    "area_type": "lga",
-    "bbox": [
-      140.87185282069325, -35.79611355035582, 142.77436686243178,
-      -33.981171291467376
-    ],
-    "lga_official_name": "MILDURA RURAL CITY",
-    "lga_code": "345",
-    "lga_name": "MILDURA RURAL CITY"
-  },
-  {
-    "name": "Mitchell Shire",
-    "area_type": "lga",
-    "bbox": [
-      144.52776800727796, -37.51460007534549, 145.4323506176215,
-      -36.83368103118501
-    ],
-    "lga_official_name": "MITCHELL SHIRE",
-    "lga_code": "346",
-    "lga_name": "MITCHELL SHIRE"
-  },
-  {
-    "name": "Moira Shire",
-    "area_type": "lga",
-    "bbox": [
-      144.82953884900434, -36.30344044435922, 146.24843767124642,
-      -35.79662784204739
-    ],
-    "lga_official_name": "MOIRA SHIRE",
-    "lga_code": "347",
-    "lga_name": "MOIRA SHIRE"
-  },
-  {
-    "name": "Monash City",
-    "area_type": "lga",
-    "bbox": [
-      145.07411905099403, -37.940417707426164, 145.2201393389023,
-      -37.853172722884715
-    ],
-    "lga_official_name": "MONASH CITY",
-    "lga_code": "348",
-    "lga_name": "MONASH CITY"
-  },
-  {
-    "name": "Moonee Valley City",
-    "area_type": "lga",
-    "bbox": [
-      144.84604035380556, -37.78968548077479, 144.94042997465527,
-      -37.70914664996732
-    ],
-    "lga_official_name": "MOONEE VALLEY CITY",
-    "lga_code": "349",
-    "lga_name": "MOONEE VALLEY CITY"
-  },
-  {
-    "name": "Moorabool Shire",
-    "area_type": "lga",
-    "bbox": [
-      143.88059260280892, -37.86462763345019, 144.55720485364176,
-      -37.39924676917975
-    ],
-    "lga_official_name": "MOORABOOL SHIRE",
-    "lga_code": "350",
-    "lga_name": "MOORABOOL SHIRE"
-  },
-  {
-    "name": "Merri-Bek City",
-    "area_type": "lga",
-    "bbox": [
-      144.88601907337767, -37.780256384678594, 144.9887181279924,
-      -37.69084342536878
-    ],
-    "lga_official_name": "MERRI-BEK CITY",
-    "lga_code": "351",
-    "lga_name": "MERRI-BEK CITY"
-  },
-  {
-    "name": "Mornington Peninsula Shire",
-    "area_type": "lga",
-    "bbox": [
-      144.64736255173267, -38.49971668224617, 145.26391208474487,
-      -38.16192726847427
-    ],
-    "lga_official_name": "MORNINGTON PENINSULA SHIRE",
-    "lga_code": "352",
-    "lga_name": "MORNINGTON PENINSULA SHIRE"
-  },
-  {
-    "name": "Mount Alexander Shire",
-    "area_type": "lga",
-    "bbox": [
-      143.82613340770678, -37.27329490302596, 144.54699216969362,
-      -36.881315569467134
-    ],
-    "lga_official_name": "MOUNT ALEXANDER SHIRE",
-    "lga_code": "353",
-    "lga_name": "MOUNT ALEXANDER SHIRE"
-  },
-  {
-    "name": "Moyne Shire",
-    "area_type": "lga",
-    "bbox": [
-      141.78969224561348, -38.613885787878125, 143.10926223693428,
-      -37.74003031131439
-    ],
-    "lga_official_name": "MOYNE SHIRE",
-    "lga_code": "354",
-    "lga_name": "MOYNE SHIRE"
-  },
-  {
-    "name": "Murrindindi Shire",
-    "area_type": "lga",
-    "bbox": [
-      145.1618937516149, -37.625327850001916, 146.18729960523535,
-      -36.93375231644082
-    ],
-    "lga_official_name": "MURRINDINDI SHIRE",
-    "lga_code": "355",
-    "lga_name": "MURRINDINDI SHIRE"
-  },
-  {
-    "name": "Nillumbik Shire",
-    "area_type": "lga",
-    "bbox": [
-      145.06757335222855, -37.74195000718848, 145.36858684823792,
-      -37.487416850211595
-    ],
-    "lga_official_name": "NILLUMBIK SHIRE",
-    "lga_code": "356",
-    "lga_name": "NILLUMBIK SHIRE"
-  },
-  {
-    "name": "Northern Grampians Shire",
-    "area_type": "lga",
-    "bbox": [
-      142.2279681248057, -37.31035736812285, 143.51975485273275,
-      -36.38647305582302
-    ],
-    "lga_official_name": "NORTHERN GRAMPIANS SHIRE",
-    "lga_code": "357",
-    "lga_name": "NORTHERN GRAMPIANS SHIRE"
-  },
-  {
-    "name": "Port Phillip City",
-    "area_type": "lga",
-    "bbox": [
-      144.91183894184925, -37.89172333608622, 145.0105316517196,
-      -37.82584895108108
-    ],
-    "lga_official_name": "PORT PHILLIP CITY",
-    "lga_code": "358",
-    "lga_name": "PORT PHILLIP CITY"
-  },
-  {
-    "name": "Pyrenees Shire",
-    "area_type": "lga",
-    "bbox": [
-      143.05965450962432, -37.76225900627397, 143.67953315019315,
-      -36.89607975364141
-    ],
-    "lga_official_name": "PYRENEES SHIRE",
-    "lga_code": "359",
-    "lga_name": "PYRENEES SHIRE"
-  },
-  {
-    "name": "Queenscliffe Borough",
-    "area_type": "lga",
-    "bbox": [
-      144.60116881978215, -38.29275328562721, 144.70154309165443,
-      -38.237415142991296
-    ],
-    "lga_official_name": "QUEENSCLIFFE BOROUGH",
-    "lga_code": "360",
-    "lga_name": "QUEENSCLIFFE BOROUGH"
-  },
-  {
-    "name": "South Gippsland Shire",
-    "area_type": "lga",
-    "bbox": [
-      145.6051435893329, -39.142584525122906, 146.5390149430544,
-      -38.254019942880305
-    ],
-    "lga_official_name": "SOUTH GIPPSLAND SHIRE",
-    "lga_code": "361",
-    "lga_name": "SOUTH GIPPSLAND SHIRE"
-  },
-  {
-    "name": "Southern Grampians Shire",
-    "area_type": "lga",
-    "bbox": [
-      141.40038571135653, -37.98739901728644, 142.6372609264016,
-      -37.06333011140315
-    ],
-    "lga_official_name": "SOUTHERN GRAMPIANS SHIRE",
-    "lga_code": "362",
-    "lga_name": "SOUTHERN GRAMPIANS SHIRE"
-  },
-  {
-    "name": "Stonnington City",
-    "area_type": "lga",
-    "bbox": [
-      144.98331918031843, -37.89299438420738, 145.0922117239844,
-      -37.82969527482193
-    ],
-    "lga_official_name": "STONNINGTON CITY",
-    "lga_code": "363",
-    "lga_name": "STONNINGTON CITY"
-  },
-  {
-    "name": "Strathbogie Shire",
-    "area_type": "lga",
-    "bbox": [
-      144.78408822577393, -37.02415979535817, 145.87635794817587,
-      -36.42265520293751
-    ],
-    "lga_official_name": "STRATHBOGIE SHIRE",
-    "lga_code": "364",
-    "lga_name": "STRATHBOGIE SHIRE"
-  },
-  {
-    "name": "Surf Coast Shire",
-    "area_type": "lga",
-    "bbox": [
-      143.82418181006113, -38.582522710073306, 144.40730433757403,
-      -38.09823970788911
-    ],
-    "lga_official_name": "SURF COAST SHIRE",
-    "lga_code": "365",
-    "lga_name": "SURF COAST SHIRE"
-  },
-  {
-    "name": "Swan Hill Rural City",
-    "area_type": "lga",
-    "bbox": [
-      142.49027804070604, -35.662471742612425, 143.83240807861213,
-      -34.54098774019008
-    ],
-    "lga_official_name": "SWAN HILL RURAL CITY",
-    "lga_code": "366",
-    "lga_name": "SWAN HILL RURAL CITY"
-  },
-  {
-    "name": "Towong Shire",
-    "area_type": "lga",
-    "bbox": [
-      147.0267666913463, -36.82055320270483, 148.2277248676982,
-      -35.916589799972535
-    ],
-    "lga_official_name": "TOWONG SHIRE",
-    "lga_code": "367",
-    "lga_name": "TOWONG SHIRE"
-  },
-  {
-    "name": "Wangaratta Rural City",
-    "area_type": "lga",
-    "bbox": [
-      146.12823510082248, -37.16872207688918, 146.74181597577504,
-      -36.0616962759911
-    ],
-    "lga_official_name": "WANGARATTA RURAL CITY",
-    "lga_code": "368",
-    "lga_name": "WANGARATTA RURAL CITY"
-  },
-  {
-    "name": "Warrnambool City",
-    "area_type": "lga",
-    "bbox": [
-      142.41993370541866, -38.45035641027401, 142.6234850780401,
-      -38.30540023301963
-    ],
-    "lga_official_name": "WARRNAMBOOL CITY",
-    "lga_code": "369",
-    "lga_name": "WARRNAMBOOL CITY"
-  },
-  {
-    "name": "Wellington Shire",
-    "area_type": "lga",
-    "bbox": [
-      146.28676477456165, -38.7940334823904, 147.75182772857113,
-      -37.10103538287372
-    ],
-    "lga_official_name": "WELLINGTON SHIRE",
-    "lga_code": "370",
-    "lga_name": "WELLINGTON SHIRE"
-  },
-  {
-    "name": "West Wimmera Shire",
-    "area_type": "lga",
-    "bbox": [
-      140.87297342848348, -37.47093788661527, 141.869894276319,
-      -35.73633259040711
-    ],
-    "lga_official_name": "WEST WIMMERA SHIRE",
-    "lga_code": "371",
-    "lga_name": "WEST WIMMERA SHIRE"
-  },
-  {
-    "name": "Whitehorse City",
-    "area_type": "lga",
-    "bbox": [
-      145.09503994194026, -37.86531663431388, 145.21366194512163,
-      -37.79215873636042
-    ],
-    "lga_official_name": "WHITEHORSE CITY",
-    "lga_code": "372",
-    "lga_name": "WHITEHORSE CITY"
-  },
-  {
-    "name": "Whittlesea City",
-    "area_type": "lga",
-    "bbox": [
-      144.9463627732859, -37.69998049397894, 145.24174018017334,
-      -37.40309945583528
-    ],
-    "lga_official_name": "WHITTLESEA CITY",
-    "lga_code": "373",
-    "lga_name": "WHITTLESEA CITY"
-  },
-  {
-    "name": "Wodonga City",
-    "area_type": "lga",
-    "bbox": [
-      146.6849041924783, -36.261813302087674, 147.07648787284703,
-      -36.02382237251259
-    ],
-    "lga_official_name": "WODONGA CITY",
-    "lga_code": "374",
-    "lga_name": "WODONGA CITY"
-  },
-  {
-    "name": "Wyndham City",
-    "area_type": "lga",
-    "bbox": [
-      144.44297174272089, -38.00512048640922, 144.82751837557268,
-      -37.78088379131267
-    ],
-    "lga_official_name": "WYNDHAM CITY",
-    "lga_code": "375",
-    "lga_name": "WYNDHAM CITY"
-  },
-  {
-    "name": "Yarra City",
-    "area_type": "lga",
-    "bbox": [
-      144.96144993665706, -37.834500634881664, 145.0453320301003,
-      -37.77529081904839
-    ],
-    "lga_official_name": "YARRA CITY",
-    "lga_code": "376",
-    "lga_name": "YARRA CITY"
-  },
-  {
-    "name": "Yarra Ranges Shire",
-    "area_type": "lga",
-    "bbox": [
-      145.28100966817703, -37.97531864271635, 146.19860768371748,
-      -37.52100385710143
-    ],
-    "lga_official_name": "YARRA RANGES SHIRE",
-    "lga_code": "377",
-    "lga_name": "YARRA RANGES SHIRE"
-  },
-  {
-    "name": "Yarriambiack Shire",
-    "area_type": "lga",
-    "bbox": [
-      141.94686530617344, -36.76830547029678, 142.85261032472962,
-      -35.2836216934969
-    ],
-    "lga_official_name": "YARRIAMBIACK SHIRE",
-    "lga_code": "378",
-    "lga_name": "YARRIAMBIACK SHIRE"
-  },
-  {
-    "name": "French-Elizabeth-Sandstone Islands (Unincorpo",
-    "area_type": "unincorporated",
-    "bbox": [
-      145.20785414938052, -38.42282321069864, 145.50540816921315,
-      -38.280678947463294
-    ],
-    "lga_official_name": "FRENCH-ELIZABETH-SANDSTONE ISLANDS (UNINCORPO",
-    "lga_code": "379",
-    "lga_name": "FRENCH-ELIZABETH-SANDSTONE ISLANDS (UNINCORPO"
-  },
-  {
-    "name": "Benalla Rural City",
-    "area_type": "lga",
-    "bbox": [
-      145.77362665737093, -36.92943233127392, 146.28087315443358,
-      -36.25276815765584
-    ],
-    "lga_official_name": "BENALLA RURAL CITY",
-    "lga_code": "381",
-    "lga_name": "BENALLA RURAL CITY"
-  },
-  {
-    "name": "Mansfield Shire",
-    "area_type": "lga",
-    "bbox": [
-      145.64792919924236, -37.635402473680706, 146.65747590749052,
-      -36.84610133083459
-    ],
-    "lga_official_name": "MANSFIELD SHIRE",
-    "lga_code": "382",
-    "lga_name": "MANSFIELD SHIRE"
-  },
-  {
-    "name": "Mount Baw Baw Alpine Resort (Unincorporated)",
-    "area_type": "unincorporated",
-    "bbox": [
-      146.23148957308902, -37.85622626007419, 146.27967040609724,
-      -37.83175880614818
-    ],
-    "lga_official_name": "MOUNT BAW BAW ALPINE RESORT (UNINCORPORATED)",
-    "lga_code": "383",
-    "lga_name": "MOUNT BAW BAW ALPINE RESORT (UNINCORPORATED)"
-  },
-  {
-    "name": "Mount Buller Alpine Resort (Unincorporated)",
-    "area_type": "unincorporated",
-    "bbox": [
-      146.39545386279858, -37.16530508858091, 146.4931637098197,
-      -37.10782410592266
-    ],
-    "lga_official_name": "MOUNT BULLER ALPINE RESORT (UNINCORPORATED)",
-    "lga_code": "384",
-    "lga_name": "MOUNT BULLER ALPINE RESORT (UNINCORPORATED)"
-  },
-  {
-    "name": "Lake Mountain Alpine Resort (Unincorporated)",
-    "area_type": "unincorporated",
-    "bbox": [
-      145.83643473386945, -37.53207354404317, 145.88565165831463,
-      -37.49192762762295
-    ],
-    "lga_official_name": "LAKE MOUNTAIN ALPINE RESORT (UNINCORPORATED)",
-    "lga_code": "385",
-    "lga_name": "LAKE MOUNTAIN ALPINE RESORT (UNINCORPORATED)"
-  },
-  {
-    "name": "Falls Creek Alpine Resort (Unincorporated)",
-    "area_type": "unincorporated",
-    "bbox": [
-      147.2352577528242, -36.88444043640226, 147.29286856867148,
-      -36.83577262295669
-    ],
-    "lga_official_name": "FALLS CREEK ALPINE RESORT (UNINCORPORATED)",
-    "lga_code": "386",
-    "lga_name": "FALLS CREEK ALPINE RESORT (UNINCORPORATED)"
-  },
-  {
-    "name": "Mount Stirling Alpine Resort (Unincorporated)",
-    "area_type": "unincorporated",
-    "bbox": [
-      146.3957349590759, -37.15285533084523, 146.5418733152289,
-      -37.098710793933975
-    ],
-    "lga_official_name": "MOUNT STIRLING ALPINE RESORT (UNINCORPORATED)",
-    "lga_code": "387",
-    "lga_name": "MOUNT STIRLING ALPINE RESORT (UNINCORPORATED)"
-  },
-  {
-    "name": "Mount Hotham Alpine Resort (Unincorporated)",
-    "area_type": "unincorporated",
-    "bbox": [
-      147.06025573808162, -37.02471844731832, 147.1980816498343,
-      -36.95687742239779
-    ],
-    "lga_official_name": "MOUNT HOTHAM ALPINE RESORT (UNINCORPORATED)",
-    "lga_code": "388",
-    "lga_name": "MOUNT HOTHAM ALPINE RESORT (UNINCORPORATED)"
-  },
-  {
-    "name": "Gabo Island (Unincorporated)",
-    "area_type": "unincorporated",
-    "bbox": [
-      149.90347826258065, -37.570176335791054, 149.9186349772842,
-      -37.54778088826536
-    ],
-    "lga_official_name": "GABO ISLAND (UNINCORPORATED)",
-    "lga_code": "389",
-    "lga_name": "GABO ISLAND (UNINCORPORATED)"
   }
 ]

@@ -35,11 +35,11 @@ describe('budget data script', () => {
       const geoServerLocalitiesPairs = geoserverDataLocalities.map(
         (itm) => `${itm.properties.name} - ${itm.properties.lga_official_name}`
       )
-      const missing: string[] = findMissingItems(
+      const missingInTestData: string[] = findMissingItems(
         geoServerLocalitiesPairs,
         testLocalitiesPairs
       )
-      expect(missing).toMatchInlineSnapshot(`
+      expect(missingInTestData).toMatchInlineSnapshot(`
         [
           "AREEGRA - BULOKE SHIRE",
           "ATHLONE - SOUTH GIPPSLAND SHIRE",
@@ -95,6 +95,18 @@ describe('budget data script', () => {
           "WAL WAL - HORSHAM RURAL CITY",
           "WANTIRNA - MAROONDAH CITY",
           "WONNANGATTA - WELLINGTON SHIRE",
+        ]
+      `)
+      const missingInGeoData: string[] = findMissingItems(
+        testLocalitiesPairs,
+        geoServerLocalitiesPairs
+      )
+      expect(missingInGeoData).toMatchInlineSnapshot(`
+        [
+          "ELIZABETH ISLAND - FRENCH-ELIZABETH-SANDSTONE ISLANDS (UNINCORPO",
+          "FRENCH ISLAND - FRENCH-ELIZABETH-SANDSTONE ISLANDS (UNINCORPO",
+          "WARRANWOOD - MANNINGHAM CITY",
+          "WATTLE HILL - COLAC OTWAY SHIRE",
         ]
       `)
     })
