@@ -28,7 +28,7 @@ export default function rplGeoDataCommand() {
           break
         case 'budget':
           console.log('fetching budget data...')
-          getBudgetData(savePath, options.where)
+          getBudgetData(savePath)
           break
       }
     })
