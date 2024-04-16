@@ -441,7 +441,7 @@ importers:
   packages/nuxt-ripple-cli:
     dependencies:
       '@turf/turf':
-        specifier: 6.2.0
+        specifier: ^6.2.0
         version: 6.2.0
       commander:
         specifier: ^12.0.0
