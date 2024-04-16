@@ -11,9 +11,9 @@ export const baseArcGISURL =
   'https://services6.arcgis.com/GB33F62SbDxJjwEL/ArcGIS/rest/services/Vicmap_Admin/FeatureServer'
 
 export const vicMapFeatureServerIds = {
-  localities: '11',
+  localities: '12',
   postcodes: '14',
-  lgas: '9'
+  lgas: '10'
 }
 
 export const defaultGeometryPrecision = 7
@@ -58,15 +58,23 @@ export async function fetchData(layer: string, options): Promise<any> {
  */
 export function bufferPolygon(
   geometry,
-  bufferValue = -40,
+  bufferValue = -20,
   convertToPolygon = true
 ): Position[][] {
-  const steps = 2
+  const steps = 4
   let polygonGeometry = convertToPolygon ? polygon(geometry) : geometry
-  const buffered = buffer(polygonGeometry, bufferValue, {
+  let buffered = buffer(polygonGeometry, bufferValue, {
     units: 'meters',
     steps
   })
+  let currBufferVal = bufferValue
+  while (buffered?.geometry?.type !== 'Polygon') {
+    currBufferVal = currBufferVal + 5
+    buffered = buffer(polygonGeometry, currBufferVal, {
+      units: 'meters',
+      steps
+    })
+  }
 
   return buffered.geometry?.coordinates
 }
@@ -76,7 +84,7 @@ export function bufferPolygon(
  */
 export function simplifyGeometry(
   geometry,
-  bufferValue = -40,
+  bufferValue = -10,
   precision = 0
 ): Position[][] | 'error' {
   let geometryToSimplify = polygon(geometry)
@@ -160,7 +168,7 @@ export async function fetchPostCodesMatchingGeometry(
     ...options
   })
     .then((response) => {
-      if (response.features && response.features.length > 0) {
+      if (response && response.features && response.features.length > 0) {
         return response.features.map((feature) => feature.attributes.postcode)
       }
       return 'error'
@@ -182,7 +190,8 @@ export async function fetchLGAsMatchingGeometry(
     defaultSrt: '4326',
     geometryType: 'esriGeometryPolygon',
     returnGeometry: false,
-    outFields: 'lga_official_name,lga_name,lga_code',
+    distance: 0,
+    outFields: 'official_name,name,lga_code',
     returnCentroid: true
   }
 ) {
@@ -193,8 +202,8 @@ export async function fetchLGAsMatchingGeometry(
     .then((response) => {
       if (response.features && response.features.length > 0) {
         return response.features.map((feature) => ({
-          lga_official_name: feature.attributes.lga_official_name,
-          lga_name: feature.attributes.lga_name,
+          lga_official_name: feature.attributes.official_name,
+          lga_name: feature.attributes.name,
           lga_code: feature.attributes.lga_code
         }))
       }
@@ -239,7 +248,7 @@ export async function fetchBboxForFeature(
 
 export async function fetchLocalityData(
   offset: number,
-  where = '1=1',
+  where = `state='VIC'`,
   options?: Record<string, any>
 ): Promise<ILocalityVicMapData> {
   const defaultOptions = {

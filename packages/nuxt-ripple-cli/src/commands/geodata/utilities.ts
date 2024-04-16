@@ -8,6 +8,14 @@ export function convertToTitleCase(str) {
   return str.toLowerCase().replace(/\b\w/g, (s) => s.toUpperCase())
 }
 
+export function uniqBy(a: any[], key: Function) {
+  let seen = new Set()
+  return a.filter((item) => {
+    let k = key(item)
+    return seen.has(k) ? false : seen.add(k)
+  })
+}
+
 export async function writeFile(
   filePath: string,
   data: any,
@@ -21,7 +29,6 @@ export async function writeFile(
       { flag: append ? 'a+' : '' },
       onWriteError
     )
-    console.log(`Data written :  ${JSON.stringify(data)}`)
   } catch (err) {
     onWriteError(err)
   }

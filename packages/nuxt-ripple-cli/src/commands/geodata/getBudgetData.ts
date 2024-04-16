@@ -9,17 +9,17 @@ import {
   bufferPolygon,
   defaultGeometryPrecision
 } from './arcGisApi'
-import { convertToTitleCase, writeFile } from './utilities'
+import { convertToTitleCase, writeFile, uniqBy } from './utilities'
 
 async function getAllLocalities() {
   const allLocalities = await fetchPaginatedCollection(
     vicMapFeatureServerIds.localities,
     {
-      where: `1=1`,
+      where: `state='VIC'`,
       returnGeometry: true,
       geometryPrecision: defaultGeometryPrecision,
       returnCentroid: true,
-      orderByFields: 'LOCALITY_NAME'
+      orderByFields: 'NAME'
     }
   )
   const localitiesWithLGAs = await fetchConcurrently(
@@ -39,9 +39,9 @@ async function fetchLGAsFromLocalityGeometry(feature) {
   for (let i = 0; i < matchingLGAs.length; i++) {
     const itm = matchingLGAs[i]
     const lga_bbox = await fetchLgaBbox(itm.lga_code)
-    if (itm.hasOwnProperty('lga_code')) {
+    if (itm.lga_code) {
       localitiesWithLGAData.push({
-        name: convertToTitleCase(feature.attributes.LOCALITY_NAME),
+        name: convertToTitleCase(feature.attributes.NAME),
         area_type: 'locality',
         lga_bbox,
         ...itm
@@ -79,26 +79,36 @@ async function fetchLgaBbox(lga_code) {
   return lgaBBOX
 }
 
+function isLgaUninc(name) {
+  return name.includes('(UNINC')
+}
+
 async function fetchLGAWithBBOX(feature) {
   const bbox = await fetchLgaBbox(feature.attributes.lga_code)
   return {
-    name: convertToTitleCase(feature.attributes.lga_official_name),
-    area_type: 'lga',
+    name: convertToTitleCase(feature.attributes.official_name),
+    area_type: isLgaUninc(feature.attributes.official_name)
+      ? 'unincorporated'
+      : 'lga',
     bbox,
-    lga_official_name: feature.attributes.lga_official_name,
+    lga_official_name: feature.attributes.official_name,
     lga_code: feature.attributes.lga_code,
-    lga_name: feature.attributes.lga_official_name
+    lga_name: feature.attributes.official_name
   }
 }
 
 async function getAllLGAs() {
-  const lgas = await fetchLGAData(0, '1=1', {
+  const lgas = await fetchLGAData(0, `STATE='VIC'`, {
     returnGeometry: false,
     returnCentroid: false,
     orderByFields: 'lga_code',
-    outFields: 'lga_official_name,lga_name,lga_code'
+    outFields: 'official_name,name,lga_code'
   })
-  return fetchConcurrently(lgas.features, fetchLGAWithBBOX)
+  const allLGAs = await fetchConcurrently(lgas.features, fetchLGAWithBBOX)
+  // only return unique lgas, there are duplicates in the Vicmap data for some ungodly reason
+  return allLGAs.filter(
+    (v, i, a) => a.findIndex((v2) => v2.lga_code === v.lga_code) === i
+  )
 }
 
 async function getAllPostCodes() {
@@ -108,6 +118,7 @@ async function getAllPostCodes() {
     orderByFields: 'postcode',
     outFields: 'postcode'
   })
+
   const withLGAData = await fetchConcurrently(
     postcodes.features,
     fetchLGAsFromPostcodeGeometry
@@ -115,21 +126,46 @@ async function getAllPostCodes() {
   return [].concat(...withLGAData)
 }
 
-async function fetchLGAsFromPostcodeGeometry(feature) {
-  const simplifedGeometry = bufferPolygon(feature.geometry.rings)
-  const matchingLGAs = await fetchLGAsMatchingGeometry(simplifedGeometry)
+const difficultPostcodes = {
+  '3139': -500,
+  '3237': null,
+  '3243': null,
+  '3283': null,
+  '3340': -400,
+  '3351': null,
+  '3352': null,
+  '3364': null,
+  '3401': null,
+  '3463': null,
+  '3478': null,
+  '3685': null
+}
 
+async function fetchLGAsFromPostcodeGeometry(feature) {
+  let bufferVal = -1
+  if (difficultPostcodes.hasOwnProperty(feature.attributes.postcode)) {
+    bufferVal = difficultPostcodes[feature.attributes.postcode]
+  }
+  // we skip buffer step for items that have multiple polygon shapes
+  const simplifedGeometry =
+    bufferVal !== null
+      ? bufferPolygon(feature.geometry.rings, bufferVal)
+      : feature.geometry.rings
+  const matchingLGAs = await fetchLGAsMatchingGeometry(simplifedGeometry)
   const postcodesWithLGAData: any[] = []
-  for (let i = 0; i < matchingLGAs.length; i++) {
-    const itm = matchingLGAs[i]
-    const lga_bbox = await fetchLgaBbox(itm.lga_code)
-    if (itm.hasOwnProperty('lga_code')) {
-      postcodesWithLGAData.push({
-        name: feature.attributes.postcode,
-        area_type: 'postcode',
-        lga_bbox,
-        ...itm
-      })
+  if (matchingLGAs !== 'error') {
+    const matchingLGAsClean: any[] = uniqBy(matchingLGAs, (itm) => itm.lga_code)
+    for (let i = 0; i < matchingLGAsClean.length; i++) {
+      const itm = matchingLGAsClean[i]
+      const lga_bbox = await fetchLgaBbox(itm.lga_code)
+      if (itm.hasOwnProperty('lga_code') && itm['lga_code']) {
+        postcodesWithLGAData.push({
+          name: feature.attributes.postcode,
+          area_type: 'postcode',
+          lga_bbox,
+          ...itm
+        })
+      }
     }
   }
   return Promise.resolve(postcodesWithLGAData)
@@ -146,9 +182,9 @@ async function getBudgetData(
 ): Promise<void> {
   const results: any[] = []
   const localities = await getAllLocalities()
-  const lgas = await getAllLGAs()
-  const postcodes = await getAllPostCodes()
-  results.push(...localities, ...lgas, ...postcodes)
+  // const lgas = await getAllLGAs()
+  // const postcodes = await getAllPostCodes()
+  results.push(...localities)
   await writeFile(savePath, JSON.stringify(results, null, 2), false, false)
   console.log(`wrote ${results.length} items to ${savePath}`)
 }
