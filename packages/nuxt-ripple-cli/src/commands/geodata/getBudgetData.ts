@@ -123,9 +123,10 @@ async function getAllLGAs() {
   })
   const allLGAs = await fetchConcurrently(lgas.features, fetchLGAWithBBOX)
   // only return unique lgas, there are duplicates in the Vicmap data for some ungodly reason
-  return allLGAs.filter(
-    (v, i, a) => a.findIndex((v2) => v2.lga_code === v.lga_code) === i
-  )
+  // also filter out unincorporated LGA areas
+  return allLGAs
+    .filter((v, i, a) => a.findIndex((v2) => v2.lga_code === v.lga_code) === i)
+    .filter((itm) => itm.area_type !== 'unincorporated')
 }
 
 async function getAllPostCodes() {
