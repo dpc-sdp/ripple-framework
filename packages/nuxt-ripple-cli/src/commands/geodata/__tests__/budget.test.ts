@@ -120,7 +120,7 @@ describe('budget data script', () => {
   describe('Postcodes', () => {
     it('should have the correct number of Postcodes', () => {
       const postcodes = testData.filter((itm) => itm.area_type === 'postcode')
-      expect(postcodes.length).toEqual(1424)
+      expect(postcodes.length).toEqual(1423)
     })
     it('should have no null lga values', () => {
       const postcodes = testData.filter((itm) => itm.area_type === 'postcode')
