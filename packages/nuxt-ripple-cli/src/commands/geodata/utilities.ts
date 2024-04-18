@@ -8,6 +8,12 @@ export function convertToTitleCase(str) {
   return str.toLowerCase().replace(/\b\w/g, (s) => s.toUpperCase())
 }
 
+export function fixUnincorporatedTitle(str) {
+  if (str.endsWith('(UNINCORPO')) {
+    return str.replace('(UNINCORPO', '(UNINCORPORATED)')
+  }
+}
+
 export function uniqBy(a: any[], key: Function) {
   let seen = new Set()
   return a.filter((item) => {

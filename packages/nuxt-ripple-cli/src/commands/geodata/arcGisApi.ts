@@ -5,7 +5,7 @@ import type {
   IArcGisGeoJSONResponse,
   esriGeometryTypes
 } from './types'
-import { convertToTitleCase } from './utilities'
+import { convertToTitleCase, fixUnincorporatedTitle } from './utilities'
 
 export const baseArcGISURL =
   'https://services6.arcgis.com/GB33F62SbDxJjwEL/ArcGIS/rest/services/Vicmap_Admin/FeatureServer'
@@ -202,7 +202,9 @@ export async function fetchLGAsMatchingGeometry(
     .then((response) => {
       if (response.features && response.features.length > 0) {
         return response.features.map((feature) => ({
-          lga_official_name: feature.attributes.official_name,
+          lga_official_name: convertToTitleCase(
+            fixUnincorporatedTitle(feature.attributes.official_name)
+          ),
           lga_name: feature.attributes.name,
           lga_code: feature.attributes.lga_code
         }))

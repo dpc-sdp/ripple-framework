@@ -8,7 +8,12 @@ import {
   bufferPolygon,
   defaultGeometryPrecision
 } from './arcGisApi'
-import { convertToTitleCase, writeFile, uniqBy } from './utilities'
+import {
+  convertToTitleCase,
+  writeFile,
+  uniqBy,
+  fixUnincorporatedTitle
+} from './utilities'
 
 async function getAllLocalities() {
   const allLocalities = await fetchPaginatedCollection(
@@ -108,7 +113,9 @@ async function fetchLGAWithBBOX(feature) {
       ? 'unincorporated'
       : 'lga',
     bbox,
-    lga_official_name: feature.attributes.official_name,
+    lga_official_name: convertToTitleCase(
+      fixUnincorporatedTitle(feature.attributes.official_name)
+    ),
     lga_code: feature.attributes.lga_code,
     lga_name: feature.attributes.official_name
   }
@@ -130,7 +137,7 @@ async function getAllLGAs() {
 }
 
 async function getAllPostCodes() {
-  const postcodes = await fetchPostCodeData(0, `1=1`, {
+  const postcodes = await fetchPostCodeData(0, `postcode='3921'`, {
     returnGeometry: true,
     returnCentroid: false,
     orderByFields: 'postcode',
@@ -145,6 +152,7 @@ async function getAllPostCodes() {
 }
 
 const difficultPostcodes = {
+  '3147': -500,
   '3139': -500,
   '3237': null,
   '3243': null,
@@ -191,8 +199,10 @@ async function fetchLGAsFromPostcodeGeometry(feature) {
 
 async function getBudgetData(savePath: string): Promise<void> {
   const results: any[] = []
-  const localities = await getAllLocalities()
-  const lgas = await getAllLGAs()
+  // const localities = await getAllLocalities()
+  // const lgas = await getAllLGAs()
+  const localities = []
+  const lgas = []
   const postcodes = await getAllPostCodes()
   results.push(...localities, ...lgas, ...postcodes)
   await writeFile(savePath, JSON.stringify(results, null, 2), false, false)
