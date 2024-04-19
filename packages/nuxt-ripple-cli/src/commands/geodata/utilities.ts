@@ -9,9 +9,10 @@ export function convertToTitleCase(str) {
 }
 
 export function fixUnincorporatedTitle(str) {
-  if (str.endsWith('(UNINCORPO')) {
+  if (str && str.endsWith('(UNINCORPO')) {
     return str.replace('(UNINCORPO', '(UNINCORPORATED)')
   }
+  return str
 }
 
 export function uniqBy(a: any[], key: Function) {

@@ -314,12 +314,12 @@ export async function fetchPostCodeData(
 export async function fetchPaginatedCollection(
   collection,
   queryOptions,
-  options = { delay: 1000, offset: 0, perPage: 2000 }
+  options = { delay: 300, offset: 0, perPage: 2000 }
 ): Promise<unknown[]> {
   let hasData = true
   const results: unknown[] = []
   let offset = options.offset || 0 // starting offset to make requests, can use this to resume interupted requests
-  let delay = options.delay || 1000 // add delay between requests to prevent flooding API
+  let delay = options.delay || 300 // add delay between requests to prevent flooding API
   const perPage = options.perPage || 2000 // number of items to return per request
   while (hasData) {
     try {
