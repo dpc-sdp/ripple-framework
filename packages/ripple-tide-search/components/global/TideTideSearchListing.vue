@@ -41,7 +41,13 @@ const searchResultsMappingFn = (item: any): TideSearchListingResultItem => {
       }
     }
   }
-  return item
+
+  return {
+    id: item._id,
+    props: {
+      result: item._source
+    }
+  }
 }
 </script>
 
@@ -60,6 +66,5 @@ const searchResultsMappingFn = (item: any): TideSearchListingResultItem => {
     :belowFilterComponent="page.config?.layoutConfig?.belowFilter"
     :searchResultsMappingFn="(searchResultsMappingFn as any)"
     :sortOptions="page.config.sortOptions"
-    :showFiltersOnLoad="page.config.showFiltersOnLoad"
   />
 </template>

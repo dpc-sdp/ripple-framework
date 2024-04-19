@@ -12,15 +12,22 @@
       :debounce="5000"
       :maxSuggestionsDisplayed="8"
       :placeholder="placeholder"
-      :getOptionId="(itm:any) => itm.name"
+      :getOptionId="(itm:any) => itm?.id || itm?.name"
       :getSuggestionVal="(itm:any) => itm?.name || ''"
+      :isFreeText="false"
       @submit="submitAction"
       @update:input-value="onUpdate"
     >
       <template #suggestion="{ option: { option } }">
         <span>{{ option?.name }}</span>
+
+        <component
+          :is="tagsComponent"
+          v-if="tagsComponent"
+          :option="option"
+        ></component>
         <RplTag
-          v-if="option?.postcode"
+          v-else-if="option?.postcode"
           :label="option?.postcode"
           variant="dark"
           class="rpl-u-margin-l-3"
@@ -31,11 +38,12 @@
 </template>
 
 <script setup lang="ts">
+import { defineProps, defineEmits, inject, watch } from 'vue'
 import { ref, getSingleResultValue } from '#imports'
 import { useDebounceFn } from '@vueuse/core'
-import { inAndOut } from 'ol/easing'
-import { fromLonLat, transformExtent } from 'ol/proj'
+import { transformExtent } from 'ol/proj'
 import { Extent } from 'ol/extent'
+import { fitExtent, fitVictoria } from '@dpc-sdp/ripple-ui-maps'
 // TODO must add analytics events
 // import { useRippleEvent } from '@dpc-sdp/ripple-ui-core'
 
@@ -43,18 +51,24 @@ interface Props {
   inputValue?: any
   resultsloaded?: boolean
   suggestionsIndex?: string
+  suggestionsKey?: string
   controlMapZooming?: boolean
   label?: string
   placeholder?: string
+  tagsComponent?: string
+  mapResultsFnName?: string
 }
 
 const props = withDefaults(defineProps<Props>(), {
   inputValue: null,
   resultsloaded: false,
   suggestionsIndex: 'vic-postcode-localities',
+  suggestionsKey: 'name',
   controlMapZooming: true,
   label: 'Search by postcode or suburb',
-  placeholder: 'Enter postcode or suburb'
+  placeholder: 'Enter postcode or suburb',
+  tagsComponent: undefined,
+  mapResultsFnName: ''
 })
 
 const results = ref([])
@@ -70,7 +84,8 @@ const emit = defineEmits<{
   (e: 'update', payload: addressResultType): void
 }>()
 
-const { rplMapRef } = inject('rplMapInstance')
+const appConfig = useAppConfig()
+const { rplMapRef, deadSpace } = inject('rplMapInstance')
 
 const pendingZoomAnimation = ref(false)
 
@@ -96,7 +111,7 @@ const fetchSuggestions = async (query: string) => {
         should: [
           {
             match: {
-              name: {
+              [props.suggestionsKey]: {
                 query,
                 operator: 'and'
               }
@@ -104,7 +119,7 @@ const fetchSuggestions = async (query: string) => {
           },
           {
             prefix: {
-              name: {
+              [props.suggestionsKey]: {
                 value: query,
                 case_insensitive: true
               }
@@ -130,17 +145,37 @@ const fetchSuggestions = async (query: string) => {
         size: 20
       }
     })
-    if (response && response.hits.total.value > 0) {
-      return response.hits.hits.map((itm: any) => {
-        const center = getSingleResultValue(itm._source.center)?.split(',')
 
-        return {
-          name: getSingleResultValue(itm._source.name),
-          postcode: getSingleResultValue(itm._source.postcode),
-          bbox: itm._source.bbox,
-          center: center?.length === 2 ? [center[1], center[0]] : undefined
-        }
-      })
+    let mappingFn = (itm: any) => {
+      const center = getSingleResultValue(itm._source.center)?.split(',')
+
+      return {
+        id: itm._id,
+        name: getSingleResultValue(itm._source[props.suggestionsKey]),
+        postcode: getSingleResultValue(itm._source.postcode),
+        bbox: itm._source.bbox,
+        center: center?.length === 2 ? [center[1], center[0]] : undefined
+      }
+    }
+
+    const fns: Record<string, (item: any) => any> =
+      appConfig?.ripple?.search?.locationSuggestionMappingFunctions || {}
+
+    // If no transform function is defined, return an empty array
+    if (props.mapResultsFnName) {
+      const transformFn = fns[props.mapResultsFnName]
+
+      if (typeof transformFn !== 'function') {
+        throw new Error(
+          `Search listing: No matching location transform function called "${props.mapResultsFnName}"`
+        )
+      }
+
+      mappingFn = transformFn
+    }
+
+    if (response && response.hits.total.value > 0) {
+      return response.hits.hits.map(mappingFn)
     }
   } catch (e) {
     console.error(e)
@@ -192,11 +227,12 @@ watch(
 // Center the map on the location when the location changes
 // We look for the value of pendingZoomAnimation to determine if we should animate the zoom
 watch(
-  () => props.inputValue,
-  (newLocation) => {
+  () => props.inputValue?.id,
+  async () => {
+    await nextTick()
     centerMapOnLocation(
       rplMapRef.value,
-      newLocation,
+      props.inputValue,
       pendingZoomAnimation.value
     )
     pendingZoomAnimation.value = false
@@ -220,25 +256,15 @@ async function centerMapOnLocation(
         'EPSG:4326',
         'EPSG:3857'
       )
-      const mapSize = map.getSize()
-      if (mapSize) {
-        map.getView().fit(bbox, {
-          size: mapSize,
-          easing: inAndOut,
-          duration: animate ? 800 : 0,
-          padding: [100, 100, 100, 100]
-        })
-      }
+
+      fitExtent(map, bbox, deadSpace.value, {
+        padding: 100,
+        animationDuration: animate ? 800 : 0
+      })
     }
   } else if (!location?.postcode) {
     // reset back to initial view on empty query
-    const center = [144.9631, -36.8136]
-    const initialZoom = 7.3
-    map.getView().animate({
-      center: fromLonLat(center),
-      duration: 1200,
-      zoom: initialZoom
-    })
+    fitVictoria(map, deadSpace.value)
   }
 }
 </script>
