@@ -4,6 +4,7 @@ import rplMockCommand from './mock'
 import rplInitCommand from './init'
 import rplAddCommand from './add'
 import rplFaviconCommand from './favicon'
+import rplGeoDataCommand from './geodata'
 
 const program = new commander.Command('ripple')
 
@@ -16,6 +17,8 @@ rippleCli.addCommand(rplMockCommand())
 rippleCli.addCommand(rplInitCommand())
 rippleCli.addCommand(rplAddCommand())
 rippleCli.addCommand(rplFaviconCommand())
+rippleCli.addCommand(rplGeoDataCommand())
+rippleCli.showHelpAfterError()
 // TODO Add update command for existing sites
 
 program.parse(process.argv)
