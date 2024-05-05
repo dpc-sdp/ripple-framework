@@ -1,0 +1,1 @@
+import{_ as r}from"./_plugin-vue_export-helper.DlAUqK2U.js";import{b as o,c as s,E as t}from"./entry.CCk94wfS.js";const a={},c={class:"border rounded p-6 bg-slate-50 dark:bg-slate-800 border-slate-400 my-4"};function n(e,d){return o(),s("div",c,[t(e.$slots,"default")])}const f=r(a,[["render",n]]);export{f as default};
