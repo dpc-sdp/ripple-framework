@@ -1,5 +1,18 @@
 # Changelog
 
+## v2.8.2...release/v2.8.3
+
+[compare changes](https://github.com/dpc-sdp/ripple-framework/compare/v2.8.2...release/v2.8.3)
+
+
+### 🩹 Fixes
+
+  - **@dpc-sdp/ripple-tide-search:** Fix search listing dropdowns ([1429ddfdb](https://github.com/dpc-sdp/ripple-framework/commit/1429ddfdb))
+
+### ❤️  Contributors
+
+- David Featherston <david.featherstone@dpc.vic.gov.au>
+
 ## v2.8.2
 
 [compare changes](https://github.com/dpc-sdp/ripple-framework/compare/v2.8.1...v2.8.2)
