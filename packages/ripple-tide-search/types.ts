@@ -45,6 +45,10 @@ export interface FilterConfigItem {
      * @description number of items to fetch
      */
     size?: number
+    /**
+     * @description order the items should be returned in
+     */
+    order?: number
   }
 
   /**
@@ -220,6 +224,10 @@ export type TideSearchListingConfig = {
      * @description Filter panel open on page load
      */
     showFiltersOnLoad: boolean
+    /**
+     * @description Setup a custom component to use as the search bar
+     */
+    searchComponent: string
   }
   /**
    * @description Tabs to display, key needs to be one of TideSearchListingTabKey
@@ -228,7 +236,7 @@ export type TideSearchListingConfig = {
   /**
    * @description Elastic Query DSL for query clause
    */
-  queryConfig: Record<string, any>
+  queryConfig: Record<string, any> | string
   /**
    * @description Global filters to apply to ES Query DSL Filter clause
    */
