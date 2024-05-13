@@ -9,6 +9,8 @@ import {
   FormKitPlugin
 } from '@formkit/core'
 import { getValidationMessages } from '@formkit/validation'
+import { createMultiStepPlugin } from '@formkit/addons'
+import '@formkit/addons/css/multistep'
 import rplFormInputs from '../../plugin'
 import RplFormAlert from '../RplFormAlert/RplFormAlert.vue'
 import { reset } from '@formkit/vue'
@@ -28,6 +30,7 @@ interface Props {
     message: string
   }
   customInputs?: FormKitPlugin
+  stepStyle?: 'tab' | 'progress' | null
 }
 
 interface CachedError {
@@ -56,7 +59,8 @@ const props = withDefaults(defineProps<Props>(), {
     title: '',
     message: ''
   }),
-  customInputs: () => {}
+  customInputs: () => {},
+  stepStyle: 'tab'
 })
 
 const emit = defineEmits<{
@@ -160,7 +164,7 @@ const errorSummaryMessages = computed(() => {
 const rplFormConfig = ref({
   rootClasses: function (sectionKey) {
     return {
-      [`rpl-form__${sectionKey}`]: true
+      [`rpl-form__${sectionKey} formkit-${sectionKey}`]: true
     }
   },
   ...props.config
@@ -236,10 +240,12 @@ const data = reactive({
 
 const plugins = computed(
   () =>
-    [rplFormInputs, props.customInputs ? props.customInputs : false].filter(
+    [rplFormInputs, createMultiStepPlugin(), props.customInputs ? props.customInputs : false].filter(
       Boolean
     ) as FormKitPlugin[]
 )
+const pagesSchema = computed(() => props.schema.filter(f => f['$formkit'] === 'RplFormPage'))
+const nonPagesSchema = computed(() => props.schema.filter(f => f['$formkit'] !== 'RplFormPage'))
 </script>
 
 <template>
@@ -284,9 +290,22 @@ const plugins = computed(
       </RplFormAlert>
       <slot name="aboveForm"></slot>
       <slot :value="value">
+        <FormKit
+          v-if="pagesSchema.length > 0"
+          type="multi-step"
+          tab-style="progress"
+        >
+          <RplFormPage
+            v-for="page in pagesSchema"
+            :name="page.key"
+            :title="page.title"
+            :schema="page.schema"
+            :data="data"
+          />
+        </FormKit>
+
         <FormKitSchema
-          v-if="schema"
-          :schema="schema"
+          :schema="nonPagesSchema"
           :data="data"
         ></FormKitSchema>
       </slot>
