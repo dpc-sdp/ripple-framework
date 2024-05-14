@@ -13,8 +13,6 @@ to: package.json
   },
   "version": "1.0.0",
   "dependencies": {
-    "@dpc-sdp/nuxt-ripple": "<%= rplVersion %>",
-    "@dpc-sdp/ripple-tide-api": "<%= rplVersion %>",
-    "@dpc-sdp/ripple-ui-core": "<%= rplVersion %>"
+    "@dpc-sdp/ripple-tide-api": "<%= rplVersion %>"
   }
 }

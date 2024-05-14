@@ -30,6 +30,19 @@ export default defineNuxtConfig({
     inlineSSRStyles: (id) => !id?.includes('entry'),
     externalVue: false // See https://github.com/nuxt/nuxt/issues/14820
   },
+  extends: [
+    '@dpc-sdp/nuxt-ripple-analytics',
+    '@dpc-sdp/nuxt-ripple-preview',
+    '@dpc-sdp/ripple-tide-event',
+    '@dpc-sdp/ripple-tide-topic',
+    '@dpc-sdp/ripple-tide-landing-page',
+    '@dpc-sdp/ripple-tide-grant',
+    '@dpc-sdp/ripple-tide-publication',
+    '@dpc-sdp/ripple-tide-media',
+    '@dpc-sdp/ripple-tide-news',
+    '@dpc-sdp/ripple-tide-search',
+    '@dpc-sdp/ripple-tide-webform'
+  ],
   // A change in nuxt 3.8.0 means we were getting errors whenever a type was imported without the 'type' keyword
   // This is a temporary workaround until we can fix all the types
   // TODO: Add 'type' keyword to all type imports

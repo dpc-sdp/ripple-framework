@@ -11,7 +11,6 @@
     "./types": "./types.ts"
   },
   "dependencies": {
-    "@dpc-sdp/nuxt-ripple": "workspace:*",
     "@dpc-sdp/ripple-tide-api": "workspace:*"
   }
 }

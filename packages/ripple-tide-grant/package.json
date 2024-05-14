@@ -11,7 +11,6 @@
     "./utils": "./utilities/index.ts"
   },
   "dependencies": {
-    "@dpc-sdp/nuxt-ripple": "workspace:*",
     "@dpc-sdp/ripple-tide-api": "workspace:*",
     "@dpc-sdp/ripple-ui-core": "workspace:*"
   }
