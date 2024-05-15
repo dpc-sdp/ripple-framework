@@ -60,7 +60,7 @@ const props = withDefaults(defineProps<Props>(), {
     message: ''
   }),
   customInputs: () => {},
-  stepStyle: 'tab'
+  stepStyle: 'progress'
 })
 
 const emit = defineEmits<{

@@ -2,6 +2,8 @@
   <FormKit type="step"
            :name="name"
            :label="title"
+           :nextAttrs="{inputClass: 'rpl-button rpl-u-margin-t-8'}"
+           :previousAttrs="{inputClass: 'rpl-button rpl-u-margin-t-8'}"
   >
     <FormKitSchema
       v-if="schema"
