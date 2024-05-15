@@ -57,7 +57,7 @@ const props = withDefaults(defineProps<Props>(), {
     title: '',
     message: ''
   }),
-  stepStyle: 'tab'
+  stepStyle: 'progress'
 })
 
 const emit = defineEmits<{
