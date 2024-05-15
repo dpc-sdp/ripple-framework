@@ -21,6 +21,9 @@
       "@types/react"
     ],
     "paths": {
+      "@dpc-sdp/nuxt-ripple/mapping/site/alerts/site-alerts-mapping": [
+        "nuxt-ripple/mapping/site/alerts/site-alerts-mapping"
+      ],
       "@dpc-sdp/nuxt-ripple-preview/utils": ["nuxt-ripple-preview/utils"],
       "@dpc-sdp/ripple-tide-api/errors": ["ripple-tide-api/src/errors/errors"],
       "@dpc-sdp/ripple-tide-api/helpers": ["ripple-tide-api/src/helpers"],

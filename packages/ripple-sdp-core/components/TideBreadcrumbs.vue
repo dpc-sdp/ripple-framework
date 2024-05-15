@@ -8,8 +8,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, toRaw, unref } from 'vue'
-import { getBreadcrumbs } from '#imports'
+import { computed, toRaw, unref, getBreadcrumbs } from '#imports'
 
 interface IRplBreadcrumbsItem {
   text: string

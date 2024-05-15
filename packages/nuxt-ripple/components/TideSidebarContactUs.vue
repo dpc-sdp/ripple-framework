@@ -17,7 +17,7 @@ import { computed } from 'vue'
 import {
   TideAddress,
   TideContact
-} from '../../../mapping/sidebar-contacts/sidebar-contacts-mapping-types'
+} from '../mapping/base/sidebar-contacts/sidebar-contacts-mapping-types'
 
 interface Props {
   contacts: TideContact[]

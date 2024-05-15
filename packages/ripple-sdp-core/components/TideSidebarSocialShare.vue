@@ -4,12 +4,12 @@
     :pagetitle="pageTitle"
     :url="url"
     :networks="activeNetworks"
-    :email="email"
+    :email="email || undefined"
   />
 </template>
 
 <script setup lang="ts">
-import { inject } from 'vue'
+import { inject } from '#imports'
 import type {
   IRplFeatureFlags,
   TideSocialShare

@@ -1,8 +1,11 @@
 <script setup lang="ts">
-import { computed, inject } from 'vue'
+import { computed, inject } from '#imports'
 import { TideHeroHeader } from '../types'
-import type { IRplFeatureFlags } from '@dpc-sdp/ripple-tide-api/types'
-import { TideImageField } from '@dpc-sdp/ripple-tide-api/types'
+import {
+  TideImageField,
+  type IRplFeatureFlags
+} from '@dpc-sdp/ripple-tide-api/types'
+import type { IRplImageType } from '@dpc-sdp/ripple-ui-core'
 
 interface Props {
   header: TideHeroHeader
@@ -16,8 +19,8 @@ interface Props {
 const props = withDefaults(defineProps<Props>(), {
   behindNav: true,
   hideBottomCornerGraphic: false,
-  cornerTop: null,
-  cornerBottom: null
+  cornerTop: undefined,
+  cornerBottom: undefined
 })
 
 const { direction, language } = inject('language')
@@ -83,16 +86,16 @@ const headerTheme = computed(() => {
 <template>
   <RplHeroHeader
     :title="header.title"
-    :links="headerLinks"
+    :links="headerLinks || undefined"
     :theme="headerTheme"
-    :logo="header?.logoImage"
+    :logo="header?.logoImage as IRplImageType"
     :behindNav="behindNav"
     :breadcrumbs="hasBreadcrumbs"
     :cornerTop="cornerTop"
     :cornerBottom="cornerBottom"
-    :background="header?.backgroundImage"
+    :background="header?.backgroundImage as IRplImageType"
     :primaryAction="header?.primaryAction"
-    :secondaryAction="secondaryAction"
+    :secondaryAction="secondaryAction || undefined"
     :class="{ [`${language}`]: language }"
     :dir="direction"
   >

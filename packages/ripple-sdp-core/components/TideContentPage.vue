@@ -40,8 +40,7 @@
 
 <script setup lang="ts">
 // @ts-ignore
-import { useTideSite, useTidePage } from '#imports'
-import { computed } from 'vue'
+import { computed, useTideSite, useTidePage } from '#imports'
 import { pascalCase, pascalCaseTransformMerge } from 'change-case'
 
 const site = await useTideSite()
@@ -50,6 +49,8 @@ const page = await useTidePage()
 const componentName = computed(
   () =>
     page &&
-    `Tide${pascalCase(page.type, { transform: pascalCaseTransformMerge })}`
+    `Tide${pascalCase(page.type as string, {
+      transform: pascalCaseTransformMerge
+    })}`
 )
 </script>

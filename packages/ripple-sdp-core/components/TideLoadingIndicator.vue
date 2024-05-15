@@ -1,6 +1,5 @@
 <script setup lang="ts">
-import { computed, ref } from 'vue'
-import { useRouter, useNuxtApp } from '#imports'
+import { computed, ref, useRouter, useNuxtApp } from '#imports'
 
 interface Props {
   delay?: number
@@ -19,8 +18,8 @@ const props = withDefaults(defineProps<Props>(), {
 const router = useRouter()
 const nuxtApp = useNuxtApp()
 const progress = ref(0)
-const timer = ref(null)
-const throttle = ref(null)
+const timer = ref<NodeJS.Timer>()
+const throttle = ref<NodeJS.Timer>()
 
 const start = () => {
   if (typeof window !== 'undefined') {

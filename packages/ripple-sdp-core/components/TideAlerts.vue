@@ -20,9 +20,8 @@
 <script setup lang="ts">
 // @ts-ignore
 import { useMounted } from '@vueuse/core'
-import { useCookie } from '#imports'
-import { computed, ref, toRaw } from 'vue'
-import { TideAlert } from '@dpc-sdp/ripple-tide-api/src/mapping/alerts/site-alerts-mapping'
+import { computed, ref, toRaw, useCookie } from '#imports'
+import { TideAlert } from '@dpc-sdp/nuxt-ripple/mapping/site/alerts/site-alerts-mapping'
 
 interface Props {
   draftAlert?: boolean

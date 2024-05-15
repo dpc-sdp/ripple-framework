@@ -1,0 +1,28 @@
+{
+  "name": "@dpc-sdp/ripple-sdp-core",
+  "description": "SDP core layers for use with Ripple",
+  "version": "2.8.2",
+  "license": "Apache-2.0",
+  "repository": "https://github.com/dpc-sdp/ripple-framework",
+  "main": "./nuxt.config.ts",
+  "exports": {
+    ".": "./nuxt.config.ts"
+  },
+  "dependencies": {
+    "@dpc-sdp/nuxt-ripple": "workspace:*",
+    "@dpc-sdp/nuxt-ripple-analytics": "workspace:*",
+    "@dpc-sdp/nuxt-ripple-preview": "workspace:*",
+    "@dpc-sdp/ripple-tide-api": "workspace:*",
+    "@dpc-sdp/ripple-tide-event": "workspace:*",
+    "@dpc-sdp/ripple-tide-topic": "workspace:*",
+    "@dpc-sdp/ripple-tide-landing-page": "workspace:*",
+    "@dpc-sdp/ripple-tide-grant": "workspace:*",
+    "@dpc-sdp/ripple-tide-publication": "workspace:*",
+    "@dpc-sdp/ripple-tide-media": "workspace:*",
+    "@dpc-sdp/ripple-tide-news": "workspace:*",
+    "@dpc-sdp/ripple-tide-search": "workspace:*",
+    "@dpc-sdp/ripple-tide-webform": "workspace:*",
+    "@vueuse/core": "^9.13.0",
+    "change-case": "^4.1.2"
+  }
+}

@@ -10,7 +10,7 @@
 </template>
 
 <script setup lang="ts">
-import { inject } from 'vue'
+import { inject } from '#imports'
 import type { IRplFeatureFlags } from '@dpc-sdp/ripple-tide-api/types'
 
 interface Props {

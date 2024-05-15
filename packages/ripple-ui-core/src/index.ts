@@ -6,4 +6,6 @@ export { isExternalUrl } from './utils/isExternalUrl'
 export { formatDate } from './lib/helpers'
 export { RplIconGroups } from './components/icon/constants'
 export { useRippleEvent } from './composables/useRippleEvent'
+
 export type { rplEventPayload } from './composables/useRippleEvent'
+export type { IRplImageType } from './components/image/constants'

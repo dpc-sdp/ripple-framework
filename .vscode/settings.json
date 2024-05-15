@@ -31,7 +31,8 @@
     "eslint-config-ripple",
     "@dpc-sdp/ripple-ui-maps",
     "@dpc-sdp/ripple-tide-webform",
-    "ripple-storybook"
+    "ripple-storybook",
+    "@dpc-sdp/ripple-sdp-core"
   ],
   "cSpell.words": [
     "colour",

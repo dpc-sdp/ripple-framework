@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onMounted, ref } from 'vue'
+import { onMounted, ref } from '#imports'
 
 interface Props {
   siteSectionName: string
@@ -65,7 +65,7 @@ onMounted(() => {
                   ]"
                 />
               </div>
-              <RplExpandable :expanded="!!value.was_this_page_helpful">
+              <RplExpandable :expanded="!!value!.was_this_page_helpful">
                 <div class="tide-content-rating__expanded">
                   <FormKit
                     id="comments"
@@ -88,7 +88,7 @@ onMounted(() => {
                     </p>
                   </RplContent>
                   <FormKit
-                    v-if="value.was_this_page_helpful"
+                    v-if="value!.was_this_page_helpful"
                     type="RplFormActions"
                   />
                 </div>

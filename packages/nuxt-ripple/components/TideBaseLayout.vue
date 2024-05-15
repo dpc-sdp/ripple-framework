@@ -97,8 +97,7 @@
 
 <script setup lang="ts">
 // @ts-ignore
-import { useRoute, useNuxtApp, useTideLanguage } from '#imports'
-import { computed, onMounted, provide } from 'vue'
+import { computed, onMounted, provide, useRoute, useNuxtApp, useTideLanguage } from '#imports'
 import { TideSiteData } from '../types'
 import { TideTopicTag } from '../mapping/base/topic-tags/topic-tags-mapping'
 import { TideSiteSection } from '@dpc-sdp/ripple-tide-api/types'
