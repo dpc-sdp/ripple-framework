@@ -357,6 +357,16 @@ Feature: Search listing - Filter
     Then the selected dropdown field should allow "multi" selection
 
   @mockserver
+  Example: Functions can be used to set global filters
+    Given I load the page fixture with "/search-listing/filters/page"
+    And the search listing has "exampleGlobalFilterFunction" added to "globalFilters"
+    And the search network request is stubbed with fixture "/search-listing/filters/response" and status 200
+    Then the page endpoint for path "/" returns the loaded fixture
+
+    When I visit the page "/"
+    Then the search network request should be called with the "/search-listing/filters/request-global-filters" fixture
+
+  @mockserver
   Example: Should hide the search form when hideSearchForm is set
     Given the page endpoint for path "/no-search-form" returns fixture "/search-listing/filters/page-no-search-form" with status 200
     And the search network request is stubbed with fixture "/search-listing/filters/response" and status 200
@@ -364,4 +374,3 @@ Feature: Search listing - Filter
     When I visit the page "/no-search-form"
     Then the search listing page should have 2 results
     And the search form should be hidden
-

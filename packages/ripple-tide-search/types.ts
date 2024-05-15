@@ -232,7 +232,7 @@ export type TideSearchListingConfig = {
   /**
    * @description Global filters to apply to ES Query DSL Filter clause
    */
-  globalFilters: Record<string, any>[]
+  globalFilters: Record<string, any>[] | string[]
   /**
    * @description Filter config for the user facing filter controls
    */

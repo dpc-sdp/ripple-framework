@@ -1,4 +1,5 @@
 import { Then, When, DataTable } from '@badeball/cypress-cucumber-preprocessor'
+import { get, set } from 'lodash-es'
 
 Then(
   'the search listing page should have {int} results',
@@ -382,3 +383,18 @@ Then('the search suggestions should not be displayed', () => {
 Then('a custom component should be rendered below the filter', () => {
   cy.get('[data-cy="below-filter-component"]').should('be.visible')
 })
+
+Then(
+  'the search listing has {string} added to {string}',
+  (value: string | boolean, key: string) => {
+    cy.get('@pageFixture').then((response) => {
+      const mergedValue = get(response, `config.${key}`)
+
+      if (Array.isArray(mergedValue)) {
+        mergedValue.push(value)
+      }
+
+      set(response, `config.${key}`, mergedValue)
+    })
+  }
+)

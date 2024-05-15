@@ -35,6 +35,15 @@ export default defineAppConfig({
         // `dynamicValue` is used in a cypress test to ensure fallbackValues function are called
         dynamicValue: () => ['blue']
       },
+      globalFilterFunctions: {
+        exampleGlobalFilterFunction: () => {
+          return {
+            range: {
+              changed: { gte: 'now-1d/d', lte: 'now/d' }
+            }
+          }
+        }
+      },
       filterFunctions: {
         // `dummyFunctionFilter` is used in a cypress test to check that the correct parameters are passed to custom filter functions
         dummyFunctionFilter: (filterConfig, values) => {

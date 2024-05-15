@@ -34,6 +34,10 @@ declare module '@nuxt/schema' {
           string,
           (filterConfig: any, values: string[]) => void
         >
+        globalFilterFunctions?: Record<
+          string,
+          (filterForm: any, searchTerm: any) => any[]
+        >
         filterFunctions?: Record<
           string,
           (filterConfig: any, values: string[]) => any

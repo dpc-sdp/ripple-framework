@@ -32,7 +32,7 @@ const encodeCommasAndColons = (value: string): string => {
 interface Config {
   queryConfig: TideSearchListingConfig['queryConfig']
   userFilters: TideSearchListingConfig['userFilters']
-  globalFilters: any[]
+  globalFilters: TideSearchListingConfig['globalFilters']
   searchResultsMappingFn: (item: any) => any
   searchListingConfig: TideSearchListingConfig['searchListingConfig']
   sortOptions?: TideSearchListingConfig['sortOptions']
@@ -121,10 +121,26 @@ export default ({
     return [{ match_all: {} }]
   }
 
+  const getGlobalFilters = () => {
+    const fns: Record<
+      string,
+      (filterForm: any, queryValues: any) => Record<string, any>
+    > = appConfig?.ripple?.search?.globalFilterFunctions || {}
+
+    return (globalFilters || []).map((filter) => {
+      if (typeof filter === 'string' && fns[filter]) {
+        return fns[filter](filterForm.value, searchTerm.value)
+      }
+      return filter
+    })
+  }
+
   const getUserFilterClause = (forAggregations = false) => {
     const _filters = [] as any[]
-    if (globalFilters && globalFilters.length > 0) {
-      _filters.push(...globalFilters)
+
+    const _globalFilters = getGlobalFilters()
+    if (_globalFilters && _globalFilters.length > 0) {
+      _filters.push(..._globalFilters)
     }
 
     if (forAggregations) {
@@ -445,7 +461,7 @@ export default ({
       query: {
         bool: {
           must: [{ match_all: {} }],
-          filter: globalFilters
+          filter: getGlobalFilters()
         }
       },
       size: 0,
