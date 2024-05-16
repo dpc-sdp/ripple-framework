@@ -385,16 +385,12 @@ Then('a custom component should be rendered below the filter', () => {
 })
 
 Then(
-  'the search listing has {string} added to {string}',
-  (value: string | boolean, key: string) => {
+  'the search listing global filters use the {string} function',
+  (value: string) => {
     cy.get('@pageFixture').then((response) => {
-      const mergedValue = get(response, `config.${key}`)
-
-      if (Array.isArray(mergedValue)) {
-        mergedValue.push(value)
-      }
-
-      set(response, `config.${key}`, mergedValue)
+      const globalFilters = get(response, `config.globalFilters`)
+      globalFilters.push(value)
+      set(response, `config.globalFilters`, globalFilters)
     })
   }
 )

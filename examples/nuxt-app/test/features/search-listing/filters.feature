@@ -359,7 +359,7 @@ Feature: Search listing - Filter
   @mockserver
   Example: Functions can be used to set global filters
     Given I load the page fixture with "/search-listing/filters/page"
-    And the search listing has "exampleGlobalFilterFunction" added to "globalFilters"
+    And the search listing global filters use the "exampleGlobalFilterFunction" function
     And the search network request is stubbed with fixture "/search-listing/filters/response" and status 200
     Then the page endpoint for path "/" returns the loaded fixture
 
