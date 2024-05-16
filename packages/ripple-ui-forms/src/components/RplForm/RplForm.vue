@@ -91,10 +91,21 @@ const submitHandler = (form, node: FormKitNode) => {
   cachedErrors.value = {}
   submitCounter.value = 0
 
+  // Steps/page data gets nested - un-nest it.
+  let data = form;
+  node.children.filter(f => f.props.type === 'multi-step').forEach(ms => {
+    data = {...data, ...data[ms.name]}
+    delete data[ms.name]
+    ms.children?.forEach(s => {
+      data = {...data, ...data[s.name]}
+      delete data[s.name]
+    })
+  })
+
   emitRplEvent(
     'submit',
     {
-      data: form,
+      data,
       id: props.id,
       name: props.title,
       action: 'submit',
