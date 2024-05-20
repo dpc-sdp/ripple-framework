@@ -16,7 +16,6 @@
   margin-bottom: -1px;
 
   &:hover,
-  &:focus,
   &:active,
   &--active {
     text-decoration: none;

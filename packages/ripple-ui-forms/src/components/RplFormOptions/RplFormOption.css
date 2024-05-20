@@ -72,7 +72,7 @@
   }
 }
 
-.rpl-form-option__input:focus + .rpl-form-option__label {
+.rpl-form-option__input:focus-visible + .rpl-form-option__label {
   .rpl-form-option__check {
     border-radius: 0;
   }

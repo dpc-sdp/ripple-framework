@@ -47,11 +47,11 @@
   cursor: pointer;
 
   &:hover,
-  &:focus {
+  &:focus-visible {
     border-color: var(--rpl-clr-dark);
   }
 
-  &:focus,
+  &:focus-visible,
   &.rpl-u-focusable--force-on {
     border-radius: 0;
   }
@@ -157,8 +157,7 @@
   flex-shrink: 0;
   margin-right: var(--rpl-sp-3);
 
-  &:hover,
-  &:focus {
+  &:hover {
     border-color: var(--rpl-clr-dark);
   }
 }

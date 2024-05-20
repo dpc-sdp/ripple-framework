@@ -25,11 +25,11 @@
     }
 
     &:hover,
-    &:focus {
+    &:focus-visible {
       border-color: var(--rpl-clr-dark);
     }
 
-    &:focus {
+    &:focus-visible {
       border-radius: 0;
     }
 

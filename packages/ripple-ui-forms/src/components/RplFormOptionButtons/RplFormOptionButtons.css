@@ -48,7 +48,7 @@
   opacity: 1;
 }
 
-.rpl-form-opt-buttons-option__input:focus
+.rpl-form-opt-buttons-option__input:focus-visible
   + .rpl-form-opt-buttons-option__label {
   border-radius: 0;
 

@@ -64,7 +64,10 @@ const displayMobileView: ComputedRef<boolean> = computed(() => {
       'rpl-data-table--mobile': displayMobileView
     }"
   >
-    <div class="rpl-table__scroll-container" tabindex="0">
+    <div
+      class="rpl-table__scroll-container rpl-u-focusable-outline"
+      tabindex="0"
+    >
       <table>
         <caption v-if="caption">
           {{

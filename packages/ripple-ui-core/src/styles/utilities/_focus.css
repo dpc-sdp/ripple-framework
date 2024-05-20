@@ -95,7 +95,7 @@
 }
 
 .rpl-u-focusable-outline {
-  &:focus,
+  &:focus-visible,
   &.rpl-u-focusable--force-on {
     outline: none;
     box-shadow: 0 0 0 var(--rpl-border-1) var(--rpl-clr-dark) inset,
@@ -103,7 +103,7 @@
   }
 
   &.rpl-u-focusable--alt-colour {
-    &:focus,
+    &:focus-visible,
     &.rpl-u-focusable--force-on {
       box-shadow: 0 0 0 var(--rpl-border-1) var(--rpl-clr-type-primary-contrast)
           inset,
@@ -113,13 +113,13 @@
 }
 
 .rpl-u-focusable-outline--no-border {
-  &:focus,
+  &:focus-visible,
   &.rpl-u-focusable--force-on {
     box-shadow: 0 0 0 var(--rpl-border-3) var(--rpl-clr-focus);
   }
 
   &.rpl-u-focusable--alt-colour {
-    &:focus,
+    &:focus-visible,
     &.rpl-u-focusable--force-on {
       box-shadow: 0 0 0 var(--rpl-border-3) var(--rpl-clr-focus);
     }
