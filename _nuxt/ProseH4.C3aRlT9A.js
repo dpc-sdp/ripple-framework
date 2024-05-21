@@ -1,0 +1,1 @@
+import{d as s,b as o,c as t,E as r}from"./entry.C8lNR8qJ.js";const a=["id"],c=s({__name:"ProseH4",props:{id:{}},setup(n){return(e,d)=>(o(),t("h4",{class:"rpl-type-h4 docs-h4",id:e.id},[r(e.$slots,"default")],8,a))}});export{c as default};

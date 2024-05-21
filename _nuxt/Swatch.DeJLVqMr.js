@@ -1,0 +1,1 @@
+import{d as e,b as t,c as a,a0 as c}from"./entry.C8lNR8qJ.js";import{_ as r}from"./_plugin-vue_export-helper.DlAUqK2U.js";const s=e({__name:"Swatch",props:{colour:{},type:{default:"color"}},setup(n){return(o,_)=>(t(),a("div",{class:"docs-colour-swatch",style:c({background:o.colour})},null,4))}}),u=r(s,[["__scopeId","data-v-a0076e87"]]);export{u as default};
