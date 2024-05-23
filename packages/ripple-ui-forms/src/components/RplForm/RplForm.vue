@@ -95,15 +95,17 @@ const submitHandler = (form, node: FormKitNode) => {
   submitCounter.value = 0
 
   // Steps/page data gets nested - un-nest it.
-  let data = form;
-  node.children.filter(f => f.props.type === 'multi-step').forEach(ms => {
-    data = {...data, ...data[ms.name]}
-    delete data[ms.name]
-    ms.children?.forEach(s => {
-      data = {...data, ...data[s.name]}
-      delete data[s.name]
+  let data = form
+  node.children
+    .filter((f) => f.props.type === 'multi-step')
+    .forEach((ms) => {
+      data = { ...data, ...data[ms.name] }
+      delete data[ms.name]
+      ms.children?.forEach((s) => {
+        data = { ...data, ...data[s.name] }
+        delete data[s.name]
+      })
     })
-  })
 
   emitRplEvent(
     'submit',
@@ -255,8 +257,12 @@ const plugins = computed(
       Boolean
     ) as FormKitPlugin[]
 )
-const pagesSchema = computed(() => props.schema.filter(f => f['$formkit'] === 'RplFormPage'))
-const nonPagesSchema = computed(() => props.schema.filter(f => f['$formkit'] !== 'RplFormPage'))
+const pagesSchema = computed(() =>
+  props.schema.filter((f) => f['$formkit'] === 'RplFormPage')
+)
+const nonPagesSchema = computed(() =>
+  props.schema.filter((f) => f['$formkit'] !== 'RplFormPage')
+)
 </script>
 
 <template>
@@ -303,11 +309,12 @@ const nonPagesSchema = computed(() => props.schema.filter(f => f['$formkit'] !==
       <slot :value="value">
         <FormKit
           v-if="pagesSchema.length > 0"
-          type="multi-step"
+          :type="'multi-step' as any"
           tab-style="progress"
         >
           <RplFormPage
             v-for="page in pagesSchema"
+            :key="page.key"
             :name="page.key"
             :title="page.title"
             :schema="page.schema"
@@ -315,10 +322,7 @@ const nonPagesSchema = computed(() => props.schema.filter(f => f['$formkit'] !==
           />
         </FormKit>
 
-        <FormKitSchema
-          :schema="nonPagesSchema"
-          :data="data"
-        ></FormKitSchema>
+        <FormKitSchema :schema="nonPagesSchema" :data="data"></FormKitSchema>
       </slot>
       <slot name="belowForm" :value="value"></slot>
     </fieldset>
