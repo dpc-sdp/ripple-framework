@@ -314,22 +314,25 @@ export const getFormSchemaFromMapping = async (
           ...getInputIcons(field)
         }
         break
-      case 'webform_wizard_page':
-        const title =  field['#title']
-        const subformId = `${field['formId']}_${fieldKey}`
+      case 'webform_wizard_page': {
+        const title = field['#title']
         const subform = webform
         delete field['#title']
         delete field['#type']
         delete field['formId']
-        subform.elements = field
-        const subformSchema =  await getFormSchemaFromMapping(subform, tidePageApi)
+        subform.elements = field as unknown as TideWebformElement[]
+        const subformSchema = await getFormSchemaFromMapping(
+          subform,
+          tidePageApi
+        )
         mappedField = {
           $formkit: 'RplFormPage',
           key: fieldKey,
           title,
-          schema: subformSchema,
+          schema: subformSchema
         }
         break
+      }
       default:
         mappedField = {
           $el: 'div',

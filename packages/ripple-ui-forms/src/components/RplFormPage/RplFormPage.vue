@@ -1,29 +1,27 @@
 <template>
-  <FormKit type="step"
-           :name="name"
-           :label="title"
-           :nextAttrs="{inputClass: 'rpl-button rpl-u-margin-t-8'}"
-           :previousAttrs="{inputClass: 'rpl-button rpl-u-margin-t-8'}"
+  <FormKit
+    :type="'step' as any"
+    :name="name"
+    :label="title"
+    :nextAttrs="{ inputClass: 'rpl-button rpl-u-margin-t-8' }"
+    :previousAttrs="{ inputClass: 'rpl-button rpl-u-margin-t-8' }"
   >
-    <FormKitSchema
-      v-if="schema"
-      :schema="schema"
-      :data="data"
-    ></FormKitSchema>
+    <FormKitSchema v-if="schema" :schema="schema" :data="data"></FormKitSchema>
   </FormKit>
 </template>
 
 <script setup lang="ts">
-import {FormKitSchemaCondition, FormKitSchemaNode} from "@formkit/core";
+import { FormKitSchemaCondition, FormKitSchemaNode } from '@formkit/core'
 
 interface Props {
-  name: string,
-  title: string,
-  schema?: FormKitSchemaCondition | FormKitSchemaNode[] | undefined,
+  name: string
+  title: string
+  schema?: FormKitSchemaCondition | FormKitSchemaNode[] | undefined
   data?: object
 }
 
-const props = withDefaults(defineProps<Props>(), {
+withDefaults(defineProps<Props>(), {
   schema: undefined,
+  data: () => ({})
 })
 </script>
