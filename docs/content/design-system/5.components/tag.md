@@ -1,17 +1,17 @@
 ---
 title: Tag
-description: The Tag component adds, and draws attention to, a category name for your content. 
+description: Label and draw attention to content such as a category. 
 layout: page
 label: Core
 
 ---
 
 ## Usage
-Use tags to help categorise content. Tags help users to scan and find content that's relevant to them.
+Tags help categorise content. They help users to scan and find content that's relevant to them.
 
 Content can have more than one category or theme. Using the tag component helps indicate this to the user.
 
-When naming tags, use a noun or adjective. Don't use verbs as a user may confuse the tag with an action.
+When naming tags, use a noun or adjective. Don't use verbs as a user may confuse it with an action.
 
 ::DocsExample
 ---
@@ -38,7 +38,7 @@ id: core-containers-tag--neutral
 Tags have 3 variants:
 - default, for use on neutral backgrounds
 - neutral, for use on white backgrounds
-- dark, for use in predictive list.
+- Dark, for use in the [predictive list] (https://www.ripple.sdp.vic.gov.au/design-system/components/search-bar#predictive-keyword-list).
 
 ### Default
 ::DocsExample
@@ -48,11 +48,11 @@ id: core-containers-tag--default-story
 ::
 
 ### Neutral
-Use the reverse variant when the chip appears on the primary colour.
 
 ::DocsExample
 ---
 id: core-containers-tag--neutral
 ---
 ::
+
 
