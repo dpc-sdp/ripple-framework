@@ -38,7 +38,14 @@ id: core-containers-description-list--with-link
 - Don't use with complex or long form content.
 
 ---
+## Variants
 
+Detail list has two variants:
+- Default
+- Icon
+
+---
+  
 ## Theming
 
 When a link is present, the detail list uses the link colour for interaction states.
