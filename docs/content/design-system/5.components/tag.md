@@ -35,9 +35,10 @@ id: core-containers-tag--neutral
 ---
 
 ## Variants
-Tags have 2 variants:
+Tags have 3 variants:
 - default, for use on neutral backgrounds
-- neutral, for use on white backgrounds.
+- neutral, for use on white backgrounds
+- dark, for use in predictive list.
 
 ### Default
 ::DocsExample
