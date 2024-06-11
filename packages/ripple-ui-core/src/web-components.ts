@@ -1,10 +1,11 @@
 import { defineCustomElement } from 'vue'
 
+import { default as RplPageCmp } from './components/page/RplPage.vue'
 import { default as RplAccordionCmp } from './components/accordion/RplAccordion.vue'
 import { default as RplAcknowledgementCmp } from './components/acknowledgement/RplAcknowledgement.vue'
 import { default as RplAlertCmp } from './components/alert/RplAlert.vue'
 import { default as RplBreadcrumbsCmp } from './components/breadcrumbs/RplBreadcrumbs.vue'
-import { default as RplButtonCmp } from './components/button/RplButton.vue'
+import { default as RplButtonCmp } from './components/button/RplButton.ce.vue'
 
 import { default as RplPrimaryCampaignCmp } from './components/campaign-banner/RplPrimaryCampaign.vue'
 import { default as RplSecondaryCampaignCmp } from './components/campaign-banner/RplSecondaryCampaign.vue'
@@ -26,13 +27,15 @@ import { default as RplDescriptionListCmp } from './components/description-list/
 import { default as RplDocumentCmp } from './components/document/RplDocument.vue'
 import { default as RplFileCmp } from './components/file/RplFile.vue'
 
-import { default as RplFooterCmp } from './components/footer/RplFooter.vue'
+import { default as RplFooterCmp } from './components/footer/RplFooter.ce.vue'
+import { default as RplFooterNavSectionCmp } from './components/footer/RplFooterNavSection.ce.vue'
+import { default as RplFooterLinkCmp } from './components/footer/RplFooterLink.ce.vue'
 
 import { default as RplHeaderCmp } from './components/header/RplHeader.vue'
-import { default as RplHeroHeaderCmp } from './components/header/RplHeroHeader.vue'
+import { default as RplHeroHeaderCmp } from './components/header/RplHeroHeader.ce.vue'
 import { default as RplIntroHeaderCmp } from './components/header/RplIntroHeader.vue'
 
-import { default as RplIconCmp } from './components/icon/RplIcon.vue'
+import { default as RplIconCmp } from './components/icon/RplIcon.ce.vue'
 import { default as RplIconSpriteCmp } from './components/icon/RplIconSprite.vue'
 
 import { default as RplImageCmp } from './components/image/RplImage.vue'
@@ -40,7 +43,7 @@ import { default as RplImgCmp } from './components/image/RplImg.vue'
 
 import { default as RplInPageNavigationCmp } from './components/in-page-navigation/RplInPageNavigation.vue'
 
-import { default as RplLayoutCmp } from './components/layout/RplLayout.vue'
+import { default as RplLayoutCmp } from './components/layout/RplLayout.ce.vue'
 import { default as RplPageComponentCmp } from './components/layout/RplPageComponent.vue'
 import { default as RplSidebarComponentCmp } from './components/layout/RplSidebarComponent.vue'
 
@@ -50,7 +53,8 @@ import { default as RplLinkCmp } from './components/link/RplLink.vue'
 
 import { default as RplPageActionCmp } from './components/page-action/RplPageAction.vue'
 import { default as RplPageLinksCmp } from './components/page-links/RplPageLinks.vue'
-import { default as RplPrimaryNavCmp } from './components/primary-nav/RplPrimaryNav.vue'
+import { default as RplPrimaryNavCmp } from './components/primary-nav/RplPrimaryNav.ce.vue'
+import { default as RplPrimaryNavBarCmp } from './components/primary-nav/components/nav-bar/RplPrimaryNavBar.ce.vue'
 import { default as RplProfileCmp } from './components/profile/RplProfile.vue'
 import { default as RplRelatedLinksCmp } from './components/related-links/RplRelatedLinks.vue'
 import { default as RplSearchBarCmp } from './components/search-bar/RplSearchBar.vue'
@@ -70,6 +74,9 @@ import { default as RplMediaEmbedCmp } from './components/media-embed/RplMediaEm
 import { default as RplErrorMessageCmp } from './components/error-message/RplErrorMessage.vue'
 
 // register custom el
+
+const RplPage = defineCustomElement(RplPageCmp)
+
 const RplAccordion = defineCustomElement(RplAccordionCmp)
 const RplAcknowledgement = defineCustomElement(RplAcknowledgementCmp)
 const RplAlert = defineCustomElement(RplAlertCmp)
@@ -80,6 +87,7 @@ const RplPrimaryCampaign = defineCustomElement(RplPrimaryCampaignCmp)
 const RplSecondaryCampaign = defineCustomElement(RplSecondaryCampaignCmp)
 
 const RplCard = defineCustomElement(RplCardCmp)
+
 const RplAvatarCard = defineCustomElement(RplAvatarCardCmp)
 const RplCallToActionCard = defineCustomElement(RplCallToActionCardCmp)
 const RplCategoryGridCard = defineCustomElement(RplCategoryGridCardCmp)
@@ -97,6 +105,8 @@ const RplDocument = defineCustomElement(RplDocumentCmp)
 const RplFile = defineCustomElement(RplFileCmp)
 
 const RplFooter = defineCustomElement(RplFooterCmp)
+const RplFooterNavSection = defineCustomElement(RplFooterNavSectionCmp)
+const RplFooterLink = defineCustomElement(RplFooterLinkCmp)
 
 const RplHeader = defineCustomElement(RplHeaderCmp)
 const RplHeroHeader = defineCustomElement(RplHeroHeaderCmp)
@@ -121,6 +131,7 @@ const RplLink = defineCustomElement(RplLinkCmp)
 const RplPageAction = defineCustomElement(RplPageActionCmp)
 const RplPageLinks = defineCustomElement(RplPageLinksCmp)
 const RplPrimaryNav = defineCustomElement(RplPrimaryNavCmp)
+const RplPrimaryNavBar = defineCustomElement(RplPrimaryNavBarCmp)
 const RplProfile = defineCustomElement(RplProfileCmp)
 const RplRelatedLinks = defineCustomElement(RplRelatedLinksCmp)
 const RplSearchBar = defineCustomElement(RplSearchBarCmp)
@@ -140,6 +151,7 @@ const RplMediaGallery = defineCustomElement(RplMediaGalleryCmp)
 const RplMediaEmbed = defineCustomElement(RplMediaEmbedCmp)
 
 // export each wc
+export { RplPage }
 export { RplAccordion }
 export { RplAcknowledgement }
 export { RplAlert }
@@ -167,6 +179,8 @@ export { RplDocument }
 export { RplFile }
 
 export { RplFooter }
+export { RplFooterNavSection }
+export { RplFooterLink }
 
 export { RplHeader }
 export { RplHeroHeader }
@@ -191,6 +205,7 @@ export { RplLink }
 export { RplPageAction }
 export { RplPageLinks }
 export { RplPrimaryNav }
+export { RplPrimaryNavBar }
 export { RplProfile }
 export { RplRelatedLinks }
 export { RplSearchBar }
@@ -211,6 +226,7 @@ export { RplMediaEmbed }
 
 // export register function for all webcomponents
 export function registerRplWebComponents() {
+  customElements.define('rpl-page', RplPage)
   customElements.define('rpl-accordion', RplAccordion)
   customElements.define('rpl-acknowledgement', RplAcknowledgement)
   customElements.define('rpl-alert', RplAlert)
@@ -238,6 +254,8 @@ export function registerRplWebComponents() {
   customElements.define('rpl-file', RplFile)
 
   customElements.define('rpl-footer', RplFooter)
+  customElements.define('rpl-footer-nav-section', RplFooterNavSection)
+  customElements.define('rpl-footer-link', RplFooterLink)
 
   customElements.define('rpl-header', RplHeader)
   customElements.define('rpl-hero-header', RplHeroHeader)
@@ -262,6 +280,7 @@ export function registerRplWebComponents() {
   customElements.define('rpl-page-action', RplPageAction)
   customElements.define('rpl-page-links', RplPageLinks)
   customElements.define('rpl-primary-nav', RplPrimaryNav)
+  customElements.define('rpl-primary-nav-bar', RplPrimaryNavBar)
   customElements.define('rpl-profile', RplProfile)
   customElements.define('rpl-related-links', RplRelatedLinks)
   customElements.define('rpl-search-bar', RplSearchBar)

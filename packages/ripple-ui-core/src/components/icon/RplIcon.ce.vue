@@ -1,7 +1,8 @@
 <script setup lang="ts">
-import { computed } from 'vue'
-import { RplIconSizes } from './constants'
+import { ref, computed, inject, defineAsyncComponent } from 'vue'
+import { RplIconSizes, RplCoreIconNames } from './constants'
 import { RplColorThemes } from '../../lib/constants'
+import customIconImports from './custom.js'
 
 interface Props {
   name?: string
@@ -19,6 +20,9 @@ const props = withDefaults(defineProps<Props>(), {
   title: undefined
 })
 
+const inSprite = ref(RplCoreIconNames.find((key) => key === props.name))
+const providedIcons = inject('rplIcons', {})
+
 const classes = computed(() => [
   'rpl-icon',
   `rpl-icon--size-${props.size}`,
@@ -32,7 +36,7 @@ const classes = computed(() => [
   <span :class="classes">
     <svg v-if="name" :role="title ? undefined : 'presentation'">
       <title v-if="title">{{ title }}</title>
-      <use :xlink:href="`rpl-icon-sprite.svg#${name}`"></use>
+      <use :xlink:href="`#${name}`"></use>
     </svg>
     <slot v-else></slot>
   </span>

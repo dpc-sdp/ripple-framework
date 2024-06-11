@@ -21,7 +21,8 @@
     "./webcomponents": "./dist/web-components/rpl-wc.es.js",
     "./style": "./dist/global.css",
     "./style/breakpoints": "./src/styles/_breakpoints.css",
-    "./style/components": "./dist/style.css"
+    "./style/components": "./dist/style.css",
+    "./components/*": "./src/components/*"
   },
   "scripts": {
     "build": "pnpm clean && pnpm build:types && pnpm build:tokens && pnpm build:utils && pnpm build:styles && pnpm build:lib && pnpm build:vue && pnpm build:wc",

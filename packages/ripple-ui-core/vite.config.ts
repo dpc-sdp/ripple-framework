@@ -26,7 +26,7 @@ export default defineConfig({
     // Reduce bloat from legacy polyfills.
     target: 'esnext',
     // Leave minification for now whilst we are non prod
-    minify: false,
+    minify: true,
     rollupOptions: {
       external: ['vue'],
       output: {
