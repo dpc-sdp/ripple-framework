@@ -49,7 +49,8 @@
     "postcss-nested": "^6.0.1",
     "postcss-normalize": "^10.0.1",
     "postcss-preset-env": "^8.1.0",
-    "vue3-openlayers": "^7.0.0"
+    "vue3-openlayers": "^7.0.0",
+    "ol-mapbox-style": "^12.3.3"
   },
   "peerDependencies": {
     "vue": "^3.4.21"
