@@ -1,0 +1,1 @@
+import{_ as n}from"./RplIcon.vue.D9_N8wC8.js";import{d as s,b as a,G as c}from"./entry.PgGXI6iu.js";const _=s({__name:"DocsIcon",props:{name:{},size:{default:"xs"}},setup(m){return(e,r)=>{const o=n;return a(),c(o,{name:e.name,colour:"default",size:e.size},null,8,["name","size"])}}});export{_ as default};
