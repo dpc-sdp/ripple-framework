@@ -19,7 +19,7 @@
       </template>
 
       <template #map-provider>
-        <rpl-map-provider-vic-map />
+        <rpl-map-provider-vic-map-vector />
       </template>
 
       <template v-if="vectorLayerComponent" #shapes>
