@@ -1,1 +1,0 @@
-import{d as o,b as n,c as t,E as s}from"./entry.BCKNaJHL.js";const r=["innerHTML"],l={key:1,class:"rpl-content"},_=o({__name:"RplContent",props:{html:{},pageBackground:{}},setup(a){return(e,c)=>e.html?(n(),t("div",{key:0,class:"rpl-content",innerHTML:e.html},null,8,r)):(n(),t("div",l,[s(e.$slots,"default")]))}});export{_};
