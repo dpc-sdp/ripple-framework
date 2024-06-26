@@ -44,6 +44,14 @@ export default defineAppConfig({
           }
         }
       },
+      transformResultFns: {
+        exampleResultTransformFn: (result) => {
+          return {
+            ...result._source,
+            distance: result.sort[0]
+          }
+        }
+      },
       sortFunctions: {
         exampleDistanceSort: (location) => {
           if (!location?.center) {
@@ -63,6 +71,39 @@ export default defineAppConfig({
               mode: 'min',
               distance_type: 'arc',
               ignore_unmapped: true
+            }
+          }
+        }
+      },
+      queryConfigFunctions: {
+        exampleQueryFunction: ({ searchTerm, queryFilters }) => {
+          if (!searchTerm?.q) {
+            return {
+              bool: {
+                must: [{ match_all: {} }],
+                filter: queryFilters
+              }
+            }
+          }
+
+          const fieldMap = {
+            title: ['title'],
+            content: ['field_paragraph_body'],
+            title_content: ['title', 'field_paragraph_body']
+          }
+          const filter = !searchTerm?.queryType
+            ? 'title_content'
+            : searchTerm?.queryType
+
+          return {
+            bool: {
+              should: {
+                multi_match: {
+                  query: searchTerm?.q,
+                  fields: fieldMap[filter]
+                }
+              },
+              filter: queryFilters
             }
           }
         }

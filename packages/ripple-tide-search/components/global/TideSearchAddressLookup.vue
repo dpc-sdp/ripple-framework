@@ -6,14 +6,17 @@
       :showLabel="true"
       variant="reverse"
       :submitLabel="false"
-      :inputValue="inputValue"
+      :inputValue="
+        inputValue?.useGeolocation ? userGeolocation || null : inputValue
+      "
       :suggestions="results"
       :showNoResults="true"
-      :debounce="5000"
       :maxSuggestionsDisplayed="8"
       :placeholder="placeholder"
       :getOptionId="(itm:any) => itm?.id || itm?.name"
       :getSuggestionVal="(itm:any) => itm?.name || ''"
+      :getOptionLabel="(itm:any) => itm?.name || ''"
+      :isBusy="isGettingLocation"
       :isFreeText="false"
       :submitOnClear="true"
       @submit="submitAction"
@@ -42,9 +45,8 @@
 import { inject, watch } from 'vue'
 import { ref, getSingleResultValue } from '#imports'
 import { useDebounceFn } from '@vueuse/core'
-import { transformExtent } from 'ol/proj'
+import { transformExtent, fromLonLat } from 'ol/proj'
 import { Extent } from 'ol/extent'
-import { fitExtent, fitVictoria } from '@dpc-sdp/ripple-ui-maps'
 // TODO must add analytics events
 // import { useRippleEvent } from '@dpc-sdp/ripple-ui-core'
 
@@ -58,6 +60,8 @@ interface Props {
   placeholder?: string
   tagsComponent?: string
   mapResultsFnName?: string
+  isGettingLocation?: boolean
+  userGeolocation: any
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -69,7 +73,9 @@ const props = withDefaults(defineProps<Props>(), {
   label: 'Search by postcode or suburb',
   placeholder: 'Enter postcode or suburb',
   tagsComponent: undefined,
-  mapResultsFnName: ''
+  mapResultsFnName: '',
+  isGettingLocation: false,
+  userGeolocation: null
 })
 
 const results = ref([])
@@ -91,7 +97,7 @@ const { rplMapRef, deadSpace } = inject('rplMapInstance')
 const pendingZoomAnimation = ref(false)
 
 async function submitAction(e: any) {
-  const item = e.value
+  const item = e.payload
 
   // The search bar component sometimes returns a string, sometimes an object, we just ignore the non-empty strings
   if (item && typeof item === 'string') {
@@ -246,6 +252,20 @@ async function centerMapOnLocation(
   animate: boolean
 ) {
   if (!props.controlMapZooming) {
+    return
+  }
+
+  // Zoom to the user's geolocation if enabled
+  if (location?.useGeolocation && props.userGeolocation) {
+    const center = [
+      props.userGeolocation.center[0],
+      props.userGeolocation.center[1]
+    ]
+
+    const zoom = 16
+
+    centerMap(map, fromLonLat(center), zoom, deadSpace.value, null)
+
     return
   }
 

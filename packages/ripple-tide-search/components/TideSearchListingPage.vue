@@ -7,6 +7,7 @@ import {
   computed
 } from '#imports'
 import { submitForm } from '@formkit/vue'
+import { useDebounceFn } from '@vueuse/core'
 import useTideSearch from './../composables/useTideSearch'
 import type { TidePageBase, TideSiteData } from '@dpc-sdp/ripple-tide-api/types'
 import type {
@@ -33,7 +34,8 @@ interface Props {
   autocompleteMinimumCharacters?: number
   searchListingConfig?: TideSearchListingConfig['searchListingConfig']
   sortOptions?: TideSearchListingConfig['sortOptions']
-  queryConfig: TideSearchListingConfig['queryConfig']
+  customQueryConfig?: TideSearchListingConfig['customQueryConfig']
+  queryConfig?: TideSearchListingConfig['queryConfig']
   globalFilters?: TideSearchListingConfig['globalFilters']
   userFilters?: TideSearchListingConfig['userFilters']
   resultsLayout: TideSearchListingResultLayout
@@ -42,6 +44,7 @@ interface Props {
   searchResultsMappingFn?: (item: any) => MappedSearchResult<any>
   contentPage: TideContentPage
   site: TideSiteData
+  showUpdatedDate?: boolean
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -52,6 +55,7 @@ const props = withDefaults(defineProps<Props>(), {
   autocompleteMinimumCharacters: 3,
   globalFilters: () => [],
   userFilters: () => [],
+  customQueryConfig: undefined,
   queryConfig: () => ({
     multi_match: {
       query: '{{query}}',
@@ -77,8 +81,10 @@ const props = withDefaults(defineProps<Props>(), {
         key: 'title',
         enabled: true
       },
-      showFiltersOnLoad: false
-    } as any),
+      showFiltersOnLoad: false,
+      showFiltersOnly: false,
+      scrollToResultsOnSubmit: true
+    }) as any,
   resultsLayout: () => ({
     component: 'TideSearchResultsList'
   }),
@@ -95,7 +101,8 @@ const props = withDefaults(defineProps<Props>(), {
       }
     }
   },
-  sortOptions: () => []
+  sortOptions: () => [],
+  showUpdatedDate: false
 })
 
 const emit = defineEmits<{
@@ -114,7 +121,10 @@ const emit = defineEmits<{
 
 const { emitRplEvent } = useRippleEvent('tide-search', emit)
 
-const filtersExpanded = ref(props.searchListingConfig?.showFiltersOnLoad)
+const filtersExpanded = ref(
+  props.searchListingConfig?.showFiltersOnLoad ||
+    props.searchListingConfig?.showFiltersOnly
+)
 
 const {
   isBusy,
@@ -127,6 +137,7 @@ const {
   filterForm,
   appliedFilters,
   resetFilters,
+  resetSearch,
   submitSearch,
   goToPage,
   page,
@@ -137,8 +148,10 @@ const {
   totalPages,
   pagingStart,
   pagingEnd,
+  scrollToResults,
   onAggregationUpdateHook
 } = useTideSearch({
+  customQueryConfig: props.customQueryConfig,
   queryConfig: props.queryConfig,
   userFilters: props.userFilters,
   globalFilters: props.globalFilters,
@@ -154,7 +167,7 @@ const baseEvent = () => ({
   contextId: props.id,
   name: props.title,
   index: page.value,
-  label: searchTerm.value,
+  label: searchTerm.value.q,
   value: totalResults.value,
   options: getActiveFilterURL(filterForm.value),
   section: 'search-listing'
@@ -197,6 +210,8 @@ onAggregationUpdateHook.value = (aggs: any) => {
   })
 }
 
+const resultsContainer = '.rpl-layout__body-wrap'
+
 const emitSearchEvent = (event: any) => {
   emitRplEvent(
     'submit',
@@ -220,6 +235,9 @@ const handleSearchSubmit = (event: any) => {
   } else {
     // If there's no filters in the form, we need to just do the search without submitting the filter form
     submitSearch()
+    if (event?.type === 'button') {
+      scrollToResults(resultsContainer)
+    }
     emitSearchEvent({ ...event, ...baseEvent() })
   }
 }
@@ -227,6 +245,13 @@ const handleSearchSubmit = (event: any) => {
 const handleFilterSubmit = (event: any) => {
   filterForm.value = event.value
   submitSearch()
+
+  if (
+    !cachedSubmitEvent.value?.type ||
+    cachedSubmitEvent.value?.type === 'button'
+  ) {
+    scrollToResults(resultsContainer)
+  }
 
   emitSearchEvent({ ...event, ...cachedSubmitEvent.value, ...baseEvent() })
 
@@ -244,23 +269,34 @@ const handleFilterReset = (event: rplEventPayload) => {
     { global: true }
   )
 
-  searchTerm.value = ''
+  resetSearch()
   resetFilters()
   submitSearch()
 }
 
 const handleUpdateSearchTerm = (term: string) => {
-  searchTerm.value = term
+  searchTerm.value.q = term
+  getDebouncedSuggestions(term)
+}
 
+const getDebouncedSuggestions = useDebounceFn((term: string) => {
   if (
     props.autocompleteQuery &&
     props.searchListingConfig?.suggestions?.enabled !== false
   ) {
-    if (term.length >= props.autocompleteMinimumCharacters) {
+    if (term?.length >= props.autocompleteMinimumCharacters) {
       getSuggestions()
     } else if (suggestions.value?.length) {
       clearSuggestions()
     }
+  }
+}, 300)
+
+const handleUpdateSearch = (term: string | Record<string, any>) => {
+  if (term && typeof term === 'object') {
+    searchTerm.value = { ...searchTerm.value, ...term }
+  } else {
+    handleUpdateSearchTerm(term)
   }
 }
 
@@ -333,7 +369,9 @@ watch(
     :background="contentPage.background"
     :pageTitle="contentPage.title"
     :pageLanguage="contentPage.lang"
-    :updatedDate="contentPage.changed || contentPage.created"
+    :updatedDate="
+      showUpdatedDate ? contentPage.changed || contentPage.created : null
+    "
     :showContentRating="contentPage.showContentRating"
   >
     <template #breadcrumbs>
@@ -354,19 +392,42 @@ watch(
           v-if="!searchListingConfig?.hideSearchForm"
           class="tide-search-header"
         >
-          <RplSearchBar
-            id="tide-search-bar"
-            variant="default"
-            :input-label="searchListingConfig?.labels?.submit"
-            :inputValue="searchTerm"
-            :placeholder="searchListingConfig?.labels?.placeholder"
-            :suggestions="suggestions"
-            :global-events="false"
-            @submit="handleSearchSubmit"
-            @update:input-value="handleUpdateSearchTerm"
-          />
+          <template v-if="!searchListingConfig?.showFiltersOnly">
+            <component
+              :is="customQueryConfig.component"
+              v-if="customQueryConfig?.component"
+              v-bind="customQueryConfig?.props"
+              id="tide-search-bar"
+              variant="default"
+              :input-label="searchListingConfig?.labels?.submit"
+              :inputValue="searchTerm"
+              :placeholder="searchListingConfig?.labels?.placeholder"
+              :suggestions="suggestions"
+              :global-events="false"
+              :handle-submit="handleSearchSubmit"
+              :handle-update="handleUpdateSearch"
+            />
+            <RplSearchBar
+              v-else
+              id="tide-search-bar"
+              variant="default"
+              :input-label="searchListingConfig?.labels?.submit"
+              :inputValue="searchTerm.q"
+              :placeholder="searchListingConfig?.labels?.placeholder"
+              :suggestions="suggestions"
+              :global-events="false"
+              :maxlength="128"
+              @submit="handleSearchSubmit"
+              @update:input-value="handleUpdateSearchTerm"
+            />
+          </template>
           <RplSearchBarRefine
-            v-if="userFilters && userFilters.length > 0"
+            v-if="
+              !searchListingConfig?.showFiltersOnLoad &&
+              !searchListingConfig?.showFiltersOnly &&
+              userFilters &&
+              userFilters.length > 0
+            "
             class="tide-search-refine-btn"
             :expanded="filtersExpanded"
             aria-controls="tide-search-listing-filters"
@@ -401,9 +462,7 @@ watch(
           :html="contentPage.beforeResults"
         />
       </RplPageComponent>
-      <TideSearchAboveResults
-        v-if="results?.length || (sortOptions && sortOptions.length)"
-      >
+      <TideSearchAboveResults>
         <template #left>
           <slot
             name="resultsCount"
@@ -415,10 +474,12 @@ watch(
           >
             <div data-component-type="search-listing-result-count">
               <TideSearchResultsCount
-                v-if="!searchError && results?.length"
+                v-if="!searchError"
                 :pagingStart="pagingStart + 1"
                 :pagingEnd="pagingEnd + 1"
                 :totalResults="totalResults"
+                :results="results"
+                :loading="isBusy"
               />
             </div>
           </slot>
@@ -442,13 +503,14 @@ watch(
             v-else-if="!isBusy && !results?.length"
           />
 
-          <slot name="results" :results="results">
+          <slot v-if="!searchError" name="results" :results="results">
             <component
               :is="resultsLayout.component"
-              v-if="!searchError && results && results.length > 0"
               :key="`TideSearchListingResultsLayout${resultsLayout.component}`"
               v-bind="resultsLayout.props"
+              :loading="isBusy"
               :results="results"
+              :perPage="searchListingConfig?.resultsPerPage"
             />
           </slot>
         </TideSearchResultsLoadingState>
@@ -466,6 +528,7 @@ watch(
             v-if="!searchError"
             :currentPage="page"
             :totalPages="totalPages"
+            :scroll-to-selector="resultsContainer"
             @paginate="handlePageChange"
           />
         </slot>

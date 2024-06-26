@@ -1,7 +1,7 @@
 {
   "name": "@dpc-sdp/ripple-ui-core",
   "description": "Ripple UI Core component library",
-  "version": "2.9.0",
+  "version": "2.10.3",
   "license": "Apache-2.0",
   "repository": "https://github.com/dpc-sdp/ripple-framework",
   "files": [
@@ -67,7 +67,7 @@
     "@vue/compiler-sfc": "^3.2.47",
     "autoprefixer": "^10.4.14",
     "chromatic": "^6.17.2",
-    "eslint-config-prettier": "^8.8.0",
+    "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-storybook": "^0.6.13",
     "pathe": "^1.1.0",
     "rimraf": "^4.4.1",

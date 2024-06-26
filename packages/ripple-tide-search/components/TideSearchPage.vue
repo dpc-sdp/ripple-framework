@@ -1,6 +1,11 @@
 <script setup lang="ts">
 import { ref, watch } from 'vue'
-import { getActiveFilterURL, useRuntimeConfig, useTideSite } from '#imports'
+import {
+  getActiveFilterURL,
+  scrollToElementTopWithOffset,
+  useRuntimeConfig,
+  useTideSite
+} from '#imports'
 import useSearchUI from './../composables/useSearchUI'
 import {
   AppSearchFilterConfigItem,
@@ -17,12 +22,14 @@ interface Props {
   filtersConfig: AppSearchFilterConfigItem[]
   searchDriverOptions: Omit<SearchDriverOptions, 'apiConnector'>
   searchResultsMappingFn: (item: any) => MappedSearchResult<any>
+  scrollToResults: boolean
 }
 
 const props = withDefaults(defineProps<Props>(), {
   id: 'tide-search-page',
   pageTitle: 'Search',
   filtersConfig: () => [],
+  scrollToResults: true,
   searchDriverOptions: () => ({
     initialState: { resultsPerPage: 10 },
     alwaysSearchOnInitialLoad: true,
@@ -100,9 +107,17 @@ const {
   props.searchResultsMappingFn
 )
 
+const initialLoad = ref(true)
 const filtersExpanded = ref(false)
-const toggleFiltersLabel = 'Refine search'
 const submitFiltersLabel = 'Apply search filters'
+
+const toggleFiltersLabel = computed(() => {
+  let label = 'Refine search'
+
+  return searchState.value?.filters?.length
+    ? `${label} (${searchState.value.filters.length})`
+    : label
+})
 
 const baseEvent = () => ({
   contextId: props.id,
@@ -126,15 +141,29 @@ const emitSearchEvent = (event) => {
   )
 }
 
+const scrollToResults = () => {
+  if (props.scrollToResults) {
+    const scrollToElement = document.querySelector('.rpl-layout__body-wrap')
+
+    if (scrollToElement) {
+      scrollToElementTopWithOffset(scrollToElement)
+    }
+  }
+}
+
 const handleSubmit = (event) => {
   doSearch()
-
   emitSearchEvent(event)
+
+  if (event?.type === 'button') {
+    scrollToResults()
+  }
 }
 
 const handleFilterSubmit = (event) => {
   filterFormValues.value = event.data
   doSearch()
+  scrollToResults()
 
   emitSearchEvent({ ...event, text: submitFiltersLabel, type: 'button' })
 }
@@ -194,6 +223,19 @@ const handlePagination = (event) => {
   )
 }
 
+const displayResults = computed(() => {
+  if (loading.value) {
+    return Array(props.searchDriverOptions?.initialState?.resultsPerPage).fill({
+      id: 'skeleton',
+      component: 'TideSearchResultSkeleton'
+    })
+  }
+
+  return results.value?.length ? results.value : []
+})
+
+const loading = computed(() => initialLoad.value || searchState.value.isLoading)
+
 watch(
   () => searchState.value.isLoading,
   (loading, prevLoading) => {
@@ -206,6 +248,8 @@ watch(
         },
         { global: true }
       )
+
+      initialLoad.value = false
     }
   }
 )
@@ -230,6 +274,7 @@ watch(
             :inputValue="searchState.searchTerm"
             :suggestions="searchTermSuggestions"
             :global-events="false"
+            maxlength="128"
             @submit="handleSubmit"
             @update:input-value="updateSearchTerm"
           />
@@ -251,7 +296,9 @@ watch(
               :title="pageTitle"
               @submit="handleFilterSubmit"
             >
-              <div class="rpl-grid rpl-grid--no-row-gap tide-search-filters">
+              <div
+                class="rpl-grid rpl-grid--no-row-gap rpl-u-margin-t-6 tide-search-filters"
+              >
                 <div
                   v-for="filter in filtersConfig"
                   :key="filter.field"
@@ -281,12 +328,13 @@ watch(
       </RplHeroHeader>
     </template>
     <template #body>
-      <RplPageComponent v-if="!searchState.error && searchState.totalResults">
+      <RplPageComponent v-if="!searchState.error">
         <TideSearchResultsCount
-          v-if="!searchState.error && searchState.totalResults"
           :pagingStart="searchState.pagingStart"
           :pagingEnd="searchState.pagingEnd"
           :totalResults="searchState.totalResults"
+          :results="results"
+          :loading="loading"
         />
       </RplPageComponent>
       <RplPageComponent>
@@ -295,23 +343,21 @@ watch(
             <div
               :class="{
                 'tide-search-results': true,
-                'tide-search-results--loading':
-                  searchState.isLoading && !searchState.error
+                'tide-search-results--loading': loading && !searchState.error
               }"
             >
               <TideSearchError v-if="searchState.error" />
               <TideSearchNoResults
                 v-else-if="
-                  searchComplete &&
-                  !searchState.isLoading &&
-                  !searchState.totalResults
+                  searchComplete && !loading && !searchState.totalResults
                 "
                 :query="searchState.searchTerm"
               />
               <RplResultListing v-else>
                 <RplResultListingItem
-                  v-for="(result, idx) in results"
+                  v-for="(result, idx) in displayResults"
                   :key="`result-${idx}-${result.id}`"
+                  data-component-type="search-result"
                 >
                   <component :is="result.component" v-bind="result.props" />
                 </RplResultListingItem>
