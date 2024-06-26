@@ -33,5 +33,17 @@ export default defineNuxtConfig({
   sourcemap: true,
   devtools: {
     enabled: true
+  },
+  hooks: {
+    'vite:extendConfig'(viteInlineConfig, env) {
+      viteInlineConfig.server = {
+        ...viteInlineConfig.server,
+        hmr: {
+          protocol: 'ws',
+          host: 'localhost',
+          port: 24678
+        }
+      }
+    }
   }
 })

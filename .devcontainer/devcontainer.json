@@ -1,0 +1,49 @@
+{
+  "name": "Node.js & TypeScript",
+  "image": "mcr.microsoft.com/devcontainers/typescript-node:1-20-bookworm",
+  "features": {
+    "ghcr.io/devcontainers/features/node:1": {},
+    "ghcr.io/devcontainers/features/docker-in-docker:2": {}
+  },
+
+  "forwardPorts": [3000],
+  "portsAttributes": {
+    "3000": {
+      "label": "Nuxt",
+      "onAutoForward": "ignore"
+    },
+    "24678": {
+      "label": "Vite HMR",
+      "onAutoForward": "ignore"
+    }
+  },
+
+  // Share local BE container network
+  "runArgs": [
+    "--network=content-reference-sdp-vic-gov-au_default",
+    "--add-host=content-sdp.docker.internal:172.21.0.3"
+  ],
+
+  "postCreateCommand": "pnpm i",
+
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "dbaeumer.vscode-eslint",
+        "esbenp.prettier-vscode",
+        "eamodio.gitlens",
+        "streetsidesoftware.code-spell-checker",
+        "vue.volar",
+        "vivaxy.vscode-conventional-commits",
+        "csstools.postcss",
+        "editorconfig.editorconfig",
+        "stylelint.vscode-stylelint",
+        "alexkrechik.cucumberautocomplete",
+        "nuxt.mdc"
+      ],
+      "settings": {
+        "terminal.integrated.defaultProfile.linux": "zsh"
+      }
+    }
+  }
+}
