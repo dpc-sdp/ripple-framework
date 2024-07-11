@@ -50,6 +50,8 @@ interface Props {
 
 const props = defineProps<Props>()
 
+console.log('Some debug log', props.error)
+
 const is500 = computed(() => props.error?.statusCode === 500)
 const title = computed(() => (is500.value ? 'Sorry!' : 'Oops!'))
 const site = is500.value ? undefined : await useTideSite()

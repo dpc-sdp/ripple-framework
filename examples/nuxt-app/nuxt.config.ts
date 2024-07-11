@@ -33,5 +33,19 @@ export default defineNuxtConfig({
   sourcemap: true,
   devtools: {
     enabled: true
+  },
+  logLevel: 'verbose',
+
+  nitro: {
+    // Just the homepage
+    prerender: {
+      crawlLinks: false,
+      routes: ['/search']
+    }
+    // Every page, ignoring errors
+    // prerender: {
+    //     failOnError: false,
+    //     ignore: ['/search']
+    //   }
   }
 })
