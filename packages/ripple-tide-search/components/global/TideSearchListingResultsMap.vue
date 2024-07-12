@@ -10,6 +10,7 @@
       :popupType="popupType"
       :map-height="550"
       :pinStyle="pinStyle"
+      :activePinStyle="activePinStyle"
       :noresults="noresults"
       :hasSidePanel="hasSidePanel"
       :getFeatureTitle="getTitle"
@@ -89,6 +90,7 @@ interface Props {
   results: TideSearchListingMapFeature[]
   vectorLayerComponent?: string
   pinIconFn?: string
+  activePinIconFn?: string
   legendTitle?: string
   legendExpanded?: boolean
   legendItems?: {
@@ -106,6 +108,7 @@ const props = withDefaults(defineProps<Props>(), {
   titleObjPath: '_source.title[0]',
   vectorLayerComponent: undefined,
   pinIconFn: 'defaultPinStyleFn',
+  activePinIconFn: undefined,
   legendTitle: 'Key',
   legendExpanded: false,
   legendItems: () => [],
@@ -117,8 +120,18 @@ const props = withDefaults(defineProps<Props>(), {
 const appConfig = useAppConfig()
 const pinStyleFunctions = appConfig?.ripple?.search?.mapPinStyleFn
 const pinStyle = ref()
-if (pinStyleFunctions && pinStyleFunctions.hasOwnProperty(props.pinIconFn)) {
-  pinStyle.value = pinStyleFunctions[props.pinIconFn]
+const activePinStyle = ref()
+
+if (pinStyleFunctions) {
+  if (pinStyleFunctions.hasOwnProperty(props.pinIconFn)) {
+    pinStyle.value = pinStyleFunctions[props.pinIconFn]
+  }
+  if (
+    props.activePinIconFn &&
+    pinStyleFunctions.hasOwnProperty(props.activePinIconFn)
+  ) {
+    activePinStyle.value = pinStyleFunctions[props.activePinIconFn]
+  }
 }
 
 const mapRef = ref()

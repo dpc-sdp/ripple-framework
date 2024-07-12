@@ -39,6 +39,7 @@ interface Props {
   initialZoom?: number
   initialCenter?: [number, number]
   pinStyle?: Function
+  activePinStyle?: Function
   mapHeight?: number
   popupType?: 'sidebar' | 'popover'
   hasSidePanel?: boolean
@@ -68,6 +69,7 @@ const props = withDefaults(defineProps<Props>(), {
     ic.load()
     return ic
   },
+  activePinStyle: null,
   noresults: false,
   getFeatureTitle: (feature: any) => (feature ? feature.title : '')
 })
@@ -92,7 +94,7 @@ onUnmounted(() => {
 const activatePin = (featureProperties, coordinates, zoom) => {
   const map = mapRef.value.map
 
-  const pinStyle = props.pinStyle(featureProperties)
+  const pinStyle = props.pinStyle(featureProperties, Icon)
   const pinColor =
     typeof pinStyle === 'string' ? pinStyle : pinStyle?.getColor()
 
@@ -119,14 +121,20 @@ const center = computed(() => {
 })
 
 const selectedPinStyle = (feature, style) => {
-  const ic = new Icon({
-    src: markerIconSelectedSrc,
-    color: popup.value.color,
-    anchor: [0.5, 1],
-    anchorXUnits: 'fraction',
-    anchorYUnits: 'fraction'
-  })
-  ic.load()
+  let ic = null
+  if (props.activePinStyle) {
+    ic = props.activePinStyle(feature, Icon)
+  } else {
+    ic = new Icon({
+      src: markerIconSelectedSrc,
+      color: popup.value.color,
+      anchor: [0.5, 1],
+      anchorXUnits: 'fraction',
+      anchorYUnits: 'fraction'
+    })
+    ic.load()
+  }
+
   style.setImage(ic)
   return style
 }
@@ -336,14 +344,9 @@ const noResultsRef = ref(null)
         :mapFeatures="mapFeatures && mapFeatures.length > 0"
       ></slot>
 
-      <!-- This enlarged pin is rendered for the sidebar/fixed popup style only -->
+      <!-- This is an enlarged pin is rendered for the active feature -->
       <ol-vector-layer
-        v-if="
-          (popupType === 'sidebar' || popupType === 'sidepanel') &&
-          popup.isOpen &&
-          popup.position &&
-          popup.feature?.length === 1
-        "
+        v-if="popup.isOpen && popup.position && popup.feature?.length === 1"
         :zIndex="5"
       >
         <ol-source-vector>

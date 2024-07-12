@@ -87,6 +87,31 @@ Feature: Custom collection map component
     Then the map matches the image snapshot "map-popup-type-sidebar-with-sidepanel-double-pin"
 
   @mockserver
+  Scenario: Custom map pins
+    Given I load the page fixture with "/maps/basic-page"
+    And the popup type is "popover"
+    And the maps pin function is "testMapPinCustom"
+    Then the page endpoint for path "/map" returns the loaded fixture
+    And the "/api/tide/elasticsearch/elasticsearch_index_develop_node/_search" network request is stubbed with fixture "/maps/simple-map-results" and status 200 as alias "searchReq"
+    Given I visit the page "/map"
+    When I wait 2 seconds
+    Then the map matches the image snapshot "map-popup-custom-pins"
+
+  @mockserver
+  Scenario: Custom current (i.e. active) map pins
+    Given I load the page fixture with "/maps/basic-page"
+    And the popup type is "popover"
+    And the maps pin function is "testMapPinCustom"
+    And the maps current pin function is "testMapCurrentPinCustom"
+    Then the page endpoint for path "/map" returns the loaded fixture
+    And the "/api/tide/elasticsearch/elasticsearch_index_develop_node/_search" network request is stubbed with fixture "/maps/simple-map-results" and status 200 as alias "searchReq"
+    Given I visit the page "/map"
+    When I wait 2 seconds
+    When I click the map component at coordinates 517 242
+    When I wait 2 seconds
+    Then the map matches the image snapshot "map-popup-custom-current-pins"
+
+  @mockserver
   Scenario: Sidepanel - Clicking an item
     Given I load the page fixture with "/maps/basic-page"
     Given the side panel is enabled

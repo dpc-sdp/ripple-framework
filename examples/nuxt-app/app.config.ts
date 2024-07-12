@@ -185,6 +185,18 @@ export default defineAppConfig({
           // Used for tests in cypress
           return feature.test_pin_color ? feature.test_pin_color : 'black'
         },
+        testMapPinCustom: (feature, Icon) => {
+          return new Icon({
+            src: "data:image/svg+xml,%3Csvg width='32' height='32' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg' fill='%23ffffff'%3E%3Cpath d='M4.5 2C3.11929 2 2 3.11929 2 4.5V19.5C2 20.8807 3.11929 22 4.5 22H19.5C20.8807 22 22 20.8807 22 19.5V4.5C22 3.11929 20.8807 2 19.5 2H4.5Z'/%3E%3C/svg%3E",
+            color: '#00bcd4'
+          })
+        },
+        testMapCurrentPinCustom: (feature, Icon) => {
+          return new Icon({
+            src: "data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 24 24' fill='%23ffffff' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M14.1735 2.22902C13.2063 0.590325 10.7938 0.590326 9.82664 2.22902L0.340215 18.3024C-0.657696 19.9933 0.63634 22 2.51362 22H21.4865C23.3638 22 24.6578 19.9933 23.6599 18.3024L14.1735 2.22902Z'/%3E%3C/svg%3E",
+            color: '#00d461'
+          })
+        },
         vsbaPinIcons: (feature) => {
           const projectType =
             feature && feature['field_mappintype_name']

@@ -125,6 +125,26 @@ Given('the side panel is enabled', () => {
   })
 })
 
+Given('the maps pin function is {string}', (pinFunction) => {
+  cy.get('@pageFixture').then((response) => {
+    set(
+      response,
+      'bodyComponents[0].props.mapConfig.props.pinIconFn',
+      pinFunction
+    )
+  })
+})
+
+Given('the maps current pin function is {string}', (currentPinFunction) => {
+  cy.get('@pageFixture').then((response) => {
+    set(
+      response,
+      'bodyComponents[0].props.mapConfig.props.currentPinIconFn',
+      currentPinFunction
+    )
+  })
+})
+
 Given('I click the side panel item with text {string}', (title) => {
   cy.get('.rpl-map-side-panel [role="button"]')
     .contains(title)

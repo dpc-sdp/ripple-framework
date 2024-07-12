@@ -13,14 +13,7 @@
         '--local-popup-header-height': `${headerHeight}px`
       }"
     >
-      <slot v-if="type === 'popover'" name="above">
-        <LargePinIcon
-          v-if="!isArea && isOpen"
-          class="rpl-map-popup__large-pin"
-          :class="{ [`rpl-map-popup__large-pin--open`]: isOpen }"
-          :style="{ fill: `${pinColor}` }"
-        />
-      </slot>
+      <slot v-if="type === 'popover'" name="above"> </slot>
 
       <div v-if="isOpen" class="rpl-map-popup__container">
         <div ref="headerRef" class="rpl-map-popup__header">
@@ -58,7 +51,6 @@ import { useResizeObserver } from '@vueuse/core'
 import { RplIcon } from '@dpc-sdp/ripple-ui-core/vue'
 import { useRippleEvent } from '@dpc-sdp/ripple-ui-core'
 import type { rplEventPayload } from '@dpc-sdp/ripple-ui-core'
-import LargePinIcon from './../../assets/icons/icon-pin-large.svg?component'
 
 interface Props {
   isOpen: boolean
@@ -95,4 +87,5 @@ useResizeObserver(headerRef, (entries) => {
   headerHeight.value = entry.borderBoxSize[0].blockSize
 })
 </script>
+
 <style src="./RplMapPopUp.css" />
