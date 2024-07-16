@@ -136,7 +136,6 @@ Then(
       cy.get(`[data-component-type="search-result"]`)
         .eq(i)
         .then((item) => {
-          cy.log(item)
           cy.wrap(item).should('contain', row.title)
 
           if (row.url) {
@@ -221,7 +220,9 @@ Then(
       .invoke('attr', 'for')
       .then((dropdownId) => {
         cy.get(`#${dropdownId}`).as('selectedDropdown')
-        cy.get('@selectedDropdown').should('have.text', value)
+        cy.get('@selectedDropdown').should(($div) => {
+          expect($div.get(0).innerText).to.eq(value)
+        })
       })
   }
 )
@@ -246,6 +247,42 @@ Then(
       .invoke('attr', 'for')
       .then((checkboxId) => {
         cy.get(`#${checkboxId}`).should('be.checked')
+      })
+  }
+)
+
+Then(
+  `the search listing checkbox group labelled {string} should have the following options checked`,
+  (label: string, dataTable: DataTable) => {
+    const table = dataTable.hashes()
+
+    cy.get('.rpl-form-label')
+      .contains(label)
+      .parents('.rpl-form__fieldset')
+      .find('.rpl-form-option-group')
+      .as('checkboxGroup')
+
+    table.forEach((row) => {
+      cy.get('@checkboxGroup').within(() => {
+        cy.contains('label', row.label)
+          .invoke('attr', 'for')
+          .then((checkboxId) => {
+            cy.get(`#${checkboxId}`).should('be.checked')
+          })
+      })
+    })
+  }
+)
+
+Then(
+  `the search listing checkbox group labelled {string} should not have any options checked`,
+  (label: string) => {
+    cy.get('.rpl-form-label')
+      .contains(label)
+      .parents('.rpl-form__fieldset')
+      .find('.rpl-form-option-group input')
+      .each(($el) => {
+        cy.wrap($el).should('not.be.checked')
       })
   }
 )
@@ -430,7 +467,7 @@ Then(
   `the search suggestions displayed should include`,
   (dataTable: DataTable) => {
     const table = dataTable.raw()
-    cy.get('#tide-search-bar__menu')
+    cy.get('.rpl-search-bar__menu')
       .find('[role="option"]')
       .as('suggestedOptions')
 
@@ -446,7 +483,7 @@ Then(
 )
 
 When('I click the search suggestion labelled {string}', (label: string) => {
-  cy.get('#tide-search-bar__menu')
+  cy.get('.rpl-search-bar__menu')
     .find('[role="option"]')
     .contains(label)
     .click()

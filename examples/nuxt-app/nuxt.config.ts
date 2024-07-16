@@ -15,7 +15,11 @@ export default defineNuxtConfig({
     }
   },
   // See https://nuxt.com/docs/getting-started/layers - each content type is a added as a Nuxt layer
-  extends: ['@dpc-sdp/nuxt-ripple', '@dpc-sdp/ripple-sdp-core'],
+  extends: [
+    '@dpc-sdp/nuxt-ripple',
+    '@dpc-sdp/ripple-sdp-core',
+    './layers/ripple-ui-forms-ext'
+  ],
   // Nuxt devtools
   sourcemap: true,
   devtools: {
