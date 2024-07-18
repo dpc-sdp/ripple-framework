@@ -14,7 +14,6 @@
       }"
     >
       <slot v-if="type === 'popover'" name="above"> </slot>
-
       <div v-if="isOpen" class="rpl-map-popup__container">
         <div ref="headerRef" class="rpl-map-popup__header">
           <button
@@ -55,7 +54,6 @@ import type { rplEventPayload } from '@dpc-sdp/ripple-ui-core'
 interface Props {
   isOpen: boolean
   isArea: boolean
-  pinColor?: string
   type?: 'standalone' | 'popover' | 'sidebar'
   mapHeight?: number
 }
@@ -63,7 +61,6 @@ interface Props {
 withDefaults(defineProps<Props>(), {
   isOpen: false,
   isArea: false,
-  pinColor: 'green',
   type: 'sidebar',
   mapHeight: 600
 })

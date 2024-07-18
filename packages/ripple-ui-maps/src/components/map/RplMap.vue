@@ -99,7 +99,7 @@ const activatePin = (featureProperties, coordinates, zoom) => {
     typeof pinStyle === 'string' ? pinStyle : pinStyle?.getColor()
 
   popup.value.feature = [featureProperties]
-  popup.value.color = asString(pinColor)
+  popup.value.color = pinColor ? asString(pinColor) : null
   popup.value.isOpen = true
   popup.value.isArea = false
 
@@ -383,7 +383,6 @@ const noResultsRef = ref(null)
             :is-open="popup.isOpen"
             :is-area="popup.isArea"
             :type="popupType"
-            :pinColor="popup.color"
             @close="onPopUpClose"
           >
             <template #header>
@@ -445,7 +444,6 @@ const noResultsRef = ref(null)
           :is-open="popup.isOpen"
           :is-area="popup.isArea"
           :type="popupType"
-          :pinColor="popup.color"
           :mapHeight="mapHeight"
           @close="onPopUpClose"
         >
