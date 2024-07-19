@@ -1,0 +1,62 @@
+.rpl-form {
+  &__tabs {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(50px, 1fr));
+    column-gap: 4px;
+    font-size: var(--rpl-type-size-2);
+    margin-bottom: var(--rpl-sp-4);
+  }
+
+  &__tab {
+    cursor: pointer;
+    text-align: left;
+    border-top: 8px solid var(--rpl-clr-neutral-300);
+    padding-top: 10px;
+
+    /* Hide label till md. */
+    font-size: 0;
+    line-height: 0;
+
+    @media (--rpl-bp-m) {
+      font-size: inherit;
+      line-height: inherit;
+    }
+
+    /* Set top border 'success' if visited & valid, 'error' if visited & invalid, 'primary' if active. */
+    &[data-visited="true"] {
+      &[data-valid="true"] {
+        border-top-color: var(--rpl-clr-success);
+      }
+
+      &[data-valid="false"] {
+        border-top-color: var(--rpl-clr-error);
+      }
+    }
+
+    &[data-active="true"] {
+      font-weight: bold;
+      border-top-color: var(--rpl-clr-primary) !important;
+    }
+
+    /* Hide the badge on the tab with the number of errors. */
+    .rpl-form__badge {
+      display: none;
+    }
+  }
+
+  /* Prev/next button tweaks. */
+  &__stepActions {
+    button {
+      line-height: 1;
+    }
+  }
+
+  /* Hide the error border on invalid multi-step and step wrappers. */
+  [data-type="multi-step"],
+  [data-type="step"] {
+    &[data-invalid="true"] {
+      border-left: none;
+      padding-left: 0;
+    }
+  }
+}

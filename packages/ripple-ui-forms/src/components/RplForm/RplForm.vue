@@ -10,7 +10,6 @@ import {
 } from '@formkit/core'
 import { getValidationMessages } from '@formkit/validation'
 import { createMultiStepPlugin } from '@formkit/addons'
-import '@formkit/addons/css/multistep'
 import rplFormInputs from '../../plugin'
 import RplFormAlert from '../RplFormAlert/RplFormAlert.vue'
 import { reset } from '@formkit/vue'
@@ -351,3 +350,4 @@ const handleStepChange = ({ targetStep }) => {
 </template>
 
 <style src="./RplForm.css"></style>
+<style src="./RplFormMultiStep.css"></style>
