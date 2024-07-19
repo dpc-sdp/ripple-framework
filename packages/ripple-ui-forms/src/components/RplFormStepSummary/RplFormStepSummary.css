@@ -1,0 +1,24 @@
+.rpl-form-step-summary {
+  display: flex;
+  align-items: center;
+  font-size: var(--rpl-type-size-3);
+  margin-bottom: var(--rpl-sp-3);
+
+  &__current {
+    color: var(--rpl-clr-primary);
+    border: 2px solid var(--rpl-clr-primary);
+    border-radius: 1.6rem;
+    font-weight: bold;
+    text-align: center;
+    line-height: 1;
+    padding: calc(var(--rpl-sp-1) / 2) var(--rpl-sp-1);
+    min-width: 2.4rem;
+    display: inline-block;
+    box-sizing: content-box;
+  }
+
+  &__name {
+    font-weight: bold;
+    margin-left: 1.2rem;
+  }
+}

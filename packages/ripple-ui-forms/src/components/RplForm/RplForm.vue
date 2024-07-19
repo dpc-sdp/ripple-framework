@@ -264,6 +264,21 @@ const pagesSchema = computed(() =>
 const nonPagesSchema = computed(() =>
   (props.schema || []).filter((f) => f['$formkit'] !== 'RplFormPage')
 )
+
+const stepInformation = ref({
+  name: (pagesSchema.value)[0]?.title,
+  index1: 1,
+  total: pagesSchema.value.length
+})
+
+const handleStepChange = ({ targetStep }) => {
+  stepInformation.value = {
+    ...stepInformation.value,
+    name: targetStep.stepName,
+    index1: targetStep.stepIndex + 1,
+  }
+  return true
+}
 </script>
 
 <template>
@@ -284,6 +299,10 @@ const nonPagesSchema = computed(() =>
       class="rpl-form__submit-guard"
       :disabled="submissionState.status === 'submitting'"
     >
+      <RplFormStepSummary
+        v-if="pagesSchema.length > 0"
+        v-bind="stepInformation"
+      />
       <RplFormAlert
         v-if="errorSummaryMessages && errorSummaryMessages.length"
         ref="errorSummaryRef"
@@ -312,6 +331,7 @@ const nonPagesSchema = computed(() =>
           v-if="pagesSchema.length > 0"
           :type="'multi-step' as any"
           tab-style="progress"
+          :before-step-change="handleStepChange"
         >
           <RplFormPage
             v-for="page in pagesSchema"
