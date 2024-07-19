@@ -257,11 +257,12 @@ const plugins = computed(
       Boolean
     ) as FormKitPlugin[]
 )
+
 const pagesSchema = computed(() =>
-  props.schema.filter((f) => f['$formkit'] === 'RplFormPage')
+  (props.schema || []).filter((f) => f['$formkit'] === 'RplFormPage')
 )
 const nonPagesSchema = computed(() =>
-  props.schema.filter((f) => f['$formkit'] !== 'RplFormPage')
+  (props.schema || []).filter((f) => f['$formkit'] !== 'RplFormPage')
 )
 </script>
 
