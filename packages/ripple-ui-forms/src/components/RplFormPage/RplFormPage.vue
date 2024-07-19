@@ -3,8 +3,8 @@
     :type="'step' as any"
     :name="name"
     :label="title"
-    :nextAttrs="{ inputClass: 'rpl-button rpl-u-margin-t-8' }"
-    :previousAttrs="{ inputClass: 'rpl-button rpl-u-margin-t-8' }"
+    :nextAttrs="{ inputClass: 'rpl-button rpl-button--outlined rpl-button--default rpl-u-focusable-block rpl-u-margin-t-8' }"
+    :previousAttrs="{ inputClass: 'rpl-button rpl-button--outlined rpl-button--default rpl-u-focusable-block rpl-u-margin-t-8' }"
   >
     <FormKitSchema v-if="schema" :schema="schema" :data="data"></FormKitSchema>
   </FormKit>
