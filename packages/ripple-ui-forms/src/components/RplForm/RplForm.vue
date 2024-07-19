@@ -29,7 +29,6 @@ interface Props {
     message: string
   }
   customInputs?: FormKitPlugin
-  stepStyle?: 'tab' | 'progress' | null
 }
 
 interface CachedError {
@@ -58,8 +57,7 @@ const props = withDefaults(defineProps<Props>(), {
     title: '',
     message: ''
   }),
-  customInputs: () => {},
-  stepStyle: 'progress'
+  customInputs: () => {}
 })
 
 const emit = defineEmits<{
