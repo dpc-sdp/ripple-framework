@@ -9,6 +9,7 @@ import {
   FormKitPlugin
 } from '@formkit/core'
 import { getValidationMessages } from '@formkit/validation'
+import { createMultiStepPlugin } from '@formkit/addons'
 import rplFormInputs from '../../plugin'
 import RplFormAlert from '../RplFormAlert/RplFormAlert.vue'
 import { reset } from '@formkit/vue'
@@ -90,10 +91,23 @@ const submitHandler = (form, node: FormKitNode) => {
   cachedErrors.value = {}
   submitCounter.value = 0
 
+  // Steps/page data gets nested - un-nest it.
+  let data = form
+  node.children
+    .filter((f) => f.props.type === 'multi-step')
+    .forEach((ms) => {
+      data = { ...data, ...data[ms.name] }
+      delete data[ms.name]
+      ms.children?.forEach((s) => {
+        data = { ...data, ...data[s.name] }
+        delete data[s.name]
+      })
+    })
+
   emitRplEvent(
     'submit',
     {
-      data: form,
+      data,
       id: props.id,
       name: props.title,
       action: 'submit',
@@ -160,7 +174,7 @@ const errorSummaryMessages = computed(() => {
 const rplFormConfig = ref({
   rootClasses: function (sectionKey) {
     return {
-      [`rpl-form__${sectionKey}`]: true
+      [`rpl-form__${sectionKey} formkit-${sectionKey}`]: true
     }
   },
   ...props.config
@@ -236,10 +250,32 @@ const data = reactive({
 
 const plugins = computed(
   () =>
-    [rplFormInputs, props.customInputs ? props.customInputs : false].filter(
+    [rplFormInputs, createMultiStepPlugin(), props.customInputs ? props.customInputs : false].filter(
       Boolean
     ) as FormKitPlugin[]
 )
+
+const pagesSchema = computed(() =>
+  (props.schema || []).filter((f) => f['$formkit'] === 'RplFormPage')
+)
+const nonPagesSchema = computed(() =>
+  (props.schema || []).filter((f) => f['$formkit'] !== 'RplFormPage')
+)
+
+const stepInformation = ref({
+  name: (pagesSchema.value)[0]?.title,
+  index1: 1,
+  total: pagesSchema.value.length
+})
+
+const handleStepChange = ({ targetStep }) => {
+  stepInformation.value = {
+    ...stepInformation.value,
+    name: targetStep.stepName,
+    index1: targetStep.stepIndex + 1,
+  }
+  return true
+}
 </script>
 
 <template>
@@ -260,6 +296,10 @@ const plugins = computed(
       class="rpl-form__submit-guard"
       :disabled="submissionState.status === 'submitting'"
     >
+      <RplFormStepSummary
+        v-if="pagesSchema.length > 0"
+        v-bind="stepInformation"
+      />
       <RplFormAlert
         v-if="errorSummaryMessages && errorSummaryMessages.length"
         ref="errorSummaryRef"
@@ -284,11 +324,23 @@ const plugins = computed(
       </RplFormAlert>
       <slot name="aboveForm"></slot>
       <slot :value="value">
-        <FormKitSchema
-          v-if="schema"
-          :schema="schema"
-          :data="data"
-        ></FormKitSchema>
+        <FormKit
+          v-if="pagesSchema.length > 0"
+          :type="'multi-step' as any"
+          tab-style="progress"
+          :before-step-change="handleStepChange"
+        >
+          <RplFormPage
+            v-for="page in pagesSchema"
+            :key="page.key"
+            :name="page.key"
+            :title="page.title"
+            :schema="page.schema"
+            :data="data"
+          />
+        </FormKit>
+
+        <FormKitSchema :schema="nonPagesSchema" :data="data"></FormKitSchema>
       </slot>
       <slot name="belowForm" :value="value"></slot>
     </fieldset>
@@ -296,3 +348,4 @@ const plugins = computed(
 </template>
 
 <style src="./RplForm.css"></style>
+<style src="./RplFormMultiStep.css"></style>

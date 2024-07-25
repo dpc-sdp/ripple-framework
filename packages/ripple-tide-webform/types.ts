@@ -12,8 +12,8 @@ export interface TideWebform {
 }
 
 export interface TideWebformElement {
-  '#type': string
-  '#title': string
+  '#type'?: string
+  '#title'?: string
   '#required'?: boolean
   '#required_error'?: string
   '#description'?: string

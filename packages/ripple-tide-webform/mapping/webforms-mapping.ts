@@ -331,6 +331,25 @@ export const getFormSchemaFromMapping = async (
           ...getInputIcons(field)
         }
         break
+      case 'webform_wizard_page': {
+        const title = field['#title']
+        const subform = webform
+        delete field['#title']
+        delete field['#type']
+        delete field['formId']
+        subform.elements = field as unknown as TideWebformElement[]
+        const subformSchema = await getFormSchemaFromMapping(
+          subform,
+          tidePageApi
+        )
+        mappedField = {
+          $formkit: 'RplFormPage',
+          key: fieldKey,
+          title,
+          schema: subformSchema
+        }
+        break
+      }
       default:
         if (Object.keys(customInputs).includes(field['#type'])) {
           mappedField = customInputs[field['#type']].mapping(
