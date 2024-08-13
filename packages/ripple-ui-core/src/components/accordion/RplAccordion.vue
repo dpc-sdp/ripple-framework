@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, useSlots } from 'vue'
 import RplIcon from '../icon/RplIcon.vue'
 import RplContent from '../content/RplContent.vue'
 import RplExpandable from '../expandable/RplExpandable.vue'
@@ -18,7 +18,7 @@ type RplAccordionItem = {
 
 interface Props {
   id: string
-  items: RplAccordionItem[]
+  items?: RplAccordionItem[]
   numbered?: boolean
   displayToggleAll?: boolean
 }
@@ -28,6 +28,9 @@ const props = withDefaults(defineProps<Props>(), {
   numbered: false,
   displayToggleAll: true
 })
+
+const {default: defaultSlot } = useSlots();
+const useItems = computed(() => props.items.length ? props.items : defaultSlot().map((child, i) => ({ id: i + 1 })))
 
 const emit = defineEmits<{
   (
@@ -42,7 +45,7 @@ const emit = defineEmits<{
 
 const { emitRplEvent } = useRippleEvent('rpl-accordion', emit)
 
-const initialActiveIndexes: string[] = props.items.reduce(
+const initialActiveIndexes: string[] = useItems.value.reduce(
   (result: string[], current: RplAccordionItem): string[] => {
     if (current.active) {
       return [...result, current.id]
@@ -55,7 +58,7 @@ const initialActiveIndexes: string[] = props.items.reduce(
 
 const { isItemExpanded, isAllExpanded, toggleItem } = useExpandableState(
   initialActiveIndexes,
-  props.items.length
+  useItems.value.length
 )
 
 const itemID = (itemId) => `accordion-${props.id}-${itemId}`
@@ -73,7 +76,7 @@ const toggleAll = () => {
 
   // Make all items active
   if (!isAllExpanded()) {
-    props.items.forEach((item) => {
+    useItems.value.forEach((item) => {
       // If the item is not expanded, make it expanded
       if (!isItemExpanded(item.id)) {
         toggleItem(item.id)
@@ -83,7 +86,7 @@ const toggleAll = () => {
 
   // Make all items inactive
   else {
-    props.items.forEach((item) => {
+    useItems.value.forEach((item) => {
       // If the item is expanded, make it not expanded
       if (isItemExpanded(item.id)) {
         toggleItem(item.id)
@@ -125,7 +128,7 @@ const toggleAllLabel = computed(() => {
       class="rpl-accordion__toggle-all-wrapper rpl-u-screen-only"
     >
       <button
-        v-if="items.length > 1"
+        v-if="useItems.length > 1"
         class="rpl-accordion__toggle-all rpl-u-focusable-inline"
         @click="toggleAll()"
       >
@@ -136,7 +139,7 @@ const toggleAllLabel = computed(() => {
     <!-- Items -->
     <component :is="numbered ? 'ol' : 'ul'" class="rpl-accordion__items">
       <li
-        v-for="(item, index) in items"
+        v-for="(item, index) in useItems"
         :id="itemID(item.id)"
         :key="item.id"
         :class="{

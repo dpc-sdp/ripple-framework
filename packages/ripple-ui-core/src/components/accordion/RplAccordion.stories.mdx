@@ -7,7 +7,6 @@ import {
 import { a11yStoryCheck } from './../../../stories/interactions.js'
 import RplAccordion from './RplAccordion.vue'
 import SAMPLE from './fixtures/default.js'
-import SLOTS_SAMPLE from './fixtures/slots.js'
 
 export const Template = (args) => ({
   components: { RplAccordion },
@@ -112,7 +111,6 @@ export const SlotsTemplate = (args) => ({
     play={a11yStoryCheck}
     args={{
       id: 'example',
-      items: SLOTS_SAMPLE,
     }}
   >
     {SlotsTemplate.bind()}
