@@ -164,7 +164,12 @@ const toggleAllLabel = computed(() => {
 
             <!-- Title -->
             <span class="rpl-accordion__item-heading rpl-type-h4">
-              {{ item.title }}
+              <template v-if="item.title">
+                {{ item.title }}
+              </template>
+              <template v-else>
+                <component :is="$slots.title?.()[index]" />
+              </template>
             </span>
           </span>
 
@@ -186,9 +191,16 @@ const toggleAllLabel = computed(() => {
           class="rpl-accordion__item-content"
         >
           <RplContent
+            v-if="item.content"
             class="rpl-accordion__item-content-inner"
             :html="item.content"
           >
+          </RplContent>
+          <RplContent
+            v-else
+            class="rpl-accordion__item-content-inner"
+          >
+            <component :is="$slots.default?.()[index]" />
           </RplContent>
         </RplExpandable>
       </li>

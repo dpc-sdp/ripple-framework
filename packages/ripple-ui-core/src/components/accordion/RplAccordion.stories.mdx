@@ -7,6 +7,7 @@ import {
 import { a11yStoryCheck } from './../../../stories/interactions.js'
 import RplAccordion from './RplAccordion.vue'
 import SAMPLE from './fixtures/default.js'
+import SLOTS_SAMPLE from './fixtures/slots.js'
 
 export const Template = (args) => ({
   components: { RplAccordion },
@@ -20,6 +21,45 @@ export const Template = (args) => ({
     <RplAccordion
       v-bind="args"
     />
+  `
+})
+
+export const SlotsTemplate = (args) => ({
+  components: { RplAccordion },
+  setup() {
+    return {
+      args,
+      SAMPLE
+    }
+  },
+  template: `
+    <RplAccordion
+      v-bind="args"
+    >
+      <template #title>
+        <span>Accordion one</span>
+        <span>Accordion two with a really long title that wraps over multiple lines so that we can see how the icon and number align vertically</span>
+        <span>Accordion three</span>
+      </template>
+      <div>
+        <p class="rpl-type-p">
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
+          et dolore magna aliqua.
+        </p>
+      </div>
+      <div>
+        <p class="rpl-type-p">
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
+          et dolore magna aliqua.
+        </p>
+      </div>
+      <div>
+        <p class="rpl-type-p">
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
+          et dolore magna aliqua.
+        </p>
+      </div>
+    </RplAccordion>
   `
 })
 
@@ -61,5 +101,20 @@ export const Template = (args) => ({
     }}
   >
     {Template.bind()}
+  </Story>
+</Canvas>
+
+## Slots
+
+<Canvas>
+  <Story
+    name='Accordion using slots'
+    play={a11yStoryCheck}
+    args={{
+      id: 'example',
+      items: SLOTS_SAMPLE,
+    }}
+  >
+    {SlotsTemplate.bind()}
   </Story>
 </Canvas>
