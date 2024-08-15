@@ -1,9 +1,13 @@
 <script setup lang="ts">
-const props = defineProps<{
+defineProps<{
+  id: string
   items: Array<any>
+  hasSidebar?: boolean
+  hasTitle?: boolean
+  pageBackground?: string
 }>()
 </script>
 
 <template>
-  <RplMediaGallery :items="items" />
+  <RplMediaGallery :id="id" :items="items" />
 </template>

@@ -3,6 +3,7 @@ import TideApiBase from './tide-api-base.js'
 import type { RplTideModuleConfig, IRplTideModuleMapping } from './../../types'
 import { ApplicationError } from '../errors/errors.js'
 import { ILogger } from '../logger/logger'
+import { defu as defuMerge } from 'defu'
 
 export default class TideSite extends TideApiBase {
   site: string
@@ -16,10 +17,14 @@ export default class TideSite extends TideApiBase {
   }
 
   setSiteMapping(siteMapping) {
-    this.siteMapping = siteMapping
+    if (!this.siteMapping) {
+      this.siteMapping = siteMapping
+    } else {
+      this.siteMapping = defuMerge(siteMapping, this.siteMapping)
+    }
   }
 
-  async getSiteData(siteid) {
+  async getSiteData(siteid, logId?: string) {
     if (!this.siteMapping) {
       throw new Error('Error loading site mapping')
     }
@@ -38,14 +43,23 @@ export default class TideSite extends TideApiBase {
       }
     }
     try {
-      const response = await this.get(`/taxonomy_term/sites`, { params })
+      const { data: response, headers } = await this.get(
+        `/taxonomy_term/sites`,
+        {
+          params,
+          _logId: logId
+        }
+      )
       if (response && response.data.length > 0) {
         const resource = jsonapiParse.parse(response).data[0]
         const siteData = await this.getMappedData(
           this.siteMapping.mapping,
           resource
         )
-        return siteData
+        return {
+          data: siteData,
+          headers
+        }
       }
     } catch (error: any) {
       throw new ApplicationError('Error fetching site data', { cause: error })

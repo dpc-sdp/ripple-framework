@@ -26,7 +26,9 @@ export const checkbox: FormKitTypeDefinition = {
       'aria-required': '$fns.isFieldRequired()',
       'data-rpl-focus-input': '$id',
       required: '$fns.isFieldRequired()',
-      showRequiredInLabel: '$fns.hasNoLabel()'
+      showRequiredInLabel: '$fns.hasNoLabel()',
+      variant: '$node.props.variant',
+      pii: '$node.props.pii'
     }
   }),
   library: inputLibrary,
@@ -42,7 +44,7 @@ export const checkbox: FormKitTypeDefinition = {
   /**
    * An array of extra props to accept for this input.
    */
-  props: ['checkboxLabel', 'onValue', 'offValue'],
+  props: ['checkboxLabel', 'variant', 'onValue', 'offValue', 'pii'],
   /**
    * Forces node.props.type to be this explicit value.
    */

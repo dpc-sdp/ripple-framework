@@ -2,8 +2,18 @@ import { setup, type Preview } from '@storybook/vue3'
 
 // @ts-ignore-next-line: Missing declaration
 import { registerRplFormPlugin } from '@dpc-sdp/ripple-ui-forms'
+import registerRplMapsPlugin from '@dpc-sdp/ripple-ui-maps/plugin'
+// Note: rebuild ripple-ui-core after generating sprite to update in storybook
 // @ts-ignore-next-line: Vue SFC
-import { RplIconSprite, RplLink, RplImg } from '@dpc-sdp/ripple-ui-core/vue'
+import {
+  RplIconSprite,
+  RplLink,
+  RplImg,
+  RplIcon,
+  RplButton,
+  RplContent,
+  RplTextLink
+} from '@dpc-sdp/ripple-ui-core/vue'
 import '@dpc-sdp/ripple-ui-core/style'
 import themes from './themes.js'
 import withBackground from './utils/withBackground'
@@ -21,9 +31,15 @@ window.svgPlaceholder = svgPlaceholder
 setup((app) => {
   // Ripple vue plugins
   registerRplFormPlugin(app)
+  registerRplMapsPlugin(app, {})
 
   app.component('RplLink', RplLink)
   app.component('RplImg', RplImg)
+  // Add global components needed for forms
+  app.component('RplIcon', RplIcon)
+  app.component('RplButton', RplButton)
+  app.component('RplContent', RplContent)
+  app.component('RplTextLink', RplTextLink)
 })
 
 const preview: Preview = {

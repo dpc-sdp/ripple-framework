@@ -23,12 +23,14 @@ export interface TideSiteData {
     href: string
     src: string
     altText: string
+    printSrc: string
   }
   showQuickExit: boolean
   cornerGraphic?: {
     top?: TideImageField
     bottom?: TideImageField
   }
+  contentRatingText?: string
   acknowledgementHeader?: string
   acknowledgementFooter: string
   copyrightHtml: string
@@ -40,11 +42,12 @@ export interface TideSiteData {
   theme: {
     [key: string]: string
   }
-  featureFlags: RplFeatureFlags
+  featureFlags: IRplFeatureFlags
   socialImages: {
     twitter: any
     og: any
   }
+  socialLinks: TideMenuItem[]
   menus: {
     menuMain: TideMenuItem[]
     menuFooter: TideMenuItem[]
@@ -80,6 +83,14 @@ export interface TideImageField {
     x: string
     y: string
   }
+}
+
+export type TideDocumentField = {
+  name: string
+  url: string
+  extension: string
+  size: string
+  id: string
 }
 
 export interface TidePageBase {
@@ -128,9 +139,26 @@ export type TidePropRange = {
   to: string | number
 }
 
+export type TideSiteSectionOverrides = {
+  showQuickExit: boolean
+  theme: Record<string, string>
+  featureFlags: IRplFeatureFlags
+}
+
 export type TideSiteSection = {
   id: string
   name: string
+  siteOverrides: TideSiteSectionOverrides
+}
+
+export interface TideSocialShare {
+  Facebook?: boolean
+  LinkedIn?: boolean
+  X?: boolean
+  WhatsApp?: boolean
+  email: boolean
+  emailSubject: string
+  emailBody: string
 }
 
 export interface RplTideModuleMappingConfig {
@@ -209,6 +237,18 @@ export interface IRplFeatureFlags {
    */
   footerTheme?: 'neutral' | 'default'
   /**
+   * @description Sets the display of the footer menu to one single level i.e. no children
+   */
+  footerMenuSingleLevel?: boolean
+  /**
+   * @description Disable the primary vic.gov.au logo for sites that are not co-branded
+   */
+  disablePrimaryLogo?: boolean
+  /**
+   * @description Disable the footer vic.gov.au logo for sites that are not co-branded
+   */
+  disableFooterLogo?: boolean
+  /**
    * @description Sets which search connector to use for content collection queries
    */
   contentCollectionSearchConnector?: 'appSearch' | 'elasticsearch'
@@ -216,6 +256,22 @@ export interface IRplFeatureFlags {
    * @description Option to disable the display of topics and tags on all content types
    */
   disableTopicTags?: boolean
+  /**
+   * @description Option to disable the display of the updated date on all content types
+   */
+  disableUpdatedDate?: boolean
+  /**
+   * @description Option to disable the display of the search form within the primary navigation
+   */
+  disablePrimaryNavSearch?: boolean
+  /**
+   * @description Force multi-line links to render on a single line in the primary navigation
+   */
+  primaryNavNowrap?: boolean
+  /**
+   * @description Option to override the default URL the search for redirects to
+   */
+  primaryNavSearchUrl?: string
   /**
    * @description Option to disable the display of coloured/rainbow stripes on top of promo cards
    */
@@ -228,6 +284,30 @@ export interface IRplFeatureFlags {
    * @description Sets the PROD Google Analytics measurement ID
    */
   prodMeasurementID?: string
+  /**
+   * @description Sets a secondary GTM container ID
+   */
+  gtmContainerID?: string
+  /**
+   * @description Extends the default social share options
+   */
+  socialShare?: TideSocialShare
+  /**
+   * @description Sets the number of toggle-able levels
+   */
+  sectionNavToggleLevels?: number
+  /**
+   * @description Allow overriding the default site search content types
+   */
+  search?: {
+    contentTypes: {
+      [key: string]: boolean
+    }
+  }
+  /**
+   * @description Custom flags
+   */
+  [key: string]: any
 }
 
 declare module 'nitropack' {
@@ -240,7 +320,12 @@ declare module 'nitropack' {
 
 // Mapping util interfaces
 export function getAddress(address: any): string
-export function getBodyFromField(field: string, path: string | string[]): string
+export function getBody(body: any, customPlugins?: (() => void)[]): string
+export function getBodyFromField(
+  field: string,
+  path: string | string[],
+  fallback?: any
+): string
 export function getField(
   field: string,
   path: string | string[],
@@ -252,3 +337,5 @@ export function getImageFromField(
 ): string
 export function getLinkFromField(field: any, path: string | string[]): any
 export function humanizeFilesize(fileSize: number): string
+export function getSiteKeyValues(key: string, src: any): any
+export function getSiteSection(sectionId: string, src: any): any

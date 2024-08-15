@@ -10,7 +10,8 @@ const baseProps = {
       title: 'Two',
       key: 'two'
     }
-  ]
+  ],
+  mode: 'horizontal'
 }
 
 describe('RplTabs', () => {
@@ -18,12 +19,21 @@ describe('RplTabs', () => {
     cy.mount(RplTabs, { props: baseProps })
   })
 
-  it('switches tabs when clicked', () => {
-    cy.mount(RplTabs, { props: baseProps })
+  it.only('switches tabs when clicked', () => {
+    const onChangeSpy = cy.spy().as('onChangeSpy')
 
-    cy.get('.rpl-tab--active').should('contain', 'One')
-    cy.get('.rpl-tab button').contains('Two').click()
-    cy.get('.rpl-tab--active').should('contain', 'Two')
+    cy.mount(RplTabs, {
+      props: { ...baseProps, activeTab: 'one', [`onToggleTab`]: onChangeSpy }
+    })
+
+    cy.get('.rpl-tab').contains('Two').click()
+
+    cy.get('@onChangeSpy').should('have.been.calledWith', {
+      action: 'select',
+      id: 'two',
+      key: 'two',
+      text: 'Two'
+    })
   })
 
   it('sets the correct default tab', () => {

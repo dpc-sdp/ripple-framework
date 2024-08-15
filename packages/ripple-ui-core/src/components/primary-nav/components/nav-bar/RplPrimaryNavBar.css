@@ -17,8 +17,6 @@
   padding-left: var(--rpl-sp-4);
 
   @media (--rpl-bp-s) {
-    padding-top: var(--rpl-sp-3);
-    padding-bottom: var(--rpl-sp-3);
     padding-left: var(--rpl-sp-5);
   }
 
@@ -42,12 +40,14 @@
   display: block;
   width: 106px;
   height: 16px;
+  fill: var(--rpl-clr-primary-logo, var(--rpl-clr-type-primary-contrast));
 
   @media print {
     width: auto;
     height: 30px;
     padding-top: var(--rpl-sp-1);
     padding-bottom: var(--rpl-sp-1);
+    fill: var(--rpl-clr-type-default);
   }
 }
 
@@ -110,6 +110,11 @@
       height: 60px;
     }
 
+    .rpl-primary-nav__nav-bar-action-wrapper {
+      display: block;
+      text-wrap: pretty;
+    }
+
     span {
       white-space: normal;
     }
@@ -118,6 +123,13 @@
     &:hover {
       text-decoration: underline;
       text-decoration-thickness: 2px;
+    }
+  }
+
+  &.rpl-primary-nav__nav-bar-actions-list--nowrap {
+    a,
+    button {
+      max-width: none;
     }
   }
 }
@@ -177,12 +189,17 @@
 
 .rpl-primary-nav__nav-bar-icon {
   display: inline-block;
+  margin-top: -1px;
   transform: translateY(1px);
   transition: transform var(--rpl-motion-speed-7) linear;
 
   &.rpl-primary-nav__nav-bar-icon--large {
     margin-top: -4px;
     transform: translateY(3px);
+
+    @media (--rpl-bp-s) {
+      margin-top: -5px;
+    }
   }
 
   &.rpl-primary-nav__nav-bar-icon--search {

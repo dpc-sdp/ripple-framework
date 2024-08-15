@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/ban-ts-comment */
 import svgLoader from 'vite-svg-loader'
 export default [
   svgLoader({
@@ -9,7 +8,9 @@ export default [
         {
           name: 'preset-default',
           params: {
-            overrides: {}
+            overrides: {
+              removeHiddenElems: false
+            }
           }
         },
         {
@@ -23,7 +24,6 @@ export default [
         },
         {
           name: 'removeAttributesBySelector',
-          // @ts-ignore
           params: {
             selector: "[style='fill:#*']",
             attributes: 'style'

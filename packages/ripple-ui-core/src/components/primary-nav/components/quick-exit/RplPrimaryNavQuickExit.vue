@@ -16,7 +16,7 @@ interface Props {
 
 const props = withDefaults(defineProps<Props>(), {
   url: 'https://www.google.com',
-  label: 'Quick Exit',
+  label: 'Quick exit',
   parent: undefined,
   variant: 'inline'
 })
@@ -64,7 +64,7 @@ const handleBackFocus = (event) => {
     :url="url"
     :label="label"
     variant="destructive"
-    :class="`rpl-primary-nav__quick-exit rpl-primary-nav__quick-exit--${variant}`"
+    :class="`rpl-primary-nav__quick-exit rpl-primary-nav__quick-exit--${variant} rpl-u-screen-only`"
     @click="clickHandler()"
     @keydown.shift.tab.exact="handleBackFocus"
   />

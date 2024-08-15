@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import { useBreakpoints } from '@vueuse/core'
-import { computed, onMounted, ref } from 'vue'
+import { computed, inject, onMounted, ref } from 'vue'
 import { bpMin } from '../../lib/breakpoints'
 import RplAcknowledgement from '../acknowledgement/RplAcknowledgement.vue'
 import RplTextLink from '../text-link/RplTextLink.vue'
-import VicGovLogo from './../../assets/logos/logo-victoria.svg?component'
+import VicGovLogo from './../../assets/logos/logo-victoria-state-government.svg?component'
 import {
   ICoreLink,
   ILogoLink,
@@ -19,6 +19,7 @@ import {
   useRippleEvent,
   rplEventPayload
 } from '../../composables/useRippleEvent'
+import type { IRplFeatureFlags } from '@dpc-sdp/ripple-tide-api/types'
 
 interface Props {
   variant?: (typeof RplFooterVariants)[number]
@@ -43,6 +44,10 @@ const emit = defineEmits<{
 }>()
 
 const { emitRplEvent } = useRippleEvent('rpl-footer', emit)
+
+const { disableFooterLogo }: IRplFeatureFlags = inject('featureFlags', {
+  disableFooterLogo: false
+})
 
 const isMounted = ref(false)
 
@@ -145,7 +150,7 @@ const handleClick = (link) => {
     data-component-type="site-footer"
   >
     <div class="rpl-container">
-      <nav class="rpl-footer__nav">
+      <nav class="rpl-footer__nav" aria-label="Footer navigation">
         <!-- Fallback rendering for SSR, this ensures that the server and client render the same thing initially -->
         <template v-if="!isMounted">
           <RplNavSection
@@ -231,6 +236,7 @@ const handleClick = (link) => {
             />
           </RplLink>
           <RplLink
+            v-if="!disableFooterLogo"
             class="rpl-footer-logo-link rpl-u-focusable-outline rpl-u-focusable-outline--no-border rpl-u-focusable--alt-colour"
             :url="vicGovHomeUrl"
             @click="

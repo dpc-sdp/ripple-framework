@@ -6,13 +6,14 @@ import {
 import { useSlotContent } from '../../composables/useSlotContent'
 
 interface Props {
-  url: string
+  url?: string
   openInNewWindow?: boolean
   download?: boolean
   globalEvents?: boolean
 }
 
 const props = withDefaults(defineProps<Props>(), {
+  url: undefined,
   openInNewWindow: false,
   download: undefined,
   globalEvents: true
@@ -26,15 +27,17 @@ const slotContent = useSlotContent('name')
 const { emitRplEvent } = useRippleEvent('rpl-document', emit)
 
 const onClick = () => {
-  emitRplEvent(
-    'download',
-    {
-      action: 'download',
-      text: slotContent,
-      value: props.url
-    },
-    { global: props.globalEvents }
-  )
+  if (props.url) {
+    emitRplEvent(
+      'download',
+      {
+        action: 'download',
+        text: slotContent,
+        value: props.url
+      },
+      { global: props.globalEvents }
+    )
+  }
 }
 </script>
 
@@ -42,11 +45,12 @@ const onClick = () => {
   <figure
     :class="{ 'rpl-document': true, 'rpl-document--centered': !$slots.info }"
   >
-    <a
+    <component
+      :is="url ? 'a' : 'div'"
       class="rpl-document__link rpl-u-focusable-within"
       :href="url"
       :download="download"
-      :target="openInNewWindow ? '_blank' : null"
+      :target="openInNewWindow ? '_blank' : undefined"
       @click="onClick"
     >
       <div v-if="$slots.icon" class="rpl-document__icon">
@@ -63,7 +67,10 @@ const onClick = () => {
           <slot name="info"></slot>
         </div>
       </div>
-    </a>
+      <span v-if="openInNewWindow" class="rpl-u-visually-hidden">
+        (opens in a new window)
+      </span>
+    </component>
     <figcaption
       v-if="$slots.caption"
       class="rpl-document__caption rpl-type-p-small"

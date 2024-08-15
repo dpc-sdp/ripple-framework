@@ -43,9 +43,11 @@ export default async (
       }, {})
     }
   })
+  const searchComplete = ref(false)
   const searchDriver = getSearchDriver(apiConnectorOptions, config)
   const searchState = ref(searchDriver.getState())
   const urlManager = ref(searchDriver.URLManager)
+  const autocompleteMinimumCharacters = 3
 
   const staticFacetOptions = ref(null)
   staticSearchDriver.setSearchTerm('')
@@ -71,6 +73,10 @@ export default async (
   )
 
   searchDriver.subscribeToStateChanges((state: SearchState) => {
+    if (!state.isLoading && searchState.value.isLoading) {
+      searchComplete.value = true
+    }
+
     searchState.value = state
   })
 
@@ -83,7 +89,12 @@ export default async (
   })
 
   const searchTermSuggestions = computed(() => {
-    if (!searchState.value?.autocompletedSuggestions) {
+    const characters = searchState.value?.searchTerm?.length ?? 0
+
+    if (
+      !searchState.value?.autocompletedSuggestions ||
+      characters < autocompleteMinimumCharacters
+    ) {
       return []
     }
 
@@ -97,10 +108,10 @@ export default async (
     const searchTermOptions = {
       refresh: false,
       autocompleteSuggestions: true,
-      autocompleteMinimumCharacters: 3,
+      autocompleteMinimumCharacters,
       debounce: 100
     }
-    searchDriver.getActions().setSearchTerm(value, searchTermOptions)
+    searchDriver.getActions().setSearchTerm(value || '', searchTermOptions)
   }
 
   const goToPage = (newPage: number) => {
@@ -134,6 +145,7 @@ export default async (
     searchTermSuggestions,
     results,
     staticFacetOptions,
-    filterFormValues
+    filterFormValues,
+    searchComplete
   }
 }

@@ -1,8 +1,13 @@
 import type { AxiosInstance } from 'axios'
-import { IRplFeatureFlags, IRplTideModuleMapping } from 'ripple-tide-api/types'
+import type {
+  IRplFeatureFlags,
+  IRplTideModuleMapping,
+  TideSiteSection
+} from '@dpc-sdp/ripple-tide-api/types'
 import { TideAlert } from './src/mapping/alerts/site-alerts-mapping'
 import { TideContact } from './src/mapping/sidebar-contacts/sidebar-contacts-mapping-types'
 import { TideTopicTag } from './src/mapping/topic-tags/topic-tags-mapping'
+import { HookResult } from '@nuxt/schema'
 
 export type TideApiResponse = any
 
@@ -48,13 +53,24 @@ export interface TideLink {
   url: string
 }
 
+export interface TideAlert {
+  alertId: string
+  variant: 'information' | 'warning' | 'error'
+  iconName: string
+  message: string
+  linkText: string
+  linkUrl: string
+}
+
 export interface TideMenuItem {
   text: string
-  url: string
+  url?: string
   id: string
-  parent: string | null
-  weight: number
-  items: TideMenuItem[]
+  parent?: string | null
+  weight?: number
+  icon?: string
+  iconColour?: string
+  items?: TideMenuItem[]
 }
 
 export interface TideUrlField {
@@ -93,6 +109,7 @@ export interface TideHeroHeader {
 }
 
 export interface TidePageBase {
+  type: string
   title: string
   created: string
   changed: string
@@ -103,8 +120,20 @@ export interface TidePageBase {
   sidebar: {
     contacts?: TideContact[]
     relatedLinks?: any[]
+    siteSectionNav?: {
+      title: string
+      items: any[]
+    }
+    socialShareNetworks?: []
+    whatsNext?: []
   }
+  siteSection: TideSiteSection
   [key: string]: unknown
+}
+
+export interface TideDynamicPageComponentBase {
+  hasSidebar: boolean
+  hasTitle: boolean
 }
 
 export type TideDynamicPageComponent<T> = {
@@ -177,5 +206,14 @@ declare module 'nitropack' {
       pageApi: TidePageApi
       siteApi: TideSiteApi
     }
+  }
+}
+
+declare module '#app' {
+  interface RuntimeNuxtHooks {
+    'tide:page': (props: {
+      page: Partial<TidePageBase>
+      site: Partial<TideSiteData>
+    }) => HookResult
   }
 }

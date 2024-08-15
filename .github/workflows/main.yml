@@ -4,20 +4,18 @@ jobs:
   Test:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Install pnpm
-        uses: pnpm/action-setup@v2
+        uses: pnpm/action-setup@v3
         with:
-          version: 8.6.2
+          version: 9.0.6
           run_install: false
       - name: Install Node
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
-          node-version: 18
+          node-version: 20
           cache: 'pnpm'
       - name: Install Dependencies
-        env:
-          PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: 1
         run: pnpm install --frozen-lockfile
       - run: pnpm run lint
       - run: pnpm run test:unit

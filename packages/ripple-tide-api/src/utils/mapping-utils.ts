@@ -1,7 +1,8 @@
 import { get } from 'lodash-es'
-import { TideImageField, TideUrlField } from '../../types'
+import { TideImageField, TideUrlField, TideDocumentField } from '../../types'
 import markupTranspiler from './markup-transpiler/index.js'
-import normaliseImageUrl from './normaliseImageUrl.js'
+import { stripMediaBaseUrl } from './stripMediaBaseUrl.js'
+import mime from 'mime-types'
 
 export type drupalField = Record<string, any>
 
@@ -16,6 +17,7 @@ interface RawMediaImage {
       x: string
       y: string
     }
+    drupal_internal__target_id?: number
   }
 }
 
@@ -37,13 +39,29 @@ interface RawCardImage {
   data: RawCardImageData[]
 }
 
-/**
- * @deprecated Need to make a decision on whether we proxy images or use direct url
- */
-export const removeDomainFromPath = (path: string) =>
-  typeof path === 'string' && path.length > 0
-    ? path.replace(/^.*(?=(\/sites\/default\/files))/, '')
-    : path
+type tidePageSitePartial = {
+  field_node_site: [
+    {
+      drupal_internal__tid: number
+    }
+  ]
+}
+
+export const getMediaPath = (field: any, path?: string | string[]): string => {
+  let uri = ''
+
+  if (path) {
+    field = get(field, path)
+  }
+
+  if (!field?.uri) {
+    uri = field?.url
+  } else {
+    uri = field?.uri?.url || field?.uri
+  }
+
+  return stripMediaBaseUrl(uri, process.env.NUXT_PUBLIC_TIDE_BASE_URL as string)
+}
 
 export const getImageFromField = (
   field: object,
@@ -68,11 +86,14 @@ export const getMediaImage = (
   if (fieldMediaImage.meta?.focal_point) {
     delete fieldMediaImage.meta.focal_point
   }
+
+  // Silence drupal prop
+  if (fieldMediaImage.meta?.drupal_internal__target_id) {
+    delete fieldMediaImage.meta.drupal_internal__target_id
+  }
+
   return {
-    src: normaliseImageUrl(
-      process.env.NUXT_PUBLIC_TIDE_BASE_URL as string,
-      fieldMediaImage.url
-    ),
+    src: getMediaPath(fieldMediaImage),
     ...fieldMediaImage.meta,
     focalPoint
   }
@@ -89,15 +110,27 @@ export const getCardImage = (fieldMediaImage: RawCardImage): TideImageField => {
     : null
 
   return {
-    src: normaliseImageUrl(
-      process.env.NUXT_PUBLIC_TIDE_BASE_URL as string,
-      fieldMediaImage.url
-    ),
+    src: getMediaPath(fieldMediaImage),
     focalPoint,
     alt: data?.alt,
     width: data?.width ? parseInt(data.width) : undefined,
     height: data?.height ? parseInt(data.height) : undefined,
     title: data?.title
+  }
+}
+
+export const getDocumentFromField = (
+  field: drupalField,
+  path = 'field_media_file'
+): TideDocumentField => {
+  const medaFile = get(field, path)
+
+  return {
+    id: field.id,
+    name: field.name,
+    url: getMediaPath(medaFile),
+    extension: mime.extension(medaFile.filemime) || '',
+    size: humanizeFilesize(medaFile.filesize)
   }
 }
 
@@ -134,7 +167,11 @@ export const getBody = (html, customPlugins = []) => {
   return markupTranspiler(html, plugins)
 }
 
-export const getField = (field, path, fallback = undefined) => {
+export const getField = (
+  field: {},
+  path: string | string[],
+  fallback: any = undefined
+) => {
   return get(field, path, fallback)
 }
 
@@ -170,6 +207,38 @@ export const getSiteKeyValues = (key: string, src: any) => {
   }
 }
 
+/**
+ * @description returns the site section id from either the passed section ID or the page src sites. Selects the last site as per existing logic.
+ */
+export const getSiteSectionId = (
+  sectionId: string,
+  src: tidePageSitePartial
+) => {
+  if (sectionId) {
+    return `${sectionId}`
+  }
+  if (src.field_node_site && src.field_node_site.length > 0) {
+    return `${src.field_node_site.slice(-1)[0].drupal_internal__tid}`
+  }
+  return null
+}
+
+/**
+ * @description returns the correct site section from the page sites data
+ */
+export const getSiteSection = (sectionId: string, src: any) => {
+  const siteId = getSiteSectionId(sectionId, src)
+
+  if (!siteId) {
+    return null
+  }
+
+  // With the correct site/section id, we can now choose the correct site data from 'field_node_site'
+  return src.field_node_site?.find((site) => {
+    return `${site.drupal_internal__tid}` === siteId
+  })
+}
+
 export default {
   getImageFromField,
   getLinkFromField,
@@ -178,5 +247,8 @@ export default {
   getBodyFromField,
   humanizeFilesize,
   getField,
-  getSiteKeyValues
+  getMediaPath,
+  getDocumentFromField,
+  getSiteKeyValues,
+  getSiteSection
 }

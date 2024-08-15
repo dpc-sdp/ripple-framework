@@ -23,7 +23,7 @@ import {
   includes as sidebarSiteSectionNavIncludes
 } from './sidebar-site-section-nav/sidebar-site-section-nav-mapping.js'
 import TidePageMeta from './page-meta.js'
-import { TidePageApi } from '@dpc-sdp/ripple-tide-api'
+import { getSiteKeyValues, getSiteSection } from '@dpc-sdp/ripple-tide-api'
 
 export const tidePageBaseMapping = ({
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -64,14 +64,9 @@ export const tidePageBaseMapping = ({
     sidebar: sidebar,
     status: 'moderation_state',
     topicTags: topicTagsMapping,
-    siteSection: async (src, tidePageApi: TidePageApi) => {
-      // The section/site id comes from the drupal 'route' api
-      const siteId = tidePageApi.sectionId
-
+    siteSection: async (src) => {
       // With the correct site/section id, we can now choose the correct site data from 'field_node_site'
-      const siteData = src.field_node_site?.find((site) => {
-        return `${site.drupal_internal__tid}` === siteId
-      })
+      const siteData = getSiteSection(src._sectionId, src)
 
       if (!siteData) {
         return null
@@ -79,7 +74,13 @@ export const tidePageBaseMapping = ({
 
       return {
         id: siteData.drupal_internal__tid,
-        name: siteData.name
+        name: siteData.name,
+        siteOverrides: {
+          showQuickExit: siteData?.field_site_show_exit_site || null,
+          theme: getSiteKeyValues('field_site_theme_values', siteData) || {},
+          featureFlags:
+            getSiteKeyValues('field_site_feature_flags', siteData) || {}
+        }
       }
     },
     ...TidePageMeta,
@@ -98,6 +99,7 @@ export const tidePageBaseIncludes = ({
   withSidebarSiteSectionNav = false
 } = {}) => {
   return [
+    'field_node_site',
     ...(withTopicTags ? topicTagsIncludes : []),
     ...(withSidebarContacts ? sidebarContactsIncludes : []),
     ...(withSidebarRelatedLinks ? sidebarRelatedLinksIncludes : []),

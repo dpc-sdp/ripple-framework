@@ -1,34 +1,50 @@
 <script setup lang="ts">
-import { getActiveFilterURL, useRoute, ref, toRaw, computed } from '#imports'
+import {
+  getActiveFilterURL,
+  getActiveFiltersTally,
+  ref,
+  toRaw,
+  computed
+} from '#imports'
 import { submitForm } from '@formkit/vue'
+import { useDebounceFn } from '@vueuse/core'
 import useTideSearch from './../composables/useTideSearch'
 import type { TidePageBase, TideSiteData } from '@dpc-sdp/ripple-tide-api/types'
 import type {
-  TideSearchListingPage,
   MappedSearchResult,
-  TideSearchListingResultLayout
+  TideSearchListingResultLayout,
+  TideSearchListingConfig
 } from './../types'
+import type { ITideSecondaryCampaign } from '@dpc-sdp/ripple-tide-landing-page/mapping/secondary-campaign/secondary-campaign-mapping'
 import { useRippleEvent } from '@dpc-sdp/ripple-ui-core'
 import type { rplEventPayload } from '@dpc-sdp/ripple-ui-core'
 import { watch } from 'vue'
 
 interface TideContentPage extends TidePageBase {
+  beforeResults: string
   afterResults: string
+  secondaryCampaign: ITideSecondaryCampaign
 }
 
 interface Props {
-  id: string
+  id?: string
   title: string
   introText?: string
-  searchListingConfig?: TideSearchListingPage['searchListingConfig']
   autocompleteQuery?: boolean
-  queryConfig: Record<string, any>
-  globalFilters?: any[]
-  userFilters?: any[]
+  autocompleteMinimumCharacters?: number
+  searchListingConfig?: TideSearchListingConfig['searchListingConfig']
+  sortOptions?: TideSearchListingConfig['sortOptions']
+  customQueryConfig?: TideSearchListingConfig['customQueryConfig']
+  queryConfig?: TideSearchListingConfig['queryConfig']
+  globalFilters?: TideSearchListingConfig['globalFilters']
+  userFilters?: TideSearchListingConfig['userFilters']
   resultsLayout: TideSearchListingResultLayout
+  noResultsLayout: any
+  belowFilterComponent?: any
   searchResultsMappingFn?: (item: any) => MappedSearchResult<any>
   contentPage: TideContentPage
   site: TideSiteData
+  showUpdatedDate?: boolean
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -36,8 +52,10 @@ const props = withDefaults(defineProps<Props>(), {
   title: 'Search',
   introText: '',
   autocompleteQuery: true,
+  autocompleteMinimumCharacters: 3,
   globalFilters: () => [],
   userFilters: () => [],
+  customQueryConfig: undefined,
   queryConfig: () => ({
     multi_match: {
       query: '{{query}}',
@@ -50,18 +68,31 @@ const props = withDefaults(defineProps<Props>(), {
       ]
     }
   }),
-  searchListingConfig: () => ({
-    resultsPerPage: 9,
-    labels: {
-      submit: 'Submit',
-      reset: 'Reset',
-      placeholder: 'Enter a search term'
-    }
-  }),
+  searchListingConfig: () =>
+    ({
+      hideSearchForm: false,
+      resultsPerPage: 9,
+      labels: {
+        submit: 'Submit',
+        reset: 'Reset',
+        placeholder: 'Enter a search term'
+      },
+      suggestions: {
+        key: 'title',
+        enabled: true
+      },
+      showFiltersOnLoad: false,
+      showFiltersOnly: false,
+      scrollToResultsOnSubmit: true
+    }) as any,
   resultsLayout: () => ({
     component: 'TideSearchResultsList'
   }),
-  searchResultsMappingFn: (item): MappedSearchResult<any> => {
+  noResultsLayout: () => ({
+    component: 'TideSearchNoResults'
+  }),
+  belowFilterComponent: undefined,
+  searchResultsMappingFn: (item: any): MappedSearchResult<any> => {
     return {
       id: item._id,
       component: 'TideSearchResult',
@@ -69,7 +100,9 @@ const props = withDefaults(defineProps<Props>(), {
         result: item._source
       }
     }
-  }
+  },
+  sortOptions: () => [],
+  showUpdatedDate: false
 })
 
 const emit = defineEmits<{
@@ -83,38 +116,49 @@ const emit = defineEmits<{
     e: 'toggleFilters',
     payload: rplEventPayload & { action: 'open' | 'close' }
   ): void
+  (e: 'reset', payload: rplEventPayload & { action: 'clear_search' }): void
 }>()
 
 const { emitRplEvent } = useRippleEvent('tide-search', emit)
 
-const route = useRoute()
-const filtersExpanded = ref(false)
+const filtersExpanded = ref(
+  props.searchListingConfig?.showFiltersOnLoad ||
+    props.searchListingConfig?.showFiltersOnly
+)
 
 const {
   isBusy,
   searchError,
   getSuggestions,
+  clearSuggestions,
   searchTerm,
   results,
   suggestions,
   filterForm,
   appliedFilters,
+  resetFilters,
+  resetSearch,
   submitSearch,
   goToPage,
   page,
   pageSize,
+  userSelectedSort,
+  changeSortOrder,
   totalResults,
   totalPages,
   pagingStart,
   pagingEnd,
+  scrollToResults,
   onAggregationUpdateHook
-} = useTideSearch(
-  props.queryConfig,
-  props.userFilters,
-  props.globalFilters,
-  props.searchResultsMappingFn,
-  props.searchListingConfig
-)
+} = useTideSearch({
+  customQueryConfig: props.customQueryConfig,
+  queryConfig: props.queryConfig,
+  userFilters: props.userFilters,
+  globalFilters: props.globalFilters,
+  searchResultsMappingFn: props.searchResultsMappingFn,
+  searchListingConfig: props.searchListingConfig,
+  sortOptions: props.sortOptions
+})
 
 const uiFilters = ref(props.userFilters)
 const cachedSubmitEvent = ref({})
@@ -123,28 +167,29 @@ const baseEvent = () => ({
   contextId: props.id,
   name: props.title,
   index: page.value,
-  label: searchTerm.value,
+  label: searchTerm.value.q,
   value: totalResults.value,
-  options: getActiveFilterURL(filterForm.value)
+  options: getActiveFilterURL(filterForm.value),
+  section: 'search-listing'
 })
 
 // Updates filter options with aggregation value
-onAggregationUpdateHook.value = (aggs) => {
+onAggregationUpdateHook.value = (aggs: any) => {
   const updateTimestamp = Date.now()
 
   Object.keys(aggs).forEach((key) => {
     uiFilters.value.forEach((uiFilter, idx) => {
       if (uiFilter.id === key) {
         const getDynamicOptions = () => {
-          const mappedOptions = aggs[key].map((item) => ({
-            id: item,
-            label: item,
-            value: item
+          const mappedOptions = aggs[key].map((item: any) => ({
+            id: item.key,
+            label: item.key,
+            value: item.key
           }))
 
-          if (uiFilters.value[idx].props.hasOwnProperty('options')) {
+          if (uiFilters.value[idx].props?.hasOwnProperty('options')) {
             return [
-              ...toRaw(uiFilters.value[idx].props.options),
+              ...toRaw(uiFilters.value[idx].props?.options as unknown as any),
               ...mappedOptions
             ]
           }
@@ -165,7 +210,9 @@ onAggregationUpdateHook.value = (aggs) => {
   })
 }
 
-const emitSearchEvent = (event) => {
+const resultsContainer = '.rpl-layout__body-wrap'
+
+const emitSearchEvent = (event: any) => {
   emitRplEvent(
     'submit',
     {
@@ -177,7 +224,7 @@ const emitSearchEvent = (event) => {
   )
 }
 
-const handleSearchSubmit = (event) => {
+const handleSearchSubmit = (event: any) => {
   if (props.userFilters && props.userFilters.length) {
     cachedSubmitEvent.value = event
     // Submitting the search term should also 'apply' the filters, but the filters live in a seperate form.
@@ -188,52 +235,73 @@ const handleSearchSubmit = (event) => {
   } else {
     // If there's no filters in the form, we need to just do the search without submitting the filter form
     submitSearch()
+    if (event?.type === 'button') {
+      scrollToResults(resultsContainer)
+    }
     emitSearchEvent({ ...event, ...baseEvent() })
   }
 }
 
-const handleFilterSubmit = (event) => {
+const handleFilterSubmit = (event: any) => {
   filterForm.value = event.value
   submitSearch()
+
+  if (
+    !cachedSubmitEvent.value?.type ||
+    cachedSubmitEvent.value?.type === 'button'
+  ) {
+    scrollToResults(resultsContainer)
+  }
 
   emitSearchEvent({ ...event, ...cachedSubmitEvent.value, ...baseEvent() })
 
   cachedSubmitEvent.value = {}
 }
 
-const handleFilterReset = () => {
-  searchTerm.value = ''
-  filterForm.value = {}
+const handleFilterReset = (event: rplEventPayload) => {
+  emitRplEvent(
+    'reset',
+    {
+      ...event,
+      ...baseEvent(),
+      action: 'clear_search'
+    },
+    { global: true }
+  )
+
+  resetSearch()
+  resetFilters()
   submitSearch()
 }
 
-const handleUpdateSearchTerm = (term) => {
-  searchTerm.value = term
-  if (props.autocompleteQuery) {
-    getSuggestions()
+const handleUpdateSearchTerm = (term: string) => {
+  searchTerm.value.q = term
+  getDebouncedSuggestions(term)
+}
+
+const getDebouncedSuggestions = useDebounceFn((term: string) => {
+  if (
+    props.autocompleteQuery &&
+    props.searchListingConfig?.suggestions?.enabled !== false
+  ) {
+    if (term?.length >= props.autocompleteMinimumCharacters) {
+      getSuggestions()
+    } else if (suggestions.value?.length) {
+      clearSuggestions()
+    }
+  }
+}, 300)
+
+const handleUpdateSearch = (term: string | Record<string, any>) => {
+  if (term && typeof term === 'object') {
+    searchTerm.value = { ...searchTerm.value, ...term }
+  } else {
+    handleUpdateSearchTerm(term)
   }
 }
 
-function scrollToElementTopWithOffset(element, offset) {
-  const elementTop = element.getBoundingClientRect().top + window.scrollY
-  const scrollToPosition = elementTop - offset
-
-  window.scrollTo({
-    top: scrollToPosition,
-    behavior: 'smooth'
-  })
-}
-
-const handlePageChange = (event) => {
-  const navHeight = 92
-  const layoutBody = document.querySelector('.rpl-layout__body-wrap')
-
-  if (layoutBody) {
-    scrollToElementTopWithOffset(layoutBody, navHeight)
-  }
-
+const handlePageChange = (event: any) => {
   goToPage(event.value)
-
   emitRplEvent(
     'paginate',
     {
@@ -243,6 +311,10 @@ const handlePageChange = (event) => {
     },
     { global: true }
   )
+}
+
+const handleSortChange = (sortId: any) => {
+  changeSortOrder(sortId)
 }
 
 const handleToggleFilters = () => {
@@ -260,17 +332,7 @@ const handleToggleFilters = () => {
 }
 
 const numAppliedFilters = computed(() => {
-  return Object.values(appliedFilters.value).filter((value) => {
-    if (!value) {
-      return false
-    }
-
-    if (Array.isArray(value) && !value.length) {
-      return false
-    }
-
-    return true
-  }).length
+  return getActiveFiltersTally(appliedFilters.value)
 })
 
 const toggleFiltersLabel = computed(() => {
@@ -307,7 +369,9 @@ watch(
     :background="contentPage.background"
     :pageTitle="contentPage.title"
     :pageLanguage="contentPage.lang"
-    :updatedDate="contentPage.changed || contentPage.created"
+    :updatedDate="
+      showUpdatedDate ? contentPage.changed || contentPage.created : null
+    "
     :showContentRating="contentPage.showContentRating"
   >
     <template #breadcrumbs>
@@ -321,97 +385,135 @@ watch(
         :full-width="true"
         :corner-top="site?.cornerGraphic?.top?.src || true"
         :corner-bottom="false"
+        :class="{ 'rpl-header--hero-tight': belowFilterComponent }"
       >
         <p v-if="introText" class="rpl-type-p-large">{{ introText }}</p>
-        <div class="tide-search-header">
-          <RplSearchBar
-            id="tide-search-bar"
-            variant="default"
-            :input-label="searchListingConfig.labels?.submit"
-            :inputValue="searchTerm"
-            :placeholder="searchListingConfig.labels?.placeholder"
-            :suggestions="suggestions"
-            :global-events="false"
-            @submit="handleSearchSubmit"
-            @update:input-value="handleUpdateSearchTerm"
-          />
+        <div
+          v-if="!searchListingConfig?.hideSearchForm"
+          class="tide-search-header"
+        >
+          <template v-if="!searchListingConfig?.showFiltersOnly">
+            <component
+              :is="customQueryConfig.component"
+              v-if="customQueryConfig?.component"
+              v-bind="customQueryConfig?.props"
+              id="tide-search-bar"
+              variant="default"
+              :input-label="searchListingConfig?.labels?.submit"
+              :inputValue="searchTerm"
+              :placeholder="searchListingConfig?.labels?.placeholder"
+              :suggestions="suggestions"
+              :global-events="false"
+              :handle-submit="handleSearchSubmit"
+              :handle-update="handleUpdateSearch"
+            />
+            <RplSearchBar
+              v-else
+              id="tide-search-bar"
+              variant="default"
+              :input-label="searchListingConfig?.labels?.submit"
+              :inputValue="searchTerm.q"
+              :placeholder="searchListingConfig?.labels?.placeholder"
+              :suggestions="suggestions"
+              :global-events="false"
+              :maxlength="128"
+              @submit="handleSearchSubmit"
+              @update:input-value="handleUpdateSearchTerm"
+            />
+          </template>
           <RplSearchBarRefine
-            v-if="userFilters && userFilters.length > 0"
+            v-if="
+              !searchListingConfig?.showFiltersOnLoad &&
+              !searchListingConfig?.showFiltersOnly &&
+              userFilters &&
+              userFilters.length > 0
+            "
             class="tide-search-refine-btn"
             :expanded="filtersExpanded"
+            aria-controls="tide-search-listing-filters"
             @click="handleToggleFilters"
             >{{ toggleFiltersLabel }}</RplSearchBarRefine
           >
           <RplExpandable
             v-if="userFilters && userFilters.length > 0"
+            id="tide-search-listing-filters"
             :expanded="filtersExpanded"
             class="rpl-u-margin-t-4"
           >
             <TideSearchFilters
               :title="title"
               :filter-form-values="filterForm"
-              :filterInputs="userFilters"
+              :filterInputs="userFilters as any"
               @reset="handleFilterReset"
               @submit="handleFilterSubmit"
             >
             </TideSearchFilters>
           </RplExpandable>
         </div>
+        <template v-if="belowFilterComponent">
+          <component :is="belowFilterComponent.component" />
+        </template>
       </RplHeroHeader>
     </template>
     <template #body>
-      <slot
-        name="resultsCount"
-        :results="results"
-        :currentPage="page"
-        :pageSize="pageSize"
-        :totalPages="totalPages"
-        :totalResults="totalResults"
-      >
-        <RplPageComponent
-          v-if="results?.length"
-          data-component-type="search-listing-result-count"
-        >
-          <p class="rpl-type-label rpl-u-padding-b-6">
-            Displaying {{ pagingStart + 1 }}-{{ pagingEnd + 1 }} of
-            {{ totalResults }} results
-          </p>
-        </RplPageComponent>
-      </slot>
+      <RplPageComponent v-if="contentPage.beforeResults">
+        <RplContent
+          class="tide-content-before-results"
+          :html="contentPage.beforeResults"
+        />
+      </RplPageComponent>
+      <TideSearchAboveResults>
+        <template #left>
+          <slot
+            name="resultsCount"
+            :results="results"
+            :currentPage="page"
+            :pageSize="pageSize"
+            :totalPages="totalPages"
+            :totalResults="totalResults"
+          >
+            <div data-component-type="search-listing-result-count">
+              <TideSearchResultsCount
+                v-if="!searchError"
+                :pagingStart="pagingStart + 1"
+                :pagingEnd="pagingEnd + 1"
+                :totalResults="totalResults"
+                :results="results"
+                :loading="isBusy"
+              />
+            </div>
+          </slot>
+        </template>
+
+        <template #right>
+          <TideSearchSortOptions
+            v-if="sortOptions && sortOptions.length"
+            :currentValue="userSelectedSort"
+            :sortOptions="sortOptions"
+            @change="handleSortChange"
+          />
+        </template>
+      </TideSearchAboveResults>
 
       <RplPageComponent>
-        <div :class="{ 'tide-search-results--loading': isBusy }">
-          <div v-if="searchError">
-            <RplContent data-component-type="search-listing-error">
-              <p class="rpl-type-h3">
-                Sorry! Something went wrong. Please try again later.
-              </p>
-            </RplContent>
-          </div>
-          <RplContent
+        <TideSearchResultsLoadingState :isActive="isBusy">
+          <TideSearchError v-if="searchError" />
+          <component
+            :is="noResultsLayout.component"
             v-else-if="!isBusy && !results?.length"
-            data-component-type="search-listing-no-results"
-          >
-            <p class="rpl-type-h3">
-              Sorry! We couldn't find any matches for '{{ route.query.q }}'.
-            </p>
-            <p>To improve your search results:</p>
-            <ul>
-              <li>use different or fewer keywords</li>
-              <li>check spelling.</li>
-            </ul>
-          </RplContent>
+          />
 
-          <slot name="results" :results="results">
+          <slot v-if="!searchError" name="results" :results="results">
             <component
               :is="resultsLayout.component"
-              v-if="results && results.length > 0"
               :key="`TideSearchListingResultsLayout${resultsLayout.component}`"
               v-bind="resultsLayout.props"
+              :loading="isBusy"
               :results="results"
+              :perPage="searchListingConfig?.resultsPerPage"
             />
           </slot>
-        </div>
+        </TideSearchResultsLoadingState>
       </RplPageComponent>
       <RplPageComponent>
         <slot
@@ -422,11 +524,12 @@ watch(
           :totalPages="totalPages"
           :totalResults="totalResults"
         >
-          <RplPagination
-            v-if="totalPages > 1"
+          <TideSearchPagination
+            v-if="!searchError"
             :currentPage="page"
             :totalPages="totalPages"
-            @change="handlePageChange"
+            :scroll-to-selector="resultsContainer"
+            @paginate="handlePageChange"
           />
         </slot>
       </RplPageComponent>
@@ -437,10 +540,19 @@ watch(
         ></RplContent>
       </RplPageComponent>
     </template>
+    <template #belowBody>
+      <RplPageComponent v-if="contentPage.secondaryCampaign">
+        <TideLandingPageSecondaryCampaignBanner
+          :campaign="contentPage.secondaryCampaign"
+        />
+      </RplPageComponent>
+    </template>
   </TideBaseLayout>
 </template>
 
 <style>
+@import '@dpc-sdp/ripple-ui-core/style/breakpoints';
+
 .tide-search-header {
   display: flex;
   flex-direction: column;

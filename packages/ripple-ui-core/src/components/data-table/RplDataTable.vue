@@ -1,6 +1,12 @@
 <script setup lang="ts">
-import { computed } from 'vue'
-import RplDataTableRow, { tableColumnConfig } from './RplDataTableRow.vue'
+import { useBreakpoints } from '@vueuse/core'
+import { computed, withDefaults, ref, unref, onMounted } from 'vue'
+import { bpMin } from '../../lib/breakpoints'
+import RplDataTableRow, {
+  extraRowContent,
+  tableColumnConfig,
+  tableRow
+} from './RplDataTableRow.vue'
 
 interface HeadingType {
   horizontal: boolean
@@ -10,10 +16,12 @@ interface HeadingType {
 interface Props {
   caption?: string
   footer?: string
-  columns: tableColumnConfig[] | string[]
+  columns: tableColumnConfig[]
+  items: tableRow[]
+  showExtraContent?: boolean
   headingType?: HeadingType
-  items: Array<Record<string, unknown>[] | string[]>
   offset?: number
+  hasSidebar?: boolean
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -23,74 +31,70 @@ const props = withDefaults(defineProps<Props>(), {
     horizontal: true,
     vertical: false
   }),
-  offset: 1
+  offset: 1,
+  showExtraContent: false,
+  items: () => [],
+  hasSidebar: false
 })
 
-// Split hidden content out for presentation component
-const mappedItems = computed(() => {
-  let hidden: Array<any> = []
-  let visible: Array<Array<string>> = []
+const isMounted = ref(false)
 
-  props.items.map((j) => {
-    let row: Array<string> = []
+onMounted(() => {
+  isMounted.value = true
+})
 
-    j.map((k) => {
-      if (Array.isArray(k)) {
-        hidden.push(k)
-      } else {
-        row.push(k)
-      }
-    })
+const breakpoints = useBreakpoints(bpMin)
+const isUpToMediumScreen = breakpoints.smaller('m')
+const isUpToLargeScreen = breakpoints.smaller('l')
 
-    visible.push(row)
-  })
-
-  return {
-    hidden,
-    visible
+const displayMobileView: ComputedRef<boolean> = computed(() => {
+  if (!isMounted.value) {
+    return false
   }
+
+  return props.hasSidebar ? unref(isUpToLargeScreen) : unref(isUpToMediumScreen)
 })
 </script>
 
 <template>
-  <div class="rpl-table rpl-data-table">
-    <div class="rpl-table__scroll-container" tabindex="0">
+  <div
+    :class="{
+      'rpl-table': true,
+      'rpl-data-table': true,
+      'rpl-data-table--mobile': displayMobileView
+    }"
+  >
+    <div
+      class="rpl-table__scroll-container rpl-u-focusable-outline--visible"
+      tabindex="0"
+    >
       <table>
         <caption v-if="caption">
           {{
             caption
           }}
         </caption>
-        <thead>
+        <thead v-if="headingType.horizontal && columns.length > 0">
           <tr>
-            <th v-for="(item, index) in columns" :key="index">
-              <template
-                v-if="
-                  item &&
-                  typeof item === 'object' &&
-                  item.hasOwnProperty('label')
-                "
-              >
-                {{ item.label }}
-              </template>
-              <template v-else>
-                {{ item }}
-              </template>
-            </th>
             <th
-              v-if="mappedItems.hidden.length"
-              class="rpl-data-table__actions"
+              v-for="(column, index) in columns"
+              :key="index"
+              :class="column.classes"
             >
+              {{ column.label }}
+            </th>
+            <th v-if="showExtraContent" class="rpl-data-table__actions">
               <span class="rpl-u-visually-hidden">Actions</span>
             </th>
           </tr>
         </thead>
         <RplDataTableRow
-          v-for="(row, index) in mappedItems.visible"
-          :key="index"
+          v-for="(row, index) in items"
+          :key="row.id || index"
           :columns="columns"
-          :items="row"
-          :content="mappedItems.hidden?.[index]?.[0]"
+          :row="row"
+          :extraContent="(row.__extraContent as extraRowContent) || null"
+          :showExtraContent="showExtraContent"
           :vertical-header="headingType.vertical"
           :offset="offset"
           :caption="caption"

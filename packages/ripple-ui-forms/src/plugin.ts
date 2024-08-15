@@ -14,8 +14,10 @@ import {
   label,
   divider,
   date,
+  datePicker,
   optionButtons,
-  fieldset
+  fieldset,
+  hidden
 } from './inputs/index'
 
 const rplFormInputs = () => {
@@ -48,6 +50,8 @@ rplFormInputs.library = (node) => {
       return node.define(dropdown)
     case 'RplFormDate':
       return node.define(date)
+    case 'RplFormDatePicker':
+      return node.define(datePicker)
     case 'RplFormContent':
       return node.define(content)
     case 'RplFormLabel':
@@ -58,6 +62,8 @@ rplFormInputs.library = (node) => {
       return node.define(divider)
     case 'RplFormActions':
       return node.define(actions)
+    case 'RplFormHidden':
+      return node.define(hidden)
   }
 }
 

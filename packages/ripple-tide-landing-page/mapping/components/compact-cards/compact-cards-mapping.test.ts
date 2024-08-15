@@ -13,7 +13,7 @@ const result: TideDynamicPageComponent<ITideCompactCards> = {
         title: 'Card one',
         summary: 'Card one summary',
         image: {
-          src: 'https://develop.content.reference.sdp.vic.gov.au/sites/default/files/2023-08/Image2.jpg',
+          src: '/sites/default/files/2023-08/Image2.jpg',
           alt: '',
           focalPoint: undefined,
           height: 667,
@@ -26,7 +26,7 @@ const result: TideDynamicPageComponent<ITideCompactCards> = {
         title: 'Card two',
         summary: 'Card two summary',
         image: null,
-        url: '/tav2-social-sharing-exists-landing-page-fe827f16'
+        url: 'https://google.com/'
       }
     ]
   }

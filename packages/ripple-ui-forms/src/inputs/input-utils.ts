@@ -1,20 +1,4 @@
 import { markRaw } from 'vue'
-import RplFormInput from './../components/RplFormInput/RplFormInput.vue'
-import RplFormTextarea from './../components/RplFormTextarea/RplFormTextarea.vue'
-import RplFormOption from '../components/RplFormOptions/RplFormOption.vue'
-import RplFormCheckboxGroup from './../components/RplFormOptions/RplFormCheckboxGroup.vue'
-import RplFormRadioGroup from './../components/RplFormOptions/RplFormRadioGroup.vue'
-import RplFormOptionButtons from './../components/RplFormOptionButtons/RplFormOptionButtons.vue'
-import RplFormDropdown from './../components/RplFormDropdown/RplFormDropdown.vue'
-import RplFormDate from './../components/RplFormDate/RplFormDate.vue'
-import RplFormValidationError from './../components/RplFormValidationError/RplFormValidationError.vue'
-import RplFormHelpText from './../components/RplFormHelpText/RplFormHelpText.vue'
-import RplFormLabel from './../components/RplFormLabel/RplFormLabel.vue'
-import RplFormInputGrid from './../components/RplFormInputGrid/RplFormInputGrid.vue'
-import RplFormContent from '../components/RplFormContent/RplFormContent.vue'
-import RplFormFieldset from '../components/RplFormFieldset/RplFormFieldset.vue'
-import RplFormDivider from '../components/RplFormDivider/RplFormDivider.vue'
-import RplFormActions from '../components/RplFormActions/RplFormActions.vue'
 import {
   inner,
   wrapper,
@@ -39,8 +23,26 @@ import {
   hasNoLabel
 } from '../formkit-features'
 import { rplInputGrid } from '../sections/rplInputGrid'
+import RplFormInput from './../components/RplFormInput/RplFormInput.vue'
+import RplFormTextarea from './../components/RplFormTextarea/RplFormTextarea.vue'
+import RplFormOption from '../components/RplFormOptions/RplFormOption.vue'
+import RplFormCheckboxGroup from './../components/RplFormOptions/RplFormCheckboxGroup.vue'
+import RplFormRadioGroup from './../components/RplFormOptions/RplFormRadioGroup.vue'
+import RplFormOptionButtons from './../components/RplFormOptionButtons/RplFormOptionButtons.vue'
+import RplFormDropdown from './../components/RplFormDropdown/RplFormDropdown.vue'
+import RplFormDate from './../components/RplFormDate/RplFormDate.vue'
+import RplFormValidationError from './../components/RplFormValidationError/RplFormValidationError.vue'
+import RplFormHelpText from './../components/RplFormHelpText/RplFormHelpText.vue'
+import RplFormLabel from './../components/RplFormLabel/RplFormLabel.vue'
+import RplFormInputGrid from './../components/RplFormInputGrid/RplFormInputGrid.vue'
+import RplFormContent from '../components/RplFormContent/RplFormContent.vue'
+import RplFormFieldset from '../components/RplFormFieldset/RplFormFieldset.vue'
+import RplFormDivider from '../components/RplFormDivider/RplFormDivider.vue'
+import RplFormActions from '../components/RplFormActions/RplFormActions.vue'
 import FormkitInputError from '../components/RplForm/FormkitInputError.vue'
 import FormkitOuter from '../components/RplForm/FormkitOuter.vue'
+import RplFormNumber from '../components/RplFormNumber/RplFormNumber.vue'
+import RplFormHidden from '../components/RplFormHidden/RplFormHidden.vue'
 
 export const inputLibrary = {
   RplFormInput: markRaw(RplFormInput),
@@ -60,7 +62,9 @@ export const inputLibrary = {
   RplFormDivider: markRaw(RplFormDivider),
   RplFormActions: markRaw(RplFormActions),
   FormkitInputError: markRaw(FormkitInputError),
-  FormkitOuter: markRaw(FormkitOuter)
+  FormkitOuter: markRaw(FormkitOuter),
+  RplFormNumber: markRaw(RplFormNumber),
+  RplFormHidden: markRaw(RplFormHidden)
 }
 
 export const rplFeatures = [
@@ -98,7 +102,7 @@ export const createRplFormInput = (
         )
       )
     )
-  )
+  ) as unknown as FormKitExtendableSchemaRoot
 }
 
 /*
@@ -121,7 +125,21 @@ export const createRplFormGroup = (
       }))(),
       rplInputGrid(createSection('input', () => cmp)())
     )
-  )
+  ) as unknown as FormKitExtendableSchemaRoot
+}
+
+/*
+ * Creates a Formkit schema for UI-less fields
+ * this is useful for when you don't need the wrapping elements
+ * and just want the input itself, for example, when using a hidden input
+ */
+export const createRplFormInputOnly = (
+  cmp: FormKitSchemaComponent
+): FormKitExtendableSchemaRoot => {
+  return createSection(
+    'input',
+    () => cmp
+  )() as unknown as FormKitExtendableSchemaRoot
 }
 
 export const defaultRplFormInputProps = {
@@ -141,7 +159,8 @@ export const defaultRplFormInputProps = {
   'aria-describedby': '$fns.getAriaDescribedBy()',
   invalid: '$fns.isFieldInvalid()',
   required: '$fns.isFieldRequired()',
-  columnClasses: '$node.props.columnClasses'
+  columnClasses: '$node.props.columnClasses',
+  pii: '$node.props.pii'
 }
 
 export const minMaxRplFormProps = {

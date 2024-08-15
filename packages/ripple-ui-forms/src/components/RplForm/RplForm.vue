@@ -1,17 +1,20 @@
 <script setup lang="ts">
 import { nextTick, provide, ref, watch, reactive, computed } from 'vue'
 import {
+  getNode,
   FormKitSchemaCondition,
   FormKitSchemaNode,
-  FormKitConfig
+  FormKitConfig,
+  FormKitNode,
+  FormKitPlugin
 } from '@formkit/core'
 import { getValidationMessages } from '@formkit/validation'
 import rplFormInputs from '../../plugin'
 import RplFormAlert from '../RplFormAlert/RplFormAlert.vue'
-import { RplContent } from '@dpc-sdp/ripple-ui-core/vue'
 import { reset } from '@formkit/vue'
 import { useRippleEvent } from '@dpc-sdp/ripple-ui-core'
 import type { rplEventPayload } from '@dpc-sdp/ripple-ui-core'
+import { sanitisePIIFields } from '../../lib/sanitisePII'
 
 interface Props {
   id: string
@@ -24,6 +27,7 @@ interface Props {
     title: string
     message: string
   }
+  customInputs?: FormKitPlugin
 }
 
 interface CachedError {
@@ -51,12 +55,14 @@ const props = withDefaults(defineProps<Props>(), {
     status: 'idle',
     title: '',
     message: ''
-  })
+  }),
+  customInputs: () => {}
 })
 
 const emit = defineEmits<{
-  (e: 'submit', data: any): void
-  (e: 'submitted', payload: rplEventPayload & { action: 'submit' }): void
+  (e: 'submit', payload: rplEventPayload & { action: 'submit' }): void
+  (e: 'invalid', payload: rplEventPayload & { action: 'submit' }): void
+  (e: 'submitted', payload: rplEventPayload & { action: 'complete' }): void
 }>()
 
 const { emitRplEvent } = useRippleEvent('rpl-form', emit)
@@ -76,19 +82,29 @@ provide('isFormSubmitting', isFormSubmitting)
 // submitCounter is watched by some components to efficiently know when to update
 provide('submitCounter', submitCounter)
 
-const submitHandler = (form) => {
+const submitLabel =
+  props.schema?.find((field) => field?.key === 'actions')?.label || 'Submit'
+
+const submitHandler = (form, node: FormKitNode) => {
   // Reset the error summary as it is not reactive
   cachedErrors.value = {}
   submitCounter.value = 0
 
-  emitRplEvent('submit', {
-    id: props.id,
-    name: props.title,
-    data: form
-  })
+  emitRplEvent(
+    'submit',
+    {
+      data: form,
+      id: props.id,
+      name: props.title,
+      action: 'submit',
+      text: submitLabel,
+      value: sanitisePIIFields(node)
+    },
+    { global: true }
+  )
 }
 
-const submitInvalidHandler = async (node) => {
+const submitInvalidHandler = async (node: FormKitNode) => {
   submitCounter.value = submitCounter.value + 1
 
   const validations = getValidationMessages(node)
@@ -106,6 +122,18 @@ const submitInvalidHandler = async (node) => {
   })
 
   cachedErrors.value = cachedErrorsMap
+
+  emitRplEvent(
+    'invalid',
+    {
+      id: props.id,
+      action: 'submit',
+      name: props.title,
+      text: submitLabel,
+      value: sanitisePIIFields(node)
+    },
+    { global: true }
+  )
 
   await nextTick()
   if (errorSummaryRef.value) {
@@ -152,20 +180,19 @@ watch(
       }
 
       if (newStatus === 'success') {
-        reset(props.id)
-
         emitRplEvent(
           'submitted',
           {
             id: props.id,
-            action: 'submit',
+            action: 'complete',
             name: props.title,
-            text:
-              props.schema?.find((field) => field?.key === 'actions')?.label ||
-              'Submit'
+            text: submitLabel,
+            value: sanitisePIIFields(getNode(props.id))
           },
           { global: true }
         )
+
+        reset(props.id)
       }
     }
   }
@@ -206,14 +233,22 @@ const data = reactive({
     return matches && matches.length > 0
   }
 })
+
+const plugins = computed(
+  () =>
+    [rplFormInputs, props.customInputs ? props.customInputs : false].filter(
+      Boolean
+    ) as FormKitPlugin[]
+)
 </script>
 
 <template>
   <FormKit
     :id="id"
     v-slot="{ value }"
+    :name="id"
     type="form"
-    :plugins="[rplFormInputs]"
+    :plugins="plugins"
     form-class="rpl-form"
     :config="rplFormConfig"
     :actions="false"

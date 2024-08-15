@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { computed, onMounted, reactive } from 'vue'
-import RplButton from '../button/RplButton.vue'
+import { computed } from 'vue'
+import RplIcon from '../icon/RplIcon.vue'
 import {
   useRippleEvent,
   rplEventPayload
@@ -31,15 +31,6 @@ const props = withDefaults(defineProps<Props>(), {
   mode: 'horizontal'
 })
 
-const state = reactive({
-  active: ''
-})
-
-onMounted(() => {
-  state.active =
-    state.active === '' ? props.activeTab || props.tabs[0].key : state.active
-})
-
 const componentClasses = computed(() => [
   'rpl-tabs',
   props.mode === 'vertical' ? 'rpl-tabs--vertical' : null
@@ -47,37 +38,44 @@ const componentClasses = computed(() => [
 
 const activeClasses = (key: string) => [
   'rpl-tab',
-  state.active === key ? 'rpl-tab--active' : null
+  'rpl-type-p',
+  'rpl-u-focusable-block',
+  props.activeTab === key ? 'rpl-tab--active' : null
 ]
 
 const updateActive = (key: string) => {
-  state.active = key
-
   emitRplEvent(
     'toggleTab',
     {
       action: 'select',
+      id: key,
+      key,
       text: props.tabs.find((tab) => tab.key === key)?.title
     },
     { global: true }
   )
 }
+
+// This component only renders the tablist, panels are the responsibility of the
+// consuming component - naming is opinionated to match the ARIA spec
 </script>
 
 <template>
-  <div :class="componentClasses">
-    <div
+  <div :class="componentClasses" role="tablist">
+    <button
       v-for="(item, index) in tabs"
+      :id="`tab-${item.key}`"
       :key="index"
       :class="activeClasses(item.key)"
+      type="button"
+      role="tab"
+      :aria-selected="activeTab === item.key ? 'true' : undefined"
+      :aria-controls="`panel-${item.key}`"
+      @click="updateActive(item.key)"
     >
-      <RplButton
-        :icon-name="item.icon ? `icon-${item.icon}` : null"
-        variant="transparent"
-        @click="updateActive(item.key)"
-        >{{ item.title }}</RplButton
-      >
-    </div>
+      {{ item.title }}
+      <RplIcon v-if="item.icon" :name="`icon-${item.icon}`" />
+    </button>
   </div>
 </template>
 

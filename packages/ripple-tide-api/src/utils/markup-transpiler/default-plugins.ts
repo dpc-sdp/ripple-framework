@@ -1,25 +1,15 @@
-/// <reference types="cheerio" />
-
-// Note: for add obj type prop in template, please return data instead of set them in template otherwise it won't work properly.
-// e.g You have something like in your plugin: `<component-obj-prop :author="{name: 'Veronica', company: 'Veridian Dynamics'}"></component-obj-prop>`
-// You should make template: `<component-obj-prop :author="myPluginData1.author"></component-obj-prop>`
-// Then set myPluginData1.author = {name: 'Veronica', company: 'Veridian Dynamics'} and return {myPluginData1, myPluginData2 ... } in your plugin.
-// See a example in `pluginEmbeddedMediaVideo` plugin below.
-
 import { epochToDate } from '../epochToDate.js'
-
-export const isRelativeUrl = (str: string): boolean => {
-  if (str) {
-    return true
-  }
-  return false
-}
+import { stripMediaBaseUrl } from '../stripMediaBaseUrl.js'
 
 const pluginTables = function (this: any) {
   // Wrap tables with a div.
   this.find('table').map((i: any, el: any) => {
     const $table = this.find(el)
-    return $table.wrap(`<div class="rpl-table"></div>`)
+    return $table
+      .wrap(`<div class="rpl-table"></div>`)
+      .wrap(
+        '<div class="rpl-table__scroll-container rpl-u-focusable-outline--visible" tabindex="0"></div>'
+      )
   })
 }
 
@@ -27,7 +17,11 @@ const pluginCallout = function (this: any) {
   // These callouts are added in drupal via the 'C' button in the wysiwyg editor.
   // Wrap callouts with a div. If there are multiple callouts in a row, wrap them all in a div.
   this.find('.callout-wrapper').each((i: any, el: any) => {
-    if (this.find(el).prev().hasClass('callout-wrapper')) {
+    this.find(el)
+      .removeClass('callout-wrapper')
+      .addClass('rpl-callout__wrapper')
+
+    if (this.find(el).prev().hasClass('rpl-callout__wrapper')) {
       return
     }
 
@@ -73,24 +67,33 @@ const pluginQuotation = function (this: any) {
     return $quotation.replaceWith(`
 <figure class="rpl-blockquote">
   ${$quotation}
-  <figcaption class="rpl-blockquote__author rpl-type-label-small">
-    ${authors.join('')}
-  </figcaption>
+  <figcaption class="rpl-blockquote__author rpl-type-label-small">${authors.join(
+    ''
+  )}</figcaption>
 </figure>
 `)
   })
 }
 
 const pluginDocuments = function (this: any) {
-  this.find('.embedded-entity--media--document').map((i: number, el: any) => {
-    const $document = this.find(el)
+  this.find(
+    '.embedded-entity--media--file, .embedded-entity--media--document'
+  ).map((i: number, el: any) => {
+    const $element = this.find(el)
+    const mediaType = $element.hasClass('embedded-entity--media--file')
+      ? 'file'
+      : 'document'
+    const titleSelector =
+      mediaType === 'document' ? '.file--title' : '.field--name-name'
 
-    const label = $document.find('a[aria-label]').attr('aria-label'),
-      link = $document.find('a').attr('href'),
-      title = $document.find('.file--title').text(),
-      filetype = $document.find('.file--type').text(),
-      filesize = $document.find('.file--size').text(),
-      updated = $document.attr('data-last-updated')
+    const label = $element.find('a[aria-label]').attr('aria-label'),
+      link = stripMediaBaseUrl(
+        $element.find('a').attr('href'),
+        process.env.NUXT_PUBLIC_TIDE_BASE_URL as string
+      ),
+      title = $element.find(titleSelector).text(),
+      fileSize = $element.find('.file--size').text(),
+      updated = $element.attr('data-last-updated')
 
     let updatedMarkup = ''
 
@@ -101,7 +104,27 @@ const pluginDocuments = function (this: any) {
         : ''
     }
 
-    return $document.replaceWith(`
+    let fileType = $element.find('.file--type').text()
+    const fileTypeClasses = $element.find('.file').attr('class')
+
+    // Some file types come back as simply 'other' from drupal (e.g. zip files), so we here we try to get the file type from the classes
+    if (fileTypeClasses) {
+      fileTypeClasses
+        .split(' ')
+        .filter((cls) => cls.includes('file--mime') || cls.includes('file--x'))
+        .forEach((mimeType) => {
+          switch (mimeType) {
+            case 'file--mime-application-zip':
+              fileType = 'zip'
+              break
+            case 'file--mime-text-calendar':
+              fileType = 'ics'
+              break
+          }
+        })
+    }
+
+    return $element.replaceWith(`
 <figure class="rpl-document">
   <a class="rpl-document__link rpl-u-focusable-within" aria-label="${label}" href="${link}" target="_blank">
     <span class="rpl-document__icon rpl-icon rpl-icon--size-l rpl-icon--colour-default rpl-icon--icon-document-lined">
@@ -110,12 +133,11 @@ const pluginDocuments = function (this: any) {
     <div class="rpl-document__content">
       <span class="rpl-document__name rpl-type-p rpl-type-weight-bold rpl-u-focusable-inline">${title}</span>
       <div class="rpl-document__info rpl-type-label-small">
-        <span class="rpl-file__meta">${filetype}</span>
-        <span class="rpl-file__meta">${filesize}</span>
-        ${updatedMarkup}
-      </div>
+        <span class="rpl-file__meta">${fileType}</span>
+        <span class="rpl-file__meta">${fileSize}</span>
+      ${updatedMarkup}</div>
     </div>
-  </span>
+    <span class="rpl-u-visually-hidden">(opens in a new window)</span>
   </a>
 </figure>
 `)
@@ -135,9 +157,9 @@ const pluginEmbededVideo = function (this: any) {
       const link = $video.find('.field--name-field-media-link a')?.attr('href')
 
       const captionMarkup = caption
-        ? `<figcaption class="rpl-media-embed__figcaption">
-        <p class="rpl-media-embed__caption rpl-type-p">${caption}</p>
-      </figcaption>`
+        ? `    <figcaption class="rpl-media-embed__figcaption">
+      <p class="rpl-media-embed__caption rpl-type-p">${caption}</p>
+    </figcaption>`
         : ''
 
       const transcriptMarkup = link
@@ -150,16 +172,18 @@ const pluginEmbededVideo = function (this: any) {
       </div>`
         : ''
 
-      return $video.replaceWith(`<div class="rpl-media-embed">
-        <figure class="rpl-media-embed__figure">
-          <div class="rpl-media-embed__video-container">
-            <iframe class="rpl-media-embed__video rpl-u-screen-only" src="${source}" title="${title}" width="${width}" height="${height}" allow="autoplay; fullscreen; picture-in-picture;" allowfullscreen></iframe>
-            <a href="${source}" class="rpl-text-link rpl-type-p rpl-u-print-only">${title}</a>
-          </div>
-          ${captionMarkup}
-        </figure>
-        ${transcriptMarkup}
-      </div>`)
+      return $video.replaceWith(`
+<div class="rpl-media-embed">
+  <figure class="rpl-media-embed__figure">
+    <div class="rpl-media-embed__video-container">
+      <iframe class="rpl-media-embed__video rpl-u-screen-only" src="${source}" title="${title}" width="${width}" height="${height}" allow="autoplay; fullscreen; picture-in-picture;" allowfullscreen></iframe>
+      <a href="${source}" class="rpl-text-link rpl-type-p rpl-u-print-only">${title}</a>
+    </div>
+${captionMarkup}
+  </figure>
+${transcriptMarkup}
+</div>
+`)
     }
   )
 }
@@ -169,13 +193,24 @@ const pluginImages = function (this: any) {
   this.find('.embedded-entity--media--image').map((i: any, el: any) => {
     const $img = this.find(el).find('img')
     const width = $img.attr('width')
-    const src = $img.attr('src')
+    const src = stripMediaBaseUrl(
+      $img.attr('src'),
+      process.env.NUXT_PUBLIC_TIDE_BASE_URL as string
+    )
     const alt = $img.attr('alt')
+    const $caption = this.find(el)
+      .find('div.field--name-field-media-caption')
+      ?.text()
     // this is the max width of the content area
     const contentWidth = 720
     return this.find(el).replaceWith(
-      `<img src="${src}" class="rpl-img" width="${width}" alt="${alt}" srcset="${src}?width=${contentWidth},
-      ${src}?width=${contentWidth * 2} 2x"></img>`
+      `<figure><img src="${src}" class="rpl-img" width="${width}" alt="${alt}" srcset="${src}?width=${contentWidth}, ${src}?width=${
+        contentWidth * 2
+      } 2x"></img>${
+        $caption
+          ? '<figcaption class="rpl-img__caption">' + $caption + '</figcaption>'
+          : ''
+      }</figure>`
     )
   })
 }
@@ -207,7 +242,42 @@ const pluginLinks = function (this: any) {
       $anchor.addClass('rpl-text-link rpl-u-focusable-inline')
     }
 
+    if (
+      $anchor.attr('target') === '_blank' &&
+      $anchor.find('span.rpl-u-visually-hidden').length === 0
+    ) {
+      $anchor.append(
+        '<span class="rpl-u-visually-hidden">(opens in a new window)</span>'
+      )
+    }
+
     return $anchor
+  })
+}
+
+const pluginLists = function (this: any) {
+  this.find('ul[type], ol[type]').map((i: any, el: any) => {
+    const $list = this.find(el)
+    const type = $list.attr('type')
+
+    const listTypes = {
+      1: 'decimal',
+      a: 'lower-latin',
+      A: 'upper-latin',
+      i: 'lower-roman',
+      I: 'upper-roman',
+      disc: 'disc',
+      square: 'square',
+      circle: 'disc' // circles selection uses disc (a11y request)
+    }
+
+    $list.removeAttr('type')
+
+    if (listTypes[type]) {
+      $list.addClass(`rpl-type-list-${el?.name}--${listTypes[type]}`)
+    }
+
+    return $list
   })
 }
 
@@ -231,6 +301,25 @@ const pluginIFrames = function (this: any) {
   })
 }
 
+const pluginTextAlign = function (this: any) {
+  this.find('.text-align-left, .text-align-center, .text-align-right').map(
+    (i: any, el: any) => {
+      const $el = this.find(el)
+      const alignments = ['left', 'center', 'right']
+
+      alignments.forEach((alignment) => {
+        if ($el.hasClass(`text-align-${alignment}`)) {
+          $el
+            .removeClass(`text-align-${alignment}`)
+            .addClass(`rpl-u-text-${alignment}`)
+        }
+      })
+
+      return $el
+    }
+  )
+}
+
 export default [
   pluginTables,
   pluginCallout,
@@ -240,5 +329,7 @@ export default [
   pluginImages,
   pluginButtons,
   pluginLinks,
-  pluginIFrames
+  pluginLists,
+  pluginIFrames,
+  pluginTextAlign
 ]

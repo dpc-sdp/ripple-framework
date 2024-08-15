@@ -38,7 +38,11 @@ export default class HttpClient {
           `${request.method?.toUpperCase()} request to ${this.client.getUri(
             request
           )}`,
-          { label: this.logLabel }
+          {
+            label: this.logLabel,
+            // _logId is a custom property added by us https://github.com/axios/axios/issues/2203
+            section_io_id: (request as any)._logId || 'no section id'
+          }
         )
         return request
       },
@@ -50,8 +54,8 @@ export default class HttpClient {
 
   _initializeResponseInterceptor() {
     this.client.interceptors.response.use(
-      ({ data }) => {
-        return data
+      (response) => {
+        return response
       },
       (error) => {
         if (axios.isAxiosError(error)) {
@@ -62,7 +66,9 @@ export default class HttpClient {
               error.request.path
             }`,
             {
-              label: this.logLabel
+              label: this.logLabel,
+              // _logId is a custom property added by us https://github.com/axios/axios/issues/2203
+              section_io_id: error.request?._logId || 'no section id'
             }
           )
         } else {

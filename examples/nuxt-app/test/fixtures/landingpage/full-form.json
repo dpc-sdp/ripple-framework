@@ -8,7 +8,7 @@
     "contacts": [],
     "relatedLinks": [],
     "whatsNext": [],
-    "socialShareNetworks": ["Facebook", "Twitter", "LinkedIn"],
+    "socialShareNetworks": ["Facebook", "X", "LinkedIn"],
     "siteSectionNav": null
   },
   "topicTags": [
@@ -124,6 +124,14 @@
             "name": "mobile_phone",
             "label": "Mobile phone",
             "id": "mobile_phone",
+            "validation": "",
+            "validationMessages": {}
+          },
+          {
+            "$formkit": "RplFormDatePicker",
+            "name": "dob",
+            "label": "Date of birth",
+            "id": "dob",
             "validation": "",
             "validationMessages": {}
           },
@@ -266,6 +274,12 @@
               "required": "You must accept the terms",
               "accepted": "You must accept the terms"
             }
+          },
+          {
+            "$formkit": "RplFormHidden",
+            "name": "site_section",
+            "id": "site_section",
+            "value": "DPC"
           },
           {
             "$formkit": "RplFormActions",

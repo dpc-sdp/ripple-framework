@@ -67,6 +67,16 @@
           "ids": {
             "values": ["Birds"]
           }
+        },
+        {
+          "terms": {
+            "checkboxFilter.keyword": ["Archived"]
+          }
+        },
+        {
+          "terms": {
+            "checkboxFilterGroup.keyword": ["Weekdays"]
+          }
         }
       ]
     }

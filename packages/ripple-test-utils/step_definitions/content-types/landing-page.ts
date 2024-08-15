@@ -1,4 +1,4 @@
-import { Then } from '@badeball/cypress-cucumber-preprocessor'
+import { Then, DataTable } from '@badeball/cypress-cucumber-preprocessor'
 
 Then('the landing page component with ID {int} should exist', (id: number) => {
   cy.get(`[data-component-id="${id}"]`).should('exist')
@@ -11,12 +11,36 @@ Then('the landing page component {string} should exist', (type: string) => {
 Then('the sidebar component with ID {string} should exist', (id: string) => {
   cy.get(`[data-sidebar-component-id="${id}"]`).should('exist')
 })
+
+Then(
+  'the sidebar component with ID {string} should not exist',
+  (id: string) => {
+    cy.get(`[data-sidebar-component-id="${id}"]`).should('not.exist')
+  }
+)
+
 Then('the hero title should be {string}', (title: string) => {
   cy.get('[data-cy="hero-title"]').should('have.text', title)
 })
 
 Then('the hero intro text should be {string}', (introText: string) => {
   cy.get('[data-cy="hero-summary"]').should('have.text', introText)
+})
+
+Then('the hero should display the following items', (dataTable: DataTable) => {
+  const table = dataTable.hashes()
+
+  cy.get(`.rpl-header-links__list a`).as('links')
+
+  table.forEach((row, i: number) => {
+    cy.get('@links')
+      .eq(i)
+      .then((item) => {
+        cy.wrap(item).as('item')
+        cy.get('@item').should('contain', row.text)
+        cy.get('@item').should('have.attr', 'href', row.url)
+      })
+  })
 })
 
 Then(

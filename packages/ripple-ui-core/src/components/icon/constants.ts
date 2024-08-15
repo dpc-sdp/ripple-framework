@@ -21,9 +21,10 @@ export const RplIconGroups = {
     'icon-instagram',
     'icon-linkedin',
     'icon-spotify',
-    'icon-twitter',
     'icon-wechat',
-    'icon-youtube'
+    'icon-whatsapp',
+    'icon-youtube',
+    'icon-x'
   ],
   standard: [
     'icon-accessible',
@@ -85,7 +86,8 @@ export const RplIconGroups = {
     'icon-view',
     'icon-zoom-in',
     'icon-zoom-out'
-  ]
+  ],
+  map: ['icon-enlarge', 'icon-map-zoom-in', 'icon-map-zoom-out', 'icon-home']
 } as const
 
 export default {

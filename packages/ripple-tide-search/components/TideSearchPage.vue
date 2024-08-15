@@ -1,6 +1,10 @@
 <script setup lang="ts">
 import { ref, watch } from 'vue'
-import { getActiveFilterURL, useRuntimeConfig, useTideSite } from '#imports'
+import {
+  getActiveFilterURL,
+  scrollToElementTopWithOffset,
+  useRuntimeConfig
+} from '#imports'
 import useSearchUI from './../composables/useSearchUI'
 import {
   AppSearchFilterConfigItem,
@@ -10,19 +14,23 @@ import { FormKit } from '@formkit/vue'
 import { SearchDriverOptions } from '@elastic/search-ui'
 import { useRippleEvent } from '@dpc-sdp/ripple-ui-core'
 import type { rplEventPayload } from '@dpc-sdp/ripple-ui-core'
+import type { TideSiteData } from '@dpc-sdp/ripple-tide-api/types'
 
 interface Props {
-  id: string
+  id?: string
+  site: TideSiteData
   pageTitle: string
   filtersConfig: AppSearchFilterConfigItem[]
   searchDriverOptions: Omit<SearchDriverOptions, 'apiConnector'>
   searchResultsMappingFn: (item: any) => MappedSearchResult<any>
+  scrollToResults?: boolean
 }
 
 const props = withDefaults(defineProps<Props>(), {
   id: 'tide-search-page',
   pageTitle: 'Search',
   filtersConfig: () => [],
+  scrollToResults: true,
   searchDriverOptions: () => ({
     initialState: { resultsPerPage: 10 },
     alwaysSearchOnInitialLoad: true,
@@ -50,7 +58,7 @@ const props = withDefaults(defineProps<Props>(), {
       component: 'TideAppSearchResult',
       props: {
         title: item.title?.raw?.[0],
-        url: item.url?.raw?.[0].replace(/\/site-(\d+)/, ''),
+        url: stripSiteId(item.url?.raw?.[0]),
         updated: item.changed?.raw?.[0]
       }
     }
@@ -68,17 +76,18 @@ const emit = defineEmits<{
     e: 'toggleFilters',
     payload: rplEventPayload & { action: 'open' | 'close' }
   ): void
+  (e: 'reset', payload: rplEventPayload & { action: 'clear_search' }): void
 }>()
 
 const { emitRplEvent } = useRippleEvent('tide-search', emit)
 
 const { public: config } = useRuntimeConfig()
-const site = await useTideSite()
 
 const apiConnectorOptions = {
-  ...config.tide?.appSearch,
+  // Omit the search key, we'll add it on the server
+  engineName: config.tide?.appSearch.engineName,
   // The search request is proxied through the API to avoid CORS issues
-  endpointBase: '/api/tide/app-search'
+  endpointBase: '/api/tide/search'
 }
 
 const {
@@ -89,7 +98,8 @@ const {
   searchTermSuggestions,
   results,
   staticFacetOptions,
-  filterFormValues
+  filterFormValues,
+  searchComplete
 } = await useSearchUI(
   apiConnectorOptions,
   props.searchDriverOptions,
@@ -97,9 +107,17 @@ const {
   props.searchResultsMappingFn
 )
 
+const initialLoad = ref(true)
 const filtersExpanded = ref(false)
-const toggleFiltersLabel = 'Refine search'
 const submitFiltersLabel = 'Apply search filters'
+
+const toggleFiltersLabel = computed(() => {
+  let label = 'Refine search'
+
+  return searchState.value?.filters?.length
+    ? `${label} (${searchState.value.filters.length})`
+    : label
+})
 
 const baseEvent = () => ({
   contextId: props.id,
@@ -107,7 +125,8 @@ const baseEvent = () => ({
   index: searchState.value.current,
   label: searchState.value.searchTerm,
   value: searchState.value.totalResults,
-  options: getActiveFilterURL(filterFormValues.value)
+  options: getActiveFilterURL(filterFormValues.value),
+  section: 'search'
 })
 
 const emitSearchEvent = (event) => {
@@ -122,20 +141,44 @@ const emitSearchEvent = (event) => {
   )
 }
 
+const scrollToResults = () => {
+  if (props.scrollToResults) {
+    const scrollToElement = document.querySelector('.rpl-layout__body-wrap')
+
+    if (scrollToElement) {
+      scrollToElementTopWithOffset(scrollToElement)
+    }
+  }
+}
+
 const handleSubmit = (event) => {
   doSearch()
-
   emitSearchEvent(event)
+
+  if (event?.type === 'button') {
+    scrollToResults()
+  }
 }
 
 const handleFilterSubmit = (event) => {
   filterFormValues.value = event.data
   doSearch()
+  scrollToResults()
 
   emitSearchEvent({ ...event, text: submitFiltersLabel, type: 'button' })
 }
 
-const handleFilterReset = () => {
+const handleFilterReset = (event: rplEventPayload) => {
+  emitRplEvent(
+    'reset',
+    {
+      ...event,
+      ...baseEvent(),
+      action: 'clear_search'
+    },
+    { global: true }
+  )
+
   updateSearchTerm('')
   filterFormValues.value = {}
   doSearch()
@@ -180,6 +223,19 @@ const handlePagination = (event) => {
   )
 }
 
+const displayResults = computed(() => {
+  if (loading.value) {
+    return Array(props.searchDriverOptions?.initialState?.resultsPerPage).fill({
+      id: 'skeleton',
+      component: 'TideSearchResultSkeleton'
+    })
+  }
+
+  return results.value?.length ? results.value : []
+})
+
+const loading = computed(() => initialLoad.value || searchState.value.isLoading)
+
 watch(
   () => searchState.value.isLoading,
   (loading, prevLoading) => {
@@ -192,13 +248,15 @@ watch(
         },
         { global: true }
       )
+
+      initialLoad.value = false
     }
   }
 )
 </script>
 
 <template>
-  <TideBaseLayout :id="id">
+  <TideBaseLayout :id="id" :site="site" :pageTitle="pageTitle">
     <template #aboveBody>
       <RplHeroHeader
         :title="pageTitle"
@@ -216,16 +274,21 @@ watch(
             :inputValue="searchState.searchTerm"
             :suggestions="searchTermSuggestions"
             :global-events="false"
+            maxlength="128"
             @submit="handleSubmit"
             @update:input-value="updateSearchTerm"
           />
           <RplSearchBarRefine
             class="tide-search-refine-btn"
             :expanded="filtersExpanded"
+            aria-controls="tide-search-page-filters"
             @click="toggleFilters"
             >{{ toggleFiltersLabel }}</RplSearchBarRefine
           >
-          <RplExpandable :expanded="filtersExpanded">
+          <RplExpandable
+            id="tide-search-page-filters"
+            :expanded="filtersExpanded"
+          >
             <RplForm
               v-if="staticFacetOptions !== null"
               id="tide-search-filter-form"
@@ -233,7 +296,9 @@ watch(
               :title="pageTitle"
               @submit="handleFilterSubmit"
             >
-              <div class="rpl-grid rpl-grid--no-row-gap tide-search-filters">
+              <div
+                class="rpl-grid rpl-grid--no-row-gap rpl-u-margin-t-6 tide-search-filters"
+              >
                 <div
                   v-for="filter in filtersConfig"
                   :key="filter.field"
@@ -251,6 +316,7 @@ watch(
                 </div>
               </div>
               <RplFormActions
+                id="tide-search-page-actions"
                 :label="submitFiltersLabel"
                 resetLabel="Clear search filters"
                 :displayResetButton="true"
@@ -263,13 +329,14 @@ watch(
       </RplHeroHeader>
     </template>
     <template #body>
-      <RplPageComponent v-if="!searchState.error && searchState.totalResults">
-        <p class="rpl-type-label rpl-u-padding-b-6">
-          Displaying {{ searchState.pagingStart }}-{{
-            searchState.pagingEnd
-          }}
-          of {{ searchState.totalResults }} results
-        </p>
+      <RplPageComponent v-if="!searchState.error">
+        <TideSearchResultsCount
+          :pagingStart="searchState.pagingStart"
+          :pagingEnd="searchState.pagingEnd"
+          :totalResults="searchState.totalResults"
+          :results="results"
+          :loading="loading"
+        />
       </RplPageComponent>
       <RplPageComponent>
         <div class="rpl-grid">
@@ -277,37 +344,21 @@ watch(
             <div
               :class="{
                 'tide-search-results': true,
-                'tide-search-results--loading':
-                  searchState.isLoading && !searchState.error
+                'tide-search-results--loading': loading && !searchState.error
               }"
             >
-              <div v-if="searchState.error">
-                <RplContent>
-                  <p class="rpl-type-h3">
-                    Sorry! Something went wrong. Please try again later.
-                  </p>
-                </RplContent>
-              </div>
-              <div
-                v-else-if="!searchState.isLoading && !searchState.totalResults"
-              >
-                <RplContent>
-                  <p class="rpl-type-h3">
-                    Sorry! We couldn't find any matches for '{{
-                      searchState.resultSearchTerm
-                    }}'.
-                  </p>
-                  <p>To improve your search results:</p>
-                  <ul>
-                    <li>use different or fewer keywords</li>
-                    <li>check spelling.</li>
-                  </ul>
-                </RplContent>
-              </div>
+              <TideSearchError v-if="searchState.error" />
+              <TideSearchNoResults
+                v-else-if="
+                  searchComplete && !loading && !searchState.totalResults
+                "
+                :query="searchState.searchTerm"
+              />
               <RplResultListing v-else>
                 <RplResultListingItem
-                  v-for="(result, idx) in results"
+                  v-for="(result, idx) in displayResults"
                   :key="`result-${idx}-${result.id}`"
+                  data-component-type="search-result"
                 >
                   <component :is="result.component" v-bind="result.props" />
                 </RplResultListingItem>

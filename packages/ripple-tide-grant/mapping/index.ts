@@ -1,9 +1,9 @@
-import mime from 'mime-types'
 import {
   getBodyFromField,
   getField,
   getImageFromField,
-  humanizeFilesize
+  getLinkFromField,
+  getDocumentFromField
 } from '@dpc-sdp/ripple-tide-api'
 import {
   tidePageBaseMapping,
@@ -41,7 +41,7 @@ const tideGrantModule: IRplTideModuleMapping = {
       },
       ongoing: 'field_node_on_going',
       description: (src: string) => getBodyFromField(src, 'field_description'),
-      link: 'field_call_to_action'
+      link: (src: any) => getLinkFromField(src, 'field_call_to_action')
     },
     timeline: {
       title: 'field_node_timeline.field_paragraph_title',
@@ -81,20 +81,16 @@ const tideGrantModule: IRplTideModuleMapping = {
           src,
           'field_node_guidelines.field_paragraph_accordion',
           []
-        ).map((acc: string) => ({
+        ).map((acc: any) => ({
           id: getField(acc, 'id'),
           title: getField(acc, 'field_paragraph_accordion_name'),
-          content: getField(acc, 'field_paragraph_accordion_body.processed', '')
+          content: getBodyFromField(acc, 'field_paragraph_accordion_body', '')
         }))
     },
     documents: (src: string) =>
-      getField(src, 'field_node_documents').map((doc: any) => ({
-        name: doc.name,
-        url: doc.field_media_file.url || doc.field_media_file.uri,
-        extension: mime.extension(doc.field_media_file.filemime),
-        size: humanizeFilesize(doc.field_media_file.filesize),
-        id: doc.id
-      })),
+      getField(src, 'field_node_documents').map((doc: any) =>
+        getDocumentFromField(doc)
+      ),
     sidebarComponents: ['RplSocialShare']
   },
   includes: [

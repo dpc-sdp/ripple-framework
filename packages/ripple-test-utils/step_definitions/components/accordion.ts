@@ -34,6 +34,22 @@ Then(
   }
 )
 
+Then(
+  'the accordion with ID {string} should display the description {string}',
+  (id: string, description: string) => {
+    cy.get(`[data-component-id="${id}"] .tide-accordion-description`).contains(
+      description
+    )
+  }
+)
+
+Then(
+  'I click the accordion item {string} in accordion with ID {string}',
+  (text: string, id: string) => {
+    cy.get(`#${id}`).contains('button', text).click()
+  }
+)
+
 When(
   'I click the open all button on accordion with ID {string}',
   (id: string) => {

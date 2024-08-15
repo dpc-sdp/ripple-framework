@@ -1,9 +1,6 @@
 <script setup lang="ts">
-import { useRuntimeConfig } from '#imports'
 import { FormKitSchemaNode } from '@formkit/core'
-import { $fetch } from 'ohmyfetch'
 import { computed, nextTick, ref, watch } from 'vue'
-import { RplFormAlert } from '@dpc-sdp/ripple-ui-forms'
 
 interface Props {
   title?: string
@@ -25,105 +22,10 @@ const props = withDefaults(defineProps<Props>(), {
 })
 
 const honeypotId = `${props.formId}-important-email`
-const isHoneypotTriggered = () => {
-  const honeypotElement: HTMLInputElement = document.querySelector(
-    `#${honeypotId}`
-  )
 
-  return honeypotElement && !!honeypotElement.value
-}
+const { submissionState, submitHandler } = useWebformSubmit(props.formId)
 
-/**
- * Post form data to Tide API
- * @param {string} formId - webform Id
- * @param {Object} formData - form data
- */
-const postForm = async (formId, formData = {}) => {
-  const { public: config } = useRuntimeConfig()
-
-  const formResource = 'webform_submission'
-
-  const body = {
-    data: {
-      type: formResource,
-      attributes: {
-        remote_addr: '0.0.0.0', // A IP placeholder for Tide validation, incase the IP is required.
-        data: JSON.stringify(formData)
-      }
-    }
-  }
-
-  // TODO: Add better error handling/log for form API error.
-  // It's blocked by Tide webform response issue SDPA-477.
-  // Currently the Tide webform has no right response.
-  const url = `api/tide/${formResource}/${formId}`
-  const { data, error } = await $fetch(url, {
-    method: 'POST',
-    baseURL: config.apiUrl || '',
-    body,
-    params: {
-      site: config.tide.site
-    },
-    headers: {
-      'Content-Type': 'application/vnd.api+json;charset=UTF-8'
-    }
-  })
-
-  if (error) {
-    throw error
-  }
-
-  if (!data) {
-    throw new Error('Form submission failed')
-  }
-
-  return true
-}
-
-const submissionState = ref({
-  status: 'idle',
-  title: '',
-  message: ''
-})
-
-const serverSuccessRef = ref<RplFormAlert>(null)
-
-const submitHandler = async ({ data }) => {
-  submissionState.value = {
-    status: 'submitting',
-    title: '',
-    message: ''
-  }
-
-  // If there's a value in the honeypot, just show a success message without actually submitting the form
-  if (isHoneypotTriggered()) {
-    submissionState.value = {
-      status: 'success',
-      title: props.successMessageTitle,
-      message: props.successMessageHTML
-    }
-
-    return
-  }
-
-  try {
-    await postForm(props.formId, data)
-
-    submissionState.value = {
-      status: 'success',
-      title: props.successMessageTitle,
-      message: props.successMessageHTML
-    }
-  } catch (error) {
-    console.error(error)
-
-    submissionState.value = {
-      status: 'error',
-      title: props.errorMessageTitle,
-      message: props.errorMessageHTML
-    }
-  }
-}
+const serverSuccessRef = ref(null)
 
 // Scroll to and focus on success and error messages when they appear
 watch(
@@ -139,6 +41,41 @@ watch(
 )
 
 const submitted = computed(() => submissionState.value.status === 'success')
+
+import { FormKitPlugin, FormKitTypeDefinition } from '@formkit/core'
+import {
+  createRplFormInput,
+  defaultRplFormInputProps,
+  inputLibrary,
+  rplFeatures
+} from '@dpc-sdp/ripple-ui-forms'
+
+const appConfig = useAppConfig()?.ripple as { customInputs: any }
+const customInputDefs = appConfig.customInputs || {}
+
+const customInputs: FormKitPlugin = () => {}
+customInputs.library = (node: any) => {
+  Object.values(customInputDefs).forEach((item: any) => {
+    if (node.props.type === item.id) {
+      const def: FormKitTypeDefinition = {
+        schema: createRplFormInput({
+          $cmp: item.id,
+          props: {
+            ...defaultRplFormInputProps,
+            type: item.type
+          }
+        }),
+        library: {
+          [item.id]: resolveComponent(item.id),
+          ...inputLibrary
+        },
+        ...item.formkitDefProps,
+        features: rplFeatures
+      }
+      return node.define(def)
+    }
+  })
+}
 </script>
 
 <template>
@@ -150,7 +87,7 @@ const submitted = computed(() => submissionState.value.status === 'success')
     <RplFormAlert
       v-if="hideFormOnSubmit && submitted"
       ref="serverSuccessRef"
-      :status="submissionState.status"
+      status="success"
       :title="submissionState.title"
       data-component-type="form-server-message"
       :restrictWidth="true"
@@ -163,9 +100,10 @@ const submitted = computed(() => submissionState.value.status === 'success')
       <RplForm
         :id="formId"
         :title="title"
+        :customInputs="customInputs"
         :schema="schema"
-        :submissionState="submissionState"
-        @submit="submitHandler"
+        :submissionState="submissionState as any"
+        @submit="submitHandler(props, $event.data)"
       >
         <template #belowForm>
           <div class="tide-webform-important-email">

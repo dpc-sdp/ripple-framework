@@ -16,7 +16,6 @@
   border-top: var(--rpl-border-2) solid var(--rpl-clr-type-footer-accessible);
 
   --local-clr-link: var(--rpl-clr-type-footer-contrast);
-  --local-clr-link-visited: var(--rpl-clr-type-footer-contrast);
   --local-clr-link-active: var(--rpl-clr-type-footer-contrast);
   --local-icon-vertical-spacing: 2px; /* Magic margin for visual symmetry */
 }
@@ -49,6 +48,14 @@
   .rpl-list__icon {
     margin-top: var(--local-icon-vertical-spacing);
     margin-right: var(--rpl-sp-2);
+  }
+
+  .rpl-icon--colour-default {
+    color: var(--rpl-clr-type-footer-contrast);
+  }
+
+  .rpl-u-focusable-inline:focus-visible .rpl-icon--colour-default {
+    color: var(--rpl-clr-type-focus-contrast);
   }
 }
 

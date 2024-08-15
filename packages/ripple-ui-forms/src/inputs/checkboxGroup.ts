@@ -19,7 +19,10 @@ export const checkboxGroup: FormKitTypeDefinition = {
       value: '$_value',
       onChange: '$node.input',
       options: '$node.props.options',
-      validationMeta: '$node.props.validationMeta'
+      validationMeta: '$node.props.validationMeta',
+      variant: '$node.props.variant',
+      layout: '$node.props.layout',
+      pii: '$node.props.pii'
     }
   }),
   library: inputLibrary,
@@ -35,7 +38,7 @@ export const checkboxGroup: FormKitTypeDefinition = {
   /**
    * An array of extra props to accept for this input.
    */
-  props: ['options'],
+  props: ['options', 'variant', 'layout', 'pii'],
   /**
    * Additional features that should be added to your input
    */

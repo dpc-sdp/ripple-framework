@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, ref, useSlots, watch } from 'vue'
+import { computed, ref, useSlots, watch, onMounted } from 'vue'
 import RplPagination from '../pagination/RplPagination.vue'
 import { bpMin } from '../../lib/breakpoints'
 import { RplSlidesPerView } from './constants'
@@ -22,6 +22,9 @@ interface Props {
   currentSlide?: number
   label?: string
   contentType?: string
+  itemElement?: string
+  wrapperElement?: string
+  changeNotice?: boolean | string
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -31,16 +34,20 @@ const props = withDefaults(defineProps<Props>(), {
   effect: undefined,
   currentSlide: 0,
   label: undefined,
-  contentType: 'item'
+  contentType: 'item',
+  itemElement: 'li',
+  wrapperElement: 'ul',
+  changeNotice: true
 })
 
 const emit = defineEmits<{
   (e: 'change', payload: rplEventPayload & { action: 'prev' | 'next' }): void
 }>()
 
+const mounted = ref(false)
 const container = ref()
 const swiper = ref()
-const activePage = ref()
+const activePage = ref(1)
 const paginate = ref(false)
 const slots = useSlots()
 const bp = useBreakpoints(bpMin)
@@ -112,6 +119,8 @@ watch(
   (slide) => swiper.value.$el.swiper.slideTo(slide)
 )
 
+onMounted(() => (mounted.value = true))
+
 const paginationClick = ({ action, text, value }) => {
   paginate.value = true
   swiper.value.$el.swiper.slideTo(value - 1)
@@ -147,6 +156,19 @@ const setInert = ({ activeIndex, slides }) =>
       index < activeIndex || index >= activeIndex + slidesInView.value
     )
   )
+
+const slideChangeNotice = computed(() => {
+  const items =
+    slidesInView.value > 1
+      ? `${activePage.value} to ${activePage.value + (slidesInView.value - 1)}`
+      : `${activePage.value}`
+
+  let notice = `Showing ${props.contentType} ${items} of ${slides.value.length}`
+
+  return typeof props.changeNotice === 'string'
+    ? `${notice}, ${props.changeNotice}`
+    : notice
+})
 </script>
 
 <template>
@@ -171,6 +193,7 @@ const setInert = ({ activeIndex, slides }) =>
       :effect="effect"
       :speed="speed"
       :touchStartPreventDefault="false"
+      :wrapper-tag="wrapperElement"
       class="rpl-slider__swiper"
       @after-init="setInert"
       @active-index-change="slideUpdate"
@@ -178,12 +201,21 @@ const setInert = ({ activeIndex, slides }) =>
       <SwiperSlide
         v-for="(slide, i) in slides"
         :key="i"
+        :tag="itemElement"
         class="rpl-slider__slide"
         data-cy="slide"
       >
         <component :is="slide" />
       </SwiperSlide>
     </Swiper>
+    <div
+      v-if="mounted && changeNotice"
+      aria-live="polite"
+      aria-atomic="true"
+      class="rpl-u-visually-hidden"
+    >
+      {{ slideChangeNotice }}
+    </div>
   </div>
 </template>
 

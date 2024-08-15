@@ -33,6 +33,7 @@ const meta = computed(() => {
       'field_node_dates_start_value'
     ),
     dateEnd: getSearchResultValue(props.result, 'field_node_dates_end_value'),
+    publishDate: getSearchResultValue(props.result, 'field_news_date'),
     isGrantOngoing: getSearchResultValue(props.result, 'field_node_on_going')
     // @todo add profile and recommendation meta or a way to hook into this from other layers
     // fvRecommendationStatus
@@ -44,7 +45,7 @@ const meta = computed(() => {
 <template>
   <RplPromoCard
     :key="id"
-    class="rpl-col-12 rpl-col-4-m"
+    class="tide-search-result-card rpl-col-12 rpl-col-4-m"
     :image="image"
     :title="title"
     :url="url"

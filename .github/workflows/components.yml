@@ -2,6 +2,7 @@ name: UI Libraries
 on:
   push:
     paths:
+      - '.github/workflows/components.yml'
       - 'packages/ripple-storybook/**'
       - 'packages/ripple-ui-core/**'
       - 'packages/ripple-ui-forms/**'
@@ -11,13 +12,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
       - name: Install pnpm
-        uses: pnpm/action-setup@v2
+        uses: pnpm/action-setup@v3
         with:
-          version: 8.6.2
+          version: 9.0.6
       - name: Install Dependencies
         run: pnpm install --frozen-lockfile
       - name: Build Storybook
@@ -36,21 +37,21 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: Install pnpm
-        uses: pnpm/action-setup@v2
+        uses: pnpm/action-setup@v3
         env:
           PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: 1
         with:
-          version: 8.6.2
+          version: 9.0.6
           run_install: true
       - name: Install Node
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
-          node-version: 18
+          node-version: 20
           cache: 'pnpm'
       - name: Cypress component tests
-        uses: cypress-io/github-action@v5
+        uses: cypress-io/github-action@v6
         with:
           working-directory: packages/ripple-ui-core
           install: false
@@ -59,22 +60,22 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: Install pnpm
-        uses: pnpm/action-setup@v2
+        uses: pnpm/action-setup@v3
         env:
           PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: 1
         with:
-          version: 8.6.2
+          version: 9.0.6
           run_install: true
       - name: Install Node
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
-          node-version: 18
+          node-version: 20
           cache: 'pnpm'
 
       - name: Cypress component tests
-        uses: cypress-io/github-action@v5
+        uses: cypress-io/github-action@v6
         with:
           working-directory: packages/ripple-ui-forms
           install: false

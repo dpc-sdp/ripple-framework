@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { computed, inject } from 'vue'
-import RplFormCounter from '../RplFormCounter/RplFormCounter.vue'
 import { useRippleEvent } from '@dpc-sdp/ripple-ui-core'
 import type { rplEventPayload } from '@dpc-sdp/ripple-ui-core'
+import { sanitisePIIField } from '../../lib/sanitisePII'
 
 interface Props {
   id: string
@@ -16,10 +16,8 @@ interface Props {
   maxlength?: number
   invalid?: boolean
   required?: boolean
-  counter?: 'word' | 'character'
-  counterMin?: number
-  counterMax?: number
   variant?: 'default' | 'reverse'
+  pii?: boolean
   handlers: Record<string, any>
 }
 
@@ -33,10 +31,8 @@ const props = withDefaults(defineProps<Props>(), {
   disabled: false,
   required: false,
   invalid: false,
-  counter: undefined,
-  counterMin: undefined,
-  counterMax: undefined,
-  variant: 'default'
+  variant: 'default',
+  pii: true
 })
 
 const emit = defineEmits<{
@@ -63,6 +59,7 @@ const handleChange = () => {
       action: 'update',
       id: props.id,
       label: props?.label,
+      value: sanitisePIIField(props.pii, props?.value),
       contextId: form?.id,
       contextName: form?.name
     },
@@ -89,14 +86,6 @@ const handleChange = () => {
       @blur="handlers?.blur"
       @input="handlers?.DOMInput"
       @change="handleChange"
-    />
-    <RplFormCounter
-      v-if="counter"
-      :value="value"
-      :type="counter"
-      :invalid="invalid"
-      :counter-min="counterMin"
-      :counter-max="counterMax"
     />
   </div>
 </template>

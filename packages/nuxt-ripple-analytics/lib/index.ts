@@ -77,6 +77,7 @@ export default {
         element_text: payload?.text,
         label: payload?.label,
         name: payload?.name,
+        index: payload?.index,
         link_url: payload?.value,
         type: payload?.type,
         component: 'rpl-card',
@@ -169,7 +170,8 @@ export default {
   },
   'rpl-file/download': () => {
     return (payload: any) => {
-      const { host, pathname } = new URL(payload?.value)
+      const { $app_origin } = useNuxtApp()
+      const { host, pathname } = new URL(payload?.value, $app_origin)
 
       trackEvent({
         event: `file_${payload.action}`,
@@ -290,7 +292,8 @@ export default {
   },
   'rpl-media-embed/downloadImage': () => {
     return (payload: any) => {
-      const { pathname, host } = new URL(payload?.value)
+      const { $app_origin } = useNuxtApp()
+      const { pathname, host } = new URL(payload?.value, $app_origin)
       const fileName = pathname.split('/').pop()
 
       trackEvent({
@@ -457,7 +460,7 @@ export default {
   'rpl-search-result/navigate': () => {
     return (payload: any) => {
       trackEvent({
-        event: `${payload.action}_link`,
+        event: `${payload.action}_search_result`,
         element_id: payload?.id,
         element_text: payload?.text,
         label: payload?.label,
@@ -538,6 +541,7 @@ export default {
         event: `${payload.action}_menu_item`,
         element_id: payload?.id,
         element_text: payload?.text,
+        link_url: payload?.value,
         name: payload?.name,
         index: payload?.index,
         component: 'rpl-vertical-nav',
@@ -546,12 +550,41 @@ export default {
     }
   },
   // UI Forms components
+  'rpl-form/submit': () => {
+    return (payload: any) => {
+      trackEvent({
+        event: `form_${payload.action}`,
+        form_id: payload?.id,
+        form_name: payload?.name,
+        form_valid: true,
+        form_data: payload?.value,
+        element_text: payload?.text,
+        component: 'rpl-form',
+        platform_event: 'submit'
+      })
+    }
+  },
+  'rpl-form/invalid': () => {
+    return (payload: any) => {
+      trackEvent({
+        event: `form_${payload.action}`,
+        form_id: payload?.id,
+        form_name: payload?.name,
+        form_valid: false,
+        form_data: payload?.value,
+        element_text: payload?.text,
+        component: 'rpl-form',
+        platform_event: 'submit'
+      })
+    }
+  },
   'rpl-form/submitted': () => {
     return (payload: any) => {
       trackEvent({
         event: `form_${payload.action}`,
         form_id: payload?.id,
         form_name: payload?.name,
+        form_data: payload?.value,
         element_text: payload?.text,
         component: 'rpl-form',
         platform_event: 'submit'
@@ -717,7 +750,7 @@ export default {
         name: payload?.name,
         type: payload?.type,
         form_id: payload?.contextId,
-        component: 'tide-search',
+        component: `tide-${payload.section || 'search'}`,
         platform_event: 'search'
       })
     }
@@ -733,7 +766,7 @@ export default {
         index: payload?.index,
         filters: payload?.options,
         count: payload?.value,
-        component: 'tide-search',
+        component: `tide-${payload.section || 'search'}`,
         platform_event: 'search'
       })
     }
@@ -750,7 +783,7 @@ export default {
         index: payload?.index,
         count: payload?.value,
         filters: payload?.options,
-        component: 'tide-search',
+        component: `tide-${payload.section || 'search'}`,
         platform_event: 'paginate'
       })
     }
@@ -765,8 +798,25 @@ export default {
         name: payload?.name,
         form_id: payload?.contextId,
         filters: payload?.options,
-        component: 'tide-search',
+        component: `tide-${payload.section || 'search'}`,
         platform_event: 'toggleFilters'
+      })
+    }
+  },
+  'tide-search/reset': () => {
+    return (payload: any) => {
+      trackEvent({
+        event: `${payload.action}_filters`,
+        element_id: payload?.id,
+        element_text: payload?.text,
+        label: payload?.label,
+        name: payload?.name,
+        count: payload?.value,
+        type: payload?.type,
+        form_id: payload?.contextId,
+        filters: payload?.options,
+        component: `tide-${payload.section || 'search'}`,
+        platform_event: 'clearQuery'
       })
     }
   }

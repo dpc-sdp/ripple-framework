@@ -6,24 +6,62 @@ declare module '@nuxt/schema' {
       featureFlags?: IRplFeatureFlags
       theme?: {
         ['rpl-clr-primary']?: string
+        ['rpl-clr-primary-alpha']?: string
+        ['rpl-clr-footer']?: string
+        ['rpl-clr-footer-alt']?: string
         ['rpl-clr-primary-alt']?: string
+        ['rpl-clr-type-primary-accessible']?: string
+        ['rpl-clr-type-primary-alt-accessible']?: string
+        ['rpl-clr-type-footer-accessible']?: string
         ['rpl-clr-accent']?: string
         ['rpl-clr-accent-alt']?: string
         ['rpl-clr-link']?: string
         ['rpl-clr-focus']?: string
         ['rpl-clr-type-focus-contrast']?: string
+        ['rpl-clr-gradient-horizontal']?: string
+        ['rpl-clr-gradient-vertical']?: string
       }
       languages?: {
-        name?: string
-        url?: string
-        rtl?: boolean
+        [key: string]: {
+          name: string
+          url: string
+          rtl?: boolean
+        }
       }
       search?: {
-        contentTypes: string[]
-        filterFunctions?: Record<
+        contentTypes?: string[]
+        fallbackValues?: Record<
           string,
           (filterConfig: any, values: string[]) => void
         >
+        filterFunctions?: Record<
+          string,
+          (filterConfig: any, values: string[]) => any
+        >
+        sortFunctions?: Record<string, (location: any, filterForm: any) => any>
+        queryConfigFunctions?: Record<string, (queryData: any) => any>
+        locationDSLTransformFunctions?: Record<
+          string,
+          (location: any, filterForm: any) => Promise<any>
+        >
+        mapResultHooks?: Record<
+          string,
+          (map: any, results: any, location: any, mapDeadSpace: any) => void
+        >
+      }
+      customInputs?: {
+        [key: string]: {
+          id: string
+          type: string
+          formkitDefProps: {
+            [key: string]: any
+          }
+          mapping: (
+            fieldID: string,
+            field: any,
+            fieldKey: string
+          ) => Record<string, any>
+        }
       }
     }
   }
@@ -33,6 +71,7 @@ export default defineAppConfig({
   ripple: {
     featureFlags: {},
     theme: {},
+    pageMiddleware: [],
     languages: {
       aii: {
         name: 'Noto Sans Syriac Eastern',
@@ -51,6 +90,11 @@ export default defineAppConfig({
       bn: {
         name: 'Noto Sans Bengali',
         url: 'https://fonts.googleapis.com/earlyaccess/notosansbengali.css'
+      },
+      ckb: {
+        name: 'Noto Naskh Arabic',
+        url: 'https://fonts.googleapis.com/earlyaccess/notonaskharabic.css',
+        rtl: true
       },
       cld: {
         name: 'Noto Naskh Arabic',
@@ -98,6 +142,15 @@ export default defineAppConfig({
       ko: {
         name: 'Noto Sans KR',
         url: 'https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&display=swap'
+      },
+      kmr: {
+        name: 'Noto Naskh Arabic',
+        url: 'https://fonts.googleapis.com/earlyaccess/notonaskharabic.css',
+        rtl: true
+      },
+      kyu: {
+        name: 'Noto Sans Kayah Li',
+        url: 'https://fonts.googleapis.com/css2?family=Noto+Sans+Kayah+Li:wght@400;700&display=swap'
       },
       mk: {
         name: 'Noto Sans',

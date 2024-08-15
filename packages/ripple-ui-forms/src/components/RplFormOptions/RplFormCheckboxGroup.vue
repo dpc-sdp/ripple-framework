@@ -4,6 +4,7 @@ import useFormkitFriendlyEventEmitter from '../../composables/useFormkitFriendly
 import { inject } from 'vue'
 import { useRippleEvent } from '@dpc-sdp/ripple-ui-core'
 import type { rplEventPayload } from '@dpc-sdp/ripple-ui-core'
+import { sanitisePIIField } from '../../lib/sanitisePII'
 
 interface Props {
   id: string
@@ -11,6 +12,8 @@ interface Props {
   label?: string
   disabled?: boolean
   variant?: 'default' | 'reverse'
+  layout?: 'block' | 'inline'
+  pii?: boolean
   onChange: (value: string[]) => void
   options: {
     id: string
@@ -24,6 +27,8 @@ const props = withDefaults(defineProps<Props>(), {
   label: undefined,
   disabled: false,
   variant: 'default',
+  layout: 'block',
+  pii: true,
   onChange: () => undefined,
   options: () => []
 })
@@ -60,7 +65,7 @@ const handleToggle = (selectedValue: string) => {
       action: 'update',
       id: props.id,
       label: props?.label,
-      value: Array.isArray(newValue) ? newValue.join(',') : newValue,
+      value: sanitisePIIField(props.pii, newValue),
       contextId: form?.id,
       contextName: form?.name
     },
@@ -74,7 +79,7 @@ const isChecked = (optionValue: string): boolean => {
 </script>
 
 <template>
-  <div class="rpl-form-option-group">
+  <div :class="['rpl-form-option-group', `rpl-form-option-group--${layout}`]">
     <RplFormOption
       v-for="(option, i) in options"
       :id="`${id}-${option.id}`"
@@ -87,6 +92,7 @@ const isChecked = (optionValue: string): boolean => {
       :disabled="disabled || option.disabled"
       :checked="isChecked(option.value)"
       :global-events="false"
+      :grouped="true"
       @on-change="handleToggle(option.value)"
     />
   </div>

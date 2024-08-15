@@ -15,7 +15,8 @@
     background-color: transparent;
   }
 
-  > {
+  >,
+  .rpl-callout__wrapper > {
     :nth-child(n) {
       margin-top: var(--rpl-sp-4);
     }
@@ -40,4 +41,9 @@
       letter-spacing: var(--rpl-type-ls-2);
     }
   }
+}
+
+[dir='rtl'] .rpl-callout {
+  border-left: 0;
+  border-right: var(--rpl-border-3) solid var(--rpl-clr-accent);
 }

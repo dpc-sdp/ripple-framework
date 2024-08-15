@@ -6,6 +6,8 @@ const props = defineProps<{
   title?: string
   items: ITideCardCarouselItem[]
   hasSidebar: boolean
+  hasTitle: boolean
+  pageBackground: string
 }>()
 
 const perView = computed(() => {
@@ -18,7 +20,5 @@ const perView = computed(() => {
 </script>
 
 <template>
-  <h2 v-if="title" class="rpl-type-h2">{{ title }}</h2>
-
-  <RplCardCarousel :items="items" :per-view="perView" />
+  <RplCardCarousel v-if="items.length > 0" :items="items" :per-view="perView" />
 </template>

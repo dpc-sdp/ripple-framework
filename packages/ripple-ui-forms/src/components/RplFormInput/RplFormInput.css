@@ -1,5 +1,6 @@
 .rpl-form__input {
   --local-icon-spacing: var(--rpl-sp-4);
+  --local-input-height: 48px;
 
   font-size: var(--rpl-type-size-2);
   line-height: var(--rpl-type-lh-4);
@@ -57,6 +58,16 @@
     color: var(--rpl-clr-neutral-300);
     border-color: var(--rpl-clr-neutral-200);
   }
+
+  &[type='date'] {
+    color: inherit;
+    min-height: var(--local-input-height);
+    -webkit-appearance: none;
+
+    &::-webkit-date-and-time-value {
+      text-align: left;
+    }
+  }
 }
 
 .rpl-form__input--reverse input {
@@ -95,4 +106,16 @@
 
 .rpl-form__input-icon__suffix {
   right: var(--local-icon-spacing);
+}
+
+[dir='rtl'] .rpl-form__input-icon__suffix {
+  left: var(--local-icon-spacing);
+  right: auto;
+}
+
+[dir='rtl'] .rpl-form__input--with-suffix-icon input {
+  padding-left: calc(
+    var(--rpl-sp-4) + var(--local-icon-spacing) + var(--rpl-sp-2)
+  );
+  padding-right: 0;
 }

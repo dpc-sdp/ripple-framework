@@ -6,10 +6,10 @@ export default {
 
 <script setup lang="ts">
 import { computed, inject } from 'vue'
-import { RplIcon } from '@dpc-sdp/ripple-ui-core/vue'
-import RplFormCounter from '../RplFormCounter/RplFormCounter.vue'
+import { useDebounceFn } from '@vueuse/core'
 import { useRippleEvent } from '@dpc-sdp/ripple-ui-core'
 import type { rplEventPayload } from '@dpc-sdp/ripple-ui-core'
+import { sanitisePIIField } from '../../lib/sanitisePII'
 
 interface Props {
   id: string
@@ -21,16 +21,17 @@ interface Props {
   label?: string
   prefixIcon?: string
   suffixIcon?: string
+  min?: number
+  max?: number
   minlength?: number
   maxlength?: number
-  counter?: 'word' | 'character'
-  counterMin?: number
-  counterMax?: number
   variant?: 'default' | 'reverse'
   invalid?: boolean
   required?: boolean
   centeredText?: boolean
   globalEvents?: boolean
+  throttle?: number
+  pii?: boolean
   onInput?: (payload: Event) => void
   onBlur?: (payload: Event) => void
 }
@@ -42,17 +43,18 @@ const props = withDefaults(defineProps<Props>(), {
   label: undefined,
   prefixIcon: undefined,
   suffixIcon: undefined,
+  min: undefined,
+  max: undefined,
   minlength: undefined,
   maxlength: undefined,
-  counter: undefined,
-  counterMin: undefined,
-  counterMax: undefined,
   disabled: false,
   required: false,
   invalid: false,
   variant: 'default',
   centeredText: false,
   globalEvents: true,
+  throttle: 500,
+  pii: true,
   onInput: () => null,
   onBlur: () => null
 })
@@ -78,9 +80,7 @@ const classes = computed(() => {
   }
 })
 
-const isWordCounter = computed(() => props.counter === 'word')
-
-const handleChange = () => {
+const handleChange = useDebounceFn(() => {
   emitRplEvent(
     'update',
     {
@@ -89,11 +89,12 @@ const handleChange = () => {
       type: props.type,
       label: props?.label,
       contextId: form?.id,
-      contextName: form?.name
+      contextName: form?.name,
+      value: sanitisePIIField(props.pii, props?.value)
     },
     { global: props.globalEvents }
   )
-}
+}, props.throttle)
 </script>
 
 <template>
@@ -117,8 +118,10 @@ const handleChange = () => {
         v-bind="$attrs"
         :name="name"
         :value="value"
-        :minlength="!isWordCounter ? minlength : null"
-        :maxlength="!isWordCounter ? maxlength : null"
+        :min="min"
+        :max="max"
+        :minlength="minlength"
+        :maxlength="maxlength"
         @blur="onBlur"
         @input="onInput"
         @change="handleChange"
@@ -131,14 +134,6 @@ const handleChange = () => {
       >
       </RplIcon>
     </div>
-    <RplFormCounter
-      v-if="counter"
-      :value="value"
-      :type="counter"
-      :invalid="invalid"
-      :counter-min="counterMin"
-      :counter-max="counterMax"
-    />
   </div>
 </template>
 

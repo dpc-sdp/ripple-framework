@@ -16,6 +16,7 @@
   display: flex;
   align-items: center;
   gap: var(--rpl-sp-2);
+  text-decoration: underline;
 
   &:focus-visible .rpl-pagination__link-icon {
     color: var(--rpl-clr-type-focus-contrast);
@@ -69,6 +70,7 @@
 .rpl-pagination__link,
 .rpl-pagination__page {
   color: var(--rpl-clr-type-default);
+  text-decoration: underline;
 
   &:hover {
     text-decoration: none;

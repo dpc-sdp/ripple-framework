@@ -93,7 +93,6 @@ const handleClick = (item) => {
           circle
           :aspect="{ xs: 'square' }"
           sizes="xs:80px"
-          alt=""
         />
         <h3
           v-if="item.title"
@@ -116,7 +115,7 @@ const handleClick = (item) => {
         </p>
         <div
           v-if="item.description"
-          class="rpl-timeline__item-description"
+          class="rpl-timeline__item-description rpl-content"
           v-html="item.description"
         ></div>
       </li>

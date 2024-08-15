@@ -13,14 +13,14 @@
       <slot name="primaryNav">
         <RplPrimaryNav
           :primaryLogo="{
-            src: '/img/primary-nav-logo-primary.svg',
-            printSrc: '/img/primary-nav-logo-primary-print.svg',
             altText: 'Victoria government logo',
             href: '/'
           }"
           :secondaryLogo="site?.siteLogo"
           :items="site?.menus.menuMain || []"
           :showQuickExit="site?.showQuickExit"
+          :showSearch="!featureFlags?.disablePrimaryNavSearch"
+          :searchUrl="featureFlags?.primaryNavSearchUrl"
         >
         </RplPrimaryNav>
       </slot>
@@ -54,12 +54,16 @@
         v-if="!featureFlags?.disableTopicTags && topicTags.length"
         :items="topicTags"
       />
-      <TideUpdatedDate v-if="updatedDate" :date="updatedDate" />
+      <TideUpdatedDate
+        v-if="!featureFlags?.disableUpdatedDate && updatedDate"
+        :date="updatedDate"
+      />
     </template>
     <template #belowBody>
       <slot name="belowBody"></slot>
       <TideContentRating
         v-if="showContentRating"
+        :contentRatingText="site?.contentRatingText"
         :siteSectionName="siteSection ? siteSection.name : ''"
       />
     </template>
@@ -70,12 +74,12 @@
       <slot name="sidebar"></slot>
     </template>
     <template #belowSidebar>
-      <slot name="aboveSidebar"></slot>
+      <slot name="belowSidebar"></slot>
     </template>
     <template #footer>
       <slot name="footer">
         <RplFooter
-          :nav="site?.menus.menuMain"
+          :nav="footerNav"
           :links="site?.menus.menuFooter"
           :copyright="site?.copyright"
           :acknowledgement="site?.acknowledgementFooter"
@@ -94,17 +98,13 @@
 
 <script setup lang="ts">
 // @ts-ignore
-import { useHead, useSiteTheme, useAppConfig, useRoute } from '#imports'
-import { computed, onMounted, provide, ref } from 'vue'
-import { defu as defuMerge } from 'defu'
+import { useRoute, useNuxtApp, useTideLanguage } from '#imports'
+import { computed, onMounted, provide } from 'vue'
 import { TideSiteData } from '../types'
 import { TideTopicTag } from '../mapping/base/topic-tags/topic-tags-mapping'
 import { TideSiteSection } from '@dpc-sdp/ripple-tide-api/types'
-import hideAlertsOnLoadScript from '../utils/hideAlertsOnLoadScript.js'
-import useTidePageMeta from '../composables/use-tide-page-meta'
-import useTideLanguage from '../composables/use-tide-language'
 
-interface Props {
+export interface Props {
   site: TideSiteData
   background?: string
   pageTitle: string
@@ -112,8 +112,8 @@ interface Props {
   footerImageCaption?: string
   topicTags?: TideTopicTag[]
   updatedDate?: string | null
-  siteSection: TideSiteSection | null
-  page: any
+  siteSection?: TideSiteSection | null
+  page?: any
   showContentRating?: boolean
 }
 
@@ -124,77 +124,56 @@ const props = withDefaults(defineProps<Props>(), {
   topicTags: () => [],
   updatedDate: null,
   siteSection: null,
+  page: null,
   showContentRating: false
 })
 
 // Feature flags will be available on component instances with inject('featureFlags') - See https://vuejs.org/guide/components/provide-inject.html#inject
 // Site flags provided by drupal will override the app config flags
-const featureFlags = ref(
-  defuMerge(
-    props.site?.featureFlags || {},
-    useAppConfig()?.ripple?.featureFlags || {}
-  )
-)
-provide('featureFlags', featureFlags.value)
+const featureFlags = useFeatureFlags(props.site?.featureFlags)
+
+// Sets language global values
+const { locale, direction, language } = useTideLanguage(props.page)
+provide('language', { locale, direction, language })
 
 onMounted(() => {
   // Used for knowing when page is ready for cypress testing
   document.body.setAttribute('data-nuxt-hydrated', 'true')
 })
 
+const nuxtApp = useNuxtApp()
 const route = useRoute()
 const showBreadcrumbs = computed(() => route.path !== '/')
 const showDraftAlert = computed(() => props.page?.status === 'draft')
 
-const style = useSiteTheme(
-  defuMerge(props.site?.theme || {}, useAppConfig()?.ripple?.theme || {})
-)
+const footerNav = computed(() => {
+  const menuMain = (props.site?.menus.menuMain || []).map((item) => {
+    return featureFlags.value?.footerMenuSingleLevel
+      ? { ...item, single: true }
+      : item
+  })
 
-const { direction, language } = useTideLanguage(props?.page)
+  if (props.site?.socialLinks?.length) {
+    return [
+      ...menuMain,
+      {
+        text: 'Connect with us',
+        id: '__footer_connect_with_us',
+        items: props.site?.socialLinks
+      }
+    ]
+  }
 
-useHead({
-  htmlAttrs: {
-    lang: props.pageLanguage || 'en-AU'
-  },
-  title: props.pageTitle,
-  style: style && [
-    {
-      children: `:root, body { ${style} }`
-    }
-  ],
-  link: [
-    {
-      rel: 'apple-touch-icon',
-      sizes: '180x180',
-      href: '/apple-touch-icon.png'
-    },
-    {
-      rel: 'icon',
-      type: 'image/png',
-      sizes: '32x32',
-      href: '/favicon-32x32.png'
-    },
-    {
-      rel: 'icon',
-      type: 'image/png',
-      sizes: '16x16',
-      href: '/favicon-16x16.png'
-    },
-    { rel: 'manifest', href: '/site.webmanifest' },
-    { rel: 'mask-icon', href: '/safari-pinned-tab.svg', color: '#0054c9' }
-  ],
-  meta: [
-    { name: 'msapplication-TileColor', content: '#0054c9' },
-    { name: 'theme-color', content: '#ffffff' }
-  ],
-  script: [
-    {
-      innerHTML: hideAlertsOnLoadScript
-    }
-  ]
+  return menuMain
 })
 
-if (props.page && props.page.meta) {
-  useTidePageMeta(props)
-}
+/*
+ * This hook can be called from plugins to extend Tide managed pages behaviour - see /plugins folder for examples
+ */
+await nuxtApp.callHook('tide:page', props)
+
+useTideSiteTheme(props.site)
+useTideHideAlerts()
+useTideSiteMeta(props, nuxtApp?.$app_origin)
+useTideFavicons()
 </script>

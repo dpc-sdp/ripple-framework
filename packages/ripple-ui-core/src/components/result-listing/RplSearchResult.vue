@@ -12,11 +12,15 @@ interface Props {
   url: string
   content?: string
   updated?: string
+  dateLabel?: string
+  showUrl?: boolean
 }
 
 const props = withDefaults(defineProps<Props>(), {
   content: undefined,
-  updated: undefined
+  updated: undefined,
+  dateLabel: 'Updated',
+  showUrl: true
 })
 
 const emit = defineEmits<{
@@ -43,20 +47,28 @@ const handleClick = () => {
 </script>
 
 <template>
-  <div ref="container" class="rpl-search-result">
+  <div class="rpl-search-result">
     <div v-if="$slots.meta" class="rpl-search-result__meta rpl-type-p-small">
       <slot name="meta"></slot>
     </div>
-    <h2 class="rpl-search-result__title rpl-type-h3">
-      <RplTextLink ref="trigger" :url="url" @click="handleClick">
-        {{ title }}
-      </RplTextLink>
-    </h2>
-    <div
-      v-if="url"
-      class="rpl-search-result__url rpl-type-p-small rpl-u-screen-only"
-    >
-      {{ displayUrl }}
+    <div ref="container" class="rpl-search-result__heading">
+      <h2 class="rpl-search-result__title rpl-type-h3">
+        <RplTextLink
+          ref="trigger"
+          :url="url"
+          class="rpl-u-link-visited"
+          @click="handleClick"
+        >
+          {{ title }}
+        </RplTextLink>
+      </h2>
+      <div
+        v-if="url && showUrl"
+        aria-hidden="true"
+        class="rpl-search-result__url rpl-type-p-small rpl-u-screen-only"
+      >
+        {{ displayUrl }}
+      </div>
     </div>
     <div v-if="$slots.details" class="rpl-search-result__details rpl-type-p">
       <slot name="details"></slot>
@@ -66,8 +78,8 @@ const handleClick = () => {
       class="rpl-search-result__body rpl-type-p"
       v-html="content"
     />
-    <p v-if="updated" class="rpl-search-result__body rpl-type-p-small">
-      Updated: {{ updated }}
+    <p v-if="updated" class="rpl-search-result__date rpl-type-p-small">
+      {{ dateLabel ? `${dateLabel}: ` : '' }}{{ updated }}
     </p>
   </div>
 </template>

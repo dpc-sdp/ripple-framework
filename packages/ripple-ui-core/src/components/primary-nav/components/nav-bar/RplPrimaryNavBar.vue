@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { inject } from 'vue'
 import RplIcon from '../../../icon/RplIcon.vue'
 import RplPrimaryNavBarAction from './RplPrimaryNavBarAction.vue'
 import {
@@ -11,6 +12,16 @@ import {
   useRippleEvent,
   rplEventPayload
 } from '../../../../composables/useRippleEvent'
+import VicGovLogo from './../../../../assets/logos/logo-vic-gov.svg?component'
+import type { IRplFeatureFlags } from '@dpc-sdp/ripple-tide-api/types'
+
+const { disablePrimaryLogo, primaryNavNowrap }: IRplFeatureFlags = inject(
+  'featureFlags',
+  {
+    disablePrimaryLogo: false,
+    primaryNavNowrap: false
+  }
+)
 
 interface Props {
   primaryLogo: IRplPrimaryNavLogo
@@ -21,7 +32,7 @@ interface Props {
   isMegaNavActive: boolean
   isSearchActive: boolean
   activeNavItems: IRplPrimaryNavActiveItems
-  toggleMobileMenu: () => void
+  toggleMobileMenu: (...args: any) => void
   toggleItem: (...args: RplPrimaryNavToggleItemOptions) => void
   toggleSearch: () => void
 }
@@ -42,7 +53,7 @@ const mobileToggleLabel = 'Menu'
 const isItemActive = (item: IRplPrimaryNavItem) =>
   props.activeNavItems.level1?.id == item.id
 
-const handleToggleItem = (level: number, item) => {
+const handleToggleItem = (level: number, item: IRplPrimaryNavItem) => {
   emitRplEvent(
     'toggleMenuItem',
     {
@@ -54,7 +65,7 @@ const handleToggleItem = (level: number, item) => {
     { global: true }
   )
 
-  props.toggleItem(level, item)
+  props.toggleItem(level as 3 | 2 | 1, item)
 }
 </script>
 
@@ -74,24 +85,34 @@ const handleToggleItem = (level: number, item) => {
     >
       <!-- Primary logo -->
       <RplLink
+        v-if="!disablePrimaryLogo"
         class="rpl-primary-nav__primary-logo-link rpl-u-focusable-outline rpl-u-focusable-outline--no-border"
         :url="primaryLogo.href"
       >
+        <VicGovLogo
+          v-if="!primaryLogo?.src"
+          :aria-label="primaryLogo.altText"
+          class="rpl-primary-nav__primary-logo-image"
+        />
         <img
+          v-else
           class="rpl-primary-nav__primary-logo-image rpl-u-screen-only"
           :src="primaryLogo.src"
           :alt="primaryLogo.altText"
         />
         <img
-          v-if="primaryLogo.printSrc"
+          v-if="primaryLogo?.src"
           class="rpl-primary-nav__primary-logo-image rpl-primary-nav__logo-alt rpl-u-print-only"
-          :src="primaryLogo.printSrc"
+          :src="primaryLogo?.printSrc ? primaryLogo?.printSrc : primaryLogo.src"
           :alt="primaryLogo.altText"
         />
       </RplLink>
 
       <!-- Logo divider -->
-      <div v-if="secondaryLogo" class="rpl-primary-nav__logo-divider"></div>
+      <div
+        v-if="secondaryLogo && !disablePrimaryLogo"
+        class="rpl-primary-nav__logo-divider"
+      ></div>
 
       <!-- Secondary logo -->
       <RplLink
@@ -113,7 +134,12 @@ const handleToggleItem = (level: number, item) => {
       </RplLink>
     </div>
 
-    <ul class="rpl-primary-nav__nav-bar-actions-list">
+    <ul
+      :class="[
+        'rpl-primary-nav__nav-bar-actions-list',
+        { 'rpl-primary-nav__nav-bar-actions-list--nowrap': primaryNavNowrap }
+      ]"
+    >
       <!-- Mobile menu toggle -->
       <li class="rpl-primary-nav__nav-bar-mobile-menu-toggle-container">
         <RplPrimaryNavBarAction
@@ -135,7 +161,6 @@ const handleToggleItem = (level: number, item) => {
       <li
         v-if="showSearch"
         class="rpl-primary-nav__nav-bar-mobile-menu-divider"
-        aria-role="presentation"
         aria-hidden="true"
       ></li>
 
@@ -178,25 +203,21 @@ const handleToggleItem = (level: number, item) => {
 
       <!-- Search toggle -->
       <li v-if="showSearch">
-        <RplPrimaryNavBarAction
-          type="toggle"
-          href="/search"
-          @click="toggleSearch()"
-        >
-          <div v-if="!isSearchActive">
+        <RplPrimaryNavBarAction type="toggle" @click="toggleSearch()">
+          <template v-if="!isSearchActive">
             <span class="rpl-primary-nav__nav-bar-search-label">Search</span
             >&NoBreak;<span
               class="rpl-primary-nav__nav-bar-icon rpl-primary-nav__nav-bar-icon--large rpl-primary-nav__nav-bar-icon--search"
               ><RplIcon name="icon-search"></RplIcon>
             </span>
-          </div>
-          <div v-else>
+          </template>
+          <template v-else>
             <span class="rpl-primary-nav__nav-bar-search-label">Close</span
             >&NoBreak;<span
               class="rpl-primary-nav__nav-bar-icon rpl-primary-nav__nav-bar-icon--large rpl-primary-nav__nav-bar-icon--search"
               ><RplIcon name="icon-cancel"></RplIcon>
             </span>
-          </div>
+          </template>
         </RplPrimaryNavBarAction>
       </li>
     </ul>

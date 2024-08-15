@@ -18,17 +18,14 @@ export default defineNuxtConfig({
     tide: {
       appSearch: {
         privateSearchKey: ''
+      },
+      elasticsearch: {
+        username: '',
+        password: ''
       }
     }
   },
-  alias: {
-    '@elastic/search-ui': '@elastic/search-ui/lib/esm/index.js',
-    '@elastic/search-ui-app-search-connector':
-      '@elastic/search-ui-app-search-connector/lib/esm/index.js',
-    '@elastic/search-ui-elasticsearch-connector':
-      '@elastic/search-ui-elasticsearch-connector/lib/esm/index.js',
-    '@searchkit/sdk': '@searchkit/sdk/lib/esm/index.js'
-  },
+  modules: ['@dpc-sdp/ripple-ui-maps/nuxt'],
   build: {
     transpile: [
       ({ isDev }) => !isDev && '@elastic/search-ui',
@@ -39,7 +36,20 @@ export default defineNuxtConfig({
   },
   vite: {
     optimizeDeps: {
-      include: ['@elastic/search-ui > deep-equal', '@elastic/search-ui > qs']
+      include: [
+        '@elastic/search-ui > deep-equal',
+        '@elastic/search-ui > qs',
+        'ol > color-name',
+        'ol/style',
+        'ol/format',
+        'ol/layer',
+        'ol/color',
+        'ol/style/Icon',
+        'ol/Feature',
+        'ol > geotiff',
+        'ol > earcut',
+        'lodash'
+      ]
     }
   }
 })

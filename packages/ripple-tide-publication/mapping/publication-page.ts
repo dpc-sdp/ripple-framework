@@ -1,10 +1,10 @@
-import mime from 'mime-types'
-import { getField, humanizeFilesize } from '@dpc-sdp/ripple-tide-api'
+import { getField, getDocumentFromField } from '@dpc-sdp/ripple-tide-api'
 import {
   tidePageBaseMapping,
   tidePageBaseIncludes
 } from '@dpc-sdp/nuxt-ripple/mapping'
 import type { IRplTideModuleMapping } from '@dpc-sdp/ripple-tide-api/types'
+import { heroHeaderMapping } from '@dpc-sdp/ripple-tide-landing-page/mapping'
 
 const tidePublicationPageModule: IRplTideModuleMapping = {
   mapping: {
@@ -22,10 +22,7 @@ const tidePublicationPageModule: IRplTideModuleMapping = {
       }
       return 'h2'
     },
-    header: {
-      title: 'title',
-      summary: 'field_landing_page_intro_text'
-    },
+    header: heroHeaderMapping,
     breadcrumbs: (src: string) => [
       { text: 'Home', url: '/' },
       {
@@ -44,7 +41,7 @@ const tidePublicationPageModule: IRplTideModuleMapping = {
       text: 'publication_navigation_root.meta.title',
       url: 'publication_navigation_root.meta.url',
       id: 'publication_navigation_root.meta.id',
-      documents: (src) =>
+      documents: (src: any) =>
         (
           getField(
             src,
@@ -52,25 +49,17 @@ const tidePublicationPageModule: IRplTideModuleMapping = {
               ? 'field_publication.field_publication.field_node_documents'
               : 'field_publication.field_node_documents'
           ) || []
-        ).map((doc: any) => ({
-          name: doc.name,
-          url: doc.field_media_file.url || doc.field_media_file.uri,
-          size: humanizeFilesize(doc.field_media_file.filesize),
-          extension: mime.extension(doc.field_media_file.filemime),
-          id: doc.id
-        })),
+        ).map((doc: any) => getDocumentFromField(doc)),
       pagination: {
         prev: {
-          label: 'publication_navigation_prev.meta.title',
+          label: () => 'Previous',
           url: 'publication_navigation_prev.meta.url',
-          description:
-            'publication_navigation_prev.meta.field_landing_page_summary'
+          description: 'publication_navigation_prev.meta.title'
         },
         next: {
-          label: 'publication_navigation_next.meta.title',
+          label: () => 'Next',
           url: 'publication_navigation_next.meta.url',
-          description:
-            'publication_navigation_next.meta.field_landing_page_summary'
+          description: 'publication_navigation_next.meta.title'
         }
       }
     },
@@ -92,7 +81,9 @@ const tidePublicationPageModule: IRplTideModuleMapping = {
     'field_landing_page_contact.field_paragraph_phones',
     'field_landing_page_contact.field_paragraph_social_media',
     'field_landing_page_component.field_paragraph_media.field_media_image',
-    'field_landing_page_component.field_paragraph_topic'
+    'field_landing_page_component.field_paragraph_topic',
+    'field_landing_page_hero_image',
+    'field_landing_page_hero_image.field_media_image'
   ]
 }
 

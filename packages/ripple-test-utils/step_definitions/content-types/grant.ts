@@ -3,7 +3,9 @@ import { Then, DataTable } from '@badeball/cypress-cucumber-preprocessor'
 Then(
   'the overview should display a status of {string} with a {string} {string} icon',
   (status: string, colour: string, icon: string) => {
-    cy.get('.tide-grant-meta--block .rpl-list__label')
+    cy.get(
+      '.tide-grant-meta--block .rpl-list__label, .tide-grant-meta--block .rpl-description-list__description'
+    )
       .contains(status)
       .closest('.tide-grant-meta--block')
       .as('item')
@@ -28,8 +30,21 @@ Then(
 )
 
 Then('the overview should display funding of {string}', (funding: string) => {
-  cy.get('.tide-grant-meta--block .rpl-list__label').contains(funding)
+  cy.get(
+    '.tide-grant-meta--block .rpl-list__label, .tide-grant-meta--block .rpl-description-list__description'
+  ).contains(funding)
 })
+
+Then(
+  'the overview CTA {string} should link to {string}',
+  (text: string, url: string) => {
+    cy.contains('.tide-grant__overview-item .rpl-button', text).should(
+      'have.attr',
+      'href',
+      url
+    )
+  }
+)
 
 Then(
   'the first timeline item should have a date of {string}',

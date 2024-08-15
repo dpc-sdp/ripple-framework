@@ -1,4 +1,14 @@
-import { Then, DataTable } from '@badeball/cypress-cucumber-preprocessor'
+import {
+  Then,
+  DataTable,
+  When,
+  Given
+} from '@badeball/cypress-cucumber-preprocessor'
+import { set } from 'lodash-es'
+
+Then('the page title should be {string}', (title: string) => {
+  cy.title().should('equal', title)
+})
 
 Then('the title should be {string}', (title: string) => {
   cy.get('[data-cy="hero-title"]').should('have.text', title)
@@ -43,6 +53,21 @@ Then(
     cy.get(`[data-cy="updated-date"]`).should('contain', updatedDateText)
   }
 )
+
+Then('the last updated date should not be displayed', () => {
+  cy.get(`[data-cy="updated-date"]`).should('not.exist')
+})
+
+Then('the primary nav links should wrap', () => {
+  cy.get('.rpl-primary-nav__nav-bar-actions-list--nowrap').should('not.exist')
+})
+
+Then('the primary nav links should not wrap', () => {
+  cy.get('.rpl-primary-nav__nav-bar-actions-list').should(
+    'have.class',
+    'rpl-primary-nav__nav-bar-actions-list--nowrap'
+  )
+})
 
 Then(
   'the page should have the following topic tags',
@@ -91,6 +116,47 @@ Then(
           cy.wrap(item).as('item')
           cy.get('@item').should('contain', row.text)
           cy.get('@item').find('a').should('have.attr', 'href', row.url)
+        })
+    })
+  }
+)
+
+Then(
+  'the footer nav section with title {string} should link to {string}',
+  (title: string, link: string) => {
+    cy.get('.rpl-footer-nav-section__title a')
+      .contains(title)
+      .should('have.attr', 'href', link)
+  }
+)
+
+When(
+  'I open the footer nav section with title {string}',
+  (sectionTitle: string) => {
+    cy.get('.rpl-footer-nav-section button')
+      .contains('h3', sectionTitle)
+      .click()
+  }
+)
+
+Then(
+  'the footer nav should have the following single level items',
+  (dataTable: DataTable) => {
+    const table = dataTable.hashes()
+
+    cy.get(`.rpl-footer-nav-section__title`).as('items')
+
+    table.forEach((row, i: number) => {
+      cy.get('@items')
+        .eq(i)
+        .then((item) => {
+          cy.wrap(item).as('item')
+          cy.get('@item').should('contain', row.text)
+          cy.get('@item').find('a').should('have.attr', 'href', row.url)
+          cy.get('@item')
+            .parents('.rpl-footer-nav-section')
+            .find('.rpl-list__items')
+            .should('not.exist')
         })
     })
   }
@@ -155,4 +221,96 @@ Then('the footer should have the following logos', (dataTable: DataTable) => {
         cy.get('@logo').find('img').should('have.attr', 'alt', row.alt)
       })
   })
+})
+
+Given(
+  'the feature flag {string} is set to {string}',
+  (flag: string, value: string) => {
+    if (value === 'true') value = true
+    if (value === 'false') value = false
+    cy.get('@siteFixture').then((response) => {
+      set(response, `featureFlags.${flag}`, value)
+    })
+  }
+)
+
+Given('the site wide quick exit is enabled', () => {
+  cy.get('@siteFixture').then((response) => {
+    set(response, 'showQuickExit', true)
+  })
+})
+
+Given('the site section quick exit is enabled', () => {
+  cy.get('@pageFixture').then((response) => {
+    set(response, 'siteSection.siteOverrides.showQuickExit', true)
+  })
+})
+
+Then('the quick exit should be displayed', () => {
+  cy.get('.rpl-primary-nav__quick-exit').should('be.visible')
+})
+
+Then('the quick exit should not be displayed', () => {
+  cy.get('.rpl-primary-nav__quick-exit').should('not.exist')
+})
+
+Then('the content rating form should be displayed', () => {
+  cy.get('.tide-content-rating').should('be.visible')
+})
+
+Then('the content rating form should not be displayed', () => {
+  cy.get('.tide-content-rating').should('not.exist')
+})
+
+Then(
+  'the content rating form should display the custom text {string}',
+  (text: string) => {
+    cy.get('.tide-content-rating__text').should('have.text', text)
+  }
+)
+
+Then('I click the content rating option labelled {string}', (label: string) => {
+  cy.get('.tide-content-rating label').contains(label).click()
+})
+
+Given('the content rating form is enabled', () => {
+  cy.get('@pageFixture').then((response) => {
+    set(response, 'showContentRating', true)
+  })
+})
+
+Given('the content rating form is disabled', () => {
+  cy.get('@pageFixture').then((response) => {
+    set(response, 'showContentRating', false)
+  })
+})
+
+Given('the site sections share links are set to included WhatsApp', () => {
+  cy.get('@pageFixture').then((response) => {
+    set(
+      response,
+      'siteSection.siteOverrides.featureFlags[socialShare.WhatsApp]',
+      true
+    )
+  })
+})
+
+Then('the in page navigation should include', (dataTable: DataTable) => {
+  const table = dataTable.hashes()
+
+  cy.get('.rpl-in-page-navigation li').as('links')
+
+  table.forEach((row, i: number) => {
+    cy.get('@links')
+      .eq(i)
+      .then((link) => {
+        cy.wrap(link).as('link')
+        cy.get('@link').find('a').first().should('have.attr', 'href', row.url)
+        cy.get('@link').find('.rpl-list__label').first().contains(row.title)
+      })
+  })
+})
+
+Given('I click on the document {string}', (label: string) => {
+  cy.contains('.rpl-document__link', label).trigger('click')
 })

@@ -5,8 +5,8 @@ Feature: Forms
   @mockserver
   Scenario: Kitchen sink
     Given the mock server has started
-    And the endpoint "/api/tide/page" with query "?path=/kitchen-sink&site=8888" returns fixture "/landingpage/full-form" with status 200
-    And the endpoint "/api/tide/site" with query "?id=8888" returns fixture "/site/reference" with status 200
+    And the page endpoint for path "/kitchen-sink" returns fixture "/landingpage/full-form" with status 200
+    And the site endpoint returns fixture "/site/reference" with status 200
     Given I visit the page "/kitchen-sink"
     Then the landing page component "TideLandingPageWebForm" should exist
     And the form with ID "full_form" should exist
@@ -18,6 +18,7 @@ Feature: Forms
     Then a "number" input with the label "Quantity" should exist
     Then a "url" input with the label "Website" should exist
     Then a "tel" input with the label "Mobile phone" should exist
+    Then a "date" input with the label "Date of birth" should exist
     Then a select field with the label "Favourite colour" should exist
       | required |
       | true     |
@@ -38,12 +39,13 @@ Feature: Forms
     Then a textarea field with the label "Message" should exist
       | help               | required |
       | Enter your message | true     |
+    Then a hidden field named "site_section" should exist with the value "DPC"
 
   @mockserver
   Scenario: Error summary
     Given the mock server has started
-    And the endpoint "/api/tide/page" with query "?path=/kitchen-sink&site=8888" returns fixture "/landingpage/full-form" with status 200
-    And the endpoint "/api/tide/site" with query "?id=8888" returns fixture "/site/reference" with status 200
+    And the page endpoint for path "/kitchen-sink" returns fixture "/landingpage/full-form" with status 200
+    And the site endpoint returns fixture "/site/reference" with status 200
     Given I visit the page "/kitchen-sink"
     Then the landing page component "TideLandingPageWebForm" should exist
     And the form with ID "full_form" should exist
@@ -61,8 +63,8 @@ Feature: Forms
   @mockserver
   Scenario: Simple validation
     Given the mock server has started
-    And the endpoint "/api/tide/page" with query "?path=/kitchen-sink&site=8888" returns fixture "/landingpage/full-form" with status 200
-    And the endpoint "/api/tide/site" with query "?id=8888" returns fixture "/site/reference" with status 200
+    And the page endpoint for path "/kitchen-sink" returns fixture "/landingpage/full-form" with status 200
+    And the site endpoint returns fixture "/site/reference" with status 200
     Given I visit the page "/kitchen-sink"
     Then the landing page component "TideLandingPageWebForm" should exist
     And the form with ID "full_form" should exist
@@ -79,9 +81,9 @@ Feature: Forms
   @mockserver
   Scenario: Form submission - Error
     Given the mock server has started
-    And the endpoint "/api/tide/page" with query "?path=/kitchen-sink&site=8888" returns fixture "/landingpage/full-form" with status 200
-    And the endpoint "/api/tide/site" with query "?id=8888" returns fixture "/site/reference" with status 200
-    And posting to endpoint "/api/tide/webform_submission/full_form" with query "?id=8888" returns fixture "/landingpage/full-form-error-response" with status 500
+    And the page endpoint for path "/kitchen-sink" returns fixture "/landingpage/full-form" with status 200
+    And the site endpoint returns fixture "/site/reference" with status 200
+    And posting form to endpoint "/api/tide/webform_submission/full_form" returns fixture "/landingpage/full-form-error-response" with status 500
     Given I visit the page "/kitchen-sink"
     Then the landing page component "TideLandingPageWebForm" should exist
     And the form with ID "full_form" should exist
@@ -100,9 +102,9 @@ Feature: Forms
   @mockserver
   Scenario: Form submission - Success
     Given the mock server has started
-    And the endpoint "/api/tide/page" with query "?path=/kitchen-sink&site=8888" returns fixture "/landingpage/full-form" with status 200
-    And the endpoint "/api/tide/site" with query "?id=8888" returns fixture "/site/reference" with status 200
-    And posting to endpoint "/api/tide/webform_submission/full_form" with query "?site=8888" returns fixture "/landingpage/full-form-success-response" with status 201
+    And the page endpoint for path "/kitchen-sink" returns fixture "/landingpage/full-form" with status 200
+    And the site endpoint returns fixture "/site/reference" with status 200
+    And posting form to endpoint "/api/tide/webform_submission/full_form" returns fixture "/landingpage/full-form-success-response" with status 201
     Given I visit the page "/kitchen-sink"
     Then the landing page component "TideLandingPageWebForm" should exist
     And the form with ID "full_form" should exist
@@ -124,20 +126,3 @@ Feature: Forms
     Then a server message should be displayed above the form
       | status  | title          | description          |
       | success | Server success | Test success message |
-
-  @mockserver
-  Scenario: Field counter
-    Given the mock server has started
-    And the endpoint "/api/tide/page" with query "?path=/kitchen-sink&site=8888" returns fixture "/landingpage/full-form" with status 200
-    And the endpoint "/api/tide/site" with query "?id=8888" returns fixture "/site/reference" with status 200
-    Given I visit the page "/kitchen-sink"
-    Then the landing page component "TideLandingPageWebForm" should exist
-    And the form with ID "full_form" should exist
-    Then 7 "words" in the field "role" on "full_form" should display a counter of "You have 2 words too many"
-    And 0 "characters" in the field "message" on "full_form" should display a counter of "You have 0 characters"
-    And 5 "characters" in the field "message" on "full_form" should display a counter of "You have 5 characters"
-    And 9 "characters" in the field "message" on "full_form" should display a counter of "You have 9 characters"
-    And 10 "characters" in the field "message" on "full_form" should display a counter of "You have 10 characters"
-    And 50 "characters" in the field "message" on "full_form" should display a counter of "You have 50 characters"
-    And 51 "characters" in the field "message" on "full_form" should display a counter of "You have 1 character too many"
-    And 55 "characters" in the field "message" on "full_form" should display a counter of "You have 5 characters too many"

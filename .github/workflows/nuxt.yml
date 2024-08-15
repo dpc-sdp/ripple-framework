@@ -2,6 +2,7 @@ name: Nuxt
 on:
   push:
     paths:
+      - '.github/workflows/nuxt.yml'
       - 'examples/nuxt-app/**'
       - 'packages/**'
       - 'pnpm-lock.yaml'
@@ -10,16 +11,16 @@ jobs:
   TestNuxt:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Install pnpm
-        uses: pnpm/action-setup@v2
+        uses: pnpm/action-setup@v3
         with:
-          version: 8.6.2
+          version: 9.0.6
           run_install: false
       - name: Install Node
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
-          node-version: 18
+          node-version: 20
           cache: 'pnpm'
       - name: Install Dependencies
         env:
@@ -35,20 +36,21 @@ jobs:
 
       - run: npm install ./packages/nuxt-ripple-cli --global
       # Run lighthouse test against nuxt-app example
-      - name: Run lighthouse baseline test on nuxt-app
-        run: pnpm -F nuxt-app lighthouse:ci
+      # TODO Turn lighthouse back on after unlighthouse is patched
+      # - name: Run lighthouse baseline test on nuxt-app
+      #   run: pnpm -F nuxt-app lighthouse:ci
 
   # run Cypress tests in example nuxt-app, record to Cypress cloud
   Integration:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Install pnpm
-        uses: pnpm/action-setup@v2
+        uses: pnpm/action-setup@v3
         with:
-          version: 8.6.2
+          version: 9.0.6
 
       - name: Install Dependencies
         env:
@@ -56,14 +58,14 @@ jobs:
         run: pnpm install --frozen-lockfile
 
       - name: Cypress Integration (e2e) tests
-        uses: cypress-io/github-action@v5
+        uses: cypress-io/github-action@v6
         env:
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
           TZ: 'Australia/Melbourne'
-          NUXT_PUBLIC_TIDE_BASE_URL: 'https://develop.content.reference.sdp.vic.gov.au/'
-          NUXT_PUBLIC_TIDE_SITE: '8888'
+          NUXT_PUBLIC_TIDE_BASE_URL: 'https://test.base.url/'
+          NUXT_PUBLIC_TIDE_SITE: 'TEST_SITE'
           NUXT_PUBLIC_API_URL: 'http://localhost:3001'
-          NUXT_PUBLIC_TIDE_APP_SEARCH_ENGINE_NAME: a83890f7a31dea14e1ae83c6f0afacca-appsearch-index-default-node
+          NUXT_PUBLIC_TIDE_APP_SEARCH_ENGINE_NAME: 'TEST_ENGINE'
           API_PORT: '3001'
           LOG_LEVEL: 'debug'
           # DEBUG: '@cypress/github-action'
@@ -73,4 +75,4 @@ jobs:
           install: false
           build: pnpm build
           start: pnpm start
-          wait-on: 'http://localhost:3000/api/tide/site?id=8888'
+          wait-on: 'http://localhost:3000/assets/fonts/VIC-Regular.woff2'

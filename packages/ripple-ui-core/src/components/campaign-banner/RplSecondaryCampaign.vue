@@ -46,13 +46,12 @@ const handleClick = () => {
 </script>
 
 <template>
-  <RplCampaignBanner class="rpl-campaign-banner--secondary">
+  <RplCampaignBanner type="secondary">
     <template v-if="image" #media>
       <RplImage
         v-bind="image"
         :aspect="{ xs: 'wide', s: 'ultrawide', l: 'wide' }"
         sizes="xs:992px md:328px"
-        alt=""
         data-cy="image"
       />
     </template>

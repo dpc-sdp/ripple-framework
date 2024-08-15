@@ -12,46 +12,48 @@ interface Props {
 
 const props = defineProps<Props>()
 
-const searchResultsMappingFn = (item): TideSearchListingResultItem => {
-  if (props.page.config.results.item) {
-    for (const key in props.page.config.results.item) {
-      const mapping = props.page.config.results.item[key]
-      if (!item._source?.type || item._source?.type[0] === key || key === '*') {
-        /* If there is no type, a component will be required */
-        return {
-          id: item._id,
-          component: mapping.component,
-          props: {
-            result: item._source
-          }
-        }
-      } else {
-        /* Add default search result mapping if none provided */
-        return {
-          id: item._id,
-          component: 'TideSearchResult',
-          props: {
-            result: item._source
-          }
-        }
-      }
+const resultsConfig = computed(() => {
+  return props.page.config?.resultsConfig || props.page.config?.results
+})
+
+const searchResultsMappingFn = (item: any): TideSearchListingResultItem => {
+  let itemComponent = 'TideSearchResult'
+
+  if (resultsConfig.value?.item) {
+    const mapping =
+      resultsConfig.value.item[item._source?.type] ??
+      resultsConfig.value.item?.['*']
+
+    if (mapping) {
+      itemComponent = mapping.component
     }
   }
-  return item
+
+  return {
+    id: item._id,
+    component: itemComponent,
+    props: {
+      result: item._source
+    }
+  }
 }
 </script>
 
 <template>
   <TideSearchListingPage
     :site="site"
-    :contentPage="page"
+    :contentPage="(page as any)"
     :title="page.title"
     :introText="page.introText"
     :searchListingConfig="page.config.searchListingConfig"
+    :customQueryConfig="page.config.customQueryConfig"
     :queryConfig="page.config.queryConfig"
     :globalFilters="page.config.globalFilters"
     :userFilters="page.config.userFilters"
-    :resultsLayout="page.config.results?.layout"
-    :searchResultsMappingFn="searchResultsMappingFn"
+    :resultsLayout="resultsConfig?.layout"
+    :noResultsLayout="resultsConfig?.empty"
+    :belowFilterComponent="page.config?.layoutConfig?.belowFilter"
+    :searchResultsMappingFn="(searchResultsMappingFn as any)"
+    :sortOptions="page.config.sortOptions"
   />
 </template>

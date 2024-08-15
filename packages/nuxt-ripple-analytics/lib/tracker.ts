@@ -3,6 +3,7 @@ export interface IRplAnalyticsEventPayload {
   event: string
   name?: string
   page_url?: string
+  page_title?: string
   platform_event: string
   // Component properties
   label?: string
@@ -15,6 +16,8 @@ export interface IRplAnalyticsEventPayload {
   file_size?: string
   form_id?: string
   form_name?: string
+  form_valid?: boolean
+  form_data?: boolean
   field_id?: string
   filters?: string
   type?: string
@@ -26,6 +29,7 @@ export interface IRplAnalyticsEventPayload {
   component?: string
   component_options?: string
   // Route properties
+  status_code?: number
   content_type?: string
   search_term?: string
   site_section?: string
@@ -38,11 +42,17 @@ export interface IRplAnalyticsEventPayload {
   }
 }
 
-const mapPayload = (payload: IRplAnalyticsEventPayload) =>
-  Object.fromEntries(
+/**
+ * Maps the payload object to meet analytics requirements.
+ */
+const mapPayload = (payload: IRplAnalyticsEventPayload) => {
+  const { $app_origin } = useNuxtApp()
+
+  return Object.fromEntries(
     Object.entries(payload).map(([key, value]) => {
       let newValue = value
 
+      // Set 'empty' values to undefined
       if (
         value === null ||
         value === '' ||
@@ -51,9 +61,15 @@ const mapPayload = (payload: IRplAnalyticsEventPayload) =>
         newValue = undefined
       }
 
+      // Prepend origin to relative link_urls
+      if (key === 'link_url' && value?.match(/^\//)) {
+        newValue = `${$app_origin}${value}`
+      }
+
       return [key, newValue]
     })
   )
+}
 
 export const trackEvent = (payload: IRplAnalyticsEventPayload) => {
   if (!window) {

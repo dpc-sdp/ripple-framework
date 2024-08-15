@@ -1,9 +1,35 @@
 <script setup lang="ts">
 import { AppSearchFilterConfigItem, MappedSearchResult } from '../types'
-import { formatDate, useRuntimeConfig, useAppConfig } from '#imports'
+import {
+  formatDate,
+  useRuntimeConfig,
+  useAppConfig,
+  useTideSite
+} from '#imports'
 
 const appConfig = useAppConfig()
 const runtimeConfig = useRuntimeConfig()
+const site = await useTideSite()
+const featureFlags = useFeatureFlags(site?.featureFlags)
+
+const getContentTypes = () => {
+  let contentTypes = appConfig.ripple?.search?.contentTypes
+  const overrideTypes = featureFlags.value?.search?.contentTypes
+
+  if (!overrideTypes) {
+    return contentTypes
+  }
+
+  Object.keys(overrideTypes).forEach((type) => {
+    if (overrideTypes[type] && !contentTypes.includes(type)) {
+      contentTypes.push(type)
+    } else if (!overrideTypes[type] && contentTypes.includes(type)) {
+      contentTypes = contentTypes.filter((t: string) => t !== type)
+    }
+  })
+
+  return contentTypes
+}
 
 const filtersConfig: AppSearchFilterConfigItem[] = [
   {
@@ -25,7 +51,7 @@ const searchDriverOptions = {
       },
       {
         field: 'type',
-        values: appConfig.ripple?.search?.contentTypes
+        values: getContentTypes()
       }
     ],
     search_fields: {
@@ -79,6 +105,7 @@ const searchDriverOptions = {
 }
 
 const searchResultsMappingFn = (item): MappedSearchResult<any> => {
+  const { $app_origin } = useNuxtApp()
   let summaryField =
     item.summary_processed?.snippet || item.field_landing_page_summary?.snippet
 
@@ -89,7 +116,7 @@ const searchResultsMappingFn = (item): MappedSearchResult<any> => {
     component: 'TideAppSearchResult',
     props: {
       title: item.title?.raw?.[0],
-      url: item.url?.raw?.[0].replace(/\/site-(\d+)/, ''),
+      url: stripSiteId(item.url?.raw?.[0], $app_origin || ''),
       content: summaryField,
       updated: rawUpdated ? formatDate(rawUpdated) : ''
     }
@@ -100,6 +127,7 @@ const searchResultsMappingFn = (item): MappedSearchResult<any> => {
 <template>
   <TideSearchPage
     pageTitle="Search"
+    :site="site"
     :searchDriverOptions="searchDriverOptions"
     :filtersConfig="filtersConfig"
     :searchResultsMappingFn="searchResultsMappingFn"

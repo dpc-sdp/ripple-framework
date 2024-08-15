@@ -14,6 +14,10 @@ export const backgroundSample = {
   sizes: '(min-width: 640px) 640px, (min-width: 960px) 960px, (min-width: 1240px) 1240px',
   height: 1920,
   width: 2880,
+  focalPoint: {
+    x: 2620,
+    y: 620
+  }
 }
 
 export const SingleTemplate = (args) => ({
@@ -134,11 +138,13 @@ This is an example header with journey links
     play={a11yStoryCheck}
     args={{
       links: {
-        title: 'Want to know more',
+        title: 'Popular searches',
         items: [
-          {text: 'First links', url: '#first'},
-          {text: 'Second link', url: '#second'},
-          {text: 'A third link', url: '#third'},
+          {text: 'Jobs and careers', url: '#first'},
+          {text: 'Working with Children Check', url: '#second'},
+          {text: 'NDIS Worker Screening Check', url: '#third'},
+          {text: 'Coronavirus: latest information', url: '#fourth'},
+          {text: 'Contact the Victorian Government', url: '#fifth'}
         ]
       }
     }}
@@ -262,6 +268,28 @@ This is an example header with optional background using the neutral theme
       background: backgroundSample,
       cornerTop: false,
       cornerBottom: false
+    }}
+  >
+    {SingleTemplate.bind()}
+  </Story>
+</Canvas>
+
+## Image / Call to action
+
+This is an example header with background and call to action
+
+<Canvas>
+  <Story
+    name='Image/Call to action'
+    play={a11yStoryCheck}
+    args={{
+      background: backgroundSample,
+      cornerTop: false,
+      cornerBottom: false,
+      title: 'Find, connect and shape your Victoria',
+      content: 'Access services and find out what\'s on in your local area and have your say on government decisions.',
+      primaryAction: { text: 'Primary action', url: '#primary' },
+      secondaryAction: { title: 'Find out more', text: 'Secondary action', url: '#secondary' },
     }}
   >
     {SingleTemplate.bind()}

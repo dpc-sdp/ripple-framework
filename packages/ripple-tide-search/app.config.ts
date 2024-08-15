@@ -1,3 +1,5 @@
+import rplAddressSuggestionsFn from './utils/rplAddressSuggestionsFn'
+
 export default defineAppConfig({
   ripple: {
     search: {
@@ -7,8 +9,12 @@ export default defineAppConfig({
         'grant',
         'news',
         'publication',
-        'publication_page'
-      ]
+        'publication_page',
+        'tide_search_listing'
+      ],
+      suggestionsFunctions: {
+        rplAddressSuggestionsFn
+      }
     }
   }
 })

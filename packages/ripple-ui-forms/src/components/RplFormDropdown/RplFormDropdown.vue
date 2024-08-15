@@ -5,13 +5,13 @@ export default {
 </script>
 
 <script setup lang="ts">
-import { RplIcon } from '@dpc-sdp/ripple-ui-core/vue'
 import { computed, ref, watch, nextTick, inject } from 'vue'
-import { onClickOutside } from '@vueuse/core'
+import { onClickOutside, useDebounceFn } from '@vueuse/core'
 import useFormkitFriendlyEventEmitter from '../../composables/useFormkitFriendlyEventEmitter'
 import MultiValueLabel from './MultiValueLabel.vue'
 import { useRippleEvent } from '@dpc-sdp/ripple-ui-core'
 import type { rplEventPayload } from '@dpc-sdp/ripple-ui-core'
+import { sanitisePIIField } from '../../lib/sanitisePII'
 
 export interface RplFormDropdownProps {
   id: string
@@ -24,13 +24,22 @@ export interface RplFormDropdownProps {
   placeholder?: string
   required?: boolean
   invalid?: boolean
-  onChange: (value: string | string[]) => void
+  onChange?: (value: string | string[]) => void
   options: {
     id: string
     label: string
     value: string
   }[]
   maxItemsDisplayed?: number
+  pii?: boolean
+  unselectedValue?: any
+  /**
+   * Only applicable when for single selects. If true, no 'placeholder' option
+   * is added and the user can't deselect a value, only choose a different value.
+   *
+   * Useful for when the field has a default value and the user must choose a value.
+   */
+  preventDeselect?: boolean
 }
 
 const props = withDefaults(defineProps<RplFormDropdownProps>(), {
@@ -44,7 +53,10 @@ const props = withDefaults(defineProps<RplFormDropdownProps>(), {
   maxItemsDisplayed: 6,
   required: false,
   invalid: false,
-  multiple: false
+  multiple: false,
+  pii: true,
+  unselectedValue: undefined,
+  preventDeselect: false
 })
 
 const emit = defineEmits<{
@@ -56,32 +68,54 @@ const emit = defineEmits<{
   ): void
 }>()
 
-const form: object = inject('form')
+const form: object = inject('form', undefined)
 const { emitRplEvent } = useRippleEvent('rpl-form-dropdown', emit)
+
+const defaultOptionId = '__default-option'
 
 const containerRef = ref(null)
 const inputRef = ref(null)
 const menuRef = ref(null)
 const optionRefs = ref([])
+const searchCache = ref('')
 
 const menuId = computed(() => `${props.id}__menu`)
 
 const isOpen = ref<boolean>(false)
 const activeOptionId = ref<string | null>(null)
 
+const emptyOption = computed(() => {
+  return props.options.find((opt) => !opt.value && opt.id !== defaultOptionId)
+})
+
+const processedOptions = computed(() => {
+  if (!props.preventDeselect && !emptyOption.value && !props.multiple) {
+    return [
+      {
+        id: defaultOptionId,
+        label: props.placeholder,
+        value: props.unselectedValue
+      },
+      ...(props.options || [])
+    ]
+  }
+
+  return props.options || []
+})
+
 onClickOutside(containerRef, () => {
   handleClose(false)
 })
 
 const getDefaultActiveId = (): string => {
-  const firstOptionId = props.options[0].id
+  const firstOptionId = processedOptions.value[0].id
 
   if (props.multiple) {
     // Always start from the first option if we're in multi select mode
     return firstOptionId
   } else {
     // In single select mode, try to start from the currently selected item
-    const selectedOption = props.options.find(
+    const selectedOption = processedOptions.value.find(
       (opt) => opt.value === props.value
     )
 
@@ -92,6 +126,29 @@ const getDefaultActiveId = (): string => {
 
 const getUniqueOptionId = (optionId: string): string => {
   return optionId ? `${props.id}-${optionId}` : ''
+}
+
+const processSearch = useDebounceFn(() => {
+  let options = [...(props.options || [])]
+  if (activeOptionId.value) {
+    const index = options.map((o) => o.id).indexOf(activeOptionId.value)
+    options = options.slice(index + 1).concat(options.slice(0, index + 1))
+  }
+  let found = options.find((o) =>
+    o.label.toLowerCase().startsWith(searchCache.value)
+  )
+  if (found) {
+    handleOpen()
+    activeOptionId.value = found.id
+  }
+  searchCache.value = ''
+})
+
+const handleSearch = (event: KeyboardEvent): void => {
+  if (event.key?.length === 1) {
+    searchCache.value = searchCache.value + event.key.toLowerCase()
+    processSearch()
+  }
 }
 
 const handleToggle = (fromKeyboard = false): void => {
@@ -118,7 +175,7 @@ const handleToggle = (fromKeyboard = false): void => {
 const handleOpen = (fromKeyboard = false): void => {
   isOpen.value = true
 
-  if (fromKeyboard && props.options?.length) {
+  if (fromKeyboard && processedOptions.value?.length) {
     activeOptionId.value = getDefaultActiveId()
   }
 }
@@ -137,14 +194,14 @@ const handleArrowUp = () => {
     isOpen.value = true
   }
 
-  const currentActiveIndex = props.options.findIndex(
+  const currentActiveIndex = processedOptions.value.findIndex(
     (opt) => opt.id === activeOptionId.value
   )
 
   if (currentActiveIndex < 0) {
     activeOptionId.value = getDefaultActiveId()
-  } else if (currentActiveIndex < props.options.length - 1) {
-    activeOptionId.value = props.options[currentActiveIndex + 1].id
+  } else if (currentActiveIndex < processedOptions.value.length - 1) {
+    activeOptionId.value = processedOptions.value[currentActiveIndex + 1].id
   }
 }
 
@@ -153,14 +210,14 @@ const handleArrowDown = () => {
     isOpen.value = true
   }
 
-  const currentActiveIndex = props.options.findIndex(
+  const currentActiveIndex = processedOptions.value.findIndex(
     (opt) => opt.id === activeOptionId.value
   )
 
   if (currentActiveIndex < 0) {
     activeOptionId.value = getDefaultActiveId()
   } else if (currentActiveIndex > 0) {
-    activeOptionId.value = props.options[currentActiveIndex - 1].id
+    activeOptionId.value = processedOptions.value[currentActiveIndex - 1].id
   }
 }
 
@@ -192,7 +249,7 @@ const handleSelectOption = (optionValue) => {
       action: 'update',
       id: props.id,
       label: props?.label,
-      value: Array.isArray(newValue) ? newValue.join(',') : newValue,
+      value: sanitisePIIField(props.pii, newValue),
       contextId: form?.id,
       contextName: form?.name
     },
@@ -204,6 +261,10 @@ const isOptionSelected = (optionValue) => {
   if (props.multiple) {
     return (props.value || []).includes(optionValue)
   } else {
+    if (!optionValue && !props.value) {
+      return true
+    }
+
     return props.value === optionValue
   }
 }
@@ -243,13 +304,17 @@ const isMenuItemKeyboardFocused = (optionId: string): boolean => {
 }
 
 const selectedOptions = computed(() => {
-  return (props.options || []).filter((opt) =>
+  return (processedOptions.value || []).filter((opt) =>
     (props.value || []).includes(opt.value)
   )
 })
 
 const singleValueDisplay = computed((): string => {
-  const selectedOption = (props.options || []).find(
+  if (emptyOption.value && !props.value) {
+    return emptyOption.value.label
+  }
+
+  const selectedOption = (processedOptions.value || []).find(
     (opt) => props.value === opt.value
   )
 
@@ -281,6 +346,7 @@ const hasValue = computed((): boolean => {
     @keydown.esc.prevent="handleClose(true)"
     @keydown.exact.tab="handleClose(false)"
     @keydown.shift.tab="handleClose(false)"
+    @keydown.exact="handleSearch"
   >
     <div
       v-bind="$attrs"
@@ -306,7 +372,7 @@ const hasValue = computed((): boolean => {
       @keydown.space.prevent="handleToggle(true)"
     >
       <span
-        v-if="!hasValue"
+        v-if="!hasValue && !emptyOption"
         class="rpl-form-dropdown-input__placeholder rpl-type-p"
         >{{ placeholder }}</span
       >
@@ -336,7 +402,7 @@ const hasValue = computed((): boolean => {
       tabindex="-1"
     >
       <div
-        v-for="option in options"
+        v-for="option in processedOptions"
         :id="getUniqueOptionId(option.id)"
         :key="option.id"
         ref="optionRefs"

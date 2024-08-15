@@ -3,10 +3,16 @@ import { computed, useSlots } from 'vue'
 
 interface Props {
   fullWidth?: boolean
+  limitContent?: boolean
+  hasTitle?: boolean
+  hasSidebar?: boolean
+  pageBackground?: string
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  fullWidth: false
+  fullWidth: false,
+  limitContent: false,
+  pageBackground: 'default'
 })
 
 const slots = useSlots()
@@ -14,8 +20,8 @@ const slots = useSlots()
 const mainClasses = computed(() => ({
   'rpl-header__main': true,
   'rpl-col-12': true,
-  'rpl-col-7-m': !props.fullWidth && slots.aside,
-  'rpl-col-10-m': !props.fullWidth && !slots.aside
+  'rpl-col-7-m': !props.fullWidth && (slots.aside || props.limitContent),
+  'rpl-col-10-m': !props.fullWidth && !slots.aside && !props.limitContent
 }))
 </script>
 

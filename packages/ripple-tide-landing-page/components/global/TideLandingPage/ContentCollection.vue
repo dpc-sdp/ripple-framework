@@ -4,7 +4,7 @@
     <RplContent v-if="searchState.error">
       <p>Sorry! Something went wrong. Please try again later.</p>
     </RplContent>
-    <RplContent v-else-if="!searchState.isLoading && !searchState.totalResults">
+    <RplContent v-else-if="searchComplete && !searchState.totalResults">
       <p>Sorry! We couldn't find any matches.</p>
     </RplContent>
     <div v-else>
@@ -55,6 +55,7 @@ import {
   IContentCollectionSort
 } from '../../../mapping/components/content-collection/content-collection-mapping'
 import type { IRplFeatureFlags } from '@dpc-sdp/ripple-tide-api/types'
+import { stripMediaBaseUrl } from '@dpc-sdp/ripple-tide-api/utils'
 
 const { public: config } = useRuntimeConfig()
 
@@ -88,6 +89,7 @@ const cardClasses = computed(() =>
 )
 
 const searchResultsMappingFn = (item): any => {
+  const { $app_origin, $config } = useNuxtApp()
   const rawUpdated = item.changed?.raw?.[0]
   const rawImage = item.field_media_image_absolute_path?.raw?.[0]
 
@@ -96,10 +98,10 @@ const searchResultsMappingFn = (item): any => {
     props: {
       el: 'li',
       title: item.title?.raw?.[0],
-      url: item.url?.raw?.[0].replace(/\/site-(\d+)/, ''),
+      url: stripSiteId(item.url?.raw?.[0], $app_origin || ''),
       image:
         props.display.style === 'thumbnail' && rawImage
-          ? { src: rawImage }
+          ? { src: stripMediaBaseUrl(rawImage, $config.public?.tide?.baseUrl) }
           : null,
       updated: rawUpdated ? formatDate(rawUpdated) : '',
       type: item.type?.raw?.[0]
@@ -149,7 +151,7 @@ const searchDriverOptions = {
   }
 }
 
-const { results, searchState } = await useSearchUI(
+const { results, searchState, searchComplete } = await useSearchUI(
   apiConnectorOptions,
   searchDriverOptions,
   [],
