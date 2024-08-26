@@ -47,3 +47,7 @@ export interface ApiField {
   field_paragraph_title: string
   field_paragraph_webform: ApiWebForm
 }
+
+export interface CaptchaSettings {
+  type: string
+}

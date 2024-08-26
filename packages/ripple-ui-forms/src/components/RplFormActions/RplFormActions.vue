@@ -65,6 +65,7 @@ const handleReset = () => {
 }
 </script>
 <template>
+  <div :id="`rpl-captcha-element__${form.id}`"></div>
   <div class="rpl-form-actions rpl-u-screen-only">
     <RplButton
       :id="id"

@@ -1,8 +1,12 @@
 import { $fetch } from 'ofetch'
 import { ref, useRuntimeConfig } from '#imports'
 
-export function useWebformSubmit(formId: string) {
-  const postForm = async (formId: string, formData = {}) => {
+export function useWebformSubmit(formId: string, captchaConfig) {
+  const postForm = async (
+    formId: string,
+    formData = {},
+    maybeCaptchaResponse: string | null
+  ) => {
     const { public: config } = useRuntimeConfig()
 
     const formResource = 'webform_submission'
@@ -29,7 +33,8 @@ export function useWebformSubmit(formId: string) {
         site: config.tide.site
       },
       headers: {
-        'Content-Type': 'application/vnd.api+json;charset=UTF-8'
+        'Content-Type': 'application/vnd.api+json;charset=UTF-8',
+        'x-captcha-response': maybeCaptchaResponse || undefined
       }
     })
 
@@ -87,8 +92,26 @@ export function useWebformSubmit(formId: string) {
       return
     }
 
+    let maybeCaptchaResponse = null
+
     try {
-      const resData = await postForm(props.formId, data)
+      maybeCaptchaResponse = getCaptchaResponse(captchaConfig, window)
+    } catch (e) {
+      console.error(e)
+
+      submissionState.value = {
+        status: 'error',
+        title: props.errorMessageTitle,
+        message: 'CAPTCHA ERROR',
+        receipt: ''
+      }
+
+      return
+    }
+
+    try {
+      const resData = await postForm(props.formId, data, maybeCaptchaResponse)
+      console.log('asdklnalksd', resData)
 
       const [code, note] = resData.attributes?.notes?.split('|') || []
 

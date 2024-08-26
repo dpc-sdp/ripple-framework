@@ -6,6 +6,31 @@ import { createProxyMiddleware } from 'http-proxy-middleware'
 export const createWebformProxyHandler = async (event: H3Event) => {
   const { public: config } = useRuntimeConfig()
 
+  // if (!(await verifyCaptcha(event))) {
+  //   console.log('alskdnl')
+  //   sendError(
+  //     event,
+  //     createError({
+  //       statusCode: 400,
+  //       statusMessage: 'CAPTCHA validation error'
+  //     })
+  //   )
+  //   return
+  // }
+  try {
+    await verifyCaptcha(event)
+  } catch (error) {
+    console.error(error)
+    sendError(
+      event,
+      createError({
+        statusCode: 400,
+        statusMessage: 'CAPTCHA validation error'
+      })
+    )
+    return
+  }
+
   const proxyMiddleware = createProxyMiddleware({
     target: config.tide.baseUrl,
     pathRewrite: {

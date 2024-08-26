@@ -11,6 +11,7 @@ interface Props {
   errorMessageTitle?: string
   errorMessageHTML: string
   schema?: Array<FormKitSchemaNode>
+  captchaConfig?: any
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -23,7 +24,12 @@ const props = withDefaults(defineProps<Props>(), {
 
 const honeypotId = `${props.formId}-important-email`
 
-const { submissionState, submitHandler } = useWebformSubmit(props.formId)
+const { submissionState, submitHandler } = useWebformSubmit(
+  props.formId,
+  props.captchaConfig
+)
+
+const captchaWidgetId = useCaptchaWidget(props.formId, props.captchaConfig)
 
 const serverSuccessRef = ref(null)
 
