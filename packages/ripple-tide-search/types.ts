@@ -234,6 +234,8 @@ export type TideSearchListingConfig = {
     suggestions: {
       key: string
       enabled: boolean
+      limit: number
+      type: 'phrase_prefix' | 'bool_prefix'
     }
     /**
      * @description The theme to use for the display of form section and fields

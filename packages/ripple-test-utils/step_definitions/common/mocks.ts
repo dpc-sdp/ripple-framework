@@ -280,7 +280,7 @@ Given(
 Given(
   'the search autocomplete request is stubbed with {string} fixture',
   (fixture: string) => {
-    cy.intercept('POST', `/api/tide/app-search/**/query_suggestion`, {
+    cy.intercept('POST', `/api/tide/elasticsearch/**/_search`, {
       statusCode: 200,
       fixture
     }).as('autocompleteRequest') // assign an alias

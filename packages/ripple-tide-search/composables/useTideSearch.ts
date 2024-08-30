@@ -57,6 +57,8 @@ export default ({
   const route: RouteLocation = useRoute()
   const appConfig = useAppConfig()
   const index = searchListingConfig.index || config.tide.appSearch.engineName
+  const elasticIndex =
+    searchListingConfig.index || config.tide.elasticsearch.index
 
   const searchprovider = searchListingConfig.searchProvider || 'app-search'
   const searchEndpoint =
@@ -572,32 +574,37 @@ export default ({
   }
 
   const getSuggestions = async () => {
-    let fields = ['title']
-
-    if (searchListingConfig?.suggestions?.key) {
-      fields = Array.isArray(searchListingConfig.suggestions.key)
-        ? searchListingConfig.suggestions.key
-        : [searchListingConfig.suggestions.key]
-    }
+    const field = searchListingConfig?.suggestions?.key || 'title'
 
     suggestions.value = await $fetch(
-      `/api/tide/app-search/${index}/query_suggestion`,
+      `/api/tide/elasticsearch/${elasticIndex}/_search`,
       {
         method: 'POST',
         body: {
-          query: searchTerm.value.q,
-          types: {
-            documents: {
-              fields
+          query: {
+            bool: {
+              must: {
+                multi_match: {
+                  query: searchTerm.value.q,
+                  type:
+                    searchListingConfig?.suggestions?.type || 'phrase_prefix',
+                  fields: field
+                }
+              },
+              filter: globalFilters
             }
           },
-          size: 8
+          _source: field,
+          size: searchListingConfig?.suggestions?.limit || 8,
+          sort: [{ _score: 'desc' }]
         }
       }
     ).then((res) => {
-      return res.results?.documents.map(
-        (doc: { suggestion: string }) => doc.suggestion
-      )
+      const resSuggestions = res.hits?.hits
+        .flatMap((doc: { [key: string]: any }) => doc._source?.[field])
+        .filter(Boolean)
+
+      return resSuggestions ? [...new Set(resSuggestions)] : []
     })
   }
 

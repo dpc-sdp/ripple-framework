@@ -18,18 +18,18 @@ Feature: Search listing - Suggestions
     When I type "The" into the search input
     Then the search autocomplete request should be called with the "/search-listing/suggestions/request" fixture
     And the search suggestions displayed should include
-      | the   |
-      | there |
-      | their |
+      | The first result  |
+      | There we are      |
+      | Third is the best |
 
-    When I click the search suggestion labelled "there"
-    Then the search input should have the value "there"
+    When I click the search suggestion labelled "There we are"
+    Then the search input should have the value "There we are"
 
   @mockserver
-  Example: Autocomplete suggestions search key can be overridden
+  Example: Autocomplete suggestions search field and type can be overridden
     Given the page endpoint for path "/suggestions-override" returns fixture "/search-listing/suggestions/page-suggestions-override" with status 200
     And the search network request is stubbed with fixture "/search-listing/suggestions/search-response" and status 200
-    And the search autocomplete request is stubbed with "/search-listing/suggestions/response" fixture
+    And the search autocomplete request is stubbed with "/search-listing/suggestions/response-override" fixture
 
     When I visit the page "/suggestions-override"
     And I type "The" into the search input

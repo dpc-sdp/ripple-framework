@@ -1,11 +1,36 @@
 {
-  "query": "The",
-  "types": {
-    "documents": {
-      "fields": [
-        "suggestion_override_key"
+  "query": {
+    "bool": {
+      "must": {
+        "multi_match": {
+          "query": "The",
+          "type": "bool_prefix",
+          "fields": "suggestion_override_key"
+        }
+      },
+      "filter": [
+        {
+          "terms": {
+            "type": [
+              "news"
+            ]
+          }
+        },
+        {
+          "terms": {
+            "field_node_site": [
+              8888
+            ]
+          }
+        }
       ]
     }
   },
-  "size": 8
+  "_source": "suggestion_override_key",
+  "size": 4,
+  "sort": [
+    {
+      "_score": "desc"
+    }
+  ]
 }

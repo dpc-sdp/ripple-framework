@@ -12,7 +12,9 @@
       "resultsPerPage": 10,
       "suggestions": {
         "enabled": true,
-        "key": "suggestion_override_key"
+        "key": "suggestion_override_key",
+        "type": "bool_prefix",
+        "limit": 4
       }
     },
     "queryConfig": {
