@@ -57,6 +57,10 @@ const getLGASuggestions = async (query, args) => {
     return {
       id: itm._id,
       name,
+      areaType,
+      lgaName: itm._source?.lga_name,
+      lgaOfficialName: itm._source?.lga_official_name,
+      lgaCode: itm._source?.lga_code,
       bbox: itm._source.lga_bbox,
       tag
     }
