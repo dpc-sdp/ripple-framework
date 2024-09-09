@@ -90,13 +90,13 @@ export default ({
   const locationQuery = ref<any | null>(null)
 
   const searchTerm = ref({ q: '' })
+  const searchTermHistory = ref<string[]>([])
   const filterForm = ref({})
   const page = ref(1)
   const pageSize = ref(searchListingConfig.resultsPerPage || 10)
 
   const results = ref()
   const totalResults = ref(0)
-  const suggestions = ref([])
   const userSelectedSort = ref<string | null>(null)
 
   const pagingStart = computed(() => {
@@ -119,6 +119,42 @@ export default ({
   const onAggregationUpdateHook = ref()
   const onMapResultsHook = ref()
   const firstLoad = ref(false)
+
+  const getDefaultSuggestions = () => {
+    const suggestions = []
+    let history = searchListingConfig?.suggestions?.history
+    let promoted = searchListingConfig?.suggestions?.promoted
+
+    // Get suggestion history
+    if (history && searchTermHistory.value.length) {
+      const historyLimit = typeof history === 'number' ? history : 2
+
+      suggestions.push(
+        ...searchTermHistory.value
+          .map((label) => ({
+            label,
+            icon: 'search'
+          }))
+          .slice(0, historyLimit)
+      )
+    }
+
+    // Get promoted suggestions
+    if (promoted) {
+      promoted = Array.isArray(promoted) ? promoted : [promoted]
+
+      suggestions.push(
+        ...promoted.map((label: string) => ({
+          label,
+          icon: 'star'
+        }))
+      )
+    }
+
+    return suggestions
+  }
+
+  const suggestions = ref(getDefaultSuggestions())
 
   const getQueryClause = (filter: any[]) => {
     let queryClause = [{ match_all: {} }]
@@ -497,6 +533,15 @@ export default ({
     isBusy.value = true
     searchError.value = null
 
+    if (searchTerm.value.q) {
+      if (searchTermHistory.value.includes(searchTerm.value.q)) {
+        searchTermHistory.value = searchTermHistory.value.filter(
+          (term) => term !== searchTerm.value.q
+        )
+      }
+      searchTermHistory.value = [searchTerm.value.q, ...searchTermHistory.value]
+    }
+
     try {
       const body = await getQueryDSL()
 
@@ -574,7 +619,29 @@ export default ({
   }
 
   const getSuggestions = async () => {
-    const field = searchListingConfig?.suggestions?.key || 'title'
+    let query = searchTerm.value.q
+    let fields = searchListingConfig?.suggestions?.key || 'title'
+    const type = searchListingConfig?.suggestions?.type || 'phrase_prefix'
+
+    if (!Array.isArray(fields)) {
+      fields = [fields]
+    }
+
+    const displayField =
+      searchListingConfig?.suggestions?.displayKey || fields[0]
+
+    const shouldQuery = [
+      {
+        multi_match: {
+          query,
+          type,
+          fields
+        }
+      }
+    ]
+
+    // Add any synonyms' to the query
+    shouldQuery.push(...getSynonyms(type, fields))
 
     suggestions.value = await $fetch(
       `/api/tide/elasticsearch/${elasticIndex}/_search`,
@@ -583,25 +650,19 @@ export default ({
         body: {
           query: {
             bool: {
-              must: {
-                multi_match: {
-                  query: searchTerm.value.q,
-                  type:
-                    searchListingConfig?.suggestions?.type || 'phrase_prefix',
-                  fields: field
-                }
-              },
-              filter: globalFilters
+              filter: globalFilters,
+              should: shouldQuery,
+              minimum_should_match: 1
             }
           },
-          _source: field,
+          _source: displayField,
           size: searchListingConfig?.suggestions?.limit || 8,
           sort: [{ _score: 'desc' }]
         }
       }
     ).then((res) => {
       const resSuggestions = res.hits?.hits
-        .flatMap((doc: { [key: string]: any }) => doc._source?.[field])
+        .flatMap((doc: { [key: string]: any }) => doc._source?.[displayField])
         .filter(Boolean)
 
       return resSuggestions ? [...new Set(resSuggestions)] : []
@@ -609,7 +670,38 @@ export default ({
   }
 
   const clearSuggestions = () => {
-    suggestions.value = []
+    suggestions.value = getDefaultSuggestions()
+  }
+
+  const getSynonyms = (type: string, fields: string[]) => {
+    const clauses: any = []
+    const synonyms = searchListingConfig?.suggestions?.synonyms
+
+    if (synonyms) {
+      const words = searchTerm.value.q.split(' ')
+
+      Object.entries(synonyms).forEach(([key, value]) => {
+        const synonym = Array.isArray(value) ? value : [value]
+
+        synonym.forEach((syn: string) => {
+          if (words.includes(syn)) {
+            const query = words
+              .map((token: string) => (token === syn ? key : token))
+              .join(' ')
+
+            clauses.push({
+              multi_match: {
+                query,
+                type,
+                fields
+              }
+            })
+          }
+        })
+      })
+    }
+
+    return clauses
   }
 
   /**

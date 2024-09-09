@@ -22,6 +22,7 @@ interface Props {
   title?: string
   introText?: string
   autocompleteQuery?: boolean
+  autocompleteMinimumCharacters?: number
   searchListingConfig?: TideSearchListingConfig['searchListingConfig']
   sortOptions?: TideSearchListingConfig['sortOptions']
   customQueryConfig?: TideSearchListingConfig['customQueryConfig']
@@ -43,6 +44,7 @@ const props = withDefaults(defineProps<Props>(), {
   introText: '',
   index: undefined,
   autocompleteQuery: false,
+  autocompleteMinimumCharacters: 3,
   globalFilters: () => [],
   userFilters: () => [],
   customQueryConfig: undefined,
@@ -188,7 +190,9 @@ const geolocationError = ref<string | null>(null)
 const {
   isBusy,
   searchError,
+  suggestions,
   getSuggestions,
+  clearSuggestions,
   searchTerm,
   results,
   filterForm,
@@ -387,17 +391,24 @@ const handleFilterReset = (event: rplEventPayload) => {
   closeMapPopup()
 }
 
-const handleUpdateSearchTerm = (term: string) => {
-  searchTerm.value.q = term
-  getDebouncedSuggestions()
+const handleUpdateSearchTerm = (
+  term: { label: string; icon: string } | string
+) => {
+  const query = term?.label || term
+  searchTerm.value.q = query
+  getDebouncedSuggestions(query)
 }
 
-const getDebouncedSuggestions = useDebounceFn(() => {
+const getDebouncedSuggestions = useDebounceFn((term: string) => {
   if (
-    props.autocompleteQuery &&
-    props.searchListingConfig?.suggestions?.enabled !== false
+    props.autocompleteQuery ||
+    props.searchListingConfig?.suggestions?.enabled
   ) {
-    getSuggestions()
+    if (term?.length >= props.autocompleteMinimumCharacters) {
+      getSuggestions()
+    } else {
+      clearSuggestions()
+    }
   }
 }, 300)
 
@@ -594,9 +605,22 @@ const locationOrGeolocation = computed(() => {
           :placeholder="searchListingConfig.labels?.placeholder"
           :global-events="false"
           :maxlength="128"
+          :suggestions="suggestions"
+          :get-option-id="(opt) => opt?.label || opt"
+          :get-option-label="(opt) => opt?.label || opt"
+          :get-suggestion-val="(opt) => opt?.label || opt"
           @submit="handleSearchSubmit"
           @update:input-value="handleUpdateSearchTerm"
-        />
+        >
+          <template #suggestion="{ option: { option } }">
+            <RplIcon
+              v-if="option.icon"
+              :name="`icon-${option.icon}`"
+              class="rpl-u-margin-r-2"
+            />
+            {{ option?.label || option }}
+          </template>
+        </RplSearchBar>
       </template>
 
       <div class="tide-search-util-bar">

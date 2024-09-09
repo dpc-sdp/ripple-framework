@@ -231,11 +231,17 @@ export type TideSearchListingConfig = {
     /**
      * @description options for utilizing the auto suggestions
      */
-    suggestions: {
-      key: string
-      enabled: boolean
-      limit: number
-      type: 'phrase_prefix' | 'bool_prefix'
+    suggestions?: {
+      key?: string | string[]
+      displayKey?: string
+      enabled?: boolean
+      limit?: number
+      type?: 'phrase_prefix' | 'bool_prefix'
+      promoted?: string[]
+      history?: number | boolean
+      synonyms?: {
+        [key: string]: string | string[]
+      }
     }
     /**
      * @description The theme to use for the display of form section and fields

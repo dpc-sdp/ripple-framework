@@ -274,9 +274,12 @@ const handleFilterReset = (event: rplEventPayload) => {
   submitSearch()
 }
 
-const handleUpdateSearchTerm = (term: string) => {
-  searchTerm.value.q = term
-  getDebouncedSuggestions(term)
+const handleUpdateSearchTerm = (
+  term: { label: string; icon: string } | string
+) => {
+  const query = term?.label || term
+  searchTerm.value.q = query
+  getDebouncedSuggestions(query)
 }
 
 const getDebouncedSuggestions = useDebounceFn((term: string) => {
@@ -286,7 +289,7 @@ const getDebouncedSuggestions = useDebounceFn((term: string) => {
   ) {
     if (term?.length >= props.autocompleteMinimumCharacters) {
       getSuggestions()
-    } else if (suggestions.value?.length) {
+    } else {
       clearSuggestions()
     }
   }
@@ -417,9 +420,21 @@ watch(
               :suggestions="suggestions"
               :global-events="false"
               :maxlength="128"
+              :get-option-id="(opt) => opt?.label || opt"
+              :get-option-label="(opt) => opt?.label || opt"
+              :get-suggestion-val="(opt) => opt?.label || opt"
               @submit="handleSearchSubmit"
               @update:input-value="handleUpdateSearchTerm"
-            />
+            >
+              <template #suggestion="{ option: { option } }">
+                <RplIcon
+                  v-if="option.icon"
+                  :name="`icon-${option.icon}`"
+                  class="rpl-u-margin-r-2"
+                />
+                {{ option?.label || option }}
+              </template>
+            </RplSearchBar>
           </template>
           <RplSearchBarRefine
             v-if="
