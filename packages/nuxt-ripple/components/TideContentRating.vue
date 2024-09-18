@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue'
+import type { IRplFeatureFlags } from '@dpc-sdp/ripple-tide-api/types'
 
 interface Props {
   siteSectionName: string
@@ -21,6 +22,10 @@ onMounted(() => {
   isMounted.value = true
   pageUrl.value = window.location.href
 })
+
+const featureFlags: IRplFeatureFlags = inject('featureFlags', {})
+
+const captchaConfig = featureFlags.contentRatingCaptchaConfig
 </script>
 
 <template>
@@ -35,6 +40,7 @@ onMounted(() => {
             title="Was this page helpful?"
             successMessageHTML="Thank you! Your response has been submitted."
             errorMessageHTML="We are experiencing a server error. Please try again, otherwise contact us."
+            :captcha-config="captchaConfig"
           >
             <template #default="{ value }">
               <div class="tide-content-rating__rating">
