@@ -1,5 +1,8 @@
 {
-  "hits": {
-    "hits": []
+  "results": {
+    "documents": []
+  },
+  "meta": {
+    "request_id": "123"
   }
 }

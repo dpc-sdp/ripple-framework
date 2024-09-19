@@ -1,0 +1,36 @@
+{
+  "hits": {
+    "hits": [
+      {
+        "_index": "a83890f7a31dea14e1ae83c6f0afacca--elasticsearch_index_production_node",
+        "_id": "entity:node/38173:en",
+        "_score": 33.33872,
+        "_source": {
+          "title": [
+            "The first result"
+          ]
+        }
+      },
+      {
+        "_index": "a83890f7a31dea14e1ae83c6f0afacca--elasticsearch_index_production_node",
+        "_id": "entity:node/30535:en",
+        "_score": 27.013588,
+        "_source": {
+          "title": [
+            "There we are"
+          ]
+        }
+      },
+      {
+        "_index": "a83890f7a31dea14e1ae83c6f0afacca--elasticsearch_index_production_node",
+        "_id": "entity:node/30535:en",
+        "_score": 27.013588,
+        "_source": {
+          "title": [
+            "Third is the best"
+          ]
+        }
+      }
+    ]
+  }
+}

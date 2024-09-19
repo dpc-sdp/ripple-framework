@@ -158,6 +158,10 @@ When(`I type {string} into the search input`, (inputStr: string) => {
   cy.get(`[id="tide-search-bar"]`).type(`${inputStr}`)
 })
 
+When(`I focus the search input`, () => {
+  cy.get(`[id="tide-search-bar"]`).focus()
+})
+
 Then(`the search input should have the value {string}`, (inputStr: string) => {
   cy.get(`[id="tide-search-bar"]`).should(`have.value`, inputStr)
 })
@@ -462,6 +466,13 @@ Then('only the search filters should be visible', () => {
   cy.get(`.tide-search-header .rpl-search-bar-refine`).should('not.exist')
   cy.get(`#tide-search-filter-form`).should('exist')
 })
+
+Then(
+  `the number of search suggestions displayed should be {int}`,
+  (num: number) => {
+    cy.get('.rpl-search-bar__menu-option').should('have.length', num)
+  }
+)
 
 Then(
   `the search suggestions displayed should include`,

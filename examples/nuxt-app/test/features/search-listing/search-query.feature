@@ -59,3 +59,13 @@ Feature: Search Queries
     And I type "The" into the search input
     And I click the search button
     Then I should not be scrolled to the search results
+
+  @mockserver
+  Example: Allows applying synonyms to the search query
+    Given the page endpoint for path "/suggestions" returns fixture "/search-listing/search-query/page-synonyms" with status 200
+    And the search network request is stubbed with fixture "/search-listing/search-query/response" and status 200
+
+    When I visit the page "/suggestions"
+    And I type "local" into the search input
+    And I click the search button
+    Then the search network request should be called with the "/search-listing/search-query/request-synonyms" fixture

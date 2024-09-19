@@ -1,41 +1,11 @@
 {
-  "query": {
-    "bool": {
-      "filter": [
-        {
-          "terms": {
-            "type": [
-              "news"
-            ]
-          }
-        },
-        {
-          "terms": {
-            "field_node_site": [
-              8888
-            ]
-          }
-        }
-      ],
-      "should": [
-        {
-          "multi_match": {
-            "query": "The",
-            "type": "phrase_prefix",
-            "fields": [
-              "title"
-            ]
-          }
-        }
-      ],
-      "minimum_should_match": 1
+  "query": "The",
+  "types": {
+    "documents": {
+      "fields": [
+        "title"
+      ]
     }
   },
-  "_source": "title",
-  "size": 8,
-  "sort": [
-    {
-      "_score": "desc"
-    }
-  ]
+  "size": 8
 }

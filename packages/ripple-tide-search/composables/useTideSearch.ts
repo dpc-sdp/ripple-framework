@@ -120,6 +120,9 @@ export default ({
   const onMapResultsHook = ref()
   const firstLoad = ref(false)
 
+  /**
+   * Get the default options to display when no search has been preformed
+   */
   const getDefaultSuggestions = () => {
     const suggestions = []
     let history = searchListingConfig?.suggestions?.history
@@ -127,7 +130,7 @@ export default ({
 
     // Get suggestion history
     if (history && searchTermHistory.value.length) {
-      const historyLimit = typeof history === 'number' ? history : 2
+      const historyLimit = typeof history === 'number' ? history : 3
 
       suggestions.push(
         ...searchTermHistory.value
@@ -154,6 +157,39 @@ export default ({
     return suggestions
   }
 
+  /**
+   * Get any synonym search terms, this needs to match phrases i.e. multiple word and single words
+   *
+   * For example if you search for "first peoples" you may also want to query for "aboriginal"
+   * Or if you search for "preschool grants" you may also want results for "kinder grants"
+   */
+  const getSynonymTerms = () => {
+    const clauses: any = []
+    const synonyms = searchListingConfig?.synonyms
+
+    if (synonyms) {
+      const words = searchTerm.value.q.split(' ')
+
+      Object.entries(synonyms).forEach(([key, value]) => {
+        const synonym = Array.isArray(value) ? value : [value]
+
+        synonym.forEach((syn: string) => {
+          if (syn.includes(' ') && searchTerm.value.q.includes(syn)) {
+            clauses.push(searchTerm.value.q.replaceAll(syn, key))
+          } else if (words.includes(syn)) {
+            clauses.push(
+              words
+                .map((token: string) => (token === syn ? key : token))
+                .join(' ')
+            )
+          }
+        })
+      })
+    }
+
+    return clauses
+  }
+
   const suggestions = ref(getDefaultSuggestions())
 
   const getQueryClause = (filter: any[]) => {
@@ -174,6 +210,36 @@ export default ({
         '{{query}}',
         searchTerm.value.q
       )
+
+      // Add any synonyms' to the query
+      if (
+        searchListingConfig?.synonyms &&
+        searchListingConfig?.synonymResults
+      ) {
+        const synonymTerms = getSynonymTerms()
+
+        if (synonymTerms.length) {
+          const should = [queryClause]
+
+          synonymTerms.forEach((synonymQuery: string) => {
+            const synonymClause = processTemplate(
+              queryConfig,
+              '{{query}}',
+              synonymQuery
+            )
+
+            should.push(synonymClause)
+          })
+
+          return {
+            bool: {
+              should,
+              minimum_should_match: 1,
+              filter
+            }
+          }
+        }
+      }
     }
 
     return {
@@ -428,23 +494,23 @@ export default ({
           }
 
           /**
-         * Call a function passed from app.config to to allow extending and overriding. The function should
-         * return a valid DSL query.
-         * When called the function is passed the filter config and the value of the filter from the user
-         *
-         * In the nuxt app.config, the function is provided like this:
-         * {
-         *   ripple: {
-         *     search: {
-                  exampleFunction: (filterConfig, values) => {
-                    return {
-                      ... some DSL query
-                    }
-                  }
-         *      }
-         *    }
-         * }
-         */
+           * Call a function passed from app.config to to allow extending and overriding. The function should
+           * return a valid DSL query.
+           * When called the function is passed the filter config and the value of the filter from the user
+           *
+           * In the nuxt app.config, the function is provided like this:
+           * {
+           *   ripple: {
+           *     search: {
+           exampleFunction: (filterConfig, values) => {
+           return {
+           ... some DSL query
+           }
+           }
+           *      }
+           *    }
+           * }
+           */
           if (itm.filter.type === 'function') {
             const filterFuncs: Record<
               string,
@@ -619,6 +685,44 @@ export default ({
   }
 
   const getSuggestions = async () => {
+    if (searchListingConfig?.suggestions?.provider === 'elasticsearch') {
+      return await getElasticSuggestions()
+    }
+
+    return await getAppSearchSuggestions()
+  }
+
+  const getAppSearchSuggestions = async () => {
+    let fields = ['title']
+
+    if (searchListingConfig?.suggestions?.key) {
+      fields = Array.isArray(searchListingConfig.suggestions.key)
+        ? searchListingConfig.suggestions.key
+        : [searchListingConfig.suggestions.key]
+    }
+
+    suggestions.value = await $fetch(
+      `/api/tide/app-search/${index}/query_suggestion`,
+      {
+        method: 'POST',
+        body: {
+          query: searchTerm.value.q,
+          types: {
+            documents: {
+              fields
+            }
+          },
+          size: 8
+        }
+      }
+    ).then((res) => {
+      return res.results?.documents.map(
+        (doc: { suggestion: string }) => doc.suggestion
+      )
+    })
+  }
+
+  const getElasticSuggestions = async () => {
     let query = searchTerm.value.q
     let fields = searchListingConfig?.suggestions?.key || 'title'
     const type = searchListingConfig?.suggestions?.type || 'phrase_prefix'
@@ -641,7 +745,22 @@ export default ({
     ]
 
     // Add any synonyms' to the query
-    shouldQuery.push(...getSynonyms(type, fields))
+    if (
+      searchListingConfig?.synonyms &&
+      searchListingConfig?.synonymSuggestions
+    ) {
+      const synonymTerms = getSynonymTerms()
+
+      synonymTerms.forEach((synonymQuery: string) => {
+        shouldQuery.push({
+          multi_match: {
+            query: synonymQuery,
+            type,
+            fields
+          }
+        })
+      })
+    }
 
     suggestions.value = await $fetch(
       `/api/tide/elasticsearch/${elasticIndex}/_search`,
@@ -671,37 +790,6 @@ export default ({
 
   const clearSuggestions = () => {
     suggestions.value = getDefaultSuggestions()
-  }
-
-  const getSynonyms = (type: string, fields: string[]) => {
-    const clauses: any = []
-    const synonyms = searchListingConfig?.suggestions?.synonyms
-
-    if (synonyms) {
-      const words = searchTerm.value.q.split(' ')
-
-      Object.entries(synonyms).forEach(([key, value]) => {
-        const synonym = Array.isArray(value) ? value : [value]
-
-        synonym.forEach((syn: string) => {
-          if (words.includes(syn)) {
-            const query = words
-              .map((token: string) => (token === syn ? key : token))
-              .join(' ')
-
-            clauses.push({
-              multi_match: {
-                query,
-                type,
-                fields
-              }
-            })
-          }
-        })
-      })
-    }
-
-    return clauses
   }
 
   /**

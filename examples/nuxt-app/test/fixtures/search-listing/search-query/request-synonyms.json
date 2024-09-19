@@ -1,0 +1,58 @@
+{
+  "query": {
+    "bool": {
+      "should": [
+        {
+          "multi_match": {
+            "query": "local",
+            "fields": [
+              "title^3",
+              "field_landing_page_summary^2",
+              "field_paragraph_body",
+              "summary_processed"
+            ]
+          }
+        },
+        {
+          "multi_match": {
+            "query": "community",
+            "fields": [
+              "title^3",
+              "field_landing_page_summary^2",
+              "field_paragraph_body",
+              "summary_processed"
+            ]
+          }
+        }
+      ],
+      "minimum_should_match": 1,
+      "filter": [
+        {
+          "terms": {
+            "type": [
+              "news",
+              "events"
+            ]
+          }
+        },
+        {
+          "terms": {
+            "field_node_site": [
+              8888
+            ]
+          }
+        }
+      ]
+    }
+  },
+  "size": 10,
+  "from": 0,
+  "sort": [
+    {
+      "_score": "desc"
+    },
+    {
+      "_doc": "desc"
+    }
+  ]
+}

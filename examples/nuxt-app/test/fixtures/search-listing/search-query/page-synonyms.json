@@ -8,11 +8,14 @@
   "summary": "",
   "config": {
     "searchListingConfig": {
-      "index": "suggestion_index",
       "resultsPerPage": 10,
       "suggestions": {
         "enabled": false
-      }
+      },
+      "synonyms": {
+        "community": "local"
+      },
+      "synonymResults": true
     },
     "queryConfig": {
       "multi_match": {
@@ -20,7 +23,6 @@
         "fields": [
           "title^3",
           "field_landing_page_summary^2",
-          "body",
           "field_paragraph_body",
           "summary_processed"
         ]
@@ -37,7 +39,7 @@
       }
     },
     "globalFilters": [
-      { "terms": { "type": ["news"] } },
+      { "terms": { "type": ["news", "events"] } },
       { "terms": { "field_node_site": [8888] } }
     ],
     "userFilters": []

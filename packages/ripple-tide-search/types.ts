@@ -232,6 +232,7 @@ export type TideSearchListingConfig = {
      * @description options for utilizing the auto suggestions
      */
     suggestions?: {
+      provider: 'elasticsearch' | 'app-search'
       key?: string | string[]
       displayKey?: string
       enabled?: boolean
@@ -239,10 +240,12 @@ export type TideSearchListingConfig = {
       type?: 'phrase_prefix' | 'bool_prefix'
       promoted?: string[]
       history?: number | boolean
-      synonyms?: {
-        [key: string]: string | string[]
-      }
     }
+    synonyms?: {
+      [key: string]: string | string[]
+    }
+    synonymResults: boolean
+    synonymSuggestions: boolean
     /**
      * @description The theme to use for the display of form section and fields
      */

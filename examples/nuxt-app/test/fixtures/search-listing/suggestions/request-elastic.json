@@ -1,0 +1,42 @@
+{
+  "query": {
+    "bool": {
+      "filter": [
+        {
+          "terms": {
+            "type": [
+              "news", "events"
+            ]
+          }
+        },
+        {
+          "terms": {
+            "field_node_site": [
+              8888
+            ]
+          }
+        }
+      ],
+      "should": [
+        {
+          "multi_match": {
+            "query": "The",
+            "type": "phrase_prefix",
+            "fields": [
+              "title^2",
+              "field_landing_page_summary"
+            ]
+          }
+        }
+      ],
+      "minimum_should_match": 1
+    }
+  },
+  "_source": "title",
+  "size": 4,
+  "sort": [
+    {
+      "_score": "desc"
+    }
+  ]
+}
