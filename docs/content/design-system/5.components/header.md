@@ -1,20 +1,21 @@
 ---
 title: Header
-description: The Header component introduces the purpose and content of a page.
+description: The Header introduces the purpose and content of a page.
 layout: page
 label: Core
 
 ---
 
 ## Usage
+The header informs the user what is on the page. The header must be used at the top of a page above the body content. 
 
-Use headers to inform the user of what is on the page. The header must be placed at the top of a page above the main body content and styled as an H1-level heading. 
-
-Headers include optional content such as introduction text, journey links, a call to action and an introduction banner.
-
-Headers should feature a primary message and/or call to action. They can be accompanied by supporting content such as images or corner graphics.
-
-The header can also support a campaign logo if required. This will display above the page title.
+It contains the page title styled as Heading 1 (H1). Optional content includes:
+- introduction text
+- journey links
+- a call to action button, text and journey link
+- image or corner graphics
+- supporting campaign logo
+- introduction banner.
 
 ::DocsExample
 ---
@@ -23,15 +24,15 @@ id: core-containers-header--default-journey-links
 ::
 
 ### When and how to use
-- Keep the header simple and concise.
-- Use clear calls to action that align with the message or task.
+- Keep the header simple. Trying to use all the available features (such as call to action and journey links) overwhelms and confuses users.
+- Use clear calls-to-action that align with the page’s message or task.
 - Only use images that add value to the content and support the message.
 - Include with featured links and buttons to help users perform key tasks.
 - Include an optional campaign logo.
 
 ### When and how not to use
 - Don’t use a mix of reverse and default page title and introduction text styling.
-- Don’t include the same links in the main and introduction banners.
+- Don’t include the same links in the main banner and introduction banner.
 - Don’t use with more than 6 journey links.
 - Don’t overload with content.
 
@@ -45,13 +46,11 @@ The header has 3 variants:
 - reverse
 - image.
 
-The default and reverse variants can be used with journey links or a call to action. These guide users to perform tasks or navigate to related information.
+The default and reverse variants can be used with journey links or a call to action. This guides users to perform tasks or navigate to important information. They can display corner graphics to allow for brand recognition and visual prominence. They can also display a supporting campaign logo, if required.
 
-They can display corner images to enhance brand recognition and visual prominence. They can also display a supporting campaign logo if required.
+The image variant can display a full-width or half-width background image.
 
-The image variant displays a full background image with reverse blocked text. It only supports a page title and introduction text. 
-
-All variants can be used with the introduction banner.
+The introduction banner can be used with all variants.
 
 ### Default
 
@@ -69,7 +68,7 @@ id: core-containers-header--default-call-to-action
 
 ### Reverse
 
-The reverse variant uses reversed blocked type for the title and introduction text. This adds visual prominence to the banner and its information.
+The reverse variant uses reversed blocked type for the title and introduction text. This adds visual prominence to the banner and information.
 
 ::DocsExample
 ---
@@ -85,9 +84,13 @@ id: core-containers-header--reverse-call-to-action
 
 ### Image
 
-An image can be added as a full background image. The title and introduction copy will always display as the reversed blocked type.
+An image can be added as a full or half-width background image. 
 
-Images should not be stretched or too low in resolution. They should also not be complex or include text.
+The full-width background image supports a title and introduction copy. It will always display as reversed-blocked type.
+
+The half-width background image supports a title, introduction copy and an optional call to action. 
+
+Images should not be stretched or have too low resolution. They should not be complex or include text.
 
 ::DocsExample
 ---
@@ -95,12 +98,18 @@ id: core-containers-header--image-reverse
 ---
 ::
 
+::DocsExample
+---
+id: 
+---
+::
+
 ### Introduction banner
 
 The introduction banner:
-- can be used to add content and journey links under the page title and introduction section in the main header banner
-- has an optional icon and journey links
-- should contain content relating to the content in the main header.
+- can be used to add a content and call-to-action under the header banner
+- has optional journey links or buttons
+- has an optional icon that sits above the heading (H2).
 
 ::DocsExample
 ---
@@ -112,9 +121,9 @@ id: core-containers-header--intro-with-links
 
 ## Interaction with other components
 
-When using a featured campaign banner with an image, the image can overlap the header, depending on the amount of content. By default, this will hide the header's bottom corner shape.
+When using a featured campaign banner with an image, the image can overlap the header depending on the amount of content. By default, this hides the header's bottom corner graphic.
 
-The bottom corner shape won't hide if an introduction banner is between the header and campaign banner.
+If an Introduction banner is used, the featured campaign banner will display below that, so the bottom corner graphic will display.
 
 ::DocsImageExample
 ---
@@ -134,7 +143,9 @@ Headers can be themed in 2 ways:
 
 It will also adopt theming from the button component when displaying the call to action.
 
-If you choose neutral button for your site, the header will display buttons in the neutral theme.
+If you choose a neutral button style for your site, the header will display neutral-themed buttons.
+
+### Site theme
 
 ::DocsThemeChooser
   ::DocsExample
@@ -156,7 +167,7 @@ If you choose neutral button for your site, the header will display buttons in t
 
 ### Neutral theme
 
-Implemented at a site level, headers can have a neutral theme option. This option is only applicable to the reverse blocked type. Neutral headers have predefined neutral colour values that must be used and cannot be edited or customised.
+Implemented at a site level, headers can have a neutral theme option. This option is only applicable to the reverse-blocked type. Neutral headers have predefined neutral colour values that must be used; they cannot be edited or customised.
 
 ::DocsExample
 ---
