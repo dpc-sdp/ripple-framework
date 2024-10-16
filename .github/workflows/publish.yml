@@ -42,6 +42,7 @@ jobs:
         run: |
           git config --global user.email "sdp.devs@dpc.vic.gov.au"
           git config --global user.name "SDP Deploy"
+          git fetch origin ${{ github.event.release.target_commitish }}
           git checkout ${{ github.event.release.target_commitish }}
 
       - name: Commit changes
