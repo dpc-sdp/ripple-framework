@@ -47,12 +47,12 @@ jobs:
         if: ${{ !github.event.release.prerelease }}
         run: |
           git add .
-          git commit -m "chore: release ${{ !github.event.release.name }}"
+          git commit -m "chore: release ${{ github.event.release.name }}"
 
       - name: Push changes
         if: ${{ !github.event.release.prerelease  }}
         run: |
-          git push origin ${{ github.ref }} # Pushes back to the same branch
+          git push origin ${{ github.event.release.target_commitish }} # Pushes back to target branch
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
