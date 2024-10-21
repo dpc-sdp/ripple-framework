@@ -10,7 +10,8 @@ export default {
         element_text: payload?.text,
         name: payload?.name,
         component: 'rpl-accordion',
-        platform_event: 'toggleAll'
+        platform_event: 'toggleAll',
+        ...payload
       })
     }
   },
@@ -22,7 +23,8 @@ export default {
         element_text: payload?.text,
         name: payload?.name,
         component: 'rpl-accordion',
-        platform_event: 'toggleItem'
+        platform_event: 'toggleItem',
+        ...payload
       })
     }
   },
@@ -35,7 +37,8 @@ export default {
         label: payload?.label,
         name: payload?.name,
         component: 'rpl-alert',
-        platform_event: 'dismiss'
+        platform_event: 'dismiss',
+        ...payload
       })
     }
   },
@@ -49,7 +52,8 @@ export default {
         index: payload?.index,
         name: payload?.name,
         component: 'rpl-breadcrumbs',
-        platform_event: 'navigate'
+        platform_event: 'navigate',
+        ...payload
       })
     }
   },
@@ -65,7 +69,8 @@ export default {
         name: payload?.name,
         component: 'rpl-campaign-banner',
         component_options: payload?.options,
-        platform_event: 'navigate'
+        platform_event: 'navigate',
+        ...payload
       })
     }
   },
@@ -81,7 +86,8 @@ export default {
         link_url: payload?.value,
         type: payload?.type,
         component: 'rpl-card',
-        platform_event: 'navigate'
+        platform_event: 'navigate',
+        ...payload
       })
     }
   },
@@ -94,7 +100,8 @@ export default {
         name: payload?.name,
         index: payload?.index,
         component: 'rpl-card-carousel',
-        platform_event: 'paginate'
+        platform_event: 'paginate',
+        ...payload
       })
     }
   },
@@ -106,7 +113,8 @@ export default {
         name: payload?.name,
         index: payload?.index,
         component: 'rpl-card-carousel',
-        platform_event: 'swipe'
+        platform_event: 'swipe',
+        ...payload
       })
     }
   },
@@ -120,7 +128,8 @@ export default {
         index: payload?.index,
         link_url: payload?.value,
         component: 'rpl-chip',
-        platform_event: 'navigate'
+        platform_event: 'navigate',
+        ...payload
       })
     }
   },
@@ -137,7 +146,8 @@ export default {
         link_url: payload?.value,
         link_domain: host,
         component: 'rpl-contact-us',
-        platform_event: 'itemClick'
+        platform_event: 'itemClick',
+        ...payload
       })
     }
   },
@@ -151,7 +161,8 @@ export default {
         name: payload?.name,
         index: payload?.index,
         component: 'rpl-data-table',
-        platform_event: 'expandRow'
+        platform_event: 'expandRow',
+        ...payload
       })
     }
   },
@@ -164,7 +175,8 @@ export default {
         link_url: payload?.value,
         name: payload?.name,
         component: 'rpl-document',
-        platform_event: 'download'
+        platform_event: 'download',
+        ...payload
       })
     }
   },
@@ -177,7 +189,8 @@ export default {
         link_url: payload?.value,
         name: payload?.name,
         component: 'rpl-document',
-        platform_event: 'print'
+        platform_event: 'print',
+        ...payload
       })
     }
   },
@@ -197,7 +210,8 @@ export default {
         link_domain: host,
         name: payload?.name,
         component: 'rpl-file',
-        platform_event: 'download'
+        platform_event: 'download',
+        ...payload
       })
     }
   },
@@ -210,7 +224,8 @@ export default {
         index: payload?.index,
         name: payload?.name,
         component: 'rpl-footer',
-        platform_event: 'expand'
+        platform_event: 'expand',
+        ...payload
       })
     }
   },
@@ -225,7 +240,8 @@ export default {
         link_url: payload?.value,
         name: payload?.name,
         component: 'rpl-footer',
-        platform_event: 'navigate'
+        platform_event: 'navigate',
+        ...payload
       })
     }
   },
@@ -243,7 +259,8 @@ export default {
         name: payload?.name,
         component: 'rpl-header',
         component_options: payload?.options,
-        platform_event: 'navigate'
+        platform_event: 'navigate',
+        ...payload
       })
     }
   },
@@ -257,7 +274,8 @@ export default {
         link_url: payload?.value,
         name: payload?.name,
         component: 'rpl-in-page-navigation',
-        platform_event: 'navigate'
+        platform_event: 'navigate',
+        ...payload
       })
     }
   },
@@ -271,7 +289,8 @@ export default {
         type: payload?.type,
         name: payload?.name,
         component: 'rpl-media-embed',
-        platform_event: 'viewTranscript'
+        platform_event: 'viewTranscript',
+        ...payload
       })
     }
   },
@@ -285,7 +304,8 @@ export default {
         type: payload?.type,
         name: payload?.name,
         component: 'rpl-media-embed',
-        platform_event: 'viewFullscreen'
+        platform_event: 'viewFullscreen',
+        ...payload
       })
     }
   },
@@ -299,7 +319,8 @@ export default {
         type: payload?.type,
         name: payload?.name,
         component: 'rpl-media-embed',
-        platform_event: 'viewData'
+        platform_event: 'viewData',
+        ...payload
       })
     }
   },
@@ -321,7 +342,8 @@ export default {
         type: payload?.type,
         name: payload?.name,
         component: 'rpl-media-embed',
-        platform_event: 'downloadImage'
+        platform_event: 'downloadImage',
+        ...payload
       })
     }
   },
@@ -335,7 +357,8 @@ export default {
         label: payload?.label,
         name: payload?.name,
         component: 'rpl-media-gallery',
-        platform_event: 'paginate'
+        platform_event: 'paginate',
+        ...payload
       })
     }
   },
@@ -348,7 +371,8 @@ export default {
         label: payload?.label,
         name: payload?.name,
         component: 'rpl-media-gallery',
-        platform_event: 'swipe'
+        platform_event: 'swipe',
+        ...payload
       })
     }
   },
@@ -363,7 +387,8 @@ export default {
         value: payload?.value,
         index: payload?.index,
         component: 'rpl-media-gallery',
-        platform_event: 'viewFullscreen'
+        platform_event: 'viewFullscreen',
+        ...payload
       })
     }
   },
@@ -378,7 +403,8 @@ export default {
         count: payload?.count,
         index: payload?.index,
         component: 'rpl-page-links',
-        platform_event: 'paginate'
+        platform_event: 'paginate',
+        ...payload
       })
     }
   },
@@ -391,7 +417,8 @@ export default {
         link_url: payload?.value,
         name: payload?.name,
         component: 'rpl-primary-nav',
-        platform_event: 'quickExit'
+        platform_event: 'quickExit',
+        ...payload
       })
     }
   },
@@ -403,7 +430,8 @@ export default {
         element_text: payload?.text,
         name: payload?.name,
         component: 'rpl-primary-nav',
-        platform_event: 'toggleMenu'
+        platform_event: 'toggleMenu',
+        ...payload
       })
     }
   },
@@ -416,7 +444,8 @@ export default {
         index: payload?.index,
         name: payload?.name,
         component: 'rpl-primary-nav',
-        platform_event: 'toggleMenuItem'
+        platform_event: 'toggleMenuItem',
+        ...payload
       })
     }
   },
@@ -429,7 +458,8 @@ export default {
         index: payload?.index,
         name: payload?.name,
         component: 'rpl-primary-nav',
-        platform_event: 'clickBackButton'
+        platform_event: 'clickBackButton',
+        ...payload
       })
     }
   },
@@ -443,7 +473,8 @@ export default {
         link_url: payload?.value,
         name: payload?.name,
         component: 'rpl-primary-nav',
-        platform_event: 'navigate'
+        platform_event: 'navigate',
+        ...payload
       })
     }
   },
@@ -454,7 +485,8 @@ export default {
         element_id: payload?.id,
         name: payload?.name,
         component: 'rpl-primary-nav',
-        platform_event: 'toggleSearch'
+        platform_event: 'toggleSearch',
+        ...payload
       })
     }
   },
@@ -468,7 +500,8 @@ export default {
         name: payload?.name,
         link_url: payload?.value,
         component: 'rpl-related-links',
-        platform_event: 'navigate'
+        platform_event: 'navigate',
+        ...payload
       })
     }
   },
@@ -482,7 +515,8 @@ export default {
         name: payload?.name,
         link_url: payload?.value,
         component: 'rpl-search-result',
-        platform_event: 'navigate'
+        platform_event: 'navigate',
+        ...payload
       })
     }
   },
@@ -496,7 +530,8 @@ export default {
         type: payload?.type,
         name: payload?.name,
         component: 'rpl-search-bar',
-        platform_event: 'search'
+        platform_event: 'search',
+        ...payload
       })
     }
   },
@@ -509,7 +544,8 @@ export default {
         label: payload?.label,
         name: payload?.text?.toLowerCase(),
         component: 'rpl-social-share',
-        platform_event: 'openShareWindow'
+        platform_event: 'openShareWindow',
+        ...payload
       })
     }
   },
@@ -521,7 +557,9 @@ export default {
         element_text: payload?.text,
         name: payload?.name,
         component: 'rpl-tabs',
-        platform_event: 'toggleTab'
+        platform_event: 'toggleTab',
+        ...payload,
+        ...payload
       })
     }
   },
@@ -534,7 +572,8 @@ export default {
         name: payload?.name,
         link_url: payload?.value,
         component: 'rpl-timeline',
-        platform_event: 'navigate'
+        platform_event: 'navigate',
+        ...payload
       })
     }
   },
@@ -546,7 +585,8 @@ export default {
         element_text: payload?.text,
         name: payload?.name,
         component: 'rpl-vertical-nav',
-        platform_event: 'toggleMenuItem'
+        platform_event: 'toggleMenuItem',
+        ...payload
       })
     }
   },
@@ -560,7 +600,8 @@ export default {
         name: payload?.name,
         index: payload?.index,
         component: 'rpl-vertical-nav',
-        platform_event: 'navigate'
+        platform_event: 'navigate',
+        ...payload
       })
     }
   },
@@ -571,7 +612,8 @@ export default {
         element_text: payload?.text,
         value: payload?.value,
         component: 'rpl-layout-back-to-top',
-        platform_event: 'navigate'
+        platform_event: 'navigate',
+        ...payload
       })
     }
   },
@@ -583,7 +625,8 @@ export default {
         form_id: payload?.id,
         form_name: payload?.name,
         component: 'rpl-form',
-        platform_event: 'start'
+        platform_event: 'start',
+        ...payload
       })
     }
   },
@@ -595,7 +638,8 @@ export default {
         form_name: payload?.name,
         component: 'rpl-form',
         platform_event: 'abandon',
-        form_data: payload?.value
+        form_data: payload?.value,
+        ...payload
       })
     }
   },
@@ -609,7 +653,8 @@ export default {
         form_data: payload?.value,
         element_text: payload?.text,
         component: 'rpl-form',
-        platform_event: 'submit'
+        platform_event: 'submit',
+        ...payload
       })
     }
   },
@@ -623,7 +668,8 @@ export default {
         form_data: payload?.value,
         element_text: payload?.text,
         component: 'rpl-form',
-        platform_event: 'submit'
+        platform_event: 'submit',
+        ...payload
       })
     }
   },
@@ -636,7 +682,8 @@ export default {
         form_data: payload?.value,
         element_text: payload?.text,
         component: 'rpl-form',
-        platform_event: 'submit'
+        platform_event: 'submit',
+        ...payload
       })
     }
   },
@@ -648,7 +695,8 @@ export default {
         form_name: payload?.contextName,
         element_text: payload?.text,
         component: 'rpl-form-actions',
-        platform_event: 'resetForm'
+        platform_event: 'resetForm',
+        ...payload
       })
     }
   },
@@ -663,7 +711,8 @@ export default {
         value: payload?.value,
         type: 'date',
         component: 'rpl-form-date',
-        platform_event: 'update'
+        platform_event: 'update',
+        ...payload
       })
     }
   },
@@ -678,7 +727,8 @@ export default {
         value: payload?.value,
         type: 'date-range',
         component: 'rpl-form-date-range',
-        platform_event: 'update'
+        platform_event: 'update',
+        ...payload
       })
     }
   },
@@ -693,7 +743,8 @@ export default {
         value: payload?.value,
         type: 'select',
         component: 'rpl-form-dropdown',
-        platform_event: 'toggleOpen'
+        platform_event: 'toggleOpen',
+        ...payload
       })
     }
   },
@@ -708,7 +759,8 @@ export default {
         value: payload?.value,
         type: 'select',
         component: 'rpl-form-dropdown',
-        platform_event: 'update'
+        platform_event: 'update',
+        ...payload
       })
     }
   },
@@ -723,7 +775,8 @@ export default {
         type: payload?.type,
         value: payload?.value,
         component: 'rpl-form-input',
-        platform_event: 'update'
+        platform_event: 'update',
+        ...payload
       })
     }
   },
@@ -738,7 +791,8 @@ export default {
         type: payload?.type,
         value: payload?.value,
         component: 'rpl-form-number',
-        platform_event: 'update'
+        platform_event: 'update',
+        ...payload
       })
     }
   },
@@ -753,7 +807,8 @@ export default {
         type: payload?.type,
         value: payload?.value,
         component: 'rpl-form-option',
-        platform_event: 'update'
+        platform_event: 'update',
+        ...payload
       })
     }
   },
@@ -768,7 +823,8 @@ export default {
         value: payload?.value,
         type: 'radio',
         component: 'rpl-form-option-buttons',
-        platform_event: 'update'
+        platform_event: 'update',
+        ...payload
       })
     }
   },
@@ -783,7 +839,8 @@ export default {
         value: payload?.value,
         type: 'checkbox',
         component: 'rpl-form-checkbox-group',
-        platform_event: 'update'
+        platform_event: 'update',
+        ...payload
       })
     }
   },
@@ -798,7 +855,8 @@ export default {
         value: payload?.value,
         type: 'radio',
         component: 'rpl-form-radio-group',
-        platform_event: 'update'
+        platform_event: 'update',
+        ...payload
       })
     }
   },
@@ -813,7 +871,8 @@ export default {
         value: payload?.value,
         type: 'textarea',
         component: 'rpl-form-textarea',
-        platform_event: 'update'
+        platform_event: 'update',
+        ...payload
       })
     }
   },
@@ -830,7 +889,8 @@ export default {
         type: payload?.type,
         form_id: payload?.contextId,
         component: `tide-${payload.section || 'search'}`,
-        platform_event: 'search'
+        platform_event: 'search',
+        ...payload
       })
     }
   },
@@ -846,7 +906,8 @@ export default {
         filters: payload?.options,
         count: payload?.value,
         component: `tide-${payload.section || 'search'}`,
-        platform_event: 'search'
+        platform_event: 'search',
+        ...payload
       })
     }
   },
@@ -863,7 +924,8 @@ export default {
         count: payload?.value,
         filters: payload?.options,
         component: `tide-${payload.section || 'search'}`,
-        platform_event: 'paginate'
+        platform_event: 'paginate',
+        ...payload
       })
     }
   },
@@ -878,7 +940,8 @@ export default {
         form_id: payload?.contextId,
         filters: payload?.options,
         component: `tide-${payload.section || 'search'}`,
-        platform_event: 'toggleFilters'
+        platform_event: 'toggleFilters',
+        ...payload
       })
     }
   },
@@ -895,7 +958,16 @@ export default {
         form_id: payload?.contextId,
         filters: payload?.options,
         component: `tide-${payload.section || 'search'}`,
-        platform_event: 'clearQuery'
+        platform_event: 'clearQuery',
+        ...payload
+      })
+    }
+  },
+  'testing/testFire': () => {
+    return (payload: any) => {
+      trackEvent({
+        event: `testfire`,
+        ...(payload || {}),
       })
     }
   }

@@ -16,6 +16,8 @@ import type {
 import { useRippleEvent } from '@dpc-sdp/ripple-ui-core'
 import type { rplEventPayload } from '@dpc-sdp/ripple-ui-core'
 import { get } from 'lodash-es'
+import { useEventContext } from '@dpc-sdp/ripple-ui-core'
+
 
 interface Props {
   id: string
@@ -548,10 +550,17 @@ const locationOrGeolocation = computed(() => {
     ? userGeolocation.value
     : locationQuery.value
 })
+
+const { updateContext } = useEventContext({ mode: 'asdasd'})
+
+watch(activeTab, (newActiveTab) => {
+  updateContext('mode', newActiveTab)
+})
 </script>
 
 <template>
   <div class="rpl-u-margin-t-8">
+    <TestContextViewer />
     <div
       v-if="!searchListingConfig?.hideSearchForm"
       :class="{
