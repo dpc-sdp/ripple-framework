@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { useEventContext } from '@dpc-sdp/ripple-ui-core'
+
 import { FormKitSchemaNode } from '@formkit/core'
 import { computed, nextTick, ref, watch } from 'vue'
 import type { MappedCaptchaConfig } from '@dpc-sdp/ripple-tide-webform/types'
@@ -87,9 +89,12 @@ customInputs.library = (node: any) => {
     }
   })
 }
+
+const { context } = useEventContext({form_name: props.title, form_id: props.formId })
 </script>
 
 <template>
+  {{ context }}
   <div
     :style="{
       '--local-max-width': '595px'

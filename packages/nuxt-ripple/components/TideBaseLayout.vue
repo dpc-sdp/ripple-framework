@@ -49,6 +49,44 @@
       </slot>
     </template>
     <template #body="{ hasSidebar }">
+      <div class="rpl-type-p">
+        <TestContext :context="{ wow: 'cool' }">
+          <TestFireEvent name="testFire" />
+
+          <TestContextControl objKey="wow" on="apple" off="orange" />
+          <TestContext :context="{ ooh: 'amazing' }">
+            <TestContext :context="{ ooh: 'something' }">
+              <TestContextControl objKey="ooh" on="cat" off="dog" />
+              <TestContextControl objKey="wow" on="nested" off="blah" />
+              <TestContextControl objKey="new" on="123" off="456" />
+              <TestFireEvent name="testFire" />
+            </TestContext>
+          </TestContext>
+          <TestContext :context="{ ooh: 'blah' }"
+            ><TestContext :context="{ ahh: 'neat' }"><TestFireEvent name="testFire" /></TestContext
+
+
+          ><TestContextControl objKey="ooh" on="dolphin" off="whale" /></TestContext>
+        </TestContext>
+        <TestContext :context="{ wow: 'cool' }">
+          <TestFireEvent name="testFire" />
+
+          <TestContextControl objKey="wow" on="apple" off="orange" />
+          <TestContext :context="{ ooh: 'amazing' }">
+            <TestContext :context="{ ooh: 'something' }">
+              <TestContextControl objKey="ooh" on="cat" off="dog" />
+              <TestContextControl objKey="wow" on="nested" off="blah" />
+              <TestContextControl objKey="new" on="123" off="456" />
+              <TestFireEvent name="testFire" />
+            </TestContext>
+          </TestContext>
+          <TestContext :context="{ ooh: 'blah' }"
+            ><TestContext :context="{ ahh: 'neat' }"><TestFireEvent name="testFire" /></TestContext
+
+
+          ><TestContextControl objKey="ooh" on="dolphin" off="whale" /></TestContext>
+        </TestContext>
+      </div>
       <slot name="body" :hasSidebar="hasSidebar"></slot>
       <TideTopicTags
         v-if="!featureFlags?.disableTopicTags && topicTags.length"
